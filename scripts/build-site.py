@@ -690,7 +690,7 @@ def sync_panel() -> str:
         html += '<p class="sync-empty">目前沒有待辦事項。</p>'
     if non_md:
         html += f'<p class="sync-muted">另有 {non_md} 個非翻譯檔案在上游有變更（更新流程會自動同步）。</p>'
-    html += '<p class="sync-hint">要我更新上游？說「<strong>更新上游</strong>」即可。</p></div>'
+    html += "</div>"
     return html
 
 
