@@ -527,9 +527,11 @@ def install_page() -> str:
     <a class="btn" href="https://github.com/shumingyang-opencode/mattpocock-skills-zh-tw" target="_blank" rel="noopener">在 GitHub 開啟 ↗</a>
   </div>
   <div id="repo-status" class="repo-status">正在載入 GitHub repo…</div>
-  <p class="repo-note">GitHub 官方網頁不允許被 iframe 嵌入（frame-ancestors 'none'），所以這裡改用內嵌式瀏覽 repo 的 README 與檔案樹；想看原本網頁請按右上「在 GitHub 開啟」。</p>
-  <div id="repo-readme" class="repo-readme"></div>
-  <div id="repo-tree" class="repo-tree"></div>
+  <p class="repo-note">GitHub 官方網頁不允許被 iframe 嵌入（frame-ancestors 'none'），所以這裡改用內嵌式瀏覽。區塊內容較長可上下捲動；點任一連結會在<strong>新分頁</strong>開啟原文。</p>
+  <div class="embed-scroll">
+    <div id="repo-readme" class="repo-readme"></div>
+    <div id="repo-tree" class="repo-tree"></div>
+  </div>
 </div>
 
 <h2>方式一（推薦）：skills.sh 一鍵安裝</h2>
@@ -549,10 +551,10 @@ def install_page() -> str:
 </ul>
 
 <h2>方式二：手動複製（OpenCode）</h2>
-<p>不習慣用安裝器的話，直接把技能資料夾複製進去。OpenCode 讀取技能的兩個位置：</p>
+<p>不習慣用安裝器的話，直接把技能資料夾複製進去。OpenCode 讀取技能的位置：</p>
 <ul>
-  <li>全域：<code>~/.config/opencode/skills/</code>（Windows 是 <code>C:\\Users\\&lt;你&gt;\\.config\\opencode\\skills\\</code>）</li>
-  <li>專案：<code>.agents/skills/</code>（放在你的專案根目錄）</li>
+  <li>全域（擇一或全放）：<code>~/.config/opencode/skills/</code>、<code>~/.agents/skills/</code>、<code>~/.claude/skills/</code></li>
+  <li>專案：<code>.opencode/skills/</code>、<code>.agents/skills/</code>、<code>.claude/skills/</code>（放在專案根目錄）</li>
 </ul>
 <p>先把 repo 抓下來，再把 <code>skills/</code> 底下每個技能資料夾複製進去。PowerShell 範例：</p>
 <pre># 抓 repo
@@ -564,14 +566,19 @@ Copy-Item -Path "skills\\*\\*" -Destination "$env:USERPROFILE\\.config\\opencode
 <p class="hint">複製後，OpenCode 重新載入（或重開）就會看到這些技能。</p>
 
 <h2>方式三：手動複製（TRAE）</h2>
-<p>TRAE 讀取技能的位置（參見 <a href="https://docs.trae.ai/ide/skills" target="_blank" rel="noopener">TRAE Skills 文件</a>）：</p>
+<p>TRAE 讀取技能的位置（參見 <a href="https://docs.trae.ai/ide/skills" target="_blank" rel="noopener">TRAE Skills 文件</a> 與 <a href="https://docs.trae.com.cn/ide/skills" target="_blank" rel="noopener">TRAE 中國版文件</a>）：</p>
 <ul>
-  <li>全域（國際版）：<code>~/.trae/skills/</code></li>
-  <li>全域（中國版）：<code>~/.trae-cn/skills/</code></li>
-  <li>專案：<code>.trae/skills/</code></li>
+  <li>專案技能：<code>.trae/skills/</code></li>
+  <li>全域（國際版）：<code>~/.trae/skills</code>（Windows：<code>%userprofile%\\.trae\\skills</code>）</li>
+  <li>全域（中國版）：<code>~/.trae-cn/skills</code>（Windows：<code>%userprofile%\\.trae-cn\\skills</code>）</li>
+  <li><strong><code>.agents/skills/</code></strong>（Agent Skills 規範目錄）：到「設定 &gt; 技能與命令 &gt; 導入設定」打開「<strong>啟用 .agents 技能目錄</strong>」開關。官方文件把 <code>.agents/skills/</code> 定位為專案層目錄；實際 app 開啟後，全域 <code>~/.agents/skills/</code> 也可用（國際版／中國版相同）。技能重名時 <code>.trae/skills/</code> 優先。</li>
 </ul>
 <pre># 複製全部技能到 TRAE 全域目錄（國際版範例）
 Copy-Item -Path "skills\\*\\*" -Destination "$env:USERPROFILE\\.trae\\skills\\" -Recurse -Force</pre>
+
+<div class="callout">
+  <strong>兩套都裝？共用一個全域。</strong>同時安裝 OpenCode 與 TRAE 時，直接把技能放進共用的 <code>~/.agents/skills/</code>：OpenCode 原生讀取；TRAE 打開「啟用 .agents 技能目錄」後同樣使用。兩邊共用同一份，更新只需維護一處。
+</div>
 
 <h2>開始使用</h2>
 <ol>

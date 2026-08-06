@@ -490,6 +490,31 @@ footer a { color: var(--text-soft); }
 .btn:hover { border-color: var(--cyan); box-shadow: 0 4px 18px rgba(34, 211, 238, 0.2); color: #e6f7fb; }
 .repo-status { font-size: 0.7rem; color: var(--text-muted); margin-bottom: 0.6rem; }
 .repo-note { font-size: 0.72rem; color: var(--text-muted); margin: 0 0 0.6rem; line-height: 1.6; }
+.embed-scroll {
+  max-height: 440px;
+  overflow-y: auto;
+  padding-right: 0.6rem;
+  scrollbar-width: thin;
+  scrollbar-color: var(--warm-mid) transparent;
+}
+.embed-scroll::-webkit-scrollbar { width: 8px; }
+.embed-scroll::-webkit-scrollbar-track { background: transparent; }
+.embed-scroll::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 4px; }
+.embed-scroll::-webkit-scrollbar-thumb:hover { background: var(--warm-mid); }
+
+/* ---------- Callout (shared-global tip) ---------- */
+.callout {
+  border: 1px solid rgba(52, 211, 153, 0.35);
+  border-left: 3px solid var(--emerald);
+  background: rgba(52, 211, 153, 0.07);
+  border-radius: 10px;
+  padding: 0.8rem 1rem;
+  margin: 1.2rem 0;
+  font-size: 0.85rem;
+  color: var(--text-soft);
+  line-height: 1.7;
+}
+.callout strong { color: #c8f5df; }
 .repo-readme { font-size: 0.85rem; color: var(--text-soft); line-height: 1.75; }
 .repo-readme h1, .repo-readme h2, .repo-readme h3 { color: #f0f2ff; font-family: var(--font-display); margin: 0.7rem 0 0.3rem; }
 .repo-readme p { margin: 0.4rem 0; }
