@@ -511,7 +511,7 @@ def index_page() -> str:
     html = page_open("Matt Pocock 技能包 · 繁中解讀", "")
     html += """<header>
   <h1>Matt Pocock 技能包</h1>
-  <div class="subtitle">35 個工程師向代理技能，中英逐段並排，用台灣人的話講給你聽</div>
+  <div class="subtitle">35 個工程師向代理技能，中英逐段並排，口語解說</div>
   <div class="badge-line">翻譯只動說明文字，指令、路徑、技能名照原樣，安裝照常可用</div>
 </header>
 <div class="entry-cards">
