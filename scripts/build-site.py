@@ -23,6 +23,8 @@ import sys
 import urllib.request
 from pathlib import Path
 
+from about import about_card_html, about_page_html
+
 ROOT = Path(__file__).resolve().parent.parent
 CACHE = ROOT / ".site-cache"
 UPSTREAM_BASE = "https://raw.githubusercontent.com/mattpocock/skills/main"
@@ -694,6 +696,17 @@ def sync_panel() -> str:
     return html
 
 
+def about_page() -> str:
+    html = page_open("About Matt Pocock · 作者介紹", "")
+    html += about_page_html()
+    html += footer()
+    html += page_close()
+    out = ROOT / "about.html"
+    out.write_text(html, encoding="utf-8")
+    print("  ✓ about.html")
+    return html
+
+
 def index_page() -> str:
     html = page_open("Matt Pocock 技能包 · 繁中解讀", "")
     html += """<header>
@@ -722,6 +735,7 @@ def index_page() -> str:
 </div>
 """
     html += sync_panel()
+    html += about_card_html()
     html += footer()
     html += page_close()
     out = ROOT / "index.html"
@@ -768,6 +782,7 @@ def main():
     map_page()
     learning_path_page()
     install_page()
+    about_page()
     index_page()
     write_data()
     print("Done.")

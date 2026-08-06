@@ -473,6 +473,77 @@ footer a { color: var(--text-soft); }
 .guide .hint { font-size: 0.74rem; color: var(--text-muted); }
 .guide a { color: var(--cyan); }
 
+/* ---------- About page structure ---------- */
+.guide .timeline {
+  list-style: none;
+  counter-reset: tl;
+  margin: 0.6rem 0 0.6rem 10px;
+  padding: 0;
+}
+.guide .timeline li {
+  counter-increment: tl;
+  position: relative;
+  padding: 0 0 1.1rem 1.9rem;
+  border-left: 2px solid var(--line-strong);
+  color: var(--text-soft);
+  font-size: 0.85rem;
+  line-height: 1.7;
+}
+.guide .timeline li:last-child { padding-bottom: 0.2rem; border-left-color: transparent; }
+.guide .timeline li::before {
+  content: counter(tl);
+  position: absolute;
+  left: -13px;
+  top: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--surface-2);
+  border: 1px solid var(--cyan);
+  color: var(--cyan);
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.guide .t-stage {
+  display: block;
+  font-weight: 600;
+  color: #f0f2ff;
+  margin-bottom: 0.15rem;
+  font-size: 0.9rem;
+}
+.guide .work-block {
+  border: 1px solid var(--line-strong);
+  border-left: 3px solid var(--cyan);
+  border-radius: 10px;
+  padding: 0.7rem 1rem;
+  margin: 0.7rem 0;
+  background: var(--surface);
+}
+.guide .work-head { display: flex; align-items: baseline; gap: 0.7rem; flex-wrap: wrap; }
+.guide .work-name { font-family: var(--font-display); font-weight: 600; color: #e6f7fb; font-size: 0.95rem; }
+.guide .work-en { font-size: 0.7rem; color: var(--text-muted); }
+.guide .work-block p { margin: 0.3rem 0 0; font-size: 0.84rem; color: var(--text-soft); }
+.guide .link-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 0.55rem; margin: 0.6rem 0; }
+.guide .link-grid a {
+  display: block;
+  border: 1px solid var(--line-strong);
+  border-radius: 8px;
+  padding: 0.55rem 0.85rem;
+  background: var(--surface);
+  color: var(--cyan);
+  font-size: 0.8rem;
+  border-bottom: 1px solid var(--line-strong);
+}
+.guide .link-grid a:hover { border-color: var(--cyan); color: #7be7fb; }
+
+/* ---------- About card (homepage) ---------- */
+.about-card-wrap { max-width: 860px; margin: 1.6rem auto 0; }
+.about-card { text-align: center; padding: 1.2rem 1.4rem; }
+.about-card .ec-desc { max-width: 600px; margin-left: auto; margin-right: auto; }
+
 /* ---------- GitHub embed panel ---------- */
 .embed-panel { border: 1px solid var(--line-strong); border-radius: 14px; background: var(--surface); padding: 1rem 1.2rem; margin: 1.2rem 0; }
 .embed-head { display: flex; align-items: center; justify-content: space-between; gap: 0.8rem; flex-wrap: wrap; margin-bottom: 0.8rem; }
