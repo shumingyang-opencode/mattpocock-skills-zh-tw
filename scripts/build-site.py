@@ -528,6 +528,7 @@ def install_page() -> str:
   </div>
   <div id="repo-status" class="repo-status">正在載入 GitHub repo…</div>
   <p class="repo-note">GitHub 官方網頁不允許被 iframe 嵌入（frame-ancestors 'none'），所以這裡改用內嵌式瀏覽。區塊內容較長可上下捲動；點任一連結會在<strong>新分頁</strong>開啟原文。</p>
+  <button id="tree-toggle" class="btn btn-sm" type="button" hidden>全部展開</button>
   <div class="embed-scroll">
     <div id="repo-readme" class="repo-readme"></div>
     <div id="repo-tree" class="repo-tree"></div>
@@ -571,7 +572,7 @@ Copy-Item -Path "skills\\*\\*" -Destination "$env:USERPROFILE\\.config\\opencode
   <li>專案技能：<code>.trae/skills/</code></li>
   <li>全域（國際版）：<code>~/.trae/skills</code>（Windows：<code>%userprofile%\\.trae\\skills</code>）</li>
   <li>全域（中國版）：<code>~/.trae-cn/skills</code>（Windows：<code>%userprofile%\\.trae-cn\\skills</code>）</li>
-  <li><strong><code>.agents/skills/</code></strong>（Agent Skills 規範目錄）：到「設定 &gt; 技能與命令 &gt; 導入設定」打開「<strong>啟用 .agents 技能目錄</strong>」開關。官方文件把 <code>.agents/skills/</code> 定位為專案層目錄；實際 app 開啟後，全域 <code>~/.agents/skills/</code> 也可用（國際版／中國版相同）。技能重名時 <code>.trae/skills/</code> 優先。</li>
+  <li><strong><code>.agents/skills/</code></strong>（Agent Skills 規範目錄）：到「設定 &gt; 技能與命令 &gt; 導入設定」打開「<strong>啟用 .agents 技能目錄</strong>」開關。開啟後<strong>全域 <code>~/.agents/skills/</code> 可用</strong>（國際版／中國版相同）；官方文件描述為「加入專案」使用，與實際 app 行為不同。技能重名時 <code>.trae/skills/</code> 優先。</li>
 </ul>
 <pre># 複製全部技能到 TRAE 全域目錄（國際版範例）
 Copy-Item -Path "skills\\*\\*" -Destination "$env:USERPROFILE\\.trae\\skills\\" -Recurse -Force</pre>
@@ -622,7 +623,7 @@ Copy-Item -Path "skills\\*\\*" -Destination "$env:USERPROFILE\\.trae\\skills\\" 
       }}
       let h = '<div class="tree-group">';
       for (const d of Object.keys(dirs).filter(k => k).sort()) {{
-        h += '<details open><summary>&#128193; ' + d + '</summary><ul>';
+        h += '<details><summary>&#128193; ' + d + '</summary><ul>';
         for (const p of dirs[d].sort()) {{
           const n = p.split("/").pop();
           h += '<li><a href="https://github.com/' + REPO + '/blob/main/' + p + '" target="_blank" rel="noopener">' + n + '</a></li>';
@@ -631,6 +632,16 @@ Copy-Item -Path "skills\\*\\*" -Destination "$env:USERPROFILE\\.trae\\skills\\" 
       }}
       h += '</div>';
       tree.innerHTML = h;
+      const tbtn = document.getElementById("tree-toggle");
+      if (tbtn) {{
+        tbtn.hidden = false;
+        tbtn.addEventListener("click", () => {{
+          const all = tree.querySelectorAll("details");
+          const expanded = tree.querySelectorAll("details[open]").length > 0;
+          all.forEach(d => {{ if (expanded) d.removeAttribute("open"); else d.setAttribute("open", ""); }});
+          tbtn.textContent = expanded ? "全部展開" : "全部收合";
+        }});
+      }}
       status.textContent = "✓ 已載入 GitHub repo 內容";
       status.style.color = "var(--emerald)";
     }}
