@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>wizard · 互動精靈 · mattpocock-skills-zh-tw</title>
+<title>wizard · mattpocock-skills-zh-tw</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Noto+Serif+TC:wght@400;600;700&display=swap" rel="stylesheet">
@@ -23,7 +23,7 @@
 <tr><td>說明 (繁中)</td><td>產生一個互動式 bash wizard，引導人類走過只有他們能做的步驟。用於佈建基礎設施、設定憑證或 CI secrets、走訪陌生的第三方儀表板，或執行一次性遷移或切換。不要為代理自己能做的步驟叫用它。</td></tr>
 </table>
 <h1>wizard</h1>
-<div class="subtitle">互動精靈</div>
+<div class="subtitle">只能真人做的步驟（開帳號、輸密碼、點後台），它生成腳本一步步帶你走。</div>
 <div class="pair"><div class="col-en" lang="en"><h1>Wizard</h1></div><div class="col-zh" lang="zh-Hant"><h1>Wizard</h1></div></div>
 <div class="pair"><div class="col-en" lang="en"><p>A <strong>wizard</strong> is a bash script that walks a human, step by step, through a manual procedure that's tedious to do by hand and tedious to re-explain to an AI every time. It opens each URL, says exactly what to click and copy, captures the values, writes them where they belong (<code>.env</code>, GitHub secrets), confirms at every stage, and shows how much is left. It might configure third-party services, run a one-off migration, or move the project from one state to another.</p></div><div class="col-zh" lang="zh-Hant"><p><strong>wizard</strong> 是一個 bash 腳本，一步步引導人類走過一個手動程序——這個程序用手做很繁瑣，每次都要向 AI 重新解釋也很繁瑣。它開啟每個 URL、明確說要點擊和複製什麼、捕捉這些值、把它們寫到該去的地方（<code>.env</code>、GitHub secrets）、在每個階段確認，並顯示還剩多少。它可能設定第三方服務、執行一次性遷移，或把專案從一個狀態移到另一個。</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><p>The delightful UX is already solved by <a href="https://github.com/shumingyang-opencode/mattpocock-skills-zh-tw/blob/main/skills/engineering/wizard/template.sh">template.sh</a> — progress with time-remaining, confirmation gates, cross-platform URL opening (including WSL), hidden secret entry, idempotent <code>.env</code> upserts, <code>gh secret</code>/<code>gh variable</code> writes, and a closing summary. <strong>Your job is only to scope the procedure and author its stages.</strong> The library above the <code>STAGES</code> marker is identical in every wizard; that consistency is the point — never hand-edit it.</p></div><div class="col-zh" lang="zh-Hant"><p>討喜的 UX 已經由 <a href="https://github.com/shumingyang-opencode/mattpocock-skills-zh-tw/blob/main/skills/engineering/wizard/template.sh">template.sh</a> 解決了——附剩餘時間的進度、確認關卡、跨平台 URL 開啟（含 WSL）、隱藏式機密輸入、冪等的 <code>.env</code> upserts、<code>gh secret</code>／<code>gh variable</code> 寫入，以及結束摘要。<strong>你的工作只是界定程序的範圍並撰寫它的階段。</strong> <code>STAGES</code> 標記以上的程式庫在每個 wizard 中都是相同的；那個一致性正是重點——絕不手動編輯它。</p></div></div>

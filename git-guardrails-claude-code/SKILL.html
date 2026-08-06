@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>git-guardrails-claude-code · Git 安全鉤子 · mattpocock-skills-zh-tw</title>
+<title>git-guardrails-claude-code · mattpocock-skills-zh-tw</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Noto+Serif+TC:wght@400;600;700&display=swap" rel="stylesheet">
@@ -23,7 +23,7 @@
 <tr><td>說明 (繁中)</td><td>設定 Claude Code hooks 來在執行前阻擋危險的 git 命令（push、reset --hard、clean、branch -D 等）。當使用者想要防止破壞性的 git 操作、新增 git 安全 hooks，或在 Claude Code 中阻擋 git push/reset 時使用。</td></tr>
 </table>
 <h1>git-guardrails-claude-code</h1>
-<div class="subtitle">Git 安全鉤子</div>
+<div class="subtitle">在 Claude Code 的鉤子裡擋下危險 git 指令，防止手滑出事。</div>
 <div class="pair"><div class="col-en" lang="en"><h1>Setup Git Guardrails</h1></div><div class="col-zh" lang="zh-Hant"><h1>設定 Git 護欄（Setup Git Guardrails）</h1></div></div>
 <div class="pair"><div class="col-en" lang="en"><p>Sets up a PreToolUse hook that intercepts and blocks dangerous git commands before Claude executes them.</p></div><div class="col-zh" lang="zh-Hant"><p>設定一個 PreToolUse hook，在 Claude 執行危險 git 命令之前攔截並阻擋它們。</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><h2>What Gets Blocked</h2></div><div class="col-zh" lang="zh-Hant"><h2>會被阻擋的內容</h2></div></div>

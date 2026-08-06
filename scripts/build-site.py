@@ -36,43 +36,43 @@ UPSTREAM_BASE = "https://raw.githubusercontent.com/mattpocock/skills/main"
 # --------------------------------------------------------------------------
 SKILLS = {
     # --- engineering ---
-    "setup-matt-pocock-skills":          {"cat": "engineering", "level": "L0", "inv": "user",  "title": "前置設定"},
-    "ask-matt":                          {"cat": "engineering", "level": "L1", "inv": "user",  "title": "技能路由器"},
-    "grill-with-docs":                   {"cat": "engineering", "level": "L1", "inv": "user",  "title": "詰問 · 產文件"},
-    "grilling":                          {"cat": "productivity", "level": "L1", "inv": "model", "title": "詰問原語"},
-    "grill-me":                          {"cat": "productivity", "level": "L1", "inv": "user",  "title": "個人詰問"},
-    "to-spec":                           {"cat": "engineering", "level": "L2", "inv": "user",  "title": "生成規格"},
-    "to-tickets":                        {"cat": "engineering", "level": "L2", "inv": "user",  "title": "拆分 Ticket"},
-    "wayfinder":                         {"cat": "engineering", "level": "L2", "inv": "user",  "title": "尋路 · 大規劃"},
-    "triage":                            {"cat": "engineering", "level": "L2", "inv": "user",  "title": "分診"},
-    "to-questionnaire":                  {"cat": "productivity", "level": "L2", "inv": "user",  "title": "轉成問卷"},
-    "implement":                         {"cat": "engineering", "level": "L3", "inv": "user",  "title": "實作"},
-    "tdd":                               {"cat": "engineering", "level": "L3", "inv": "model", "title": "測試驅動開發"},
-    "prototype":                         {"cat": "engineering", "level": "L3", "inv": "model", "title": "可拋棄原型"},
-    "handoff":                           {"cat": "productivity", "level": "L3", "inv": "user",  "title": "會話交接"},
-    "diagnosing-bugs":                   {"cat": "engineering", "level": "L3", "inv": "model", "title": "故障診斷"},
-    "code-review":                       {"cat": "engineering", "level": "L4", "inv": "model", "title": "程式碼審查"},
-    "resolving-merge-conflicts":         {"cat": "engineering", "level": "L4", "inv": "model", "title": "解決合併衝突"},
-    "improve-codebase-architecture":     {"cat": "engineering", "level": "L4", "inv": "user",  "title": "架構維護"},
-    "codebase-design":                   {"cat": "engineering", "level": "vocab", "inv": "model", "title": "深模組設計"},
-    "domain-modeling":                   {"cat": "engineering", "level": "vocab", "inv": "model", "title": "領域建模"},
-    "research":                          {"cat": "engineering", "level": "support", "inv": "model", "title": "背景研究"},
-    "wizard":                            {"cat": "engineering", "level": "support", "inv": "model", "title": "互動精靈"},
-    "writing-for-agents":                {"cat": "productivity", "level": "support", "inv": "model", "title": "為代理寫作"},
-    "teach":                             {"cat": "productivity", "level": "support", "inv": "user",  "title": "多階段教學"},
-    "wait-what":                         {"cat": "productivity", "level": "support", "inv": "user",  "title": "重新闡述"},
+    "setup-matt-pocock-skills":          {"cat": "engineering", "level": "L0", "inv": "user",  "blurb": "開工前先把場地佈好：tracker 用哪個、標籤怎麼分、文件放哪。"},
+    "ask-matt":                          {"cat": "engineering", "level": "L1", "inv": "user",  "blurb": "不知道下一步要幹嘛？把你卡住的地方丟給它，它幫你挑對的技能。"},
+    "grill-with-docs":                   {"cat": "engineering", "level": "L1", "inv": "user",  "blurb": "跟它一輪輪對談，把你要的東西想清楚，順手讓它把結論寫成文件。"},
+    "grilling":                          {"cat": "productivity", "level": "L1", "inv": "model", "blurb": "一台問不停的機器，問到你沒得閃為止——所有訪談類技能的地基。"},
+    "grill-me":                          {"cat": "productivity", "level": "L1", "inv": "user",  "blurb": "只有你跟它，它追問到你把自己的計畫想清楚為止。"},
+    "to-spec":                           {"cat": "engineering", "level": "L2", "inv": "user",  "blurb": "把聊完的共識整理成一份規格丟進 tracker，不用再訪談一遍。"},
+    "to-tickets":                        {"cat": "engineering", "level": "L2", "inv": "user",  "blurb": "把大計畫拆成一張張曳光彈大小的工單，每張都標好要先做什麼。"},
+    "wayfinder":                         {"cat": "engineering", "level": "L2", "inv": "user",  "blurb": "大到連地圖都還沒畫的超大工程，先把決策一顆顆定下來再出發。"},
+    "triage":                            {"cat": "engineering", "level": "L2", "inv": "user",  "blurb": "外面湧進來的 bug、請求，先幫它們分診掛號，再決定放行給誰做。"},
+    "to-questionnaire":                  {"cat": "productivity", "level": "L2", "inv": "user",  "blurb": "你自己答不了的決策，變成能答的人來填的問卷。"},
+    "implement":                         {"cat": "engineering", "level": "L3", "inv": "user",  "blurb": "照規格或工單，把該做的工作真的做出來。"},
+    "tdd":                               {"cat": "engineering", "level": "L3", "inv": "model", "blurb": "先寫一支注定失敗的測試，再寫讓它變綠的程式——用回饋逼出好程式。"},
+    "prototype":                         {"cat": "engineering", "level": "L3", "inv": "model", "blurb": "寫一支丟掉也不心疼的小程式，先把「這招到底行不行」試出來。"},
+    "handoff":                           {"cat": "productivity", "level": "L3", "inv": "user",  "blurb": "把這段對話打包成交接文件，讓下一個 session 接手接著做。"},
+    "diagnosing-bugs":                   {"cat": "engineering", "level": "L3", "inv": "model", "blurb": "看一眼看不懂的硬 bug，先用一條保證會紅的指令鎖住它，再慢慢拆。"},
+    "code-review":                       {"cat": "engineering", "level": "L4", "inv": "model", "blurb": "雙軸檢查：有沒有照團隊規範、有沒有照規格做出來。"},
+    "resolving-merge-conflicts":         {"cat": "engineering", "level": "L4", "inv": "model", "blurb": "照雙方各自的意圖一塊塊解衝突，講清楚原因才動手，絕不按 --abort 擺爛。"},
+    "improve-codebase-architecture":     {"cat": "engineering", "level": "L4", "inv": "user",  "blurb": "三不五時掃一下程式碼庫，找出值得加深重構的候選，讓你挑一個來做。"},
+    "codebase-design":                   {"cat": "engineering", "level": "vocab", "inv": "model", "blurb": "把一大堆行為塞進小小的介面後面，放在乾淨的接縫上，才好測也好懂。"},
+    "domain-modeling":                   {"cat": "engineering", "level": "vocab", "inv": "model", "blurb": "讓全隊對同一個詞，講的是同一種意思。"},
+    "research":                          {"cat": "engineering", "level": "support", "inv": "model", "blurb": "把啃文件這種苦差事丟給背景代理，你在原地繼續做事，它回來交報告。"},
+    "wizard":                            {"cat": "engineering", "level": "support", "inv": "model", "blurb": "只能真人做的步驟（開帳號、輸密碼、點後台），它生成腳本一步步帶你走。"},
+    "writing-for-agents":                {"cat": "productivity", "level": "support", "inv": "model", "blurb": "教你怎麼寫「給 agent 看」的文件——技能、AGENTS.md 都算。"},
+    "teach":                             {"cat": "productivity", "level": "support", "inv": "user",  "blurb": "把目前目錄當教室，一次一次教到你真的會。"},
+    "wait-what":                         {"cat": "productivity", "level": "support", "inv": "user",  "blurb": "一句話沒聽懂？叫它用你懂的字重講一遍。"},
     # --- misc ---
-    "setup-pre-commit":                  {"cat": "misc", "level": "misc", "inv": "user", "title": "設定 pre-commit"},
-    "scaffold-exercises":                {"cat": "misc", "level": "misc", "inv": "user", "title": "練習骨架"},
-    "migrate-to-shoehorn":               {"cat": "misc", "level": "misc", "inv": "user", "title": "遷移至 Shoehorn"},
-    "git-guardrails-claude-code":        {"cat": "misc", "level": "misc", "inv": "user", "title": "Git 安全鉤子"},
+    "setup-pre-commit":                  {"cat": "misc", "level": "misc", "inv": "user", "blurb": "用 Husky 幫 commit 掛上 lint、型別檢查與測試，爛東西進不來。"},
+    "scaffold-exercises":                {"cat": "misc", "level": "misc", "inv": "user", "blurb": "幫課程建好標準的練習骨架，題目、解答、講解都歸定位。"},
+    "migrate-to-shoehorn":               {"cat": "misc", "level": "misc", "inv": "user", "blurb": "把測試裡亂用的 as 斷言，換成 @total-typescript/shoehorn 的乾淨寫法。"},
+    "git-guardrails-claude-code":        {"cat": "misc", "level": "misc", "inv": "user", "blurb": "在 Claude Code 的鉤子裡擋下危險 git 指令，防止手滑出事。"},
     # --- in-progress ---
-    "claude-handoff":                    {"cat": "in-progress", "level": "in-progress", "inv": "user", "title": "Claude 交接"},
-    "loop-me":                           {"cat": "in-progress", "level": "in-progress", "inv": "user", "title": "詰問我"},
-    "setup-ts-deep-modules":             {"cat": "in-progress", "level": "in-progress", "inv": "user", "title": "深模組建置"},
-    "writing-beats":                     {"cat": "in-progress", "level": "in-progress", "inv": "user", "title": "寫作 · 節拍"},
-    "writing-fragments":                 {"cat": "in-progress", "level": "in-progress", "inv": "user", "title": "寫作 · 碎片"},
-    "writing-shape":                     {"cat": "in-progress", "level": "in-progress", "inv": "user", "title": "寫作 · 成型"},
+    "claude-handoff":                    {"cat": "in-progress", "level": "in-progress", "inv": "user", "blurb": "把目前的對話接給下一個 session，不間斷地接著做。"},
+    "loop-me":                           {"cat": "in-progress", "level": "in-progress", "inv": "user", "blurb": "反覆詰問你要做的東西，直到規格真的長出來。"},
+    "setup-ts-deep-modules":             {"cat": "in-progress", "level": "in-progress", "inv": "user", "blurb": "幫 TypeScript 專案接上 dependency-cruiser，把每個套件圍成深模組。"},
+    "writing-beats":                     {"cat": "in-progress", "level": "in-progress", "inv": "user", "blurb": "把素材排成一段一段的故事節拍，寫出有節奏的文章。"},
+    "writing-fragments":                 {"cat": "in-progress", "level": "in-progress", "inv": "user", "blurb": "先撿素材、挖碎片，還沒結構也不用怕。"},
+    "writing-shape":                     {"cat": "in-progress", "level": "in-progress", "inv": "user", "blurb": "把碎片打磨成型，一段一段拼成文章。"},
 }
 
 # Map layout (highway diagram). Each row is {"left": [...], "center": [...], "right": [...]}
@@ -92,24 +92,24 @@ STANDALONE = ["research", "teach", "resolving-merge-conflicts", "to-questionnair
 META = ["writing-for-agents"]
 
 LEGEND = [
-    ("mainline", "主流程 Mainline", "highway"),
-    ("ramp", "進入匝道 On-ramp", "ramp"),
-    ("service", "繞道服務區 Service", "service"),
-    ("standalone", "獨立技能 Standalone", "standalone"),
-    ("meta", "元技能 Meta", "meta"),
-    ("dash", "詞彙層 Vocabulary (dashed)", "dash"),
+    ("mainline", "主線 Mainline", "highway"),
+    ("ramp", "插進來的入口 On-ramp", "ramp"),
+    ("service", "繞行支線 Service", "service"),
+    ("standalone", "隨取隨用 Standalone", "standalone"),
+    ("meta", "meta 技能 Meta", "meta"),
+    ("dash", "墊底詞彙 Vocabulary", "dash"),
 ]
 
 LEVELS = [
-    ("L0", "前置", "Prerequisite", "green", ["setup-matt-pocock-skills"]),
-    ("L1", "起手", "Start here — align on the idea", "", ["ask-matt", "grill-with-docs", "grill-me", "grilling"]),
-    ("L2", "規劃", "Plan — spec, tickets, route", "", ["to-spec", "to-tickets", "wayfinder", "triage", "to-questionnaire"]),
-    ("L3", "執行", "Build — test-first, prototype, debug", "", ["implement", "tdd", "prototype", "handoff", "diagnosing-bugs"]),
-    ("L4", "收尾", "Finish — review, maintain, unblock", "", ["code-review", "resolving-merge-conflicts", "improve-codebase-architecture"]),
-    ("vocab", "詞彙層", "Vocabulary — the two references beneath the flows", "purple", ["domain-modeling", "codebase-design"]),
-    ("support", "支援層", "Support — reach-for-anytime standalones", "green", ["research", "teach", "wizard", "wait-what", "writing-for-agents"]),
-    ("misc", "雜項工具", "Misc — kept around, not promoted", "amber", ["setup-pre-commit", "scaffold-exercises", "migrate-to-shoehorn", "git-guardrails-claude-code"]),
-    ("in-progress", "進行中", "In-progress — beta, feedback wanted", "amber", ["claude-handoff", "loop-me", "setup-ts-deep-modules", "writing-beats", "writing-fragments", "writing-shape"]),
+    ("L0", "開場", "先把場地佈好", "lv-emerald", ["setup-matt-pocock-skills"]),
+    ("L1", "起手", "先搞清楚要做什麼", "lv-cyan", ["ask-matt", "grill-with-docs", "grill-me", "grilling"]),
+    ("L2", "規劃", "把想法變成計畫", "lv-amber", ["to-spec", "to-tickets", "wayfinder", "triage", "to-questionnaire"]),
+    ("L3", "執行", "動手做，邊做邊驗", "lv-fuchsia", ["implement", "tdd", "prototype", "handoff", "diagnosing-bugs"]),
+    ("L4", "收尾", "做完，還要過得漂亮", "lv-orange", ["code-review", "resolving-merge-conflicts", "improve-codebase-architecture"]),
+    ("詞彙層", "墊底的兩本字典", "跑在底下，隨時可以翻", "lv-violet", ["domain-modeling", "codebase-design"]),
+    ("支援層", "隨取隨用工具箱", "單獨拿出來用也很好用", "lv-emerald", ["research", "teach", "wizard", "wait-what", "writing-for-agents"]),
+    ("雜項", "散裝工具", "少用，但用到時很有用", "lv-amber", ["setup-pre-commit", "scaffold-exercises", "migrate-to-shoehorn", "git-guardrails-claude-code"]),
+    ("進行中", "實驗室", "還在長大的技能，歡迎回饋", "lv-fuchsia", ["claude-handoff", "loop-me", "setup-ts-deep-modules", "writing-beats", "writing-fragments", "writing-shape"]),
 ]
 
 ATTACHED = {
@@ -313,7 +313,6 @@ def attached_links(name: str) -> str:
 
 def skill_page(name: str):
     meta = SKILLS.get(name, {})
-    zh_title = meta.get("title", name)
     src_dir = f"skills/{meta.get('cat', 'engineering')}/{name}"
     en_full = fetch(f"{src_dir}/SKILL.md")
     zh_full = (ROOT / src_dir / "SKILL.md").read_text(encoding="utf-8")
@@ -321,11 +320,11 @@ def skill_page(name: str):
     zh_fm, zh_body = parse_frontmatter(zh_full)
     pairs = pair_blocks(en_body, zh_body)
 
-    html = page_open(f"{name} · {zh_title}", "../")
+    html = page_open(name, "../")
     html += breadcrumb(name, is_skill=True, prefix="../")
     html += fm_table(en_fm, zh_fm)
     html += f"<h1>{name}</h1>\n"
-    html += f'<div class="subtitle">{zh_title}</div>\n'
+    html += f'<div class="subtitle">{meta.get("blurb", "")}</div>\n'
     html += attached_links(name)
     for en, zh in pairs:
         if not en and not zh:
@@ -378,33 +377,33 @@ def node_html(skill: str, kind: str = "mainline", small: bool = False) -> str:
     cls = f"node {kind}" + (" small" if small else "")
     return (f'<a class="{cls}" href="{skill}/SKILL.html">'
             f'<span class="label">{skill}</span>'
-            f'<span class="tag">{meta["title"]}</span>'
-            f'<span class="en">{meta["inv"]}-invoked</span>'
+            f'<span class="tag">{meta["blurb"]}</span>'
+            f'<span class="pill">{meta["inv"]}-invoked</span>'
             f'</a>')
 
 
 def map_page() -> str:
-    html = page_open("技能地圖 · Skill Map", "")
+    html = page_open("技能全景圖 · Skill Atlas", "")
     html += """<div class="back-link"><a href="index.html">← 首頁</a><a href="learning-path.html">學習路線</a></div>
 <header>
-  <h1>技能地圖</h1>
-  <div class="subtitle">Skill Map · 沿著主流程 idea → ship</div>
-  <div class="badge-line">中英對照卡片節點 · 點卡片進入逐段對照頁</div>
+  <h1>技能全景圖</h1>
+  <div class="subtitle">Skill Atlas · 從點子到上線，一條路走到底</div>
+  <div class="badge-line">點任何一格，進到逐段中英對照頁</div>
 </header>
 """
     # precondition
     html += f"""<div class="precondition">
-  <a href="setup-matt-pocock-skills/SKILL.html"><span class="label">setup-matt-pocock-skills</span><span class="tag">首次使用前運行 · 前置條件</span></a>
-  <div class="precondition-hint">↑ 每個 repo 先跑一次，種下 issue tracker 與標籤</div>
+  <a href="setup-matt-pocock-skills/SKILL.html"><span class="label">setup-matt-pocock-skills</span><span class="tag">開工前先把場地佈好</span></a>
+  <div class="precondition-hint">每個 repo 跑一次：tracker、標籤、文件位置一次搞定</div>
 </div>
 """
     # entry
     html += f"""<div class="entry">
-  <a class="sign" href="ask-matt/SKILL.html"><span class="label">ask-matt</span><span class="tag">技能路由器 · 高速入口</span><span class="en">router</span></a>
+  <a class="sign" href="ask-matt/SKILL.html"><span class="label">ask-matt</span><span class="tag">不知道下一步？先來問它</span><span class="en">router</span></a>
 </div>
 """
     # highway mainline
-    html += '<div class="zone"><div class="zone-label">主流程 · idea → ship</div><div class="highway">\n'
+    html += '<div class="zone"><div class="zone-label">主線：從點子到上線 · idea → ship</div><div class="highway">\n'
     for row in MAINLINE:
         html += '<div class="hwy-row">\n'
         html += '  <div class="col-left">'
@@ -430,25 +429,25 @@ def map_page() -> str:
             right_nodes = row["right"] if isinstance(row["right"], list) else [row["right"]]
             html += "".join(node_html(s, "on-ramp") for s in right_nodes)
         elif row.get("right") is None and row.get("service"):
-            html += '<span class="side-note">繞道 · 原型支線</span>'
+            html += '<span class="side-note">需要真的跑一下才知道的，繞去原型試</span>'
         html += '</div>\n'
         html += '</div>\n'
         html += '<div class="flow-arrow"></div>\n'
     html += "</div></div>\n"
 
     # grilling primitive annotation
-    html += f"""<div class="primitive-annotation"><a href="grilling/SKILL.html">↑ 共享訪談原語 · grilling</a></div>
+    html += f"""<div class="primitive-annotation"><a href="grilling/SKILL.html">所有訪談技能的地基 ↑ grilling</a></div>
 """
     # foundation
     html += """<div class="zone"><div class="foundation">
-  <div class="foundation-title">詞彙層（路基）— 主流程運行的底層支撐</div>
+  <div class="foundation-title">墊底的兩本字典：領域語言 × 模組形狀</div>
   <div class="foundation-row">
 """
     for s in FOUNDATION:
-        html += f'<a class="foundation-node" href="{s}/SKILL.html"><span class="label">{s}</span><span class="en">{SKILLS[s]["title"]}</span></a>'
+        html += f'<a class="foundation-node" href="{s}/SKILL.html"><span class="label">{s}</span><span class="en">{SKILLS[s]["blurb"]}</span></a>'
         for d in ATTACHED.get(s, []):
-            html += f'<a class="foundation-node" href="{s}/{d}.html"><span class="label">{d}</span><span class="en">附屬</span></a>'
-    html += '<span class="foundation-note">術語 · 決策 · 模組設計</span>\n'
+            html += f'<a class="foundation-node" href="{s}/{d}.html"><span class="label">{d}</span><span class="en">附屬文件</span></a>'
+    html += '<span class="foundation-note">讓全隊講同一種語言，讓模組長出好形狀</span>\n'
     html += """</div></div></div>
 """
     # legend
@@ -461,15 +460,15 @@ def map_page() -> str:
     html += '</div>\n'
 
     # standalone + meta zones
-    html += '<div class="zone"><div class="zone-label">獨立可用 · 不依賴主流程</div><div class="h-zone"><div class="h-row">'
+    html += '<div class="zone"><div class="zone-label">隨取隨用 · 不必進主線</div><div class="h-zone"><div class="h-row">'
     for s in STANDALONE:
         html += node_html(s, "standalone")
-    html += '</div><div class="h-note">可獨立使用，無須進入主流程</div></div></div>\n'
+    html += '</div><div class="h-note">單獨拿出來用也很好用</div></div></div>\n'
 
-    html += '<div class="zone"><div class="zone-label">元技能 · 寫作參考</div><div class="h-zone"><div class="h-row">'
+    html += '<div class="zone"><div class="zone-label">meta 技能：怎麼寫給 agent 看的文件</div><div class="h-zone"><div class="h-row">'
     for s in META:
         html += node_html(s, "meta")
-    html += '</div><div class="h-note">關於技能系統本身的技能</div></div></div>\n'
+    html += '</div><div class="h-note">這是在教「怎麼寫技能」的技能</div></div></div>\n'
 
     html += footer()
     html += page_close()
@@ -480,18 +479,17 @@ def map_page() -> str:
 
 def learning_path_page() -> str:
     html = page_open("學習路線 · Learning Path", "")
-    html += """<div class="back-link"><a href="index.html">← 首頁</a><a href="map.html">技能地圖</a></div>
+    html += """<div class="back-link"><a href="index.html">← 首頁</a><a href="map.html">技能全景圖</a></div>
 <header>
   <h1>學習路線</h1>
-  <div class="subtitle">Learning Path · 依技能分類循序學習</div>
-  <div class="badge-line">L0 前置 → L1 起手 → L2 規劃 → L3 執行 → L4 收尾 · 支援層與詞彙層隨取隨用</div>
+  <div class="subtitle">Learning Path · 從 0 練到上線</div>
+  <div class="badge-line">分層分級一關一關過；支援層與詞彙層，隨時可翻</div>
 </header>
 """
-    for code, title, sub, badge_cls, names in LEVELS:
-        html += f'<div class="level"><div class="level-head"><span class="level-badge {badge_cls}">{code}</span><span class="level-title">{title}</span><span class="level-sub">{sub}</span></div><div class="card-grid">'
+    for badge, title, sub, color_cls, names in LEVELS:
+        html += f'<div class="level {color_cls}"><div class="level-head"><span class="level-badge">{badge}</span><span class="level-title">{title}</span><span class="level-sub">{sub}</span></div><div class="card-grid">'
         for s in names:
-            meta = SKILLS[s]
-            html += card_html(s, meta)
+            html += card_html(s, SKILLS[s], color_cls)
         html += '</div></div>\n'
     html += footer()
     html += page_close()
@@ -500,44 +498,34 @@ def learning_path_page() -> str:
     print("  ✓ learning-path.html")
 
 
-def card_html(skill: str, meta: dict) -> str:
-    zh_desc = ""
-    try:
-        _, zh_body = parse_frontmatter((ROOT / f"skills/{meta['cat']}/{skill}/SKILL.md").read_text(encoding="utf-8"))
-        _ = zh_body
-        zh_full = (ROOT / f"skills/{meta['cat']}/{skill}/SKILL.md").read_text(encoding="utf-8")
-        zh_fm, _ = parse_frontmatter(zh_full)
-        zh_desc = zh_fm.get("description", "")
-    except Exception:
-        pass
+def card_html(skill: str, meta: dict, color_cls: str = "lv-cyan") -> str:
     tags = f'<span class="c-tag">{meta["cat"]}</span><span class="c-tag">{meta["inv"]}-invoked</span>'
     return (f'<a class="card" href="{skill}/SKILL.html">'
             f'<span class="c-name">{skill}</span>'
-            f'<span class="c-en">{meta["title"]}</span>'
-            f'<span class="c-zh">{zh_desc}</span>'
+            f'<span class="c-zh">{meta["blurb"]}</span>'
             f'<span class="c-tags">{tags}</span>'
             f'</a>')
 
 
 def index_page() -> str:
-    html = page_open("Matt Pocock 技能集 · 中英對照", "")
+    html = page_open("Matt Pocock 技能包 · 繁中解讀", "")
     html += """<header>
-  <h1>Matt Pocock 技能集</h1>
-  <div class="subtitle">mattpocock/skills · 繁體中文對照學習站</div>
-  <div class="badge-line">中英對照 · 全 35 個技能逐段並排 · 保留安裝與運行行為</div>
+  <h1>Matt Pocock 技能包</h1>
+  <div class="subtitle">35 個工程師向代理技能，中英逐段並排，用台灣人的話講給你聽</div>
+  <div class="badge-line">翻譯只動說明文字，指令、路徑、技能名照原樣，安裝照常可用</div>
 </header>
 <div class="entry-cards">
   <a class="entry-card" href="map.html">
     <span class="ec-icon">🗺️</span>
-    <span class="ec-title">技能地圖</span>
-    <span class="ec-en">Skill Map</span>
-    <span class="ec-desc">以「高速公路」隱喻掌握整套技能的關係 — 主流程 idea → ship、進入匝道、獨立技能、詞彙層。適合先建立全貌。</span>
+    <span class="ec-title">全景圖</span>
+    <span class="ec-en">Skill Atlas</span>
+    <span class="ec-desc">一張圖看懂 35 個技能怎麼接在一起——主線、插進來的入口、繞行支線，還有墊底的兩本字典。</span>
   </a>
   <a class="entry-card" href="learning-path.html">
-    <span class="ec-icon">🧭</span>
+    <span class="ec-icon">🧗</span>
     <span class="ec-title">學習路線</span>
     <span class="ec-en">Learning Path</span>
-    <span class="ec-desc">依技能分類與 L0–L4 分級循序學習，每張卡片為中英對照。適合照順序紮實學起。</span>
+    <span class="ec-desc">不想只看懂、想真的上手？從 L0 一路練到 L4，分層分類照著走。</span>
   </a>
 </div>
 """
@@ -549,10 +537,10 @@ def index_page() -> str:
 
 
 def footer(include_entries: bool = False) -> str:
-    links = ('<br><a href="map.html">技能地圖</a> · <a href="learning-path.html">學習路線</a>' if include_entries else "")
+    links = ('<br><a href="map.html">全景圖</a> · <a href="learning-path.html">學習路線</a>' if include_entries else "")
     return f"""<footer>
-  <div>這是 <a href="https://github.com/mattpocock/skills">mattpocock/skills</a> 的繁體中文翻譯學習站（zh-TW）· 翻譯僅限自然語言說明，保留目錄/技能名/指令/程式碼/路徑，不影響安裝行為。</div>
-  <div>內容版權 © Matt Pocock（MIT License）· 翻譯 © shumingyang-opencode · 對照排版參考 <a href="https://cnife.github.io/learn-mattpocock-skills/">learn-mattpocock-skills</a>{links}</div>
+  <div>這是 <a href="https://github.com/mattpocock/skills">mattpocock/skills</a> 的繁體中文翻譯學習站——翻譯只動說明文字，指令、路徑、技能名一律照原樣，安裝照常可用。</div>
+  <div>內容 © Matt Pocock（MIT License）· 繁中翻譯與這個站 © shumingyang-opencode · 版面架構參考 <a href="https://cnife.github.io/learn-mattpocock-skills/">learn-mattpocock-skills</a>{links}</div>
 </footer>
 """
 
