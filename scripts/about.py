@@ -3,11 +3,14 @@
 
 
 def about_card_html() -> str:
-    return """<div class="about-card-wrap"><a class="entry-card about-card" href="about.html">
-  <span class="ec-icon">👤</span>
-  <span class="ec-title">About Matt Pocock</span>
-  <span class="ec-en">Author · 作者介紹</span>
-  <span class="ec-desc">軟體工程師、教育者與開源推手。從聲音教練轉行工程師，創辦 Total TypeScript 與 AI Hero，開源 mattpocock/skills。點進了解他的完整介紹。</span>
+    return """<div class="about-card-wrap"><a class="about-card" href="about.html">
+  <div class="about-row">
+    <span class="ec-icon">👤</span>
+    <span class="ec-title">About Matt Pocock</span>
+    <span class="ec-en">Author · 作者介紹</span>
+    <span class="ec-arrow">→</span>
+  </div>
+  <span class="ec-desc">軟體工程師、教育者與開源推手。從聲音教練轉行工程師，創辦 Total TypeScript 與 AI Hero，開源 mattpocock/skills。點進了解完整介紹。</span>
 </a></div>"""
 
 

@@ -539,10 +539,27 @@ footer a { color: var(--text-soft); }
 }
 .guide .link-grid a:hover { border-color: var(--cyan); color: #7be7fb; }
 
-/* ---------- About card (homepage) ---------- */
+/* ---------- About card (homepage) — compact, matches the sync panel ---------- */
 .about-card-wrap { max-width: 860px; margin: 1.6rem auto 0; }
-.about-card { text-align: center; padding: 1.2rem 1.4rem; }
-.about-card .ec-desc { max-width: 600px; margin-left: auto; margin-right: auto; }
+.about-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  border: 1px solid var(--line-strong);
+  border-radius: 14px;
+  padding: 0.9rem 1.2rem;
+  text-decoration: none;
+  color: var(--text);
+  border-bottom: 1px solid var(--line-strong);
+  transition: border-color 0.14s, box-shadow 0.14s, transform 0.14s;
+}
+.about-card:hover { border-color: var(--cyan); box-shadow: 0 8px 28px rgba(34, 211, 238, 0.14); transform: translateY(-2px); }
+.about-card .about-row { display: flex; align-items: center; gap: 0.7rem; flex-wrap: wrap; }
+.about-card .ec-icon { font-size: 1.05rem; line-height: 1; }
+.about-card .ec-title { font-family: var(--font-display); font-size: 1rem; font-weight: 600; color: #f0f2ff; }
+.about-card .ec-en { font-size: 0.68rem; color: var(--text-muted); }
+.about-card .ec-arrow { margin-left: auto; color: var(--cyan); font-size: 1rem; }
+.about-card .ec-desc { font-size: 0.8rem; color: var(--text-soft); margin-top: 0.35rem; line-height: 1.6; }
 
 /* ---------- GitHub embed panel ---------- */
 .embed-panel { border: 1px solid var(--line-strong); border-radius: 14px; background: var(--surface); padding: 1rem 1.2rem; margin: 1.2rem 0; }
