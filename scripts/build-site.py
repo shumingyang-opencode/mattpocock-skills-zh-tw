@@ -683,7 +683,7 @@ def index_page() -> str:
   </a>
 </div>
 """
-    html += footer(include_entries=True)
+    html += footer()
     html += page_close()
     out = ROOT / "index.html"
     out.write_text(html, encoding="utf-8")
