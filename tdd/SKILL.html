@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>tdd · 測試驅動開發 · mattpocock-skills-zh-tw</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Noto+Serif+TC:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<div class="container">
+<div class="back-link">
+  <a href="../index.html">首頁</a>
+  <a href="../map.html">技能地圖</a>
+  <a href="../learning-path.html">學習路線</a>
+  
+</div>
+<table class="fm-table">
+<tr><td>name</td><td><code>tdd</code></td></tr>
+<tr><td>description (EN)</td><td>Test-driven development. Use when the user wants to build features or fix bugs test-first, mentions "red-green-refactor", or wants integration tests.</td></tr>
+<tr><td>說明 (繁中)</td><td>測試驅動開發。當使用者想以測試優先的方式建立功能或修 bug、提到「red-green-refactor」、或想要整合測試時使用。</td></tr>
+</table>
+<h1>tdd</h1>
+<div class="subtitle">測試驅動開發</div>
+<div class="back-link" style="margin-top:-0.6rem">附屬文件：<a href="mocking.html">mocking</a>　·　<a href="tests.html">tests</a></div>
+<div class="pair"><div class="col-en" lang="en"><h1>Test-Driven Development</h1></div><div class="col-zh" lang="zh-Hant"><h1>測試驅動開發</h1></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>TDD is the red → green loop. This skill is the reference that makes that loop produce tests worth keeping: what a good test is, where tests go, the anti-patterns, and the rules of the loop. Every section applies on every cycle — consult them before and during the loop, not after.</p></div><div class="col-zh" lang="zh-Hant"><p>TDD 就是紅 → 綠的迴圈。本技能是讓這個迴圈產出值得保留之測試的參考文件：什麼是好測試、測試放哪裡、反模式，以及迴圈的規則。每個章節在每個循環都適用——在迴圈之前和之中查閱它們，而不是事後。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>When exploring the codebase, read <code>CONTEXT.md</code> (if it exists) so test names and interface vocabulary match the project's domain language, and respect ADRs in the area you're touching.</p></div><div class="col-zh" lang="zh-Hant"><p>探索程式碼時，先讀 <code>CONTEXT.md</code>（如果存在），讓測試名稱和介面詞彙符合專案的領域語言，並尊重你要觸及區域中的 ADR。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h2>What a good test is</h2></div><div class="col-zh" lang="zh-Hant"><h2>什麼是好測試</h2></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Tests verify behavior through public interfaces, not implementation details. Code can change entirely; tests shouldn't. A good test reads like a specification — "user can checkout with valid cart" tells you exactly what capability exists — and survives refactors because it doesn't care about internal structure.</p></div><div class="col-zh" lang="zh-Hant"><p>測試透過公開介面驗證行為，而不是實作細節。程式碼可以完全改變；測試不應該。好測試讀起來像規格說明——「使用者可以用有效的購物車結帳」確切告訴你存在什麼能力——而且能安然度過重構，因為它不在乎內部結構。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>See <a href="tests.html">tests.md</a> for examples and <a href="mocking.html">mocking.md</a> for mocking guidelines.</p></div><div class="col-zh" lang="zh-Hant"><p>範例見 <a href="tests.html">tests.md</a>，模擬指引見 <a href="mocking.html">mocking.md</a>。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h2>Seams — where tests go</h2></div><div class="col-zh" lang="zh-Hant"><h2>接縫——測試放哪裡</h2></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>A <strong>seam</strong> is the public boundary you test at: the interface where you observe behavior without reaching inside. Tests live at seams, never against internals.</p></div><div class="col-zh" lang="zh-Hant"><p><strong>接縫</strong>是你測試所處的公開邊界：你在那裡觀察行為而不伸進內部。測試放在接縫，絕不對著內部。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p><strong>Test only at pre-agreed seams.</strong> Before writing any test, write down the seams under test and confirm them with the user. No test is written at an unconfirmed seam. You can't test everything — agreeing the seams up front is how testing effort lands on the critical paths and complex logic instead of every edge case.</p></div><div class="col-zh" lang="zh-Hant"><p><strong>只在事前約定的接縫上測試。</strong> 寫任何測試之前，先寫下將被測試的接縫並與使用者確認。不會在未確認的接縫上寫測試。你不可能測試一切——事先約定接縫，就是讓測試心力落在關鍵路徑與複雜邏輯上，而不是每個邊緣案例。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Ask: "What's the public interface, and which seams should we test?"</p></div><div class="col-zh" lang="zh-Hant"><p>問：「公開介面是什麼，我們該測試哪些接縫？」</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>When the shape of that interface is itself in question — how deep the module is, where the seam belongs, what the interface should expose — use the <code>/codebase-design</code> skill for the vocabulary. It is the shared source of the module, interface, depth, seam, adapter, leverage and locality terms, and it is a reference to consult, not a session to run.</p></div><div class="col-zh" lang="zh-Hant"><p>當那個介面的形狀本身有疑問時——模組要多深、接縫該放哪裡、介面該暴露什麼——用 <code>/codebase-design</code> 技能取得詞彙。它是模組、介面、深度、接縫、轉接器、槓桿收益與局部性這些術語的共同來源，而且是要查閱的參考文件，不是要執行的會話。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h2>Anti-patterns</h2></div><div class="col-zh" lang="zh-Hant"><h2>反模式</h2></div></div>
+<div class="pair"><div class="col-en" lang="en"><ul>
+<li><strong>Implementation-coupled</strong> — mocks internal collaborators, tests private methods, or verifies through a side channel (querying the database instead of using the interface). The tell: the test breaks when you refactor but behavior hasn't changed.</li>
+<li><strong>Tautological</strong> — the assertion recomputes the expected value the way the code does (<code>expect(add(a, b)).toBe(a + b)</code>, a snapshot derived by hand the same way, a constant asserted equal to itself), so it passes by construction and can never disagree with the code. Expected values must come from an independent source of truth — a known-good literal, a worked example, the spec.</li>
+<li><strong>Horizontal slicing</strong> — writing all tests first, then all implementation. Bulk tests verify <em>imagined</em> behavior: you test the <em>shape</em> of things rather than user-facing behavior, the tests go insensitive to real changes, and you commit to test structure before understanding the implementation. Work in <strong>vertical slices</strong> instead — one test → one implementation → repeat, each test a <strong>tracer bullet</strong> that responds to what the last cycle taught you.</li>
+</ul></div><div class="col-zh" lang="zh-Hant"><ul>
+<li><strong>耦合實作細節</strong>——模擬內部協作者、測試私有方法，或透過側通道驗證（查資料庫而不是用介面）。特徵：重構時測試壞掉，但行為沒有改變。</li>
+<li><strong>同義反覆</strong>——斷言用跟程式碼相同的方式重新計算期望值（<code>expect(add(a, b)).toBe(a + b)</code>、用手以同樣方式導出的快照、跟自己比較的常數），所以它依構造而通過、永遠不會與程式碼意見不合。期望值必須來自獨立的真實來源——已知良好的常數、實際算過的範例、規格。</li>
+<li><strong>水平切片</strong>——先寫全部測試，再寫全部實作。大量測試驗證的是_想像中_的行為：你測試的是東西的_形狀_而不是使用者可見的行為，測試對真實變動變得不敏感，而且你在理解實作之前就承諾了測試結構。改用<strong>垂直切片</strong>——一個測試 → 一個實作 → 重複，每個測試都是一顆回應上一循環所學的<strong>曳光彈</strong>。</li>
+</ul></div></div>
+<div class="pair"><div class="col-en" lang="en"><h2>Rules of the loop</h2></div><div class="col-zh" lang="zh-Hant"><h2>迴圈的規則</h2></div></div>
+<div class="pair"><div class="col-en" lang="en"><ul>
+<li><strong>Red before green.</strong> Write the failing test first, then only enough code to pass it. Don't anticipate future tests or add speculative features.</li>
+<li><strong>One slice at a time.</strong> One seam, one test, one minimal implementation per cycle.</li>
+<li><strong>Refactoring is not part of the loop.</strong> It belongs to the review stage (see the <code>code-review</code> skill), not the red → green implementation cycle.</li>
+</ul></div><div class="col-zh" lang="zh-Hant"><ul>
+<li><strong>先紅後綠。</strong> 先寫失敗測試，然後只寫足以讓它通過的程式碼。不要預期未來的測試或加投機性的功能。</li>
+<li><strong>一次一個切片。</strong> 每個循環一個接縫、一個測試、一個最小實作。</li>
+<li><strong>重構不是迴圈的一部分。</strong> 它屬於審查階段（見 <code>code-review</code> 技能），不屬於紅 → 綠的實作循環。</li>
+</ul></div></div>
+
+</div>
+</body>
+</html>

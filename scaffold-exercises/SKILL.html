@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>scaffold-exercises · 練習骨架 · mattpocock-skills-zh-tw</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Noto+Serif+TC:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<div class="container">
+<div class="back-link">
+  <a href="../index.html">首頁</a>
+  <a href="../map.html">技能地圖</a>
+  <a href="../learning-path.html">學習路線</a>
+  
+</div>
+<table class="fm-table">
+<tr><td>name</td><td><code>scaffold-exercises</code></td></tr>
+<tr><td>description (EN)</td><td>Create exercise directory structures with sections, problems, solutions, and explainers that pass linting. Use when user wants to scaffold exercises, create exercise stubs, or set up a new course section.</td></tr>
+<tr><td>說明 (繁中)</td><td>建立帶有 section、題目、解答與講解、且能通過 lint 檢查的練習目錄結構。當使用者想要建立練習骨架、建立練習樁，或設定新的課程 section 時使用。</td></tr>
+</table>
+<h1>scaffold-exercises</h1>
+<div class="subtitle">練習骨架</div>
+<div class="pair"><div class="col-en" lang="en"><h1>Scaffold Exercises</h1></div><div class="col-zh" lang="zh-Hant"><h1>建立練習骨架（Scaffold Exercises）</h1></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Create exercise directory structures that pass <code>pnpm ai-hero-cli internal lint</code>, then commit with <code>git commit</code>.</p></div><div class="col-zh" lang="zh-Hant"><p>建立能通過 <code>pnpm ai-hero-cli internal lint</code> 的練習目錄結構，然後用 <code>git commit</code> 提交。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h2>Directory naming</h2></div><div class="col-zh" lang="zh-Hant"><h2>目錄命名</h2></div></div>
+<div class="pair"><div class="col-en" lang="en"><ul>
+<li><strong>Sections</strong>: <code>XX-section-name/</code> inside <code>exercises/</code> (e.g., <code>01-retrieval-skill-building</code>)</li>
+<li><strong>Exercises</strong>: <code>XX.YY-exercise-name/</code> inside a section (e.g., <code>01.03-retrieval-with-bm25</code>)</li>
+<li>Section number = <code>XX</code>, exercise number = <code>XX.YY</code></li>
+<li>Names are dash-case (lowercase, hyphens)</li>
+</ul></div><div class="col-zh" lang="zh-Hant"><ul>
+<li><strong>Sections</strong>：<code>exercises/</code> 內部的 <code>XX-section-name/</code>（例如 <code>01-retrieval-skill-building</code>）</li>
+<li><strong>練習</strong>：section 內部的 <code>XX.YY-exercise-name/</code>（例如 <code>01.03-retrieval-with-bm25</code>）</li>
+<li>Section 號碼 = <code>XX</code>，練習號碼 = <code>XX.YY</code></li>
+<li>名稱使用 dash-case（小寫、連字號）</li>
+</ul></div></div>
+<div class="pair"><div class="col-en" lang="en"><h2>Exercise variants</h2></div><div class="col-zh" lang="zh-Hant"><h2>練習變體</h2></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Each exercise needs at least one of these subfolders:</p></div><div class="col-zh" lang="zh-Hant"><p>每個練習至少需要以下子資料夾之一：</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><ul>
+<li><code>problem/</code> - student workspace with TODOs</li>
+<li><code>solution/</code> - reference implementation</li>
+<li><code>explainer/</code> - conceptual material, no TODOs</li>
+</ul></div><div class="col-zh" lang="zh-Hant"><ul>
+<li><code>problem/</code> - 帶有 TODO 的學生工作區</li>
+<li><code>solution/</code> - 參考實作</li>
+<li><code>explainer/</code> - 概念性材料，沒有 TODO</li>
+</ul></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>When stubbing, default to <code>explainer/</code> unless the plan specifies otherwise.</p></div><div class="col-zh" lang="zh-Hant"><p>建立樁時，除非計畫另有指定，否則預設使用 <code>explainer/</code>。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h2>Required files</h2></div><div class="col-zh" lang="zh-Hant"><h2>必備檔案</h2></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Each subfolder (<code>problem/</code>, <code>solution/</code>, <code>explainer/</code>) needs a <code>readme.md</code> that:</p></div><div class="col-zh" lang="zh-Hant"><p>每個子資料夾（<code>problem/</code>、<code>solution/</code>、<code>explainer/</code>）需要一個 <code>readme.md</code>，它必須：</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><ul>
+<li>Is <strong>not empty</strong> (must have real content, even a single title line works)</li>
+<li>Has no broken links</li>
+</ul></div><div class="col-zh" lang="zh-Hant"><ul>
+<li><strong>不是空的</strong>（必須有真實內容，即使是單一標題行也可以）</li>
+<li>沒有壞掉的連結</li>
+</ul></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>When stubbing, create a minimal readme with a title and a description:</p></div><div class="col-zh" lang="zh-Hant"><p>建立樁時，建立一個帶有標題與描述的最小 readme：</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><pre><code class="language-md"># Exercise Title
+
+Description here
+</code></pre></div><div class="col-zh" lang="zh-Hant"><pre><code class="language-md"># Exercise Title
+
+Description here
+</code></pre></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>If the subfolder has code, it also needs a <code>main.ts</code> (&gt;1 line). But for stubs, a readme-only exercise is fine.</p></div><div class="col-zh" lang="zh-Hant"><p>如果子資料夾有程式碼，它也需要一個 <code>main.ts</code>（&gt;1 行）。但對於樁，一個只有 readme 的練習也可以。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h2>Workflow</h2></div><div class="col-zh" lang="zh-Hant"><h2>工作流程</h2></div></div>
+<div class="pair"><div class="col-en" lang="en"><ol>
+<li><strong>Parse the plan</strong> - extract section names, exercise names, and variant types</li>
+<li><strong>Create directories</strong> - <code>mkdir -p</code> for each path</li>
+<li><strong>Create stub readmes</strong> - one <code>readme.md</code> per variant folder with a title</li>
+<li><strong>Run lint</strong> - <code>pnpm ai-hero-cli internal lint</code> to validate</li>
+<li><strong>Fix any errors</strong> - iterate until lint passes</li>
+</ol></div><div class="col-zh" lang="zh-Hant"><ol>
+<li><strong>解析計畫</strong> - 擷取 section 名稱、練習名稱與變體類型</li>
+<li><strong>建立目錄</strong> - 為每個路徑 <code>mkdir -p</code></li>
+<li><strong>建立樁 readmes</strong> - 每個變體資料夾一個帶有標題的 <code>readme.md</code></li>
+<li><strong>執行 lint</strong> - <code>pnpm ai-hero-cli internal lint</code> 來驗證</li>
+<li><strong>修正任何錯誤</strong> - 反覆直到 lint 通過</li>
+</ol></div></div>
+<div class="pair"><div class="col-en" lang="en"><h2>Lint rules summary</h2></div><div class="col-zh" lang="zh-Hant"><h2>Lint 規則摘要</h2></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>The linter (<code>pnpm ai-hero-cli internal lint</code>) checks:</p></div><div class="col-zh" lang="zh-Hant"><p>linter（<code>pnpm ai-hero-cli internal lint</code>）檢查：</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><ul>
+<li>Each exercise has subfolders (<code>problem/</code>, <code>solution/</code>, <code>explainer/</code>)</li>
+<li>At least one of <code>problem/</code>, <code>explainer/</code>, or <code>explainer.1/</code> exists</li>
+<li><code>readme.md</code> exists and is non-empty in the primary subfolder</li>
+<li>No <code>.gitkeep</code> files</li>
+<li>No <code>speaker-notes.md</code> files</li>
+<li>No broken links in readmes</li>
+<li>No <code>pnpm run exercise</code> commands in readmes</li>
+<li><code>main.ts</code> required per subfolder unless it's readme-only</li>
+</ul></div><div class="col-zh" lang="zh-Hant"><ul>
+<li>每個練習都有子資料夾（<code>problem/</code>、<code>solution/</code>、<code>explainer/</code>）</li>
+<li><code>problem/</code>、<code>explainer/</code> 或 <code>explainer.1/</code> 至少有一個存在</li>
+<li>主要子資料夾中 <code>readme.md</code> 存在且非空</li>
+<li>沒有 <code>.gitkeep</code> 檔案</li>
+<li>沒有 <code>speaker-notes.md</code> 檔案</li>
+<li>readme 中沒有壞掉的連結</li>
+<li>readme 中沒有 <code>pnpm run exercise</code> 命令</li>
+<li>每個子資料夾需要 <code>main.ts</code>，除非它只有 readme</li>
+</ul></div></div>
+<div class="pair"><div class="col-en" lang="en"><h2>Moving/renaming exercises</h2></div><div class="col-zh" lang="zh-Hant"><h2>移動/重新命名練習</h2></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>When renumbering or moving exercises:</p></div><div class="col-zh" lang="zh-Hant"><p>重新編號或移動練習時：</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><ol>
+<li>Use <code>git mv</code> (not <code>mv</code>) to rename directories - preserves git history</li>
+<li>Update the numeric prefix to maintain order</li>
+<li>Re-run lint after moves</li>
+</ol></div><div class="col-zh" lang="zh-Hant"><ol>
+<li>使用 <code>git mv</code>（不是 <code>mv</code>）來重新命名目錄 - 保留 git 歷史</li>
+<li>更新數字前綴以維持順序</li>
+<li>移動後重新執行 lint</li>
+</ol></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Example:</p></div><div class="col-zh" lang="zh-Hant"><p>範例：</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><pre><code class="language-bash">git mv exercises/01-retrieval/01.03-embeddings exercises/01-retrieval/01.04-embeddings
+</code></pre></div><div class="col-zh" lang="zh-Hant"><pre><code class="language-bash">git mv exercises/01-retrieval/01.03-embeddings exercises/01-retrieval/01.04-embeddings
+</code></pre></div></div>
+<div class="pair"><div class="col-en" lang="en"><h2>Example: stubbing from a plan</h2></div><div class="col-zh" lang="zh-Hant"><h2>範例：從計畫建立樁</h2></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Given a plan like:</p></div><div class="col-zh" lang="zh-Hant"><p>給定一個像這樣的計畫：</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><pre><code>Section 05: Memory Skill Building
+- 05.01 Introduction to Memory
+- 05.02 Short-term Memory (explainer + problem + solution)
+- 05.03 Long-term Memory
+</code></pre></div><div class="col-zh" lang="zh-Hant"><pre><code>Section 05: Memory Skill Building
+- 05.01 Introduction to Memory
+- 05.02 Short-term Memory (explainer + problem + solution)
+- 05.03 Long-term Memory
+</code></pre></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Create:</p></div><div class="col-zh" lang="zh-Hant"><p>建立：</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><pre><code class="language-bash">mkdir -p exercises/05-memory-skill-building/05.01-introduction-to-memory/explainer
+mkdir -p exercises/05-memory-skill-building/05.02-short-term-memory/{explainer,problem,solution}
+mkdir -p exercises/05-memory-skill-building/05.03-long-term-memory/explainer
+</code></pre></div><div class="col-zh" lang="zh-Hant"><pre><code class="language-bash">mkdir -p exercises/05-memory-skill-building/05.01-introduction-to-memory/explainer
+mkdir -p exercises/05-memory-skill-building/05.02-short-term-memory/{explainer,problem,solution}
+mkdir -p exercises/05-memory-skill-building/05.03-long-term-memory/explainer
+</code></pre></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Then create readme stubs:</p></div><div class="col-zh" lang="zh-Hant"><p>然後建立 readme 樁：</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><pre><code>exercises/05-memory-skill-building/05.01-introduction-to-memory/explainer/readme.md -&gt; &quot;# Introduction to Memory&quot;
+exercises/05-memory-skill-building/05.02-short-term-memory/explainer/readme.md -&gt; &quot;# Short-term Memory&quot;
+exercises/05-memory-skill-building/05.02-short-term-memory/problem/readme.md -&gt; &quot;# Short-term Memory&quot;
+exercises/05-memory-skill-building/05.02-short-term-memory/solution/readme.md -&gt; &quot;# Short-term Memory&quot;
+exercises/05-memory-skill-building/05.03-long-term-memory/explainer/readme.md -&gt; &quot;# Long-term Memory&quot;
+</code></pre></div><div class="col-zh" lang="zh-Hant"><pre><code>exercises/05-memory-skill-building/05.01-introduction-to-memory/explainer/readme.md -&gt; &quot;# Introduction to Memory&quot;
+exercises/05-memory-skill-building/05.02-short-term-memory/explainer/readme.md -&gt; &quot;# Short-term Memory&quot;
+exercises/05-memory-skill-building/05.02-short-term-memory/problem/readme.md -&gt; &quot;# Short-term Memory&quot;
+exercises/05-memory-skill-building/05.02-short-term-memory/solution/readme.md -&gt; &quot;# Short-term Memory&quot;
+exercises/05-memory-skill-building/05.03-long-term-memory/explainer/readme.md -&gt; &quot;# Long-term Memory&quot;
+</code></pre></div></div>
+
+</div>
+</body>
+</html>

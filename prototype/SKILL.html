@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>prototype · 可拋棄原型 · mattpocock-skills-zh-tw</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Noto+Serif+TC:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<div class="container">
+<div class="back-link">
+  <a href="../index.html">首頁</a>
+  <a href="../map.html">技能地圖</a>
+  <a href="../learning-path.html">學習路線</a>
+  
+</div>
+<table class="fm-table">
+<tr><td>name</td><td><code>prototype</code></td></tr>
+<tr><td>description (EN)</td><td>Build a throwaway prototype to answer a design question. Use when the user wants to sanity-check whether a state model or logic feels right, or explore what a UI should look like.</td></tr>
+<tr><td>說明 (繁中)</td><td>建立一次性原型來回答設計問題。當使用者想確認某個狀態模型或邏輯是否合理，或想探索 UI 應該長什麼樣子時使用。</td></tr>
+</table>
+<h1>prototype</h1>
+<div class="subtitle">可拋棄原型</div>
+<div class="back-link" style="margin-top:-0.6rem">附屬文件：<a href="LOGIC.html">LOGIC</a>　·　<a href="UI.html">UI</a></div>
+<div class="pair"><div class="col-en" lang="en"><h1>Prototype</h1></div><div class="col-zh" lang="zh-Hant"><h1>原型</h1></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>A prototype is <strong>throwaway code that answers a question</strong>. The question decides the shape.</p></div><div class="col-zh" lang="zh-Hant"><p>一個原型是<strong>回答問題的一次性程式碼</strong>。問題決定了它的形狀。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h2>Pick a branch</h2></div><div class="col-zh" lang="zh-Hant"><h2>選擇分支</h2></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Identify which question is being answered — from the user's prompt, the surrounding code, or by asking if the user is around:</p></div><div class="col-zh" lang="zh-Hant"><p>判斷正在回答的是哪個問題——從使用者的提示、周邊程式碼，或在場時直接詢問使用者：</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><ul>
+<li><strong>"Does this logic / state model feel right?"</strong> → <a href="LOGIC.html">LOGIC.md</a>. Build a single shareable HTML file — free-play buttons plus tabbed guided walkthroughs — that pushes the state machine through cases that are hard to reason about on paper, and that a non-developer can drive.</li>
+<li><strong>"What should this look like?"</strong> → <a href="UI.html">UI.md</a>. Generate several radically different UI variations on a single route, switchable via a URL search param and a floating bottom bar.</li>
+</ul></div><div class="col-zh" lang="zh-Hant"><ul>
+<li><strong>「這個邏輯 / 狀態模型合理嗎？」</strong> → <a href="LOGIC.html">LOGIC.md</a>。建立單一可分享的 HTML 檔案——自由遊玩按鈕加上分頁式引導示範——把狀態機器推向那些在紙上難以推演的案例，讓非開發者也能操作。</li>
+<li><strong>「這個東西應該長什麼樣子？」</strong> → <a href="UI.html">UI.md</a>。在單一路由上產生數個截然不同的 UI 變體，可透過 URL 搜尋參數與浮動底欄切換。</li>
+</ul></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>The two branches produce very different artifacts — getting this wrong wastes the whole prototype. If the question is genuinely ambiguous and the user isn't reachable, default to whichever branch better matches the surrounding code (a backend module → logic; a page or component → UI) and state the assumption at the top of the prototype.</p></div><div class="col-zh" lang="zh-Hant"><p>兩個分支產出的產物差異很大——選錯分支會浪費整個原型。如果問題真的模稜兩可、又聯絡不上使用者，預設選擇較符合周邊程式碼的分支（後端模組 → 邏輯；頁面或元件 → UI），並在原型頂端寫明這個假設。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h2>Rules that apply to both</h2></div><div class="col-zh" lang="zh-Hant"><h2>兩種分支皆適用的規則</h2></div></div>
+<div class="pair"><div class="col-en" lang="en"><ol>
+<li><strong>Throwaway from day one, and clearly marked as such.</strong> Locate the prototype code close to where it will actually be used (next to the module or page it's prototyping for) so context is obvious — but name it so a casual reader can see it's a prototype, not production. For throwaway UI routes, obey whatever routing convention the project already uses; don't invent a new top-level structure.</li>
+<li><strong>Trivial to run.</strong> A UI prototype starts from one command in the project's task runner — <code>pnpm &lt;name&gt;</code>, <code>python &lt;path&gt;</code>, <code>bun &lt;path&gt;</code>, etc. A logic demo is a single HTML file the user double-clicks. Either way, no thinking required to start it.</li>
+<li><strong>No persistence by default.</strong> State lives in memory. Persistence is the thing the prototype is <em>checking</em>, not something it should depend on. If the question explicitly involves a database, hit a scratch DB or a local file with a clear "PROTOTYPE — wipe me" name.</li>
+<li><strong>Skip the polish.</strong> No tests, no error handling beyond what makes the prototype <em>runnable</em>, no abstractions. The point is to learn something fast.</li>
+<li><strong>Surface the state.</strong> After every action (logic) or on every variant switch (UI), print or render the full relevant state so the user can see what changed.</li>
+<li><strong>Capture it when done.</strong> Fold any validated decision into the real code, then capture the prototype itself as a <strong>primary source</strong>: commit it to a throwaway branch, out of main, and leave a context pointer to that branch on the implementation issue. Capture the answer too — the verdict and the question it settled — in the issue or a commit. The main branch keeps only the validated decision.</li>
+</ol></div><div class="col-zh" lang="zh-Hant"><ol>
+<li><strong>從第一天就是一次性，並清楚標示。</strong> 把原型程式碼放在實際使用處附近（在它要服務的模組或頁面旁邊），讓上下文一目了然——但要命名得讓隨意瀏覽的人一看就知道是原型，不是正式程式。對於一次性的 UI 路由，遵循專案既有的路由慣例；不要發明新的頂層結構。</li>
+<li><strong>執行成本趨近於零。</strong> UI 原型從專案任務執行器的單一指令開始——<code>pnpm &lt;name&gt;</code>、<code>python &lt;path&gt;</code>、<code>bun &lt;path&gt;</code> 等。邏輯示範是使用者雙擊即可開啟的單一 HTML 檔案。無論哪種方式，啟動它都不需要思考。</li>
+<li><strong>預設不持久化。</strong> 狀態存在記憶體中。持久化是原型在_檢驗_的事情，不是它應該依賴的東西。如果問題明確涉及資料庫，就使用一個命名清楚標示「PROTOTYPE——請清除我」的臨時資料庫或本機檔案。</li>
+<li><strong>跳過打磨。</strong> 不寫測試，不做超出讓原型_可執行_所需以外的錯誤處理，不做抽象化。重點是快速學到東西。</li>
+<li><strong>呈現狀態。</strong> 每次動作之後（邏輯）或每次切換變體時（UI），印出或渲染完整的相關狀態，讓使用者看到改變了什麼。</li>
+<li><strong>完成時留存。</strong> 把任何經驗證的決策折疊回正式程式碼，然後把原型本身當成<strong>主要來源</strong>留存：提交到一條一次性分支、不放進 main，並在實作 issue 上留下指向該分支的上下文指標。答案也要留存——結論以及它定案的問題——寫進 issue 或一次 commit。main 分支只保留經過驗證的決策。</li>
+</ol></div></div>
+
+</div>
+</body>
+</html>

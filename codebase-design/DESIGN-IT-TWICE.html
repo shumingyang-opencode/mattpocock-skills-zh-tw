@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>codebase-design / DESIGN-IT-TWICE · mattpocock-skills-zh-tw</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Noto+Serif+TC:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<div class="container">
+<div class="back-link">
+  <a href="../index.html">首頁</a>
+  <a href="../map.html">技能地圖</a>
+  <a href="../learning-path.html">學習路線</a>
+  <a href="SKILL.html">← 技能主頁 codebase-design</a> 
+</div>
+<h1>DESIGN-IT-TWICE</h1>
+<div class="subtitle">codebase-design · 附屬文件</div>
+<div class="pair"><div class="col-en" lang="en"><h1>Design It Twice</h1></div><div class="col-zh" lang="zh-Hant"><h1>設計兩次</h1></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>When the user wants to explore alternative interfaces for a chosen deepening candidate, use this parallel sub-agent pattern. Based on "Design It Twice" (Ousterhout) — your first idea is unlikely to be the best.</p></div><div class="col-zh" lang="zh-Hant"><p>當使用者想為選定的深化候選探索替代介面時，使用這個平行子代理模式。基於「Design It Twice」（Ousterhout）——你的第一個想法不太可能是最好的。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Uses the vocabulary in <a href="SKILL.html">SKILL.md</a> — <strong>module</strong>, <strong>interface</strong>, <strong>seam</strong>, <strong>adapter</strong>, <strong>leverage</strong>.</p></div><div class="col-zh" lang="zh-Hant"><p>使用 <a href="SKILL.html">SKILL.md</a> 中的詞彙——<strong>模組</strong>、<strong>介面</strong>、<strong>接縫</strong>、<strong>轉接器</strong>、<strong>槓桿收益</strong>。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h2>Process</h2></div><div class="col-zh" lang="zh-Hant"><h2>流程</h2></div></div>
+<div class="pair"><div class="col-en" lang="en"><h3>1. Frame the problem space</h3></div><div class="col-zh" lang="zh-Hant"><h3>1. 框定問題空間</h3></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Before spawning sub-agents, write a user-facing explanation of the problem space for the chosen candidate:</p></div><div class="col-zh" lang="zh-Hant"><p>啟動子代理之前，為選定的候選寫一份使用者面向的問題空間說明：</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><ul>
+<li>The constraints any new interface would need to satisfy</li>
+<li>The dependencies it would rely on, and which category they fall into (see <a href="DEEPENING.html">DEEPENING.md</a>)</li>
+<li>A rough illustrative code sketch to ground the constraints — not a proposal, just a way to make the constraints concrete</li>
+</ul></div><div class="col-zh" lang="zh-Hant"><ul>
+<li>任何新介面需要滿足的約束</li>
+<li>它會依賴的相依，以及它們屬於哪一類（見 <a href="DEEPENING.html">DEEPENING.md</a>）</li>
+<li>一份粗略的說明性程式草稿來讓約束落地——不是提案，只是讓約束具體化的方式</li>
+</ul></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Show this to the user, then immediately proceed to Step 2. The user reads and thinks while the sub-agents work in parallel.</p></div><div class="col-zh" lang="zh-Hant"><p>把這個給使用者看，然後立刻進行第 2 步。子代理平行工作時，使用者閱讀與思考。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h3>2. Spawn sub-agents</h3></div><div class="col-zh" lang="zh-Hant"><h3>2. 啟動子代理</h3></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Spawn 3+ sub-agents in parallel using the Agent tool. Each must produce a <strong>radically different</strong> interface for the deepened module.</p></div><div class="col-zh" lang="zh-Hant"><p>用 Agent 工具平行啟動 3+ 個子代理。每個都必須為深化後的模組產出<strong>截然不同</strong>的介面。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Prompt each sub-agent with a separate technical brief (file paths, coupling details, dependency category from <a href="DEEPENING.html">DEEPENING.md</a>, what sits behind the seam). The brief is independent of the user-facing problem-space explanation in Step 1. Give each agent a different design constraint:</p></div><div class="col-zh" lang="zh-Hant"><p>用個別技術簡報提示每個子代理（檔案路徑、耦合細節、<a href="DEEPENING.html">DEEPENING.md</a> 的相依分類、接縫後面是什麼）。簡報獨立於第 1 步的使用者面向問題空間說明。給每個代理不同的設計約束：</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><ul>
+<li>Agent 1: "Minimize the interface — aim for 1–3 entry points max. Maximise leverage per entry point."</li>
+<li>Agent 2: "Maximise flexibility — support many use cases and extension."</li>
+<li>Agent 3: "Optimise for the most common caller — make the default case trivial."</li>
+<li>Agent 4 (if applicable): "Design around ports &amp; adapters for cross-seam dependencies."</li>
+</ul></div><div class="col-zh" lang="zh-Hant"><ul>
+<li>代理 1：「最小化介面——目標最多 1–3 個進入點。最大化每個進入點的槓桿收益。」</li>
+<li>代理 2：「最大化彈性——支援許多使用案例與擴充。」</li>
+<li>代理 3：「為最常見的呼叫者最佳化——讓預設案例微不足道。」</li>
+<li>代理 4（如適用）：「圍繞 ports &amp; adapters 設計跨接縫相依。」</li>
+</ul></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Include both <a href="SKILL.html">SKILL.md</a> vocabulary and CONTEXT.md vocabulary in the brief so each sub-agent names things consistently with the architecture language and the project's domain language.</p></div><div class="col-zh" lang="zh-Hant"><p>把 <a href="SKILL.html">SKILL.md</a> 詞彙與 CONTEXT.md 詞彙都放進簡報，讓每個子代理用一致的架構語言與專案的領域語言來命名。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Each sub-agent outputs:</p></div><div class="col-zh" lang="zh-Hant"><p>每個子代理輸出：</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><ol>
+<li>Interface (types, methods, params — plus invariants, ordering, error modes)</li>
+<li>Usage example showing how callers use it</li>
+<li>What the implementation hides behind the seam</li>
+<li>Dependency strategy and adapters (see <a href="DEEPENING.html">DEEPENING.md</a>)</li>
+<li>Trade-offs — where leverage is high, where it's thin</li>
+</ol></div><div class="col-zh" lang="zh-Hant"><ol>
+<li>介面（型別、方法、參數——以及不變量、順序、錯誤模式）</li>
+<li>展示呼叫者如何使用它的使用範例</li>
+<li>實作在接縫後面藏了什麼</li>
+<li>相依策略與轉接器（見 <a href="DEEPENING.html">DEEPENING.md</a>）</li>
+<li>取捨——槓桿收益高的地方、薄弱的地方</li>
+</ol></div></div>
+<div class="pair"><div class="col-en" lang="en"><h3>3. Present and compare</h3></div><div class="col-zh" lang="zh-Hant"><h3>3. 呈現與比較</h3></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Present designs sequentially so the user can absorb each one, then compare them in prose. Contrast by <strong>depth</strong> (leverage at the interface), <strong>locality</strong> (where change concentrates), and <strong>seam placement</strong>.</p></div><div class="col-zh" lang="zh-Hant"><p>依序呈現設計，讓使用者能吸收每個，然後用散文比較它們。以<strong>深度</strong>（介面上的槓桿收益）、<strong>局部性</strong>（變更集中之處）與<strong>接縫位置</strong>對比。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>After comparing, give your own recommendation: which design you think is strongest and why. If elements from different designs would combine well, propose a hybrid. Be opinionated — the user wants a strong read, not a menu.</p></div><div class="col-zh" lang="zh-Hant"><p>比較之後，給出你自己的建議：你認為哪個設計最強、為什麼。如果不同設計的元素能良好結合，提出混合方案。要有主張——使用者想要明確的判斷，不是選單。</p></div></div>
+
+</div>
+</body>
+</html>

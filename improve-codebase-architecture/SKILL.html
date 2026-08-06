@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>improve-codebase-architecture · 架構維護 · mattpocock-skills-zh-tw</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Noto+Serif+TC:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<div class="container">
+<div class="back-link">
+  <a href="../index.html">首頁</a>
+  <a href="../map.html">技能地圖</a>
+  <a href="../learning-path.html">學習路線</a>
+  
+</div>
+<table class="fm-table">
+<tr><td>name</td><td><code>improve-codebase-architecture</code></td></tr>
+<tr><td>description (EN)</td><td>Scan a codebase for deepening opportunities, present them as a visual HTML report, then grill through whichever one you pick.</td></tr>
+<tr><td>說明 (繁中)</td><td>掃描程式碼庫找出深化機會，以視覺 HTML 報告呈現，然後對你挑選的那個進行 grilling。</td></tr>
+<tr><td>disable-model-invocation</td><td><code>true</code></td></tr>
+</table>
+<h1>improve-codebase-architecture</h1>
+<div class="subtitle">架構維護</div>
+<div class="back-link" style="margin-top:-0.6rem">附屬文件：<a href="HTML-REPORT.html">HTML-REPORT</a></div>
+<div class="pair"><div class="col-en" lang="en"><h1>Improve Codebase Architecture</h1></div><div class="col-zh" lang="zh-Hant"><h1>改善程式碼庫架構</h1></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Surface architectural friction and propose <strong>deepening opportunities</strong> — refactors that turn shallow modules into deep ones. The aim is testability and AI-navigability.</p></div><div class="col-zh" lang="zh-Hant"><p>浮現架構摩擦並提出<strong>深化機會</strong>——把淺模組變成深模組的重構。目標是測試性與對 AI 的可導覽性。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>This command is <em>informed</em> by the project's domain model and built on a shared design vocabulary:</p></div><div class="col-zh" lang="zh-Hant"><p>這個指令_受_專案的領域模型_啟發_，並建立在共享的設計詞彙上：</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><ul>
+<li>Run the <code>/codebase-design</code> skill for the architecture vocabulary (<strong>module</strong>, <strong>interface</strong>, <strong>depth</strong>, <strong>seam</strong>, <strong>adapter</strong>, <strong>leverage</strong>, <strong>locality</strong>) and its principles (the deletion test, "the interface is the test surface", "one adapter = hypothetical seam, two = real"). Use these terms exactly in every suggestion — don't drift into "component," "service," "API," or "boundary."</li>
+<li>The domain language in <code>CONTEXT.md</code> gives names to good seams; ADRs in <code>docs/adr/</code> record decisions this command should not re-litigate.</li>
+</ul></div><div class="col-zh" lang="zh-Hant"><ul>
+<li>執行 <code>/codebase-design</code> 技能取得架構詞彙（<strong>模組</strong>、<strong>介面</strong>、<strong>深度</strong>、<strong>接縫</strong>、<strong>轉接器</strong>、<strong>槓桿收益</strong>、<strong>局部性</strong>）及其原則（刪除測試、「介面就是測試表面」、「一個轉接器 = 假設性接縫，兩個 = 真實」）。在每個建議中精確使用這些術語——不要漂移成「component」「service」「API」或「boundary」。</li>
+<li><code>CONTEXT.md</code> 中的領域語言為好接縫命名；<code>docs/adr/</code> 中的 ADR 記錄了這個指令不該重新爭論的決策。</li>
+</ul></div></div>
+<div class="pair"><div class="col-en" lang="en"><h2>Process</h2></div><div class="col-zh" lang="zh-Hant"><h2>流程</h2></div></div>
+<div class="pair"><div class="col-en" lang="en"><h3>1. Explore</h3></div><div class="col-zh" lang="zh-Hant"><h3>1. 探索</h3></div></div>
+<div class="pair"><div class="col-en" lang="en"><p><strong>Scope before you scan — YAGNI.</strong> Deepening a module pays off by making future changes to it easier, so put extra weight on the parts of the codebase that have recently changed. Decide <em>where</em> to look before you look:</p></div><div class="col-zh" lang="zh-Hant"><p><strong>掃描前先定範圍——YAGNI。</strong> 深化模組的回報來自於讓未來對它的變更更容易，所以對程式碼庫最近變更的部分要特別加權。在看你之前先決定<em>往哪看</em>：</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><ul>
+<li>If the user named a direction — a module, a subsystem, a pain point — take it, and skip the inference below.</li>
+<li>Otherwise, walk back a good stretch of the commit history (<code>git log --oneline</code>) to find the codebase's hot spots — the files and areas that keep coming up — and let those paths pull your attention first. If the changes are scattered with no clear hot spot, widen the net.</li>
+</ul></div><div class="col-zh" lang="zh-Hant"><ul>
+<li>如果使用者指定了方向——一個模組、一個子系統、一個痛點——採用它，並跳過下面的推斷。</li>
+<li>否則，往回走一段良好的 commit 歷史（<code>git log --oneline</code>）找出程式碼庫的熱點——那些一直出現的檔案與區域——讓那些路徑先吸引你的注意力。如果變更四散、沒有清楚熱點，就擴大網子。</li>
+</ul></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Read the project's domain glossary (<code>CONTEXT.md</code>) and any ADRs in the area you're touching first.</p></div><div class="col-zh" lang="zh-Hant"><p>先讀專案的領域詞彙表（<code>CONTEXT.md</code>）與你要觸及區域中的任何 ADR。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Then use the Agent tool with <code>subagent_type=Explore</code> to walk the codebase. Don't follow rigid heuristics — explore organically and note where you experience friction:</p></div><div class="col-zh" lang="zh-Hant"><p>然後用 Agent 工具、<code>subagent_type=Explore</code> 走訪程式碼庫。不要遵循僵硬的啟發式——有機地探索，並記下你感到摩擦的地方：</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><ul>
+<li>Where does understanding one concept require bouncing between many small modules?</li>
+<li>Where are modules <strong>shallow</strong> — interface nearly as complex as the implementation?</li>
+<li>Where have pure functions been extracted just for testability, but the real bugs hide in how they're called (no <strong>locality</strong>)?</li>
+<li>Where do tightly-coupled modules leak across their seams?</li>
+<li>Which parts of the codebase are untested, or hard to test through their current interface?</li>
+</ul></div><div class="col-zh" lang="zh-Hant"><ul>
+<li>哪裡理解一個概念需要在許多小模組之間彈跳？</li>
+<li>哪裡有模組<strong>淺</strong>——介面幾乎跟實作一樣複雜？</li>
+<li>哪裡有純函式只是為了可測試性被抽出來，但真正的 bug 藏在它們如何被呼叫（沒有<strong>局部性</strong>）？</li>
+<li>哪裡有緊密耦合的模組跨越接縫洩漏？</li>
+<li>程式碼庫的哪些部分沒有測試，或難以透過它們目前的介面測試？</li>
+</ul></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Apply the <strong>deletion test</strong> to anything you suspect is shallow: would deleting it concentrate complexity, or just move it? A "yes, concentrates" is the signal you want.</p></div><div class="col-zh" lang="zh-Hant"><p>對任何你懷疑是淺的東西套用<strong>刪除測試</strong>：刪掉它會集中複雜度，還是只是搬移？「會，集中」就是你要的訊號。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h3>2. Present candidates as an HTML report</h3></div><div class="col-zh" lang="zh-Hant"><h3>2. 以 HTML 報告呈現候選</h3></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Write a self-contained HTML file to the OS temp directory so nothing lands in the repo. Resolve the temp dir from <code>$TMPDIR</code>, falling back to <code>/tmp</code> (or <code>%TEMP%</code> on Windows), and write to <code>&lt;tmpdir&gt;/architecture-review-&lt;timestamp&gt;.html</code> so each run gets a fresh file. Open it for the user — <code>xdg-open &lt;path&gt;</code> on Linux, <code>open &lt;path&gt;</code> on macOS, <code>start &lt;path&gt;</code> on Windows — and tell them the absolute path.</p></div><div class="col-zh" lang="zh-Hant"><p>把自足的 HTML 檔案寫到作業系統的暫存目錄，讓什麼都不落進 repo。從 <code>$TMPDIR</code> 解析暫存目錄，回退到 <code>/tmp</code>（Windows 用 <code>%TEMP%</code>），寫到 <code>&lt;tmpdir&gt;/architecture-review-&lt;timestamp&gt;.html</code>，讓每次執行都有新檔案。為使用者開啟它——Linux 用 <code>xdg-open &lt;path&gt;</code>、macOS 用 <code>open &lt;path&gt;</code>、Windows 用 <code>start &lt;path&gt;</code>——並告訴他們絕對路徑。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>The report uses <strong>Tailwind via CDN</strong> for layout and styling, and <strong>Mermaid via CDN</strong> for diagrams where a graph/flow/sequence reliably communicates the structure. Mix Mermaid with hand-crafted CSS/SVG visuals — use Mermaid when relationships are graph-shaped (call graphs, dependencies, sequences), and hand-built divs/SVG when you want something more editorial (mass diagrams, cross-sections, collapse animations). Each candidate gets a <strong>before/after visualisation</strong>. Be visual.</p></div><div class="col-zh" lang="zh-Hant"><p>報告使用 <strong>Tailwind via CDN</strong> 做佈局與樣式、<strong>Mermaid via CDN</strong> 做圖表，在圖/流程/序列能可靠傳達結構時使用。把 Mermaid 與手工打造的 CSS/SVG 視覺混用——當關係是圖形狀時用 Mermaid（呼叫圖、相依、序列），當你想要更具編輯性的東西時用手工的 div/SVG（質量圖、剖面、摺疊動畫）。每個候選都有<strong>前/後視覺化</strong>。要視覺化。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>For each candidate, render a card with:</p></div><div class="col-zh" lang="zh-Hant"><p>每個候選渲染一張卡片：</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><ul>
+<li><strong>Files</strong> — which files/modules are involved</li>
+<li><strong>Problem</strong> — why the current architecture is causing friction</li>
+<li><strong>Solution</strong> — plain English description of what would change</li>
+<li><strong>Benefits</strong> — explained in terms of locality and leverage, and how tests would improve</li>
+<li><strong>Before / After diagram</strong> — side-by-side, custom-drawn, illustrating the shallowness and the deepening</li>
+<li><strong>Recommendation strength</strong> — one of <code>Strong</code>, <code>Worth exploring</code>, <code>Speculative</code>, rendered as a badge</li>
+</ul></div><div class="col-zh" lang="zh-Hant"><ul>
+<li><strong>檔案</strong>——涉及哪些檔案/模組</li>
+<li><strong>問題</strong>——為什麼目前架構造成摩擦</li>
+<li><strong>解決方案</strong>——用白話描述會改變什麼</li>
+<li><strong>好處</strong>——以局部性與槓桿收益來解釋，以及測試會如何改善</li>
+<li><strong>前 / 後圖</strong>——並排、手工繪製，說明淺度與深化</li>
+<li><strong>建議強度</strong>——<code>Strong</code>、<code>Worth exploring</code>、<code>Speculative</code> 其中一個，渲染成徽章</li>
+</ul></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>End the report with a <strong>Top recommendation</strong> section: which candidate you'd tackle first and why.</p></div><div class="col-zh" lang="zh-Hant"><p>以<strong>頂級建議</strong>章節結束報告：你會先處理哪個候選、為什麼。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p><strong>Use CONTEXT.md vocabulary for the domain, and the <code>/codebase-design</code> vocabulary for the architecture.</strong> If <code>CONTEXT.md</code> defines "Order," talk about "the Order intake module" — not "the FooBarHandler," and not "the Order service."</p></div><div class="col-zh" lang="zh-Hant"><p><strong>領域用 CONTEXT.md 詞彙，架構用 <code>/codebase-design</code> 詞彙。</strong> 如果 <code>CONTEXT.md</code> 定義了「Order」，就說「the Order intake module」——不是「the FooBarHandler」，也不是「the Order service」。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p><strong>ADR conflicts</strong>: if a candidate contradicts an existing ADR, only surface it when the friction is real enough to warrant revisiting the ADR. Mark it clearly in the card (e.g. a warning callout: <em>"contradicts ADR-0007 — but worth reopening because…"</em>). Don't list every theoretical refactor an ADR forbids.</p></div><div class="col-zh" lang="zh-Hant"><p><strong>ADR 衝突</strong>：如果候選與既有 ADR 矛盾，只有當摩擦真實到值得重開該 ADR 時才浮現它。在卡片中清楚標記（例如警告 callout：<em>"與 ADR-0007 矛盾——但值得重新討論，因為……"</em>）。不要列出每個 ADR 禁止的理論性重構。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>See <a href="HTML-REPORT.html">HTML-REPORT.md</a> for the full HTML scaffold, diagram patterns, and styling guidance.</p></div><div class="col-zh" lang="zh-Hant"><p>完整 HTML 骨架、圖表模式與樣式指引見 <a href="HTML-REPORT.html">HTML-REPORT.md</a>。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Do NOT propose interfaces yet. After the file is written, ask the user: "Which of these would you like to explore?"</p></div><div class="col-zh" lang="zh-Hant"><p><strong>還不要</strong>提出介面。檔案寫好之後，問使用者：「你想探索哪一個？」</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h3>3. Grilling loop</h3></div><div class="col-zh" lang="zh-Hant"><h3>3. Grilling 迴圈</h3></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Once the user picks a candidate, run the <code>/grilling</code> skill to walk the decision tree with them — constraints, dependencies, the shape of the deepened module, what sits behind the seam, what tests survive.</p></div><div class="col-zh" lang="zh-Hant"><p>一旦使用者選了候選，執行 <code>/grilling</code> 技能與他們走決策樹——約束、相依、深化後模組的形狀、接縫後面是什麼、哪些測試會存活。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Side effects happen inline as decisions crystallize — run the <code>/domain-modeling</code> skill to keep the domain model current as you go:</p></div><div class="col-zh" lang="zh-Hant"><p>副作用在決策定案時內嵌發生——邊做邊執行 <code>/domain-modeling</code> 技能讓領域模型保持最新：</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><ul>
+<li><strong>Naming a deepened module after a concept not in <code>CONTEXT.md</code>?</strong> Add the term to <code>CONTEXT.md</code>. Create the file lazily if it doesn't exist.</li>
+<li><strong>Sharpening a fuzzy term during the conversation?</strong> Update <code>CONTEXT.md</code> right there.</li>
+<li><strong>User rejects the candidate with a load-bearing reason?</strong> Offer an ADR, framed as: <em>"Want me to record this as an ADR so future architecture reviews don't re-suggest it?"</em> Only offer when the reason would actually be needed by a future explorer to avoid re-suggesting the same thing — skip ephemeral reasons ("not worth it right now") and self-evident ones.</li>
+<li><strong>Want to explore alternative interfaces for the deepened module?</strong> Run the <code>/codebase-design</code> skill and use its design-it-twice parallel sub-agent pattern.</li>
+</ul></div><div class="col-zh" lang="zh-Hant"><ul>
+<li><strong>以 <code>CONTEXT.md</code> 中沒有的概念命名深化後的模組？</strong> 把術語加進 <code>CONTEXT.md</code>。如果不存在，惰性地建立檔案。</li>
+<li><strong>在對話中磨利了模糊術語？</strong> 就地更新 <code>CONTEXT.md</code>。</li>
+<li><strong>使用者以承重的理由拒絕候選？</strong> 提供 ADR，措辭如下：「<em>要我把它記錄成 ADR，讓未來的架構審查不會再建議它嗎？</em>」只有當該理由真的會被未來的探索者需要以避免再建議同樣東西時才提供——跳過一時性的理由（「現在不值得」）與顯而易見的理由。</li>
+<li><strong>想為深化後的模組探索替代介面？</strong> 執行 <code>/codebase-design</code> 技能，用它的 design-it-twice 平行子代理模式。</li>
+</ul></div></div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>setup-ts-deep-modules · 深模組建置 · mattpocock-skills-zh-tw</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Noto+Serif+TC:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<div class="container">
+<div class="back-link">
+  <a href="../index.html">首頁</a>
+  <a href="../map.html">技能地圖</a>
+  <a href="../learning-path.html">學習路線</a>
+  
+</div>
+<table class="fm-table">
+<tr><td>name</td><td><code>setup-ts-deep-modules</code></td></tr>
+<tr><td>description (EN)</td><td>Wire dependency-cruiser into a TypeScript repo so each package is a deep module — implementation hidden in subfolders, reachable only through its entry-point files. User-invoked.</td></tr>
+<tr><td>說明 (繁中)</td><td>將 dependency-cruiser 接入 TypeScript repo，讓每個套件都是深模組 — 實作藏在子資料夾中，只能透過其進入點檔案觸達。使用者觸發。</td></tr>
+<tr><td>disable-model-invocation</td><td><code>true</code></td></tr>
+</table>
+<h1>setup-ts-deep-modules</h1>
+<div class="subtitle">深模組建置</div>
+<div class="pair"><div class="col-en" lang="en"><h1>Setup TS Deep Modules</h1></div><div class="col-zh" lang="zh-Hant"><h1>設定 TS 深模組（Setup TS Deep Modules）</h1></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Make every package in this repo a <strong>deep module</strong>: a lot of behaviour behind a small interface. A package's public surface is its <strong>entry points</strong> — the files at the package root — and everything in its subfolders is hidden. This skill installs <a href="https://github.com/sverweij/dependency-cruiser">dependency-cruiser</a> and the rules that make the entry points the only way in, then proves the rules bite.</p></div><div class="col-zh" lang="zh-Hant"><p>讓此 repo 中的每個套件都是<strong>深模組</strong>：小介面後面的大量行為。套件的公開表面是它的<strong>進入點</strong> — 套件根目錄中的檔案 — 而其子資料夾中的一切都被隱藏。此技能安裝 <a href="https://github.com/sverweij/dependency-cruiser">dependency-cruiser</a> 以及讓進入點成為唯一入口的規則，然後證明規則確實咬人。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>For the vocabulary (deep module, interface, seam, depth), run the <code>/codebase-design</code> skill — use its language throughout.</p></div><div class="col-zh" lang="zh-Hant"><p>對於詞彙（深模組、介面、接縫、深度），執行 <code>/codebase-design</code> 技能 — 全程使用它的語言。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h2>The shape this enforces</h2></div><div class="col-zh" lang="zh-Hant"><h2>這強制出來的形狀</h2></div></div>
+<div class="pair"><div class="col-en" lang="en"><pre><code>src/packages/
+  &lt;name&gt;/
+    index.ts        ← an entry point (public). Import this from outside.
+    client.ts       ← another entry point. Packages may expose SEVERAL.
+    lib/            ← implementation: hidden from outside, free to import each other.
+    tests/          ← co-located tests + fixtures (a subfolder, so private).
+</code></pre></div><div class="col-zh" lang="zh-Hant"><pre><code>src/packages/
+  &lt;name&gt;/
+    index.ts        ← 一個進入點（公開）。從外部匯入這個。
+    client.ts       ← 另一個進入點。套件可以暴露多個（SEVERAL）。
+    lib/            ← 實作：對外隱藏，彼此之間可以自由匯入。
+    tests/          ← 共置的測試 + 固定裝置（一個子資料夾，所以是私有的）。
+</code></pre></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>The public surface is the package's <strong>root files</strong> — not one designated <code>index.ts</code>. By convention implementation lives in <code>lib/</code> and tests in <code>tests/</code>, giving every package the same two-folder shape. The rule itself is general, though: <em>anything</em> in <em>any</em> subfolder is private, so you never extend the config to add a folder.</p></div><div class="col-zh" lang="zh-Hant"><p>公開表面是套件的<strong>根目錄檔案</strong> — 不是一個指定的 <code>index.ts</code>。依照慣例，實作住在 <code>lib/</code>、測試住在 <code>tests/</code>，給每個套件相同的兩資料夾形狀。但規則本身是通用的：<em>任何</em>子資料夾中的<em>任何東西</em>都是私有的，所以您永遠不需要擴充設定來新增資料夾。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Four rules, all <code>error</code>:</p></div><div class="col-zh" lang="zh-Hant"><p>四個規則，全部是 <code>error</code>：</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><ol>
+<li><strong>Entry-point boundary</strong> — code outside a package (app code or another package) may import only that package's entry points (its root files), never anything in its subfolders.</li>
+<li><strong>Intra-package freedom</strong> — a package's own files import each other freely.</li>
+<li><strong>Tests through the entry points</strong> — files under <code>&lt;pkg&gt;/tests/</code> may import any package's entry points and their own <code>tests/</code> fixtures, but never any package's subfolder internals (not even their own). Integration tests across packages are fine; deep imports are not.</li>
+<li><strong>No cycles</strong> — no dependency cycles.</li>
+</ol></div><div class="col-zh" lang="zh-Hant"><ol>
+<li><strong>進入點邊界</strong> — 套件外的程式碼（app 程式碼或另一個套件）只能匯入該套件的進入點（其根目錄檔案），絕不能匯入其子資料夾中的任何東西。</li>
+<li><strong>套件內自由</strong> — 套件自己的檔案彼此自由匯入。</li>
+<li><strong>測試透過進入點</strong> — <code>&lt;pkg&gt;/tests/</code> 下的檔案可以匯入任何套件的進入點與它們自己的 <code>tests/</code> 固定裝置，但絕不能匯入任何套件的子資料夾內部（即使自己的也不行）。跨套件的整合測試可以；深層匯入不行。</li>
+<li><strong>無循環</strong> — 沒有依賴循環。</li>
+</ol></div></div>
+<div class="pair"><div class="col-en" lang="en"><p><strong>Entry points, not a barrel.</strong> Because the public surface is <em>every</em> root file, a package can expose several small entry points (<code>index.ts</code>, <code>client.ts</code>, <code>server.ts</code>) instead of funnelling everything through one giant <code>index.ts</code>. Barrel files that re-export a whole subtree are discouraged — keep entry points small and hide implementation in subfolders.</p></div><div class="col-zh" lang="zh-Hant"><p><strong>進入點，不是 barrel。</strong> 因為公開表面是<em>每個</em>根目錄檔案，一個套件可以暴露幾個小的進入點（<code>index.ts</code>、<code>client.ts</code>、<code>server.ts</code>），而不是把一切漏斗進一個巨大的 <code>index.ts</code>。重新匯出整個子樹的 barrel 檔案是不被鼓勵的 — 保持進入點小而把實作藏在子資料夾中。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Layering (which packages may depend on which) is a <em>different</em> concern and is left as a commented stub in the config for this repo to fill in.</p></div><div class="col-zh" lang="zh-Hant"><p>分層（哪個套件可以依賴哪個）是<em>另一個</em>關注點，在設定中留為一個註解掉的樁，供此 repo 填寫。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h2>Steps</h2></div><div class="col-zh" lang="zh-Hant"><h2>步驟</h2></div></div>
+<div class="pair"><div class="col-en" lang="en"><h3>1. Detect the environment</h3></div><div class="col-zh" lang="zh-Hant"><h3>1. 偵測環境</h3></div></div>
+<div class="pair"><div class="col-en" lang="en"><ul>
+<li><strong>Package manager</strong> — <code>pnpm-lock.yaml</code> → pnpm, <code>yarn.lock</code> → yarn, <code>bun.lockb</code> → bun, else npm. Use it for every command below (<code>pnpm</code>/<code>yarn</code>/<code>npm run</code>/<code>bunx</code>).</li>
+<li><strong>Packages root</strong> — if <code>src/</code> exists use <code>src/packages</code>, else <code>packages</code>. Confirm the choice with the user if the repo already has a different obvious convention.</li>
+<li><strong>Existing config</strong> — check for a <code>.dependency-cruiser.*</code> file. If one exists, do <strong>not</strong> overwrite it: merge the four rules and the options in, and tell the user what you added.</li>
+</ul></div><div class="col-zh" lang="zh-Hant"><ul>
+<li><strong>套件管理員</strong> — <code>pnpm-lock.yaml</code> → pnpm、<code>yarn.lock</code> → yarn、<code>bun.lockb</code> → bun，否則 npm。用它執行下面每個命令（<code>pnpm</code>/<code>yarn</code>/<code>npm run</code>/<code>bunx</code>）。</li>
+<li><strong>套件根目錄</strong> — 如果 <code>src/</code> 存在就用 <code>src/packages</code>，否則用 <code>packages</code>。如果 repo 已經有一個不同的明顯慣例，與使用者確認選擇。</li>
+<li><strong>既有設定</strong> — 檢查是否有 <code>.dependency-cruiser.*</code> 檔案。如果存在，<strong>不要</strong>覆寫它：把四個規則與選項合併進去，並告訴使用者您新增了什麼。</li>
+</ul></div></div>
+<div class="pair"><div class="col-en" lang="en"><p><strong>Done when:</strong> package manager, packages root, and existing-config status are all known.</p></div><div class="col-zh" lang="zh-Hant"><p><strong>完成於：</strong> 套件管理員、套件根目錄與既有設定狀態都已得知。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h3>2. Install dependency-cruiser</h3></div><div class="col-zh" lang="zh-Hant"><h3>2. 安裝 dependency-cruiser</h3></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Install <code>dependency-cruiser</code> as a devDependency with the detected package manager.</p></div><div class="col-zh" lang="zh-Hant"><p>用偵測到的套件管理員安裝 <code>dependency-cruiser</code> 作為 devDependency。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p><strong>Done when:</strong> <code>dependency-cruiser</code> is in <code>devDependencies</code>.</p></div><div class="col-zh" lang="zh-Hant"><p><strong>完成於：</strong> <code>dependency-cruiser</code> 在 <code>devDependencies</code> 中。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h3>3. Write the config</h3></div><div class="col-zh" lang="zh-Hant"><h3>3. 撰寫設定</h3></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Copy <a href="https://github.com/shumingyang-opencode/mattpocock-skills-zh-tw/blob/main/skills/in-progress/setup-ts-deep-modules/dependency-cruiser.config.cjs"><code>dependency-cruiser.config.cjs</code></a> to the repo root as <code>.dependency-cruiser.cjs</code>. Set <code>PACKAGES_ROOT</code> to the root detected in step 1. The rules are path-depth based and extension-agnostic, so nothing else needs adapting.</p></div><div class="col-zh" lang="zh-Hant"><p>將 <a href="https://github.com/shumingyang-opencode/mattpocock-skills-zh-tw/blob/main/skills/in-progress/setup-ts-deep-modules/dependency-cruiser.config.cjs"><code>dependency-cruiser.config.cjs</code></a> 複製到 repo 根目錄作為 <code>.dependency-cruiser.cjs</code>。將 <code>PACKAGES_ROOT</code> 設定為第 1 步偵測到的根目錄。規則基於路徑深度且與副檔名無關，所以沒有其他需要調整的。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p><strong>Done when:</strong> <code>.dependency-cruiser.cjs</code> exists with the correct <code>PACKAGES_ROOT</code>, and the four forbidden rules are present.</p></div><div class="col-zh" lang="zh-Hant"><p><strong>完成於：</strong> <code>.dependency-cruiser.cjs</code> 存在且 <code>PACKAGES_ROOT</code> 正確，四個禁止規則都在。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h3>4. Wire it into the checks</h3></div><div class="col-zh" lang="zh-Hant"><h3>4. 將它接入檢查</h3></div></div>
+<div class="pair"><div class="col-en" lang="en"><ul>
+<li>Add a <code>lint:boundaries</code> script: <code>depcruise &lt;packages-root&gt;</code> (or <code>depcruise src</code>).</li>
+<li>Fold it into the repo's umbrella check command — the one that already runs typecheck (e.g. a <code>check</code> / <code>ci</code> / <code>validate</code> script). Do <strong>not</strong> touch <code>tsconfig</code> or add path aliases.</li>
+<li>If there is no umbrella script, add <code>lint:boundaries</code> and tell the user to include it in CI.</li>
+</ul></div><div class="col-zh" lang="zh-Hant"><ul>
+<li>新增一個 <code>lint:boundaries</code> 腳本：<code>depcruise &lt;packages-root&gt;</code>（或 <code>depcruise src</code>）。</li>
+<li>將它摺進 repo 的總括檢查命令 — 那個已經執行型別檢查的命令（例如 <code>check</code> / <code>ci</code> / <code>validate</code> 腳本）。<strong>不要</strong>碰 <code>tsconfig</code> 或新增路徑別名。</li>
+<li>如果沒有總括腳本，新增 <code>lint:boundaries</code> 並告訴使用者把它納入 CI。</li>
+</ul></div></div>
+<div class="pair"><div class="col-en" lang="en"><p><strong>Done when:</strong> <code>lint:boundaries</code> exists and runs as part of the same command as typecheck.</p></div><div class="col-zh" lang="zh-Hant"><p><strong>完成於：</strong> <code>lint:boundaries</code> 存在，並作為與型別檢查同一個命令的一部分執行。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h3>5. Scaffold the example package</h3></div><div class="col-zh" lang="zh-Hant"><h3>5. 建立範例套件</h3></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Create a committed <code>&lt;packages-root&gt;/example/</code> as a copy-me template:</p></div><div class="col-zh" lang="zh-Hant"><p>建立一個已提交的 <code>&lt;packages-root&gt;/example/</code> 作為 copy-me 範本：</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><ul>
+<li><code>index.ts</code> — an entry point. Export one function that delegates to an internal file (so the package is visibly <em>deep</em>, not a pass-through).</li>
+<li><code>lib/impl.ts</code> — an internal file in a <strong>subfolder</strong>, imported by <code>index.ts</code>, not reachable from outside.</li>
+<li><code>tests/example.test.ts</code> — imports <strong>only</strong> <code>../index</code> (an entry point), and asserts against the public function.</li>
+</ul></div><div class="col-zh" lang="zh-Hant"><ul>
+<li><code>index.ts</code> — 一個進入點。匯出一個委派給內部檔案的函式（這樣套件可以看得見地<em>深</em>，而不是一個直通）。</li>
+<li><code>lib/impl.ts</code> — 一個在<strong>子資料夾</strong>中的內部檔案，由 <code>index.ts</code> 匯入，從外部無法觸達。</li>
+<li><code>tests/example.test.ts</code> — 只匯入 <code>../index</code>（一個進入點），並對公開函式做斷言。</li>
+</ul></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Tell the user this is a starter template to copy or delete.</p></div><div class="col-zh" lang="zh-Hant"><p>告訴使用者這是一個可以複製或刪除的起始範本。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p><strong>Done when:</strong> the example package exists, exposes its behaviour through a root entry point, and hides <code>impl</code> in a subfolder.</p></div><div class="col-zh" lang="zh-Hant"><p><strong>完成於：</strong> 範例套件存在，透過根目錄進入點暴露它的行為，並把 <code>impl</code> 藏在子資料夾中。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h3>6. Prove the rules bite</h3></div><div class="col-zh" lang="zh-Hant"><h3>6. 證明規則確實咬人</h3></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>This is the completion criterion for the whole skill — a config that doesn't fail on a violation is worthless.</p></div><div class="col-zh" lang="zh-Hant"><p>這是整個技能的完成標準 — 一個在違反時不會失敗的設定是沒有價值的。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><ol>
+<li>Run <code>lint:boundaries</code>. It must <strong>pass</strong> on the clean example.</li>
+<li>Temporarily add a deep import to <code>tests/example.test.ts</code> (e.g. <code>import { thing } from "../lib/impl"</code>). Run <code>lint:boundaries</code> again — it must <strong>fail</strong> with <code>tests-through-entrypoints</code>.</li>
+<li>Revert the deep import. Run once more — it must <strong>pass</strong>.</li>
+</ol></div><div class="col-zh" lang="zh-Hant"><ol>
+<li>執行 <code>lint:boundaries</code>。它必須在乾淨的範例上<strong>通過</strong>。</li>
+<li>暫時在 <code>tests/example.test.ts</code> 中新增一個深層匯入（例如 <code>import { thing } from "../lib/impl"</code>）。再次執行 <code>lint:boundaries</code> — 它必須以 <code>tests-through-entrypoints</code> <strong>失敗</strong>。</li>
+<li>回復深層匯入。再執行一次 — 它必須<strong>通過</strong>。</li>
+</ol></div></div>
+<div class="pair"><div class="col-en" lang="en"><p><strong>Done when:</strong> you have observed a pass, then a fail on the deep import, then a pass again. If step 2 does not fail, the rules are not wired correctly — fix before finishing.</p></div><div class="col-zh" lang="zh-Hant"><p><strong>完成於：</strong> 您觀察到一個通過、然後深層匯入失敗、然後再通過。如果第 2 步沒有失敗，表示規則沒有正確接上 — 在結束前修正。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h3>7. Document the convention</h3></div><div class="col-zh" lang="zh-Hant"><h3>7. 記錄慣例</h3></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Write a <code>README.md</code> <strong>in the packages folder</strong> (<code>&lt;packages-root&gt;/README.md</code>) — next to the packages it governs — covering: the <code>src/packages/&lt;name&gt;/</code> layout (entry points at the root, <code>lib/</code> for implementation, <code>tests/</code> for tests), "import only through a package's entry points (its root files)", and how to run <code>lint:boundaries</code>. <strong>Discourage barrel files</strong> explicitly — expose several small entry points instead of re-exporting a whole subtree through one index. Keep it to the copy-me snippet plus the four rules in one paragraph each.</p></div><div class="col-zh" lang="zh-Hant"><p>在<strong>套件資料夾中</strong>（<code>&lt;packages-root&gt;/README.md</code>）撰寫一個 <code>README.md</code> — 就在它所治理的套件旁邊 — 涵蓋：<code>src/packages/&lt;name&gt;/</code> 佈局（進入點在根目錄、<code>lib/</code> 給實作、<code>tests/</code> 給測試）、「只透過套件的進入點（其根目錄檔案）匯入」，以及如何執行 <code>lint:boundaries</code>。<strong>明確勸阻 barrel 檔案</strong> — 暴露幾個小的進入點，而不是透過一個 index 重新匯出整個子樹。讓它保持為 copy-me 片段加上每個規則一段。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Then add a <strong>context pointer</strong> to it from the repo's agent-instructions file — <code>CLAUDE.md</code> if present, else <code>AGENTS.md</code> (create <code>AGENTS.md</code> if neither exists). One line is enough, e.g. <code>Packages are deep modules — see [src/packages/README.md](./src/packages/README.md) before adding or importing one.</code> This is what makes an agent discover the boundary rule instead of tripping over it.</p></div><div class="col-zh" lang="zh-Hant"><p>然後從 repo 的代理指令檔案 — 存在的話用 <code>CLAUDE.md</code>，否則用 <code>AGENTS.md</code>（如果兩者都不存在就建立 <code>AGENTS.md</code>）— 新增一個<strong>脈絡指標</strong>指向它。一行就夠了，例如 <code>Packages are deep modules — see [src/packages/README.md](./src/packages/README.md) before adding or importing one.</code> 這正是讓代理發現邊界規則而不是絆倒它的方式。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p><strong>Done when:</strong> <code>&lt;packages-root&gt;/README.md</code> exists and discourages barrels, and the repo's <code>CLAUDE.md</code>/<code>AGENTS.md</code> links to it.</p></div><div class="col-zh" lang="zh-Hant"><p><strong>完成於：</strong> <code>&lt;packages-root&gt;/README.md</code> 存在且勸阻 barrels，repo 的 <code>CLAUDE.md</code>/<code>AGENTS.md</code> 連結到它。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h2>Notes</h2></div><div class="col-zh" lang="zh-Hant"><h2>備註</h2></div></div>
+<div class="pair"><div class="col-en" lang="en"><ul>
+<li>The config's <code>$1</code> back-references (dependency-cruiser's group matching) are what let a package reach its own internals while outsiders can't — don't flatten them into separate per-package rules.</li>
+<li>Public vs private is decided by <strong>depth</strong>: a package's root files are entry points; anything in a subfolder is private. The conventional subfolders are <code>lib/</code> (implementation) and <code>tests/</code>, but the rule doesn't hardcode them — any subfolder is private, so a new folder never needs a config change. Adding an entry point is just adding a root file — no barrel.</li>
+<li>Packages are <strong>flat</strong>: one tier of immediate children under the root. A package's internals may nest as deep as you like; a package may not contain another package.</li>
+<li>Use <code>.cjs</code> (not <code>.js</code>) so the config's <code>module.exports</code> works even in <code>"type": "module"</code> repos.</li>
+</ul></div><div class="col-zh" lang="zh-Hant"><ul>
+<li>設定的 <code>$1</code> 反向引用（dependency-cruiser 的群組比對）正是讓套件可以觸達自己的內部而外部不能的方式 — 不要把它們拍平成每個套件的獨立規則。</li>
+<li>公開與私有由<strong>深度</strong>決定：套件的根目錄檔案是進入點；子資料夾中的任何東西都是私有的。慣用的子資料夾是 <code>lib/</code>（實作）與 <code>tests/</code>，但規則不會硬編碼它們 — 任何子資料夾都是私有的，所以一個新資料夾永遠不需要變更設定。新增進入點只是新增一個根目錄檔案 — 不需要 barrel。</li>
+<li>套件是<strong>平坦的</strong>：根目錄下只有一層直接子項。套件的內部可以嵌套到您喜歡的深度；一個套件不能包含另一個套件。</li>
+<li>使用 <code>.cjs</code>（不是 <code>.js</code>），這樣設定的 <code>module.exports</code> 即使在 <code>"type": "module"</code> repo 中也能運作。</li>
+</ul></div></div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>improve-codebase-architecture / HTML-REPORT · mattpocock-skills-zh-tw</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Noto+Serif+TC:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<div class="container">
+<div class="back-link">
+  <a href="../index.html">首頁</a>
+  <a href="../map.html">技能地圖</a>
+  <a href="../learning-path.html">學習路線</a>
+  <a href="SKILL.html">← 技能主頁 improve-codebase-architecture</a> 
+</div>
+<h1>HTML-REPORT</h1>
+<div class="subtitle">improve-codebase-architecture · 附屬文件</div>
+<div class="pair"><div class="col-en" lang="en"><h1>HTML Report Format</h1></div><div class="col-zh" lang="zh-Hant"><h1>HTML 報告格式</h1></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>The architectural review is rendered as a single self-contained HTML file in the OS temp directory. Tailwind and Mermaid both come from CDNs. Mermaid handles graph-shaped diagrams reliably; hand-built divs and inline SVG handle the more editorial visuals (mass diagrams, cross-sections). Mix the two — don't lean on Mermaid for everything, it'll start to look generic.</p></div><div class="col-zh" lang="zh-Hant"><p>架構審查渲染成作業系統暫存目錄中單一自足的 HTML 檔案。Tailwind 與 Mermaid 都來自 CDN。Mermaid 可靠地處理圖形狀的圖表；手工打造的 div 與內嵌 SVG 處理更具編輯性的視覺（質量圖、剖面）。混用兩者——不要全部依賴 Mermaid，那會開始看起來千篇一律。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h2>Scaffold</h2></div><div class="col-zh" lang="zh-Hant"><h2>骨架</h2></div></div>
+<div class="pair"><div class="col-en" lang="en"><pre><code class="language-html">&lt;!doctype html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+  &lt;head&gt;
+    &lt;meta charset=&quot;utf-8&quot; /&gt;
+    &lt;title&gt;Architecture review — {{repo name}}&lt;/title&gt;
+    &lt;script src=&quot;https://cdn.tailwindcss.com&quot;&gt;&lt;/script&gt;
+    &lt;script type=&quot;module&quot;&gt;
+      import mermaid from &quot;https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs&quot;;
+      mermaid.initialize({ startOnLoad: true, theme: &quot;neutral&quot;, securityLevel: &quot;loose&quot; });
+    &lt;/script&gt;
+    &lt;style&gt;
+      /* small custom layer for things Tailwind doesn't cover cleanly:
+         dashed seam lines, hand-drawn-feeling arrow heads, etc. */
+      .seam { stroke-dasharray: 4 4; }
+      .leak { stroke: #dc2626; }
+      .deep { background: linear-gradient(135deg, #0f172a, #1e293b); }
+    &lt;/style&gt;
+  &lt;/head&gt;
+  &lt;body class=&quot;bg-stone-50 text-slate-900 font-sans&quot;&gt;
+    &lt;main class=&quot;max-w-5xl mx-auto px-6 py-12 space-y-12&quot;&gt;
+      &lt;header&gt;...&lt;/header&gt;
+      &lt;section id=&quot;candidates&quot; class=&quot;space-y-10&quot;&gt;...&lt;/section&gt;
+      &lt;section id=&quot;top-recommendation&quot;&gt;...&lt;/section&gt;
+    &lt;/main&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre></div><div class="col-zh" lang="zh-Hant"><pre><code class="language-html">&lt;!doctype html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+  &lt;head&gt;
+    &lt;meta charset=&quot;utf-8&quot; /&gt;
+    &lt;title&gt;Architecture review — {{repo name}}&lt;/title&gt;
+    &lt;script src=&quot;https://cdn.tailwindcss.com&quot;&gt;&lt;/script&gt;
+    &lt;script type=&quot;module&quot;&gt;
+      import mermaid from &quot;https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs&quot;;
+      mermaid.initialize({ startOnLoad: true, theme: &quot;neutral&quot;, securityLevel: &quot;loose&quot; });
+    &lt;/script&gt;
+    &lt;style&gt;
+      /* small custom layer for things Tailwind doesn't cover cleanly:
+         dashed seam lines, hand-drawn-feeling arrow heads, etc. */
+      .seam { stroke-dasharray: 4 4; }
+      .leak { stroke: #dc2626; }
+      .deep { background: linear-gradient(135deg, #0f172a, #1e293b); }
+    &lt;/style&gt;
+  &lt;/head&gt;
+  &lt;body class=&quot;bg-stone-50 text-slate-900 font-sans&quot;&gt;
+    &lt;main class=&quot;max-w-5xl mx-auto px-6 py-12 space-y-12&quot;&gt;
+      &lt;header&gt;...&lt;/header&gt;
+      &lt;section id=&quot;candidates&quot; class=&quot;space-y-10&quot;&gt;...&lt;/section&gt;
+      &lt;section id=&quot;top-recommendation&quot;&gt;...&lt;/section&gt;
+    &lt;/main&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre></div></div>
+<div class="pair"><div class="col-en" lang="en"><h2>Header</h2></div><div class="col-zh" lang="zh-Hant"><h2>頁首</h2></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Repo name, date, and a compact legend: solid box = module, dashed line = seam, red arrow = leakage, thick dark box = deep module. No introduction paragraph — straight into the candidates.</p></div><div class="col-zh" lang="zh-Hant"><p>Repo 名稱、日期，與一個精簡圖例：實心方塊 = 模組、虛線 = 接縫、紅箭頭 = 洩漏、粗黑方塊 = 深模組。沒有引言段落——直接進候選。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h2>Candidate card</h2></div><div class="col-zh" lang="zh-Hant"><h2>候選卡片</h2></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>The diagrams carry the weight. Prose is sparse, plain, and uses the glossary terms (from the <code>/codebase-design</code> skill) without ceremony.</p></div><div class="col-zh" lang="zh-Hant"><p>圖表承重。散文稀疏、平實，並直接使用（<code>/codebase-design</code> 技能的）詞彙表術語，不加儀式。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Each candidate is one <code>&lt;article&gt;</code>:</p></div><div class="col-zh" lang="zh-Hant"><p>每個候選是一個 <code>&lt;article&gt;</code>：</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><ul>
+<li><strong>Title</strong> — short, names the deepening (e.g. "Collapse the Order intake pipeline").</li>
+<li><strong>Badge row</strong> — recommendation strength (<code>Strong</code> = emerald, <code>Worth exploring</code> = amber, <code>Speculative</code> = slate), plus a tag for the dependency category (<code>in-process</code>, <code>local-substitutable</code>, <code>ports &amp; adapters</code>, <code>mock</code>).</li>
+<li><strong>Files</strong> — monospaced list, <code>font-mono text-sm</code>.</li>
+<li><strong>Before / After diagram</strong> — the centrepiece. Two columns, side by side. See patterns below.</li>
+<li><strong>Problem</strong> — one sentence. What hurts.</li>
+<li><strong>Solution</strong> — one sentence. What changes.</li>
+<li><strong>Wins</strong> — bullets, ≤6 words each. e.g. "Tests hit one interface", "Pricing logic stops leaking", "Delete 4 shallow wrappers".</li>
+<li><strong>ADR callout</strong> (if applicable) — one line in an amber-tinted box.</li>
+</ul></div><div class="col-zh" lang="zh-Hant"><ul>
+<li><strong>標題</strong>——簡短，點出深化（例如「把 Order intake 管線收攏」）。</li>
+<li><strong>徽章列</strong>——建議強度（<code>Strong</code> = emerald、<code>Worth exploring</code> = amber、<code>Speculative</code> = slate），加上相依分類的標籤（<code>in-process</code>、<code>local-substitutable</code>、<code>ports &amp; adapters</code>、<code>mock</code>）。</li>
+<li><strong>檔案</strong>——等寬字型清單，<code>font-mono text-sm</code>。</li>
+<li><strong>前 / 後圖</strong>——主角。兩欄並排。見下面的模式。</li>
+<li><strong>問題</strong>——一句話。什麼在痛。</li>
+<li><strong>解決方案</strong>——一句話。什麼改變。</li>
+<li><strong>戰果</strong>——條列，每條 ≤6 字。例如「Tests hit one interface」「Pricing logic stops leaking」「Delete 4 shallow wrappers」。</li>
+<li><strong>ADR callout</strong>（如適用）——amber 色調方框中的一行。</li>
+</ul></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>No paragraphs of explanation. If the diagram needs a paragraph to be understood, redraw the diagram.</p></div><div class="col-zh" lang="zh-Hant"><p>沒有解釋段落。如果圖表需要段落才能被理解，重畫圖表。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h2>Diagram patterns</h2></div><div class="col-zh" lang="zh-Hant"><h2>圖表模式</h2></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Pick the pattern that fits the candidate. Mix them. Don't make every diagram look the same — variety is part of the point.</p></div><div class="col-zh" lang="zh-Hant"><p>挑符合候選的模式。混用。不要讓每張圖都長得一樣——變化本身就是重點的一部分。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h3>Mermaid graph (the workhorse for dependencies / call flow)</h3></div><div class="col-zh" lang="zh-Hant"><h3>Mermaid 圖表（相依 / 呼叫流程的主力）</h3></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Use a Mermaid <code>flowchart</code> or <code>graph</code> when the point is "X calls Y calls Z, and look at the mess." Wrap it in a Tailwind-styled card so it doesn't feel parachuted in. Style with classDef to colour leakage edges red and the deep module dark. Sequence diagrams work well for "before: 6 round-trips; after: 1."</p></div><div class="col-zh" lang="zh-Hant"><p>當重點是「X 呼叫 Y 呼叫 Z，看看這團亂」時，用 Mermaid <code>flowchart</code> 或 <code>graph</code>。用 Tailwind 樣式的卡片包住它，讓它不像是被硬塞進來的。用 classDef 把洩漏邊染色成紅色、深模組染成深色。序列圖很適合「之前：6 次來回；之後：1 次」。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><pre><code class="language-html">&lt;div class=&quot;rounded-lg border border-slate-200 bg-white p-4&quot;&gt;
+  &lt;pre class=&quot;mermaid&quot;&gt;
+    flowchart LR
+      A[OrderHandler] --&gt; B[OrderValidator]
+      B --&gt; C[OrderRepo]
+      C -.leak.-&gt; D[PricingClient]
+      classDef leak stroke:#dc2626,stroke-width:2px;
+      class C,D leak
+  &lt;/pre&gt;
+&lt;/div&gt;
+</code></pre></div><div class="col-zh" lang="zh-Hant"><pre><code class="language-html">&lt;div class=&quot;rounded-lg border border-slate-200 bg-white p-4&quot;&gt;
+  &lt;pre class=&quot;mermaid&quot;&gt;
+    flowchart LR
+      A[OrderHandler] --&gt; B[OrderValidator]
+      B --&gt; C[OrderRepo]
+      C -.leak.-&gt; D[PricingClient]
+      classDef leak stroke:#dc2626,stroke-width:2px;
+      class C,D leak
+  &lt;/pre&gt;
+&lt;/div&gt;
+</code></pre></div></div>
+<div class="pair"><div class="col-en" lang="en"><h3>Hand-built boxes-and-arrows (when Mermaid's layout fights you)</h3></div><div class="col-zh" lang="zh-Hant"><h3>手工打造的方塊與箭頭（當 Mermaid 的佈局跟你作對時）</h3></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Modules as <code>&lt;div&gt;</code>s with borders and labels. Arrows as inline SVG <code>&lt;line&gt;</code> or <code>&lt;path&gt;</code> elements positioned absolutely over a relative container. Reach for this when you want the "after" diagram to feel like one thick-bordered deep module with greyed-out internals — Mermaid won't render that with the right weight.</p></div><div class="col-zh" lang="zh-Hant"><p>模組用帶邊框與標籤的 <code>&lt;div&gt;</code>。箭頭用內嵌 SVG <code>&lt;line&gt;</code> 或 <code>&lt;path&gt;</code> 元素，絕對定位在 relative 容器上。當你想要「之後」圖感覺像一個粗邊框深模組、內部灰掉時用它——Mermaid 渲染不出那個重量。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h3>Cross-section (good for layered shallowness)</h3></div><div class="col-zh" lang="zh-Hant"><h3>剖面（適合分層淺度）</h3></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Stack horizontal bands (<code>h-12 border-l-4</code>) to show layers a call passes through. Before: 6 thin layers each doing nothing. After: 1 thick band labelled with the consolidated responsibility.</p></div><div class="col-zh" lang="zh-Hant"><p>堆疊水平色帶（<code>h-12 border-l-4</code>）顯示一次呼叫穿過的層。之前：6 層薄層各自什麼都不做。之後：1 條粗色帶，標著合併後的責任。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h3>Mass diagram (good for "interface as wide as implementation")</h3></div><div class="col-zh" lang="zh-Hant"><h3>質量圖（適合「介面跟實作一樣寬」）</h3></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Two rectangles per module — one for interface surface area, one for implementation. Before: interface rectangle is nearly as tall as the implementation rectangle (shallow). After: interface rectangle is short, implementation rectangle is tall (deep).</p></div><div class="col-zh" lang="zh-Hant"><p>每個模組兩個矩形——一個介面表面積、一個實作。之前：介面矩形幾乎跟實作矩形一樣高（淺）。之後：介面矩形矮、實作矩形高（深）。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h3>Call-graph collapse</h3></div><div class="col-zh" lang="zh-Hant"><h3>呼叫圖收攏</h3></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Before: a tree of function calls rendered as nested boxes. After: the same tree collapsed into one box, with the now-internal calls shown faded inside it.</p></div><div class="col-zh" lang="zh-Hant"><p>之前：以巢狀方塊渲染的函式呼叫樹。之後：同一棵樹收攏進一個方塊，現在是內部的呼叫在裡面淡顯。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h2>Style guidance</h2></div><div class="col-zh" lang="zh-Hant"><h2>樣式指引</h2></div></div>
+<div class="pair"><div class="col-en" lang="en"><ul>
+<li>Lean editorial, not corporate-dashboard. Generous whitespace. Serif optional for headings (<code>font-serif</code> works well with stone/slate).</li>
+<li>Colour sparingly: one accent (emerald or indigo) plus red for leakage and amber for warnings.</li>
+<li>Keep diagrams ~320px tall so before/after sits comfortably side by side without scrolling.</li>
+<li>Use <code>text-xs uppercase tracking-wider</code> for module labels inside diagrams — they should read as schematic, not as UI.</li>
+<li>The only scripts are the Tailwind CDN and the Mermaid ESM import. The report is otherwise static — no app code, no interactivity beyond Mermaid's own rendering.</li>
+</ul></div><div class="col-zh" lang="zh-Hant"><ul>
+<li>編輯風，不是公司儀表板風。充裕留白。標題可選襯線字體（<code>font-serif</code> 與 stone/slate 搭配很好）。</li>
+<li>節制用色：一個主色（emerald 或 indigo）加紅色給洩漏、amber 給警告。</li>
+<li>保持圖表約 320px 高，讓前/後舒服地並排而不捲動。</li>
+<li>圖表內模組標籤用 <code>text-xs uppercase tracking-wider</code>——它們要讀起來像示意圖，不是 UI。</li>
+<li>唯一的腳本是 Tailwind CDN 與 Mermaid ESM import。報告其餘部分靜態——沒有應用程式碼、沒有超越 Mermaid 自身渲染的互動。</li>
+</ul></div></div>
+<div class="pair"><div class="col-en" lang="en"><h2>Top recommendation section</h2></div><div class="col-zh" lang="zh-Hant"><h2>頂級建議章節</h2></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>One larger card. Candidate name, one sentence on why, anchor link to its card. That's it.</p></div><div class="col-zh" lang="zh-Hant"><p>一張較大的卡片。候選名稱、一句話說明為什麼、連到它卡片的錨點連結。就這樣。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h2>Tone</h2></div><div class="col-zh" lang="zh-Hant"><h2>語氣</h2></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Plain English, concise — but the architectural nouns and verbs come straight from the <code>/codebase-design</code> skill. Concision is not an excuse to drift.</p></div><div class="col-zh" lang="zh-Hant"><p>平實英文、精簡——但架構名詞與動詞直接來自 <code>/codebase-design</code> 技能。精簡不是漂移的藉口。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p><strong>Use exactly:</strong> module, interface, implementation, depth, deep, shallow, seam, adapter, leverage, locality.</p></div><div class="col-zh" lang="zh-Hant"><p><strong>確切使用：</strong> module、interface、implementation、depth、deep、shallow、seam、adapter、leverage、locality。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p><strong>Never substitute:</strong> component, service, unit (for module) · API, signature (for interface) · boundary (for seam) · layer, wrapper (for module, when you mean module).</p></div><div class="col-zh" lang="zh-Hant"><p><strong>絕不替換：</strong> component、service、unit（指 module）· API、signature（指 interface）· boundary（指 seam）· layer、wrapper（指 module，當你意指 module 時）。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p><strong>Phrasings that fit the style:</strong></p></div><div class="col-zh" lang="zh-Hant"><p><strong>符合這個風格的措辭：</strong></p></div></div>
+<div class="pair"><div class="col-en" lang="en"><ul>
+<li>"Order intake module is shallow — interface nearly matches the implementation."</li>
+<li>"Pricing leaks across the seam."</li>
+<li>"Deepen: one interface, one place to test."</li>
+<li>"Two adapters justify the seam: HTTP in prod, in-memory in tests."</li>
+</ul></div><div class="col-zh" lang="zh-Hant"><ul>
+<li>"Order intake module is shallow — interface nearly matches the implementation."</li>
+<li>"Pricing leaks across the seam."</li>
+<li>"Deepen: one interface, one place to test."</li>
+<li>"Two adapters justify the seam: HTTP in prod, in-memory in tests."</li>
+</ul></div></div>
+<div class="pair"><div class="col-en" lang="en"><p><strong>Wins bullets</strong> name the gain in glossary terms: <em>"locality: bugs concentrate in one module"</em>, <em>"leverage: one interface, N call sites"</em>, <em>"interface shrinks; implementation absorbs the wrappers"</em>. Don't write <em>"easier to maintain"</em> or <em>"cleaner code"</em> — those terms aren't in the glossary and don't earn their place.</p></div><div class="col-zh" lang="zh-Hant"><p><strong>戰果條列</strong>以詞彙表術語指名收益：<em>"locality: bugs concentrate in one module"</em>、<em>"leverage: one interface, N call sites"</em>、<em>"interface shrinks; implementation absorbs the wrappers"</em>。不要寫 <em>"easier to maintain"</em> 或 <em>"cleaner code"</em>——那些術語不在詞彙表裡，不配佔位置。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>No hedging, no throat-clearing, no "it's worth noting that…". If a sentence could be a bullet, make it a bullet. If a bullet could be cut, cut it. If a term isn't in the <code>/codebase-design</code> glossary, reach for one that is before inventing a new one.</p></div><div class="col-zh" lang="zh-Hant"><p>不模糊、不開場白、沒有「值得注意的是……」如果一句話能變成條列，就變成條列。如果一條能刪，就刪。如果某個術語不在 <code>/codebase-design</code> 詞彙表裡，在發明新詞之前先去找一個在的。</p></div></div>
+
+</div>
+</body>
+</html>

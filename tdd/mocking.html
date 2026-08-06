@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>tdd / mocking · mattpocock-skills-zh-tw</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Noto+Serif+TC:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<div class="container">
+<div class="back-link">
+  <a href="../index.html">首頁</a>
+  <a href="../map.html">技能地圖</a>
+  <a href="../learning-path.html">學習路線</a>
+  <a href="SKILL.html">← 技能主頁 tdd</a> 
+</div>
+<h1>mocking</h1>
+<div class="subtitle">tdd · 附屬文件</div>
+<div class="pair"><div class="col-en" lang="en"><h1>When to Mock</h1></div><div class="col-zh" lang="zh-Hant"><h1>何時模擬</h1></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Mock at <strong>system boundaries</strong> only:</p></div><div class="col-zh" lang="zh-Hant"><p>只在<strong>系統邊界</strong>模擬：</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><ul>
+<li>External APIs (payment, email, etc.)</li>
+<li>Databases (sometimes - prefer test DB)</li>
+<li>Time/randomness</li>
+<li>File system (sometimes)</li>
+</ul></div><div class="col-zh" lang="zh-Hant"><ul>
+<li>外部 API（付款、電子郵件等）</li>
+<li>資料庫（有時——偏好測試資料庫）</li>
+<li>時間 / 隨機性</li>
+<li>檔案系統（有時）</li>
+</ul></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Don't mock:</p></div><div class="col-zh" lang="zh-Hant"><p>不要模擬：</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><ul>
+<li>Your own classes/modules</li>
+<li>Internal collaborators</li>
+<li>Anything you control</li>
+</ul></div><div class="col-zh" lang="zh-Hant"><ul>
+<li>你自己的類別 / 模組</li>
+<li>內部協作者</li>
+<li>任何你能控制的東西</li>
+</ul></div></div>
+<div class="pair"><div class="col-en" lang="en"><h2>Designing for Mockability</h2></div><div class="col-zh" lang="zh-Hant"><h2>為可模擬性而設計</h2></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>At system boundaries, design interfaces that are easy to mock:</p></div><div class="col-zh" lang="zh-Hant"><p>在系統邊界，設計容易模擬的介面：</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p><strong>1. Use dependency injection</strong></p></div><div class="col-zh" lang="zh-Hant"><p><strong>1. 使用依賴注入</strong></p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Pass external dependencies in rather than creating them internally:</p></div><div class="col-zh" lang="zh-Hant"><p>把外部相依傳入，而不是在內部建立：</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><pre><code class="language-typescript">// Easy to mock
+function processPayment(order, paymentClient) {
+  return paymentClient.charge(order.total);
+}
+
+// Hard to mock
+function processPayment(order) {
+  const client = new StripeClient(process.env.STRIPE_KEY);
+  return client.charge(order.total);
+}
+</code></pre></div><div class="col-zh" lang="zh-Hant"><pre><code class="language-typescript">// Easy to mock
+function processPayment(order, paymentClient) {
+  return paymentClient.charge(order.total);
+}
+
+// Hard to mock
+function processPayment(order) {
+  const client = new StripeClient(process.env.STRIPE_KEY);
+  return client.charge(order.total);
+}
+</code></pre></div></div>
+<div class="pair"><div class="col-en" lang="en"><p><strong>2. Prefer SDK-style interfaces over generic fetchers</strong></p></div><div class="col-zh" lang="zh-Hant"><p><strong>2. 偏好 SDK 風格的介面，而不是通用 fetcher</strong></p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Create specific functions for each external operation instead of one generic function with conditional logic:</p></div><div class="col-zh" lang="zh-Hant"><p>為每個外部操作建立特定函式，而不是一個帶條件邏輯的通用函式：</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><pre><code class="language-typescript">// GOOD: Each function is independently mockable
+const api = {
+  getUser: (id) =&gt; fetch(`/users/${id}`),
+  getOrders: (userId) =&gt; fetch(`/users/${userId}/orders`),
+  createOrder: (data) =&gt; fetch('/orders', { method: 'POST', body: data }),
+};
+
+// BAD: Mocking requires conditional logic inside the mock
+const api = {
+  fetch: (endpoint, options) =&gt; fetch(endpoint, options),
+};
+</code></pre></div><div class="col-zh" lang="zh-Hant"><pre><code class="language-typescript">// GOOD: Each function is independently mockable
+const api = {
+  getUser: (id) =&gt; fetch(`/users/${id}`),
+  getOrders: (userId) =&gt; fetch(`/users/${userId}/orders`),
+  createOrder: (data) =&gt; fetch('/orders', { method: 'POST', body: data }),
+};
+
+// BAD: Mocking requires conditional logic inside the mock
+const api = {
+  fetch: (endpoint, options) =&gt; fetch(endpoint, options),
+};
+</code></pre></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>The SDK approach means:
+- Each mock returns one specific shape
+- No conditional logic in test setup
+- Easier to see which endpoints a test exercises
+- Type safety per endpoint</p></div><div class="col-zh" lang="zh-Hant"><p>SDK 方式的好處：
+- 每個 mock 回傳一個特定形狀
+- 測試設定中沒有條件邏輯
+- 更容易看出一個測試觸及哪些端點
+- 每個端點都有型別安全</p></div></div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>codebase-design / DEEPENING · mattpocock-skills-zh-tw</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Noto+Serif+TC:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<div class="container">
+<div class="back-link">
+  <a href="../index.html">首頁</a>
+  <a href="../map.html">技能地圖</a>
+  <a href="../learning-path.html">學習路線</a>
+  <a href="SKILL.html">← 技能主頁 codebase-design</a> 
+</div>
+<h1>DEEPENING</h1>
+<div class="subtitle">codebase-design · 附屬文件</div>
+<div class="pair"><div class="col-en" lang="en"><h1>Deepening</h1></div><div class="col-zh" lang="zh-Hant"><h1>深化</h1></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>How to deepen a cluster of shallow modules safely, given its dependencies. Assumes the vocabulary in <a href="SKILL.html">SKILL.md</a> — <strong>module</strong>, <strong>interface</strong>, <strong>seam</strong>, <strong>adapter</strong>.</p></div><div class="col-zh" lang="zh-Hant"><p>如何考量其相依，安全地把一群淺模組深化。假定使用 <a href="SKILL.html">SKILL.md</a> 中的詞彙——<strong>模組</strong>、<strong>介面</strong>、<strong>接縫</strong>、<strong>轉接器</strong>。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h2>Dependency categories</h2></div><div class="col-zh" lang="zh-Hant"><h2>相依分類</h2></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>When assessing a candidate for deepening, classify its dependencies. The category determines how the deepened module is tested across its seam.</p></div><div class="col-zh" lang="zh-Hant"><p>評估一個深化候選時，分類它的相依。分類決定深化後的模組要如何跨接縫測試。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h3>1. In-process</h3></div><div class="col-zh" lang="zh-Hant"><h3>1. 進程內</h3></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Pure computation, in-memory state, no I/O. Always deepenable — merge the modules and test through the new interface directly. No adapter needed.</p></div><div class="col-zh" lang="zh-Hant"><p>純計算、記憶體狀態、沒有 I/O。永遠可以深化——把模組合併，直接透過新介面測試。不需要轉接器。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h3>2. Local-substitutable</h3></div><div class="col-zh" lang="zh-Hant"><h3>2. 本機可替代</h3></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Dependencies that have local test stand-ins (PGLite for Postgres, in-memory filesystem). Deepenable if the stand-in exists. The deepened module is tested with the stand-in running in the test suite. The seam is internal; no port at the module's external interface.</p></div><div class="col-zh" lang="zh-Hant"><p>有本機測試替身的相依（Postgres 用 PGLite、記憶體檔案系統）。如果替身存在就可深化。深化後的模組在測試套件中用跑著的替身測試。接縫是內部的；模組的外部介面上沒有連接埠。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h3>3. Remote but owned (Ports &amp; Adapters)</h3></div><div class="col-zh" lang="zh-Hant"><h3>3. 遠端但自有（Ports &amp; Adapters）</h3></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Your own services across a network boundary (microservices, internal APIs). Define a <strong>port</strong> (interface) at the seam. The deep module owns the logic; the transport is injected as an <strong>adapter</strong>. Tests use an in-memory adapter. Production uses an HTTP/gRPC/queue adapter.</p></div><div class="col-zh" lang="zh-Hant"><p>你在網路邊界另一端的自有服務（微服務、內部 API）。在接縫處定義<strong>連接埠</strong>（介面）。深模組擁有邏輯；傳輸以<strong>轉接器</strong>注入。測試用記憶體轉接器。正式環境用 HTTP/gRPC/queue 轉接器。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Recommendation shape: <em>"Define a port at the seam, implement an HTTP adapter for production and an in-memory adapter for testing, so the logic sits in one deep module even though it's deployed across a network."</em></p></div><div class="col-zh" lang="zh-Hant"><p>建議形狀：<em>「在接縫處定義連接埠，為正式環境實作 HTTP 轉接器、為測試實作記憶體轉接器，這樣即使部署在網路上，邏輯也坐落在單一深模組中。」</em></p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h3>4. True external (Mock)</h3></div><div class="col-zh" lang="zh-Hant"><h3>4. 真正的外部（模擬）</h3></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Third-party services (Stripe, Twilio, etc.) you don't control. The deepened module takes the external dependency as an injected port; tests provide a mock adapter.</p></div><div class="col-zh" lang="zh-Hant"><p>你無法控制的第三方服務（Stripe、Twilio 等）。深化後的模組把外部相依當成注入的連接埠；測試提供模擬轉接器。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h2>Seam discipline</h2></div><div class="col-zh" lang="zh-Hant"><h2>接縫紀律</h2></div></div>
+<div class="pair"><div class="col-en" lang="en"><ul>
+<li><strong>One adapter means a hypothetical seam. Two adapters means a real one.</strong> Don't introduce a port unless at least two adapters are justified (typically production + test). A single-adapter seam is just indirection.</li>
+<li><strong>Internal seams vs external seams.</strong> A deep module can have internal seams (private to its implementation, used by its own tests) as well as the external seam at its interface. Don't expose internal seams through the interface just because tests use them.</li>
+</ul></div><div class="col-zh" lang="zh-Hant"><ul>
+<li><strong>一個轉接器意味著假設性接縫；兩個轉接器意味著真實接縫。</strong> 除非至少有兩個轉接器被證成（通常是正式 + 測試），否則不要引入連接埠。單一轉接器的接縫只是間接層。</li>
+<li><strong>內部接縫 vs 外部接縫。</strong> 深模組可以同時有內部接縫（實作私有、供自己的測試使用）以及位於其介面上的外部接縫。不要只因為測試用了內部接縫，就把它們從介面暴露出來。</li>
+</ul></div></div>
+<div class="pair"><div class="col-en" lang="en"><h2>Testing strategy: replace, don't layer</h2></div><div class="col-zh" lang="zh-Hant"><h2>測試策略：取代，不要分層</h2></div></div>
+<div class="pair"><div class="col-en" lang="en"><ul>
+<li>Old unit tests on shallow modules become waste once tests at the deepened module's interface exist — delete them.</li>
+<li>Write new tests at the deepened module's interface. The <strong>interface is the test surface</strong>.</li>
+<li>Tests assert on observable outcomes through the interface, not internal state.</li>
+<li>Tests should survive internal refactors — they describe behaviour, not implementation. If a test has to change when the implementation changes, it's testing past the interface.</li>
+</ul></div><div class="col-zh" lang="zh-Hant"><ul>
+<li>一旦深化模組的介面上有測試，舊的淺模組單元測試就變成浪費——刪掉它們。</li>
+<li>在深化模組的介面上寫新測試。<strong>介面就是測試表面</strong>。</li>
+<li>測試透過介面斷言可觀察的結果，而不是內部狀態。</li>
+<li>測試應該能安然度過內部重構——它們描述行為，不是實作。如果實作改變時測試必須跟著改，它是在測試介面<em>之後</em>。</li>
+</ul></div></div>
+
+</div>
+</body>
+</html>

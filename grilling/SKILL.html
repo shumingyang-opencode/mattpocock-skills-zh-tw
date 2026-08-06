@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>grilling · 詰問原語 · mattpocock-skills-zh-tw</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Noto+Serif+TC:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<div class="container">
+<div class="back-link">
+  <a href="../index.html">首頁</a>
+  <a href="../map.html">技能地圖</a>
+  <a href="../learning-path.html">學習路線</a>
+  
+</div>
+<table class="fm-table">
+<tr><td>name</td><td><code>grilling</code></td></tr>
+<tr><td>description (EN)</td><td>Grill the user relentlessly about a plan, decision, or idea. Use when the user wants to stress-test their thinking, or uses any 'grill' trigger phrases.</td></tr>
+<tr><td>說明 (繁中)</td><td>持續質詢使用者關於一項計畫、決策或想法。當使用者想要壓力測試自己的想法，或使用任何「grill」觸發詞時使用。</td></tr>
+</table>
+<h1>grilling</h1>
+<div class="subtitle">詰問原語</div>
+<div class="pair"><div class="col-en" lang="en"><p>Interview the user relentlessly until you reach a shared understanding. Map this as a <strong>design tree</strong>: every decision branches into the decisions that hang off it.</p></div><div class="col-zh" lang="zh-Hant"><p>持續質詢使用者，直到達成共同理解。將此繪製成<strong>設計樹</strong>：每個決策都會分支成依附其上的決策。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Work the tree in <strong>rounds</strong>. The <strong>frontier</strong> is every decision whose prerequisites are already settled — the questions you can ask <em>now</em> without guessing at answers you haven't heard yet. Ask the whole frontier in one round: number each question and give your recommended answer. Then wait for the user's answers before the next round.</p></div><div class="col-zh" lang="zh-Hant"><p>以<strong>回合</strong>為單位進行樹的走訪。<strong>前沿</strong>是每個前提條件皆已確定的決策 — 也就是您_現在_就能問、且無需猜測尚未聽到的答案的問題。在一個回合內問完整個前沿：為每個問題編號，並給出您的建議答案。然後等待使用者的答案，再進入下一回合。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Each question should be formatted like so:</p></div><div class="col-zh" lang="zh-Hant"><p>每個問題應依以下格式呈現：</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><pre><code>❓ **Q1** - **&lt;question title&gt;**: &lt;question body, might be multiple paragraphs, including multiple choices&gt;
+
+➡️ &lt;your recommended answer&gt;
+</code></pre></div><div class="col-zh" lang="zh-Hant"><pre><code>❓ **Q1** - **&lt;問題標題&gt;**: &lt;問題內文，可能有多段，包含多個選項&gt;
+
+➡️ &lt;您的建議答案&gt;
+</code></pre></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Each round the user answers reshapes the tree — settled decisions push the frontier outward and unblock questions that depended on them. Recompute the frontier and ask the next round. A question whose answer depends on another question still open in this round belongs to a <em>later</em> round, not this one.</p></div><div class="col-zh" lang="zh-Hant"><p>每一回合使用者的回答都會重塑設計樹 — 已確定的決策會把前沿往外推，並解除依賴於它們的問題。重新計算前沿並問下一回合。一個答案依賴於本回合仍在進行中的另一問題的問題，屬於_較晚_的回合，而非本回合。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Finding <em>facts</em> is your job, never the user's. When a frontier question needs a fact from the environment (filesystem, tools, etc.), dispatch a sub-agent to find it — don't ask the user for anything you could look up yourself. Don't block on it: a running exploration is an unsettled prerequisite, so only the questions downstream of it wait for the sub-agent to report — ask the rest of the frontier now. The <em>decisions</em> are the user's — put each to them and wait.</p></div><div class="col-zh" lang="zh-Hant"><p>尋找_事實_是您的工作，永遠不是使用者的工作。當前沿問題需要來自環境的事實（檔案系統、工具等）時，派出子代理去查找 — 不要問使用者任何您可以自己查到的東西。不要被它阻塞：一個進行中的探索是未確定的前提，所以只有其下游的問題需要等待子代理回報 — 現在就先問其餘的前沿。_決策_是使用者的 — 把每個決策交予他們並等待。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>The session is done when the frontier is empty: every branch of the design tree visited, nothing left silently assumed. Do not act on it until the user confirms you have reached a shared understanding.</p></div><div class="col-zh" lang="zh-Hant"><p>當前沿為空時 session 即完成：設計樹的每個分支都已走訪，沒有任何事情仍在暗自假設。在使用者確認已達成共同理解之前，不要據此採取行動。</p></div></div>
+
+</div>
+</body>
+</html>

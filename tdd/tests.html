@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>tdd / tests · mattpocock-skills-zh-tw</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Noto+Serif+TC:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<div class="container">
+<div class="back-link">
+  <a href="../index.html">首頁</a>
+  <a href="../map.html">技能地圖</a>
+  <a href="../learning-path.html">學習路線</a>
+  <a href="SKILL.html">← 技能主頁 tdd</a> 
+</div>
+<h1>tests</h1>
+<div class="subtitle">tdd · 附屬文件</div>
+<div class="pair"><div class="col-en" lang="en"><h1>Good and Bad Tests</h1></div><div class="col-zh" lang="zh-Hant"><h1>好測試與壞測試</h1></div></div>
+<div class="pair"><div class="col-en" lang="en"><h2>Good Tests</h2></div><div class="col-zh" lang="zh-Hant"><h2>好測試</h2></div></div>
+<div class="pair"><div class="col-en" lang="en"><p><strong>Integration-style</strong>: Test through real interfaces, not mocks of internal parts.</p></div><div class="col-zh" lang="zh-Hant"><p><strong>整合風格</strong>：透過真實介面測試，而不是模擬內部部件。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><pre><code class="language-typescript">// GOOD: Tests observable behavior
+test(&quot;user can checkout with valid cart&quot;, async () =&gt; {
+  const cart = createCart();
+  cart.add(product);
+  const result = await checkout(cart, paymentMethod);
+  expect(result.status).toBe(&quot;confirmed&quot;);
+});
+</code></pre></div><div class="col-zh" lang="zh-Hant"><pre><code class="language-typescript">// GOOD: Tests observable behavior
+test(&quot;user can checkout with valid cart&quot;, async () =&gt; {
+  const cart = createCart();
+  cart.add(product);
+  const result = await checkout(cart, paymentMethod);
+  expect(result.status).toBe(&quot;confirmed&quot;);
+});
+</code></pre></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Characteristics:</p></div><div class="col-zh" lang="zh-Hant"><p>特徵：</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><ul>
+<li>Tests behavior users/callers care about</li>
+<li>Uses public API only</li>
+<li>Survives internal refactors</li>
+<li>Describes WHAT, not HOW</li>
+<li>One logical assertion per test</li>
+</ul></div><div class="col-zh" lang="zh-Hant"><ul>
+<li>測試使用者 / 呼叫者在乎的行為</li>
+<li>只使用公開 API</li>
+<li>能安然度過內部重構</li>
+<li>描述 WHAT，不是 HOW</li>
+<li>每個測試一個邏輯斷言</li>
+</ul></div></div>
+<div class="pair"><div class="col-en" lang="en"><h2>Bad Tests</h2></div><div class="col-zh" lang="zh-Hant"><h2>壞測試</h2></div></div>
+<div class="pair"><div class="col-en" lang="en"><p><strong>Implementation-detail tests</strong>: Coupled to internal structure.</p></div><div class="col-zh" lang="zh-Hant"><p><strong>實作細節測試</strong>：耦合到內部結構。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><pre><code class="language-typescript">// BAD: Tests implementation details
+test(&quot;checkout calls paymentService.process&quot;, async () =&gt; {
+  const mockPayment = jest.mock(paymentService);
+  await checkout(cart, payment);
+  expect(mockPayment.process).toHaveBeenCalledWith(cart.total);
+});
+</code></pre></div><div class="col-zh" lang="zh-Hant"><pre><code class="language-typescript">// BAD: Tests implementation details
+test(&quot;checkout calls paymentService.process&quot;, async () =&gt; {
+  const mockPayment = jest.mock(paymentService);
+  await checkout(cart, payment);
+  expect(mockPayment.process).toHaveBeenCalledWith(cart.total);
+});
+</code></pre></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Red flags:</p></div><div class="col-zh" lang="zh-Hant"><p>紅旗：</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><ul>
+<li>Mocking internal collaborators</li>
+<li>Testing private methods</li>
+<li>Asserting on call counts/order</li>
+<li>Test breaks when refactoring without behavior change</li>
+<li>Test name describes HOW not WHAT</li>
+<li>Verifying through external means instead of interface</li>
+</ul></div><div class="col-zh" lang="zh-Hant"><ul>
+<li>模擬內部協作者</li>
+<li>測試私有方法</li>
+<li>對呼叫次數 / 順序做斷言</li>
+<li>重構但行為不變時測試壞掉</li>
+<li>測試名稱描述 HOW 而不是 WHAT</li>
+<li>透過外部手段而不是介面驗證</li>
+</ul></div></div>
+<div class="pair"><div class="col-en" lang="en"><pre><code class="language-typescript">// BAD: Bypasses interface to verify
+test(&quot;createUser saves to database&quot;, async () =&gt; {
+  await createUser({ name: &quot;Alice&quot; });
+  const row = await db.query(&quot;SELECT * FROM users WHERE name = ?&quot;, [&quot;Alice&quot;]);
+  expect(row).toBeDefined();
+});
+
+// GOOD: Verifies through interface
+test(&quot;createUser makes user retrievable&quot;, async () =&gt; {
+  const user = await createUser({ name: &quot;Alice&quot; });
+  const retrieved = await getUser(user.id);
+  expect(retrieved.name).toBe(&quot;Alice&quot;);
+});
+</code></pre></div><div class="col-zh" lang="zh-Hant"><pre><code class="language-typescript">// BAD: Bypasses interface to verify
+test(&quot;createUser saves to database&quot;, async () =&gt; {
+  await createUser({ name: &quot;Alice&quot; });
+  const row = await db.query(&quot;SELECT * FROM users WHERE name = ?&quot;, [&quot;Alice&quot;]);
+  expect(row).toBeDefined();
+});
+
+// GOOD: Verifies through interface
+test(&quot;createUser makes user retrievable&quot;, async () =&gt; {
+  const user = await createUser({ name: &quot;Alice&quot; });
+  const retrieved = await getUser(user.id);
+  expect(retrieved.name).toBe(&quot;Alice&quot;);
+});
+</code></pre></div></div>
+<div class="pair"><div class="col-en" lang="en"><p><strong>Tautological tests</strong>: Expected value restates the implementation, so the test passes by construction.</p></div><div class="col-zh" lang="zh-Hant"><p><strong>同義反覆測試</strong>：期望值重述實作，所以測試依構造而通過。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><pre><code class="language-typescript">// BAD: Expected value is recomputed the way the code computes it
+test(&quot;calculateTotal sums line items&quot;, () =&gt; {
+  const items = [{ price: 10 }, { price: 5 }];
+  const expected = items.reduce((sum, i) =&gt; sum + i.price, 0);
+  expect(calculateTotal(items)).toBe(expected);
+});
+
+// GOOD: Expected value is an independent, known literal
+test(&quot;calculateTotal sums line items&quot;, () =&gt; {
+  expect(calculateTotal([{ price: 10 }, { price: 5 }])).toBe(15);
+});
+</code></pre></div><div class="col-zh" lang="zh-Hant"><pre><code class="language-typescript">// BAD: Expected value is recomputed the way the code computes it
+test(&quot;calculateTotal sums line items&quot;, () =&gt; {
+  const items = [{ price: 10 }, { price: 5 }];
+  const expected = items.reduce((sum, i) =&gt; sum + i.price, 0);
+  expect(calculateTotal(items)).toBe(expected);
+});
+
+// GOOD: Expected value is an independent, known literal
+test(&quot;calculateTotal sums line items&quot;, () =&gt; {
+  expect(calculateTotal([{ price: 10 }, { price: 5 }])).toBe(15);
+});
+</code></pre></div></div>
+
+</div>
+</body>
+</html>

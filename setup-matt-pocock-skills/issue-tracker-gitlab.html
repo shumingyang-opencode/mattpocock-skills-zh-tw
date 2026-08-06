@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>setup-matt-pocock-skills / issue-tracker-gitlab · mattpocock-skills-zh-tw</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Noto+Serif+TC:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<div class="container">
+<div class="back-link">
+  <a href="../index.html">首頁</a>
+  <a href="../map.html">技能地圖</a>
+  <a href="../learning-path.html">學習路線</a>
+  <a href="SKILL.html">← 技能主頁 setup-matt-pocock-skills</a> 
+</div>
+<h1>issue-tracker-gitlab</h1>
+<div class="subtitle">setup-matt-pocock-skills · 附屬文件</div>
+<div class="pair"><div class="col-en" lang="en"><h1>Issue tracker: GitLab</h1></div><div class="col-zh" lang="zh-Hant"><h1>Issue 追蹤器：GitLab</h1></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Issues and specs for this repo live as GitLab issues. Use the <a href="https://gitlab.com/gitlab-org/cli"><code>glab</code></a> CLI for all operations.</p></div><div class="col-zh" lang="zh-Hant"><p>這個 repo 的 issue 與規格以 GitLab issue 的形式存在。所有操作使用 <a href="https://gitlab.com/gitlab-org/cli"><code>glab</code></a> CLI。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h2>Conventions</h2></div><div class="col-zh" lang="zh-Hant"><h2>慣例</h2></div></div>
+<div class="pair"><div class="col-en" lang="en"><ul>
+<li><strong>Create an issue</strong>: <code>glab issue create --title "..." --description "..."</code>. Use a heredoc for multi-line descriptions. Pass <code>--description -</code> to open an editor.</li>
+<li><strong>Read an issue</strong>: <code>glab issue view &lt;number&gt; --comments</code>. Use <code>-F json</code> for machine-readable output.</li>
+<li><strong>List issues</strong>: <code>glab issue list -F json</code> with appropriate <code>--label</code> filters.</li>
+<li><strong>Comment on an issue</strong>: <code>glab issue note &lt;number&gt; --message "..."</code>. GitLab calls comments "notes".</li>
+<li><strong>Apply / remove labels</strong>: <code>glab issue update &lt;number&gt; --label "..."</code> / <code>--unlabel "..."</code>. Multiple labels can be comma-separated or by repeating the flag.</li>
+<li><strong>Close</strong>: <code>glab issue close &lt;number&gt;</code>. <code>glab issue close</code> does not accept a closing comment, so post the explanation first with <code>glab issue note &lt;number&gt; --message "..."</code>, then close.</li>
+<li><strong>Merge requests</strong>: GitLab calls PRs "merge requests". Use <code>glab mr create</code>, <code>glab mr view</code>, <code>glab mr note</code>, etc. — the same shape as <code>gh pr ...</code> with <code>mr</code> in place of <code>pr</code> and <code>note</code>/<code>--message</code> in place of <code>comment</code>/<code>--body</code>.</li>
+</ul></div><div class="col-zh" lang="zh-Hant"><ul>
+<li><strong>建立 issue</strong>：<code>glab issue create --title "..." --description "..."</code>。多行 description 使用 heredoc。傳 <code>--description -</code> 開啟編輯器。</li>
+<li><strong>讀取 issue</strong>：<code>glab issue view &lt;number&gt; --comments</code>。用 <code>-F json</code> 取得機器可讀的輸出。</li>
+<li><strong>列出 issue</strong>：<code>glab issue list -F json</code>，搭配適當的 <code>--label</code> 過濾。</li>
+<li><strong>在 issue 上留言</strong>：<code>glab issue note &lt;number&gt; --message "..."</code>。GitLab 稱留言為 "notes"。</li>
+<li><strong>套用 / 移除標籤</strong>：<code>glab issue update &lt;number&gt; --label "..."</code> / <code>--unlabel "..."</code>。多個標籤可用逗號分隔或重複旗標。</li>
+<li><strong>關閉</strong>：<code>glab issue close &lt;number&gt;</code>。<code>glab issue close</code> 不接受關閉留言，所以先用 <code>glab issue note &lt;number&gt; --message "..."</code> 發表說明，再關閉。</li>
+<li><strong>Merge request</strong>：GitLab 稱 PR 為 "merge request"。用 <code>glab mr create</code>、<code>glab mr view</code>、<code>glab mr note</code> 等——形狀與 <code>gh pr ...</code> 相同，只是用 <code>mr</code> 代替 <code>pr</code>、用 <code>note</code>/<code>--message</code> 代替 <code>comment</code>/<code>--body</code>。</li>
+</ul></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Infer the repo from <code>git remote -v</code> — <code>glab</code> does this automatically when run inside a clone.</p></div><div class="col-zh" lang="zh-Hant"><p>從 <code>git remote -v</code> 推斷 repo——<code>glab</code> 在 clone 內執行時會自動做到。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h2>Merge requests as a triage surface</h2></div><div class="col-zh" lang="zh-Hant"><h2>Merge request 作為分診表面</h2></div></div>
+<div class="pair"><div class="col-en" lang="en"><p><strong>MRs as a request surface: no.</strong> <em>(Set to <code>yes</code> if this repo treats external merge requests as feature requests; <code>/triage</code> reads this flag.)</em></p></div><div class="col-zh" lang="zh-Hant"><p><strong>MR 作為請求表面：否。</strong> <em>（如果這個 repo 把外部 merge request 當成功能請求，設為 <code>yes</code>；<code>/triage</code> 會讀這個旗標。）</em></p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>When set to <code>yes</code>, MRs run through the same labels and states as issues, using the <code>glab mr</code> equivalents:</p></div><div class="col-zh" lang="zh-Hant"><p>設為 <code>yes</code> 時，MR 與 issue 跑同一套標籤與狀態，使用 <code>glab mr</code> 的對應指令：</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><ul>
+<li><strong>Read an MR</strong>: <code>glab mr view &lt;number&gt; --comments</code> and <code>glab mr diff &lt;number&gt;</code> for the diff.</li>
+<li><strong>List external MRs for triage</strong>: <code>glab mr list -F json</code>, then keep only MRs whose author is not a project member/owner (a contributor's MR, not a maintainer's in-flight work).</li>
+<li><strong>Comment / label / close</strong>: <code>glab mr note</code>, <code>glab mr update --label</code>/<code>--unlabel</code>, <code>glab mr close</code>.</li>
+</ul></div><div class="col-zh" lang="zh-Hant"><ul>
+<li><strong>讀取 MR</strong>：<code>glab mr view &lt;number&gt; --comments</code>，diff 用 <code>glab mr diff &lt;number&gt;</code>。</li>
+<li><strong>列出待分診的外部 MR</strong>：<code>glab mr list -F json</code>，然後只保留作者不是專案成員/擁有者的 MR（貢獻者的 MR，不是維護者進行中的工作）。</li>
+<li><strong>留言 / 標籤 / 關閉</strong>：<code>glab mr note</code>、<code>glab mr update --label</code>/<code>--unlabel</code>、<code>glab mr close</code>。</li>
+</ul></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Unlike GitHub, GitLab numbers issues and MRs separately, so <code>#42</code> is unambiguous once you know which surface the maintainer means.</p></div><div class="col-zh" lang="zh-Hant"><p>不像 GitHub，GitLab 分開編號 issue 與 MR，所以一旦你知道維護者指的是哪個表面，<code>#42</code> 就沒有歧義。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h2>When a skill says "publish to the issue tracker"</h2></div><div class="col-zh" lang="zh-Hant"><h2>當技能說「publish to the issue tracker」</h2></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Create a GitLab issue.</p></div><div class="col-zh" lang="zh-Hant"><p>建立一個 GitLab issue。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h2>When a skill says "fetch the relevant ticket"</h2></div><div class="col-zh" lang="zh-Hant"><h2>當技能說「fetch the relevant ticket」</h2></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Run <code>glab issue view &lt;number&gt; --comments</code>.</p></div><div class="col-zh" lang="zh-Hant"><p>執行 <code>glab issue view &lt;number&gt; --comments</code>。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h2>Wayfinding operations</h2></div><div class="col-zh" lang="zh-Hant"><h2>尋路操作</h2></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Used by <code>/wayfinder</code>. The <strong>map</strong> is a single issue with <strong>child</strong> issues as tickets.</p></div><div class="col-zh" lang="zh-Hant"><p>由 <code>/wayfinder</code> 使用。<strong>地圖</strong>是單一 issue，<strong>子</strong> issue 是 ticket。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><ul>
+<li><strong>Map</strong>: a single issue labelled <code>wayfinder:map</code>, holding the Notes / Decisions-so-far / Fog body. <code>glab issue create --label wayfinder:map</code>. (On GitLab tiers with native epics, an epic may hold the map instead; a labelled issue works everywhere.)</li>
+<li><strong>Child ticket</strong>: an issue carrying <code>Part of #&lt;map&gt;</code> at the top of its description and labels <code>wayfinder:&lt;type&gt;</code> (<code>research</code>/<code>prototype</code>/<code>grilling</code>/<code>task</code>). Once claimed, the ticket is assigned to the driving dev.</li>
+<li><strong>Blocking</strong>: GitLab's <strong>native blocking link</strong> — the canonical, UI-visible representation. Add it with the <code>/blocked_by #&lt;n&gt;</code> quick action, posted as a note (<code>glab issue note &lt;child&gt; --message "/blocked_by #&lt;blocker&gt;"</code>). Native blocking links are a Premium/Ultimate feature; on the free tier (or where unavailable) fall back to a <code>Blocked by: #&lt;n&gt;, #&lt;n&gt;</code> line at the top of the description. A ticket is unblocked when every blocker is closed.</li>
+<li><strong>Frontier query</strong>: <code>glab issue list -F json</code> scoped to the map's children, drop any with an open blocker — a native <code>blocked_by</code> link to an open issue (<code>glab api projects/:id/issues/:iid/links</code>), or an open issue in the <code>Blocked by</code> line — or an assignee; first in map order wins.</li>
+<li><strong>Claim</strong>: <code>glab issue update &lt;n&gt; --assignee @me</code> — the session's first write.</li>
+<li><strong>Resolve</strong>: <code>glab issue note &lt;n&gt; --message "&lt;answer&gt;"</code>, then <code>glab issue close &lt;n&gt;</code>, then append a context pointer (gist + link) to the map's Decisions-so-far.</li>
+</ul></div><div class="col-zh" lang="zh-Hant"><ul>
+<li><strong>地圖</strong>：單一帶 <code>wayfinder:map</code> 標籤的 issue，容納 Notes / Decisions-so-far / Fog 的內容。<code>glab issue create --label wayfinder:map</code>。（在原生支援 epic 的 GitLab 層級，epic 可以容納地圖；有標籤的 issue 在任何地方都能用。）</li>
+<li><strong>子 ticket</strong>：description 頂端帶 <code>Part of #&lt;map&gt;</code>、標籤為 <code>wayfinder:&lt;type&gt;</code>（<code>research</code>/<code>prototype</code>/<code>grilling</code>/<code>task</code>）的 issue。一旦被認領，ticket 指派給執行的開發者。</li>
+<li><strong>阻塞</strong>：GitLab 的<strong>原生阻塞連結</strong>——標準、UI 可見的表示。用 <code>/blocked_by #&lt;n&gt;</code> 快速動作加入，以 note 發佈（<code>glab issue note &lt;child&gt; --message "/blocked_by #&lt;blocker&gt;"</code>）。原生阻塞連結是 Premium/Ultimate 功能；在免費層（或不可用時）回退到 description 頂端的 <code>Blocked by: #&lt;n&gt;, #&lt;n&gt;</code> 一行。當每個阻塞者都關閉時，ticket 就未阻塞。</li>
+<li><strong>前沿查詢</strong>：<code>glab issue list -F json</code> 限定在地圖的子項，丟掉任何有開啟阻塞者的——指向開啟 issue 的原生 <code>blocked_by</code> 連結（<code>glab api projects/:id/issues/:iid/links</code>），或 <code>Blocked by</code> 行中的開啟 issue——或已有指派者的；地圖順序第一個勝出。</li>
+<li><strong>認領</strong>：<code>glab issue update &lt;n&gt; --assignee @me</code>——這個 session 的第一次寫入。</li>
+<li><strong>解決</strong>：<code>glab issue note &lt;n&gt; --message "&lt;answer&gt;"</code>，然後 <code>glab issue close &lt;n&gt;</code>，然後在地圖的 Decisions-so-far 附加一個上下文指標（gist + 連結）。</li>
+</ul></div></div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>triage / AGENT-BRIEF · mattpocock-skills-zh-tw</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Noto+Serif+TC:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<div class="container">
+<div class="back-link">
+  <a href="../index.html">首頁</a>
+  <a href="../map.html">技能地圖</a>
+  <a href="../learning-path.html">學習路線</a>
+  <a href="SKILL.html">← 技能主頁 triage</a> 
+</div>
+<h1>AGENT-BRIEF</h1>
+<div class="subtitle">triage · 附屬文件</div>
+<div class="pair"><div class="col-en" lang="en"><h1>Writing Agent Briefs</h1></div><div class="col-zh" lang="zh-Hant"><h1>撰寫代理簡報</h1></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>An agent brief is a structured comment posted on a GitHub issue or PR when it moves to <code>ready-for-agent</code>. It is the authoritative specification that an AFK agent will work from. The original body and discussion are context — the agent brief is the contract.</p></div><div class="col-zh" lang="zh-Hant"><p>代理簡報是當 issue 或 PR 移入 <code>ready-for-agent</code> 時，貼在 GitHub issue 或 PR 上的結構化評論。它是 AFK 代理據以工作的權威規格說明。原始內文與討論是脈絡——代理簡報才是合約。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>The brief states <strong>what the agent should do</strong>, which stretches to both surfaces: for an issue, that's building the change from nothing; for a PR, it's what's left to do <em>to the existing diff</em> — finish it, close gaps, address review points. Same principles either way; the PR example below shows the difference.</p></div><div class="col-zh" lang="zh-Hant"><p>簡報陳述<strong>代理應該做什麼</strong>，這延伸到兩個介面：對 issue 而言，是從零開始建置這項變更；對 PR 而言，是<em>對既有 diff</em> 還剩什麼要做——完成它、補上缺口、處理審查意見。兩種情況的原則相同；下方的 PR 範例會顯示差異。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h2>Principles</h2></div><div class="col-zh" lang="zh-Hant"><h2>原則</h2></div></div>
+<div class="pair"><div class="col-en" lang="en"><h3>Durability over precision</h3></div><div class="col-zh" lang="zh-Hant"><h3>耐用勝於精確</h3></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>The issue may sit in <code>ready-for-agent</code> for days or weeks. The codebase will change in the meantime. Write the brief so it stays useful even as files are renamed, moved, or refactored.</p></div><div class="col-zh" lang="zh-Hant"><p>issue 可能會在 <code>ready-for-agent</code> 停留數天或數週。程式碼庫在此期間會改變。撰寫簡報時，要讓它在檔案被重新命名、移動或重構後依然有用。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><ul>
+<li><strong>Do</strong> describe interfaces, types, and behavioral contracts</li>
+<li><strong>Do</strong> name specific types, function signatures, or config shapes that the agent should look for or modify</li>
+<li><strong>Don't</strong> reference file paths — they go stale</li>
+<li><strong>Don't</strong> reference line numbers</li>
+<li><strong>Don't</strong> assume the current implementation structure will remain the same</li>
+</ul></div><div class="col-zh" lang="zh-Hant"><ul>
+<li><strong>要</strong> 描述介面、型別與行為合約</li>
+<li><strong>要</strong> 指名代理應尋找或修改的具體型別、函式簽名或設定形狀</li>
+<li><strong>不要</strong> 引用檔案路徑——它們會過時</li>
+<li><strong>不要</strong> 引用行號</li>
+<li><strong>不要</strong> 假設目前的實作結構會保持不變</li>
+</ul></div></div>
+<div class="pair"><div class="col-en" lang="en"><h3>Behavioral, not procedural</h3></div><div class="col-zh" lang="zh-Hant"><h3>行為式，而非程序式</h3></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Describe <strong>what</strong> the system should do, not <strong>how</strong> to implement it. The agent will explore the codebase fresh and make its own implementation decisions.</p></div><div class="col-zh" lang="zh-Hant"><p>描述系統應該做<strong>什麼</strong>，而不是<strong>如何</strong>實作。代理會重新探索程式碼庫，做出自己的實作決策。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><ul>
+<li><strong>Good:</strong> "The <code>SkillConfig</code> type should accept an optional <code>schedule</code> field of type <code>CronExpression</code>"</li>
+<li><strong>Bad:</strong> "Open src/types/skill.ts and add a schedule field on line 42"</li>
+<li><strong>Good:</strong> "When a user runs <code>/triage</code> with no arguments, they should see a summary of issues needing attention"</li>
+<li><strong>Bad:</strong> "Add a switch statement in the main handler function"</li>
+</ul></div><div class="col-zh" lang="zh-Hant"><ul>
+<li><strong>好：</strong>「<code>SkillConfig</code> 型別應該接受型別為 <code>CronExpression</code> 的選用 <code>schedule</code> 欄位」</li>
+<li><strong>壞：</strong>「開啟 src/types/skill.ts，並在第 42 行加上 schedule 欄位」</li>
+<li><strong>好：</strong>「當使用者以無參數執行 <code>/triage</code> 時，他們應該看到需要關注的 issues 摘要」</li>
+<li><strong>壞：</strong>「在 main handler 函式中加上一個 switch 陳述式」</li>
+</ul></div></div>
+<div class="pair"><div class="col-en" lang="en"><h3>Complete acceptance criteria</h3></div><div class="col-zh" lang="zh-Hant"><h3>完整的驗收標準</h3></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>The agent needs to know when it's done. Every agent brief must have concrete, testable acceptance criteria. Each criterion should be independently verifiable.</p></div><div class="col-zh" lang="zh-Hant"><p>代理需要知道何時算完成。每個代理簡報都必須有具體、可測試的驗收標準。每個標準都應該可以獨立驗證。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><ul>
+<li><strong>Good:</strong> "Running <code>gh issue list --label needs-triage</code> returns issues that have been through initial classification"</li>
+<li><strong>Bad:</strong> "Triage should work correctly"</li>
+</ul></div><div class="col-zh" lang="zh-Hant"><ul>
+<li><strong>好：</strong>「執行 <code>gh issue list --label needs-triage</code> 會回傳已通過初步分類的 issues」</li>
+<li><strong>壞：</strong>「Triage 應該正常運作」</li>
+</ul></div></div>
+<div class="pair"><div class="col-en" lang="en"><h3>Explicit scope boundaries</h3></div><div class="col-zh" lang="zh-Hant"><h3>明確的範圍邊界</h3></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>State what is out of scope. This prevents the agent from gold-plating or making assumptions about adjacent features.</p></div><div class="col-zh" lang="zh-Hant"><p>明確說明什麼是超出範圍的。這能防止代理鍍金，或對相鄰功能做出臆測。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h2>Template</h2></div><div class="col-zh" lang="zh-Hant"><h2>範本</h2></div></div>
+<div class="pair"><div class="col-en" lang="en"><pre><code class="language-markdown">## Agent Brief
+
+**Category:** bug / enhancement
+**Summary:** one-line description of what needs to happen
+
+**Current behavior:**
+Describe what happens now. For bugs, this is the broken behavior.
+For enhancements, this is the status quo the feature builds on.
+
+**Desired behavior:**
+Describe what should happen after the agent's work is complete.
+Be specific about edge cases and error conditions.
+
+**Key interfaces:**
+- `TypeName` — what needs to change and why
+- `functionName()` return type — what it currently returns vs what it should return
+- Config shape — any new configuration options needed
+
+**Acceptance criteria:**
+- [ ] Specific, testable criterion 1
+- [ ] Specific, testable criterion 2
+- [ ] Specific, testable criterion 3
+
+**Out of scope:**
+- Thing that should NOT be changed or addressed in this issue
+- Adjacent feature that might seem related but is separate
+</code></pre></div><div class="col-zh" lang="zh-Hant"><pre><code class="language-markdown">## Agent Brief
+
+**Category:** bug / enhancement
+**Summary:** one-line description of what needs to happen
+
+**Current behavior:**
+Describe what happens now. For bugs, this is the broken behavior.
+For enhancements, this is the status quo the feature builds on.
+
+**Desired behavior:**
+Describe what should happen after the agent's work is complete.
+Be specific about edge cases and error conditions.
+
+**Key interfaces:**
+- `TypeName` — what needs to change and why
+- `functionName()` return type — what it currently returns vs what it should return
+- Config shape — any new configuration options needed
+
+**Acceptance criteria:**
+- [ ] Specific, testable criterion 1
+- [ ] Specific, testable criterion 2
+- [ ] Specific, testable criterion 3
+
+**Out of scope:**
+- Thing that should NOT be changed or addressed in this issue
+- Adjacent feature that might seem related but is separate
+</code></pre></div></div>
+<div class="pair"><div class="col-en" lang="en"><h2>Examples</h2></div><div class="col-zh" lang="zh-Hant"><h2>範例</h2></div></div>
+<div class="pair"><div class="col-en" lang="en"><h3>Good agent brief (bug)</h3></div><div class="col-zh" lang="zh-Hant"><h3>好的代理簡報（bug）</h3></div></div>
+<div class="pair"><div class="col-en" lang="en"><pre><code class="language-markdown">## Agent Brief
+
+**Category:** bug
+**Summary:** Skill description truncation drops mid-word, producing broken output
+
+**Current behavior:**
+When a skill description exceeds 1024 characters, it is truncated at exactly
+1024 characters regardless of word boundaries. This produces descriptions
+that end mid-word (e.g. &quot;Use when the user wants to confi&quot;).
+
+**Desired behavior:**
+Truncation should break at the last word boundary before 1024 characters
+and append &quot;...&quot; to indicate truncation.
+
+**Key interfaces:**
+- The `SkillMetadata` type's `description` field — no type change needed,
+  but the validation/processing logic that populates it needs to respect
+  word boundaries
+- Any function that reads SKILL.md frontmatter and extracts the description
+
+**Acceptance criteria:**
+- [ ] Descriptions under 1024 chars are unchanged
+- [ ] Descriptions over 1024 chars are truncated at the last word boundary
+      before 1024 chars
+- [ ] Truncated descriptions end with &quot;...&quot;
+- [ ] The total length including &quot;...&quot; does not exceed 1024 chars
+
+**Out of scope:**
+- Changing the 1024 char limit itself
+- Multi-line description support
+</code></pre></div><div class="col-zh" lang="zh-Hant"><pre><code class="language-markdown">## Agent Brief
+
+**Category:** bug
+**Summary:** Skill description truncation drops mid-word, producing broken output
+
+**Current behavior:**
+When a skill description exceeds 1024 characters, it is truncated at exactly
+1024 characters regardless of word boundaries. This produces descriptions
+that end mid-word (e.g. &quot;Use when the user wants to confi&quot;).
+
+**Desired behavior:**
+Truncation should break at the last word boundary before 1024 characters
+and append &quot;...&quot; to indicate truncation.
+
+**Key interfaces:**
+- The `SkillMetadata` type's `description` field — no type change needed,
+  but the validation/processing logic that populates it needs to respect
+  word boundaries
+- Any function that reads SKILL.md frontmatter and extracts the description
+
+**Acceptance criteria:**
+- [ ] Descriptions under 1024 chars are unchanged
+- [ ] Descriptions over 1024 chars are truncated at the last word boundary
+      before 1024 chars
+- [ ] Truncated descriptions end with &quot;...&quot;
+- [ ] The total length including &quot;...&quot; does not exceed 1024 chars
+
+**Out of scope:**
+- Changing the 1024 char limit itself
+- Multi-line description support
+</code></pre></div></div>
+<div class="pair"><div class="col-en" lang="en"><h3>Good agent brief (enhancement)</h3></div><div class="col-zh" lang="zh-Hant"><h3>好的代理簡報（enhancement）</h3></div></div>
+<div class="pair"><div class="col-en" lang="en"><pre><code class="language-markdown">## Agent Brief
+
+**Category:** enhancement
+**Summary:** Add `.out-of-scope/` directory support for tracking rejected feature requests
+
+**Current behavior:**
+When a feature request is rejected, the issue is closed with a `wontfix` label
+and a comment. There is no persistent record of the decision or reasoning.
+Future similar requests require the maintainer to recall or search for the
+prior discussion.
+
+**Desired behavior:**
+Rejected feature requests should be documented in `.out-of-scope/&lt;concept&gt;.md`
+files that capture the decision, reasoning, and links to all issues that
+requested the feature. When triaging new issues, these files should be
+checked for matches.
+
+**Key interfaces:**
+- Markdown file format in `.out-of-scope/` — each file should have a
+  `# Concept Name` heading, a `**Decision:**` line, a `**Reason:**` line,
+  and a `**Prior requests:**` list with issue links
+- The triage workflow should read all `.out-of-scope/*.md` files early
+  and match incoming issues against them by concept similarity
+
+**Acceptance criteria:**
+- [ ] Closing a feature as wontfix creates/updates a file in `.out-of-scope/`
+- [ ] The file includes the decision, reasoning, and link to the closed issue
+- [ ] If a matching `.out-of-scope/` file already exists, the new issue is
+      appended to its &quot;Prior requests&quot; list rather than creating a duplicate
+- [ ] During triage, existing `.out-of-scope/` files are checked and surfaced
+      when a new issue matches a prior rejection
+
+**Out of scope:**
+- Automated matching (human confirms the match)
+- Reopening previously rejected features
+- Bug reports (only enhancement rejections go to `.out-of-scope/`)
+</code></pre></div><div class="col-zh" lang="zh-Hant"><pre><code class="language-markdown">## Agent Brief
+
+**Category:** enhancement
+**Summary:** Add `.out-of-scope/` directory support for tracking rejected feature requests
+
+**Current behavior:**
+When a feature request is rejected, the issue is closed with a `wontfix` label
+and a comment. There is no persistent record of the decision or reasoning.
+Future similar requests require the maintainer to recall or search for the
+prior discussion.
+
+**Desired behavior:**
+Rejected feature requests should be documented in `.out-of-scope/&lt;concept&gt;.md`
+files that capture the decision, reasoning, and links to all issues that
+requested the feature. When triaging new issues, these files should be
+checked for matches.
+
+**Key interfaces:**
+- Markdown file format in `.out-of-scope/` — each file should have a
+  `# Concept Name` heading, a `**Decision:**` line, a `**Reason:**` line,
+  and a `**Prior requests:**` list with issue links
+- The triage workflow should read all `.out-of-scope/*.md` files early
+  and match incoming issues against them by concept similarity
+
+**Acceptance criteria:**
+- [ ] Closing a feature as wontfix creates/updates a file in `.out-of-scope/`
+- [ ] The file includes the decision, reasoning, and link to the closed issue
+- [ ] If a matching `.out-of-scope/` file already exists, the new issue is
+      appended to its &quot;Prior requests&quot; list rather than creating a duplicate
+- [ ] During triage, existing `.out-of-scope/` files are checked and surfaced
+      when a new issue matches a prior rejection
+
+**Out of scope:**
+- Automated matching (human confirms the match)
+- Reopening previously rejected features
+- Bug reports (only enhancement rejections go to `.out-of-scope/`)
+</code></pre></div></div>
+<div class="pair"><div class="col-en" lang="en"><h3>Good agent brief (PR)</h3></div><div class="col-zh" lang="zh-Hant"><h3>好的代理簡報（PR）</h3></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>For a PR, "Current behavior" describes the state of the diff, and the brief asks the agent to finish or fix it rather than build from scratch.</p></div><div class="col-zh" lang="zh-Hant"><p>對 PR 而言，「Current behavior（目前行為）」描述 diff 的狀態，簡報要求代理完成或修復它，而不是從零開始建置。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><pre><code class="language-markdown">## Agent Brief
+
+**Category:** enhancement
+**Summary:** Finish the contributor's `--json` output flag for `triage list`
+
+**Current behavior:**
+The PR adds a `--json` flag that serializes the issue list to JSON. The happy
+path works and the diff matches the project's command structure. Two gaps
+remain: errors are still printed as human text (not JSON), and the new flag has
+no test coverage.
+
+**Desired behavior:**
+With `--json`, all output — including errors — is well-formed JSON on stdout,
+and the command's exit codes are unchanged. The existing human-readable output
+is untouched when the flag is absent.
+
+**Key interfaces:**
+- The command's error path should emit `{ &quot;error&quot;: string }` under `--json`
+  instead of the plain-text error
+- Reuse the existing serializer the PR already added; don't introduce a second
+
+**Acceptance criteria:**
+- [ ] `triage list --json` emits valid JSON for both success and error cases
+- [ ] Exit codes match the non-JSON command
+- [ ] A test covers the `--json` success output and one error case
+- [ ] Default (non-JSON) output is byte-for-byte unchanged
+
+**Out of scope:**
+- Adding `--json` to any other command
+- Changing the JSON shape of the success payload the PR already defined
+</code></pre></div><div class="col-zh" lang="zh-Hant"><pre><code class="language-markdown">## Agent Brief
+
+**Category:** enhancement
+**Summary:** Finish the contributor's `--json` output flag for `triage list`
+
+**Current behavior:**
+The PR adds a `--json` flag that serializes the issue list to JSON. The happy
+path works and the diff matches the project's command structure. Two gaps
+remain: errors are still printed as human text (not JSON), and the new flag has
+no test coverage.
+
+**Desired behavior:**
+With `--json`, all output — including errors — is well-formed JSON on stdout,
+and the command's exit codes are unchanged. The existing human-readable output
+is untouched when the flag is absent.
+
+**Key interfaces:**
+- The command's error path should emit `{ &quot;error&quot;: string }` under `--json`
+  instead of the plain-text error
+- Reuse the existing serializer the PR already added; don't introduce a second
+
+**Acceptance criteria:**
+- [ ] `triage list --json` emits valid JSON for both success and error cases
+- [ ] Exit codes match the non-JSON command
+- [ ] A test covers the `--json` success output and one error case
+- [ ] Default (non-JSON) output is byte-for-byte unchanged
+
+**Out of scope:**
+- Adding `--json` to any other command
+- Changing the JSON shape of the success payload the PR already defined
+</code></pre></div></div>
+<div class="pair"><div class="col-en" lang="en"><h3>Bad agent brief</h3></div><div class="col-zh" lang="zh-Hant"><h3>壞的代理簡報</h3></div></div>
+<div class="pair"><div class="col-en" lang="en"><pre><code class="language-markdown">## Agent Brief
+
+**Summary:** Fix the triage bug
+
+**What to do:**
+The triage thing is broken. Look at the main file and fix it.
+The function around line 150 has the issue.
+
+**Files to change:**
+- src/triage/handler.ts (line 150)
+- src/types.ts (line 42)
+</code></pre></div><div class="col-zh" lang="zh-Hant"><pre><code class="language-markdown">## Agent Brief
+
+**Summary:** Fix the triage bug
+
+**What to do:**
+The triage thing is broken. Look at the main file and fix it.
+The function around line 150 has the issue.
+
+**Files to change:**
+- src/triage/handler.ts (line 150)
+- src/types.ts (line 42)
+</code></pre></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>This is bad because:
+- No category
+- Vague description ("the triage thing is broken")
+- References file paths and line numbers that will go stale
+- No acceptance criteria
+- No scope boundaries
+- No description of current vs desired behavior</p></div><div class="col-zh" lang="zh-Hant"><p>這個很糟糕，因為：</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p class="zh-only">（無英文對照）</p></div><div class="col-zh" lang="zh-Hant"><ul>
+<li>沒有類別</li>
+<li>描述含糊（「the triage thing is broken」）</li>
+<li>引用了會過時的檔案路徑與行號</li>
+<li>沒有驗收標準</li>
+<li>沒有範圍邊界</li>
+<li>沒有描述目前行為與期望行為的差異</li>
+</ul></div></div>
+
+</div>
+</body>
+</html>

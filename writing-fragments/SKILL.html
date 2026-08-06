@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>writing-fragments · 寫作 · 碎片 · mattpocock-skills-zh-tw</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Noto+Serif+TC:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<div class="container">
+<div class="back-link">
+  <a href="../index.html">首頁</a>
+  <a href="../map.html">技能地圖</a>
+  <a href="../learning-path.html">學習路線</a>
+  
+</div>
+<table class="fm-table">
+<tr><td>name</td><td><code>writing-fragments</code></td></tr>
+<tr><td>description (EN)</td><td>Writing, explore — mine raw fragments, no structure yet.</td></tr>
+<tr><td>說明 (繁中)</td><td>寫作、探索 — 挖掘原始片段，還沒有結構。</td></tr>
+<tr><td>disable-model-invocation</td><td><code>true</code></td></tr>
+</table>
+<h1>writing-fragments</h1>
+<div class="subtitle">寫作 · 碎片</div>
+<div class="pair"><div class="col-en" lang="en"><p><what-to-do></p>
+<p>This is pure <strong>explore</strong>: widen the space of what could be written without committing to structure — committing is <em>exploit</em>, a separate skill's job. Run a grilling session that produces fragments, interviewing the user relentlessly about whatever they want to write about. Imposing phases, outlines, or article structure is out of scope here.</p>
+<p>As fragments emerge from either side of the conversation, append them to a single markdown file.</p>
+<p>If the user did not pass a path, ask once where to save the document, then remember it for the rest of the session.</p>
+<p>Capture fragments from the very first thing the user says, including the initial prompt.</p>
+<p>On first write, put a single H1 at the top with a working title (it can change later) and nothing else — no metadata, no TOC, no date.</p>
+<p></what-to-do></p></div><div class="col-zh" lang="zh-Hant"><p><what-to-do></p>
+<p>這是純粹的<strong>探索</strong>：擴大可能被寫出的空間，而不承諾結構 — 承諾是_開採_，那是另一個技能的工作。執行一場產生片段的 grilling session，持續訪問使用者關於他們想寫的任何事。在這裡施加階段、大綱或文章結構是超出範圍的。</p>
+<p>當片段從對話的任何一方浮現時，將它們附加到單一 markdown 檔案中。</p>
+<p>如果使用者沒有傳入路徑，問一次要儲存在哪裡，然後在整個 session 的剩餘時間記住它。</p>
+<p>從使用者說的第一件事就捕捉片段，包括最初的提示。</p>
+<p>首次寫入時，在頂部放一個帶有工作標題的單一 H1（之後可以改變），沒有其他東西 — 沒有中繼資料、沒有目錄、沒有日期。</p>
+<p></what-to-do></p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p><supporting-info></p>
+<h2>What is a fragment</h2>
+<p>A fragment is any piece of text that might survive into the final article. It must be <em>readable by the author</em> — the author can tell what it means — but it does not need to define its terms or be comprehensible to a cold reader. The bar is "is this a piece of good writing?", not "is this a self-contained argument?"</p>
+<p>Fragments are deliberately heterogeneous. Examples of what could be a fragment:</p>
+<ul>
+<li>A sharp sentence you'd want to deploy somewhere but don't yet know where.</li>
+<li>A claim with a one-line justification.</li>
+<li>A vignette: a thing that happened, a code snippet, a scenario, an analogy.</li>
+<li>A half-thought: "something about how X feels like Y, work this out later."</li>
+<li>A quote, a piece of dialogue, an overheard line.</li>
+<li>A list of related observations that hang together by feel.</li>
+<li>A complaint, a confession, a punchline.</li>
+<li>A <strong>leading word</strong> — a compact metaphor or coinage the whole piece can hang on (one term that names the idea, the way <em>tracer bullets</em> or <em>fog of war</em> names a whole pattern).</li>
+</ul>
+<p>Of these, the leading word is the most valuable fragment to land. It is load-bearing: name the right one in explore and it shapes the structure, the transitions, and the title later — paying dividends through the entire exploit phase. When the conversation circles a recurring idea, push to coin a word for it.</p>
+<p>The novelist's diary is the model: years of unstructured noticings that later get mined for raw material. Fragments are noticings.</p>
+<h2>File format</h2>
+<pre><code class="language-markdown"># Working title
+
+A first fragment lives here.
+
+It can be multiple paragraphs. It can include lists, code, quotes — whatever
+shape the fragment naturally takes.
+
+---
+
+A second fragment.
+
+---
+
+&gt; A quoted line that the user wants to keep around.
+
+A reaction to it.
+
+---
+
+- A cluster of related observations
+- That hang together by feel
+- And want to be near each other
+</code></pre>
+<p>Fragments are separated by a horizontal rule (<code>\n---\n</code>). No headings inside the body. No tags. No order beyond the order they were added.</p>
+<h2>Writing rhythm</h2>
+<p>Append silently. Don't ask permission for each fragment. Mention what you added in passing ("adding that"), but don't interrupt the conversation with save dialogs.</p>
+<p>Before every write: re-read the file from disk. The user may have edited, reordered, or deleted fragments between turns — preserve their changes. Never overwrite the file; only append (or, if the user asks, edit a specific fragment in place).</p>
+<p>The user can say "cut the last one", "rewrite that one sharper", "merge those two" at any time. Treat those as first-class instructions.</p>
+<p></supporting-info></p></div><div class="col-zh" lang="zh-Hant"><p><supporting-info></p>
+<h2>什麼是片段</h2>
+<p>片段是任何可能存活到最終文章的文字片段。它必須_對作者可讀_ — 作者能分辨它是什麼意思 — 但它不需要定義它的術語，也不需要讓一個陌生的讀者能理解。門檻是「這是一段好寫作嗎？」，而不是「這是一個自包含的論證嗎？」</p>
+<p>片段刻意地異質。可能是片段的例子：</p>
+<ul>
+<li>一個您想在某處部署但還不知道在哪裡的銳利句子。</li>
+<li>一個帶有一行理由的主張。</li>
+<li>一個插曲：一件發生過的事、一段程式碼片段、一個情境、一個類比。</li>
+<li>一個半成品想法：「X 感覺像 Y 的某件事，之後再想出來。」</li>
+<li>一段引用、一段對話、一句偷聽到的話。</li>
+<li>一串靠感覺聚在一起的相關觀察。</li>
+<li>一句抱怨、一段告白、一個爆點。</li>
+<li>一個<strong>領頭詞</strong> — 整個作品可以掛在上面的緊湊隱喻或新造詞（一個為想法命名的術語，就像 <em>tracer bullets</em> 或 <em>fog of war</em> 為整個模式命名一樣）。</li>
+</ul>
+<p>其中，領頭詞是最有價值的要落地的片段。它是承重的：在探索中命名正確的那個，它會塑造後來的結構、過渡與標題 — 在整個開採階段都支付紅利。當對話繞著一個反覆出現的想法打轉，推動為它造一個詞。</p>
+<p>小說家的日記是模型：多年的非結構化觀察，之後被挖掘為原始素材。片段就是觀察。</p>
+<h2>檔案格式</h2>
+<pre><code class="language-markdown"># Working title
+
+A first fragment lives here.
+
+It can be multiple paragraphs. It can include lists, code, quotes — whatever
+shape the fragment naturally takes.
+
+---
+
+A second fragment.
+
+---
+
+&gt; A quoted line that the user wants to keep around.
+
+A reaction to it.
+
+---
+
+- A cluster of related observations
+- That hang together by feel
+- And want to be near each other
+</code></pre>
+<p>片段以水平線（<code>\n---\n</code>）分隔。正文中沒有標題。沒有標籤。除了加入的順序之外沒有順序。</p>
+<h2>寫作節奏</h2>
+<p>靜默地附加。不要為每個片段請求許可。順帶一提地提到您加入了什麼（「adding that」），但不要用儲存對話方塊打斷對話。</p>
+<p>在每次寫作之前：從磁碟重新讀取檔案。使用者可能在回合之間編輯、重新排序或刪除了片段 — 保留他們的變更。永遠不要覆寫檔案；只附加（或者，如果使用者要求，就地編輯特定片段）。</p>
+<p>使用者隨時可以說「砍掉最後一個」、「把那句改得更銳利」、「把那兩個合併」。把它們當作第一等的指令。</p>
+<p></supporting-info></p></div></div>
+
+</div>
+</body>
+</html>

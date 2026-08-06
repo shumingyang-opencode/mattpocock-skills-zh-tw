@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>codebase-design · 深模組設計 · mattpocock-skills-zh-tw</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Noto+Serif+TC:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<div class="container">
+<div class="back-link">
+  <a href="../index.html">首頁</a>
+  <a href="../map.html">技能地圖</a>
+  <a href="../learning-path.html">學習路線</a>
+  
+</div>
+<table class="fm-table">
+<tr><td>name</td><td><code>codebase-design</code></td></tr>
+<tr><td>description (EN)</td><td>Shared vocabulary for designing deep modules. Use when the user wants to design or improve a module's interface, find deepening opportunities, decide where a seam goes, make code more testable or AI-navigable, or when another skill needs the deep-module vocabulary.</td></tr>
+<tr><td>說明 (繁中)</td><td>設計深模組的共用詞彙。當使用者想設計或改進模組的介面、找深化的機會、決定接縫放哪裡、讓程式碼更容易測試或對 AI 更容易導覽，或另一個技能需要深模組詞彙時使用。</td></tr>
+</table>
+<h1>codebase-design</h1>
+<div class="subtitle">深模組設計</div>
+<div class="back-link" style="margin-top:-0.6rem">附屬文件：<a href="DEEPENING.html">DEEPENING</a>　·　<a href="DESIGN-IT-TWICE.html">DESIGN-IT-TWICE</a></div>
+<div class="pair"><div class="col-en" lang="en"><h1>Codebase Design</h1></div><div class="col-zh" lang="zh-Hant"><h1>程式碼庫設計</h1></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Design <strong>deep modules</strong>: a lot of behaviour behind a small interface, placed at a clean seam, testable through that interface. Use this language and these principles wherever code is being designed or restructured. The aim is leverage for callers, locality for maintainers, and testability for everyone.</p></div><div class="col-zh" lang="zh-Hant"><p>設計<strong>深模組</strong>：小介面背後有大量行為、放在乾淨的接縫上、可以透過那個介面測試。在任何程式碼被設計或重構的地方使用這套語言與這些原則。目標是讓呼叫者獲得槓桿收益、維護者獲得局部性、所有人獲得可測試性。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h2>Glossary</h2></div><div class="col-zh" lang="zh-Hant"><h2>詞彙表</h2></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Use these terms exactly — don't substitute "component," "service," "API," or "boundary." Consistent language is the whole point.</p></div><div class="col-zh" lang="zh-Hant"><p>精確使用這些術語——不要替換成「component」「service」「API」或「boundary」。一致的語言就是重點。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p><strong>Module</strong> — anything with an interface and an implementation. Deliberately scale-agnostic: a function, class, package, or tier-spanning slice. <em>Avoid</em>: unit, component, service.</p></div><div class="col-zh" lang="zh-Hant"><p><strong>模組</strong>——任何有介面與實作的東西。刻意地與規模無關：一個函式、類別、套件，或橫跨層級的切片。<em>Avoid</em>: unit、component、service。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p><strong>Interface</strong> — everything a caller must know to use the module correctly: the type signature, but also invariants, ordering constraints, error modes, required configuration, and performance characteristics. <em>Avoid</em>: API, signature (too narrow — they refer only to the type-level surface).</p></div><div class="col-zh" lang="zh-Hant"><p><strong>介面</strong>——呼叫者要正確使用模組所需知道的一切：型別簽名，也包括不變量、順序約束、錯誤模式、必要的設定，與效能特徵。<em>Avoid</em>: API、signature（太窄——它們只指型別層級的表面）。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p><strong>Implementation</strong> — what's inside a module, its body of code. Distinct from <strong>Adapter</strong>: a thing can be a small adapter with a large implementation (a Postgres repo) or a large adapter with a small implementation (an in-memory fake). Reach for "adapter" when the seam is the topic; "implementation" otherwise.</p></div><div class="col-zh" lang="zh-Hant"><p><strong>實作</strong>——模組裡面的東西，它的程式碼本體。與<strong>轉接器</strong>區別：一個東西可以是小轉接器配大實作（Postgres repo），或大轉接器配小實作（記憶體中的假物件）。當主題是接縫時用「轉接器」；其他情況用「實作」。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p><strong>Depth</strong> — leverage at the interface: the amount of behaviour a caller (or test) can exercise per unit of interface they have to learn. A module is <strong>deep</strong> when a large amount of behaviour sits behind a small interface, <strong>shallow</strong> when the interface is nearly as complex as the implementation.</p></div><div class="col-zh" lang="zh-Hant"><p><strong>深度</strong>——介面上的槓桿收益：呼叫者（或測試）每學習一單位介面所能行使的行為量。當大量行為藏在一個小介面後面時，模組是<strong>深的</strong>；當介面幾乎跟實作一樣複雜時是<strong>淺的</strong>。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p><strong>Seam</strong> <em>(Michael Feathers)</em> — a place where you can alter behaviour without editing in that place; the <em>location</em> at which a module's interface lives. Where to put the seam is its own design decision, distinct from what goes behind it. <em>Avoid</em>: boundary (overloaded with DDD's bounded context).</p></div><div class="col-zh" lang="zh-Hant"><p><strong>接縫</strong> <em>(Michael Feathers)</em>——一個你可以不用在原地編輯就能改變行為的地方；模組介面所在的<em>位置</em>。接縫放哪裡本身是一個設計決策，與放在它後面的是什麼是兩回事。<em>Avoid</em>: boundary（與 DDD 的 bounded context 過載）。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p><strong>Adapter</strong> — a concrete thing that satisfies an interface at a seam. Describes <em>role</em> (what slot it fills), not substance (what's inside).</p></div><div class="col-zh" lang="zh-Hant"><p><strong>轉接器</strong>——在接縫處滿足某個介面的具體東西。描述<em>角色</em>（它填補什麼槽位），不是實體（裡面是什麼）。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p><strong>Leverage</strong> — what callers get from depth: more capability per unit of interface they learn. One implementation pays back across N call sites and M tests.</p></div><div class="col-zh" lang="zh-Hant"><p><strong>槓桿收益</strong>——呼叫者從深度得到的：每學習一單位介面獲得更多能力。一份實作在 N 個呼叫點與 M 個測試之間回本。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p><strong>Locality</strong> — what maintainers get from depth: change, bugs, knowledge, and verification concentrate in one place rather than spreading across callers. Fix once, fixed everywhere.</p></div><div class="col-zh" lang="zh-Hant"><p><strong>局部性</strong>——維護者從深度得到的：變更、bug、知識與驗證集中在一個地方，而不是散落在呼叫者之間。修一次，處處修好。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h2>Deep vs shallow</h2></div><div class="col-zh" lang="zh-Hant"><h2>深 vs 淺</h2></div></div>
+<div class="pair"><div class="col-en" lang="en"><p><strong>Deep module</strong> = small interface + lots of implementation:</p></div><div class="col-zh" lang="zh-Hant"><p><strong>深模組</strong> = 小介面 + 大量實作：</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><pre><code>┌─────────────────────┐
+│   Small Interface   │  ← Few methods, simple params
+├─────────────────────┤
+│                     │
+│  Deep Implementation│  ← Complex logic hidden
+│                     │
+└─────────────────────┘
+</code></pre></div><div class="col-zh" lang="zh-Hant"><pre><code>┌─────────────────────┐
+│   Small Interface   │  ← Few methods, simple params
+├─────────────────────┤
+│                     │
+│  Deep Implementation│  ← Complex logic hidden
+│                     │
+└─────────────────────┘
+</code></pre></div></div>
+<div class="pair"><div class="col-en" lang="en"><p><strong>Shallow module</strong> = large interface + little implementation (avoid):</p></div><div class="col-zh" lang="zh-Hant"><p><strong>淺模組</strong> = 大介面 + 少許實作（避免）：</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><pre><code>┌─────────────────────────────────┐
+│       Large Interface           │  ← Many methods, complex params
+├─────────────────────────────────┤
+│  Thin Implementation            │  ← Just passes through
+└─────────────────────────────────┘
+</code></pre></div><div class="col-zh" lang="zh-Hant"><pre><code>┌─────────────────────────────────┐
+│       Large Interface           │  ← Many methods, complex params
+├─────────────────────────────────┤
+│  Thin Implementation            │  ← Just passes through
+└─────────────────────────────────┘
+</code></pre></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>When designing an interface, ask:</p></div><div class="col-zh" lang="zh-Hant"><p>設計介面時問：</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><ul>
+<li>Can I reduce the number of methods?</li>
+<li>Can I simplify the parameters?</li>
+<li>Can I hide more complexity inside?</li>
+</ul></div><div class="col-zh" lang="zh-Hant"><ul>
+<li>我能減少方法數量嗎？</li>
+<li>我能簡化參數嗎？</li>
+<li>我能把更多複雜度藏在裡面嗎？</li>
+</ul></div></div>
+<div class="pair"><div class="col-en" lang="en"><h2>Principles</h2></div><div class="col-zh" lang="zh-Hant"><h2>原則</h2></div></div>
+<div class="pair"><div class="col-en" lang="en"><ul>
+<li><strong>Depth is a property of the interface, not the implementation.</strong> A deep module can be internally composed of small, mockable, swappable parts — they just aren't part of the interface. A module can have <strong>internal seams</strong> (private to its implementation, used by its own tests) as well as the <strong>external seam</strong> at its interface.</li>
+<li><strong>The deletion test.</strong> Imagine deleting the module. If complexity vanishes, it was a pass-through. If complexity reappears across N callers, it was earning its keep.</li>
+<li><strong>The interface is the test surface.</strong> Callers and tests cross the same seam. If you want to test <em>past</em> the interface, the module is probably the wrong shape.</li>
+<li><strong>One adapter means a hypothetical seam. Two adapters means a real one.</strong> Don't introduce a seam unless something actually varies across it.</li>
+</ul></div><div class="col-zh" lang="zh-Hant"><ul>
+<li><strong>深度是介面的屬性，不是實作的屬性。</strong> 深模組可以在內部由小而可模擬、可替換的部件組成——它們只是不是介面的一部分。模組可以同時有<strong>內部接縫</strong>（實作私有、供自己的測試使用）以及位於其介面上的<strong>外部接縫</strong>。</li>
+<li><strong>刪除測試。</strong> 想像刪掉這個模組。如果複雜度消失，它只是個轉送層。如果複雜度在 N 個呼叫者之間重現，它在賺自己的住宿費。</li>
+<li><strong>介面就是測試表面。</strong> 呼叫者和測試跨越同一個接縫。如果你想測試到介面<em>之後</em>，模組大概形狀錯了。</li>
+<li><strong>一個轉接器意味著假設性接縫；兩個轉接器意味著真實接縫。</strong> 除非有什麼東西真的跨越它而變化，否則不要引入接縫。</li>
+</ul></div></div>
+<div class="pair"><div class="col-en" lang="en"><h2>Designing for testability</h2></div><div class="col-zh" lang="zh-Hant"><h2>為可測試性設計</h2></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Good interfaces make testing natural:</p></div><div class="col-zh" lang="zh-Hant"><p>好介面讓測試很自然：</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><ol>
+<li><strong>Accept dependencies, don't create them.</strong></li>
+</ol></div><div class="col-zh" lang="zh-Hant"><ol>
+<li><strong>接受相依，不要製造相依。</strong></li>
+</ol></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>```typescript
+   // Testable
+   function processOrder(order, paymentGateway) {}</p>
+<p>// Hard to test
+   function processOrder(order) {
+     const gateway = new StripeGateway();
+   }
+   ```</p></div><div class="col-zh" lang="zh-Hant"><p>```typescript
+   // Testable
+   function processOrder(order, paymentGateway) {}</p>
+<p>// Hard to test
+   function processOrder(order) {
+     const gateway = new StripeGateway();
+   }
+   ```</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><ol start="2">
+<li><strong>Return results, don't produce side effects.</strong></li>
+</ol></div><div class="col-zh" lang="zh-Hant"><ol start="2">
+<li><strong>回傳結果，不要製造副作用。</strong></li>
+</ol></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>```typescript
+   // Testable
+   function calculateDiscount(cart): Discount {}</p>
+<p>// Hard to test
+   function applyDiscount(cart): void {
+     cart.total -= discount;
+   }
+   ```</p></div><div class="col-zh" lang="zh-Hant"><p>```typescript
+   // Testable
+   function calculateDiscount(cart): Discount {}</p>
+<p>// Hard to test
+   function applyDiscount(cart): void {
+     cart.total -= discount;
+   }
+   ```</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><ol start="3">
+<li><strong>Small surface area.</strong> Fewer methods = fewer tests needed. Fewer params = simpler test setup.</li>
+</ol></div><div class="col-zh" lang="zh-Hant"><ol start="3">
+<li><strong>小表面積。</strong> 方法更少 = 需要的測試更少。參數更少 = 測試設定更簡單。</li>
+</ol></div></div>
+<div class="pair"><div class="col-en" lang="en"><h2>Relationships</h2></div><div class="col-zh" lang="zh-Hant"><h2>關係</h2></div></div>
+<div class="pair"><div class="col-en" lang="en"><ul>
+<li>A <strong>Module</strong> has exactly one <strong>Interface</strong> (the surface it presents to callers and tests).</li>
+<li><strong>Depth</strong> is a property of a <strong>Module</strong>, measured against its <strong>Interface</strong>.</li>
+<li>A <strong>Seam</strong> is where a <strong>Module</strong>'s <strong>Interface</strong> lives.</li>
+<li>An <strong>Adapter</strong> sits at a <strong>Seam</strong> and satisfies the <strong>Interface</strong>.</li>
+<li><strong>Depth</strong> produces <strong>Leverage</strong> for callers and <strong>Locality</strong> for maintainers.</li>
+</ul></div><div class="col-zh" lang="zh-Hant"><ul>
+<li>一個<strong>模組</strong>剛好有一個<strong>介面</strong>（它呈現在呼叫者與測試面前的表面）。</li>
+<li><strong>深度</strong>是<strong>模組</strong>的屬性，相對於它的<strong>介面</strong>來衡量。</li>
+<li><strong>接縫</strong>是<strong>模組</strong>的<strong>介面</strong>所在之處。</li>
+<li><strong>轉接器</strong>坐在<strong>接縫</strong>處並滿足<strong>介面</strong>。</li>
+<li><strong>深度</strong>為呼叫者產生<strong>槓桿收益</strong>、為維護者產生<strong>局部性</strong>。</li>
+</ul></div></div>
+<div class="pair"><div class="col-en" lang="en"><h2>Rejected framings</h2></div><div class="col-zh" lang="zh-Hant"><h2>被否決的框架</h2></div></div>
+<div class="pair"><div class="col-en" lang="en"><ul>
+<li><strong>Depth as ratio of implementation-lines to interface-lines</strong> (Ousterhout): rewards padding the implementation. We use depth-as-leverage instead.</li>
+<li><strong>"Interface" as the TypeScript <code>interface</code> keyword or a class's public methods</strong>: too narrow — interface here includes every fact a caller must know.</li>
+<li><strong>"Boundary"</strong>: overloaded with DDD's bounded context. Say <strong>seam</strong> or <strong>interface</strong>.</li>
+</ul></div><div class="col-zh" lang="zh-Hant"><ul>
+<li><strong>把深度當成實作行數對介面行數的比率</strong>（Ousterhout）：獎勵灌水實作。我們改用深度即槓桿收益。</li>
+<li><strong>把「介面」當成 TypeScript 的 <code>interface</code> 關鍵字或類別的公開方法</strong>：太窄——這裡的介面包含呼叫者必須知道的每一件事實。</li>
+<li><strong>「boundary」</strong>：與 DDD 的 bounded context 過載。說<strong>seam</strong>或<strong>interface</strong>。</li>
+</ul></div></div>
+<div class="pair"><div class="col-en" lang="en"><h2>Going deeper</h2></div><div class="col-zh" lang="zh-Hant"><h2>深入下去</h2></div></div>
+<div class="pair"><div class="col-en" lang="en"><ul>
+<li><strong>Deepening a cluster given its dependencies</strong> — see <a href="DEEPENING.html">DEEPENING.md</a>: dependency categories, seam discipline, and replace-don't-layer testing.</li>
+<li><strong>Exploring alternative interfaces</strong> — see <a href="DESIGN-IT-TWICE.html">DESIGN-IT-TWICE.md</a>: spin up parallel sub-agents to design the interface several radically different ways, then compare on depth, locality, and seam placement.</li>
+</ul></div><div class="col-zh" lang="zh-Hant"><ul>
+<li><strong>考量其相依而深化一個叢集</strong>——見 <a href="DEEPENING.html">DEEPENING.md</a>：相依分類、接縫紀律，以及「取代而不分層」的測試。</li>
+<li><strong>探索替代介面</strong>——見 <a href="DESIGN-IT-TWICE.html">DESIGN-IT-TWICE.md</a>：並行啟動子代理，用幾種截然不同的方式設計介面，然後在深度、局部性與接縫位置之間比較。</li>
+</ul></div></div>
+
+</div>
+</body>
+</html>

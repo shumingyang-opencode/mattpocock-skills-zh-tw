@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>domain-modeling / ADR-FORMAT · mattpocock-skills-zh-tw</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Noto+Serif+TC:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<div class="container">
+<div class="back-link">
+  <a href="../index.html">首頁</a>
+  <a href="../map.html">技能地圖</a>
+  <a href="../learning-path.html">學習路線</a>
+  <a href="SKILL.html">← 技能主頁 domain-modeling</a> 
+</div>
+<h1>ADR-FORMAT</h1>
+<div class="subtitle">domain-modeling · 附屬文件</div>
+<div class="pair"><div class="col-en" lang="en"><h1>ADR Format</h1></div><div class="col-zh" lang="zh-Hant"><h1>ADR 格式</h1></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>ADRs live in <code>docs/adr/</code> and use sequential numbering: <code>0001-slug.md</code>, <code>0002-slug.md</code>, etc.</p></div><div class="col-zh" lang="zh-Hant"><p>ADR 放在 <code>docs/adr/</code> 中，使用循序編號：<code>0001-slug.md</code>、<code>0002-slug.md</code> 等。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Create the <code>docs/adr/</code> directory lazily — only when the first ADR is needed.</p></div><div class="col-zh" lang="zh-Hant"><p>惰性地建立 <code>docs/adr/</code> 目錄——只在需要第一個 ADR 時才建。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h2>Template</h2></div><div class="col-zh" lang="zh-Hant"><h2>模板</h2></div></div>
+<div class="pair"><div class="col-en" lang="en"><pre><code class="language-md"># {Short title of the decision}
+
+{1-3 sentences: what's the context, what did we decide, and why.}
+</code></pre></div><div class="col-zh" lang="zh-Hant"><pre><code class="language-md"># {Short title of the decision}
+
+{1-3 sentences: what's the context, what did we decide, and why.}
+</code></pre></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>That's it. An ADR can be a single paragraph. The value is in recording <em>that</em> a decision was made and <em>why</em> — not in filling out sections.</p></div><div class="col-zh" lang="zh-Hant"><p>就這樣。ADR 可以只是一個段落。價值在於記錄_做了_一個決策以及_為什麼_——不在於填滿章節。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h2>Optional sections</h2></div><div class="col-zh" lang="zh-Hant"><h2>選擇性章節</h2></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Only include these when they add genuine value. Most ADRs won't need them.</p></div><div class="col-zh" lang="zh-Hant"><p>只有當它們帶來真正的價值時才納入。多數 ADR 不需要它們。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><ul>
+<li><strong>Status</strong> frontmatter (<code>proposed | accepted | deprecated | superseded by ADR-NNNN</code>) — useful when decisions are revisited</li>
+<li><strong>Considered Options</strong> — only when the rejected alternatives are worth remembering</li>
+<li><strong>Consequences</strong> — only when non-obvious downstream effects need to be called out</li>
+</ul></div><div class="col-zh" lang="zh-Hant"><ul>
+<li><strong>Status</strong> frontmatter（<code>proposed | accepted | deprecated | superseded by ADR-NNNN</code>）——當決策會被重新檢視時有用</li>
+<li><strong>Considered Options</strong>——只有當被否決的替代方案值得記住時</li>
+<li><strong>Consequences</strong>——只有當不明顯的下游影響需要被點出時</li>
+</ul></div></div>
+<div class="pair"><div class="col-en" lang="en"><h2>Numbering</h2></div><div class="col-zh" lang="zh-Hant"><h2>編號</h2></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Scan <code>docs/adr/</code> for the highest existing number and increment by one.</p></div><div class="col-zh" lang="zh-Hant"><p>掃描 <code>docs/adr/</code> 中最大的既有編號並加一。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h2>When to offer an ADR</h2></div><div class="col-zh" lang="zh-Hant"><h2>何時提出 ADR</h2></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>All three of these must be true:</p></div><div class="col-zh" lang="zh-Hant"><p>以下三項都必須成立：</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><ol>
+<li><strong>Hard to reverse</strong> — the cost of changing your mind later is meaningful</li>
+<li><strong>Surprising without context</strong> — a future reader will look at the code and wonder "why on earth did they do it this way?"</li>
+<li><strong>The result of a real trade-off</strong> — there were genuine alternatives and you picked one for specific reasons</li>
+</ol></div><div class="col-zh" lang="zh-Hant"><ol>
+<li><strong>難以逆轉</strong>——之後改變心意的成本是實際的</li>
+<li><strong>沒有上下文會令人驚訝</strong>——未來的讀者會看著程式碼想「他們到底為什麼要這樣做？」</li>
+<li><strong>真實取捨的結果</strong>——存在真正的替代方案，你基於特定理由選了其中一個</li>
+</ol></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>If a decision is easy to reverse, skip it — you'll just reverse it. If it's not surprising, nobody will wonder why. If there was no real alternative, there's nothing to record beyond "we did the obvious thing."</p></div><div class="col-zh" lang="zh-Hant"><p>如果決策容易逆轉，就跳過——你只會把它逆轉回來。如果不令人驚訝，沒人會問為什麼。如果沒有真正的替代方案，除了「我們做了顯而易見的事」之外沒有什麼好記錄的。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h3>What qualifies</h3></div><div class="col-zh" lang="zh-Hant"><h3>什麼夠格</h3></div></div>
+<div class="pair"><div class="col-en" lang="en"><ul>
+<li><strong>Architectural shape.</strong> "We're using a monorepo." "The write model is event-sourced, the read model is projected into Postgres."</li>
+<li><strong>Integration patterns between contexts.</strong> "Ordering and Billing communicate via domain events, not synchronous HTTP."</li>
+<li><strong>Technology choices that carry lock-in.</strong> Database, message bus, auth provider, deployment target. Not every library — just the ones that would take a quarter to swap out.</li>
+<li><strong>Boundary and scope decisions.</strong> "Customer data is owned by the Customer context; other contexts reference it by ID only." The explicit no-s are as valuable as the yes-s.</li>
+<li><strong>Deliberate deviations from the obvious path.</strong> "We're using manual SQL instead of an ORM because X." Anything where a reasonable reader would assume the opposite. These stop the next engineer from "fixing" something that was deliberate.</li>
+<li><strong>Constraints not visible in the code.</strong> "We can't use AWS because of compliance requirements." "Response times must be under 200ms because of the partner API contract."</li>
+<li><strong>Rejected alternatives when the rejection is non-obvious.</strong> If you considered GraphQL and picked REST for subtle reasons, record it — otherwise someone will suggest GraphQL again in six months.</li>
+</ul></div><div class="col-zh" lang="zh-Hant"><ul>
+<li><strong>架構形狀。</strong>「我們在用 monorepo。」「寫入模型是事件溯源，讀取模型投射到 Postgres。」</li>
+<li><strong>上下文之間的整合模式。</strong>「Ordering 和 Billing 透過領域事件溝通，而不是同步 HTTP。」</li>
+<li><strong>帶有鎖定成本的技術選擇。</strong>資料庫、訊息匯流排、認證提供者、部署目標。不是每個函式庫——只有那些換掉要花一季的。</li>
+<li><strong>邊界與範圍決策。</strong>「Customer 資料由 Customer 上下文擁有；其他上下文只以 ID 引用它。」明確的 no 和 yes 一樣有價值。</li>
+<li><strong>刻意偏離顯而易見的路徑。</strong>「我們用人工 SQL 而不是 ORM，因為 X。」任何合理讀者會預設相反的場合。這些能阻止下一位工程師「修正」某件刻意做的事。</li>
+<li><strong>程式碼中看不見的約束。</strong>「因為法規遵循需求，我們不能用 AWS。」「因為合作夥伴 API 契約，回應時間必須低於 200ms。」</li>
+<li><strong>否決不明顯時的否決替代方案。</strong>如果你考慮過 GraphQL 卻因微妙理由選了 REST，記錄它——否則半年後又會有人建議 GraphQL。</li>
+</ul></div></div>
+
+</div>
+</body>
+</html>

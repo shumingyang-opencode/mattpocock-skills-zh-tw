@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>setup-pre-commit · 設定 pre-commit · mattpocock-skills-zh-tw</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Noto+Serif+TC:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<div class="container">
+<div class="back-link">
+  <a href="../index.html">首頁</a>
+  <a href="../map.html">技能地圖</a>
+  <a href="../learning-path.html">學習路線</a>
+  
+</div>
+<table class="fm-table">
+<tr><td>name</td><td><code>setup-pre-commit</code></td></tr>
+<tr><td>description (EN)</td><td>Set up Husky pre-commit hooks with lint-staged (Prettier), type checking, and tests in the current repo. Use when user wants to add pre-commit hooks, set up Husky, configure lint-staged, or add commit-time formatting/typechecking/testing.</td></tr>
+<tr><td>說明 (繁中)</td><td>在目前的 repo 中以 lint-staged（Prettier）、型別檢查與測試設定 Husky pre-commit hooks。當使用者想要新增 pre-commit hooks、設定 Husky、設定 lint-staged，或新增提交時的格式化/型別檢查/測試時使用。</td></tr>
+</table>
+<h1>setup-pre-commit</h1>
+<div class="subtitle">設定 pre-commit</div>
+<div class="pair"><div class="col-en" lang="en"><h1>Setup Pre-Commit Hooks</h1></div><div class="col-zh" lang="zh-Hant"><h1>設定 Pre-Commit Hooks</h1></div></div>
+<div class="pair"><div class="col-en" lang="en"><h2>What This Sets Up</h2></div><div class="col-zh" lang="zh-Hant"><h2>這會設定什麼</h2></div></div>
+<div class="pair"><div class="col-en" lang="en"><ul>
+<li><strong>Husky</strong> pre-commit hook</li>
+<li><strong>lint-staged</strong> running Prettier on all staged files</li>
+<li><strong>Prettier</strong> config (if missing)</li>
+<li><strong>typecheck</strong> and <strong>test</strong> scripts in the pre-commit hook</li>
+</ul></div><div class="col-zh" lang="zh-Hant"><ul>
+<li><strong>Husky</strong> pre-commit hook</li>
+<li><strong>lint-staged</strong> 在所有已暫存的檔案上執行 Prettier</li>
+<li><strong>Prettier</strong> 設定（如果缺少）</li>
+<li>pre-commit hook 中的 <strong>typecheck</strong> 與 <strong>test</strong> 腳本</li>
+</ul></div></div>
+<div class="pair"><div class="col-en" lang="en"><h2>Steps</h2></div><div class="col-zh" lang="zh-Hant"><h2>步驟</h2></div></div>
+<div class="pair"><div class="col-en" lang="en"><h3>1. Detect package manager</h3></div><div class="col-zh" lang="zh-Hant"><h3>1. 偵測套件管理員</h3></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Check for <code>package-lock.json</code> (npm), <code>pnpm-lock.yaml</code> (pnpm), <code>yarn.lock</code> (yarn), <code>bun.lockb</code> (bun). Use whichever is present. Default to npm if unclear.</p></div><div class="col-zh" lang="zh-Hant"><p>檢查 <code>package-lock.json</code>（npm）、<code>pnpm-lock.yaml</code>（pnpm）、<code>yarn.lock</code>（yarn）、<code>bun.lockb</code>（bun）。使用存在的那個。如果不清楚，預設為 npm。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h3>2. Install dependencies</h3></div><div class="col-zh" lang="zh-Hant"><h3>2. 安裝相依套件</h3></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Install as devDependencies:</p></div><div class="col-zh" lang="zh-Hant"><p>安裝為 devDependencies：</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><pre><code>husky lint-staged prettier
+</code></pre></div><div class="col-zh" lang="zh-Hant"><pre><code>husky lint-staged prettier
+</code></pre></div></div>
+<div class="pair"><div class="col-en" lang="en"><h3>3. Initialize Husky</h3></div><div class="col-zh" lang="zh-Hant"><h3>3. 初始化 Husky</h3></div></div>
+<div class="pair"><div class="col-en" lang="en"><pre><code class="language-bash">npx husky init
+</code></pre></div><div class="col-zh" lang="zh-Hant"><pre><code class="language-bash">npx husky init
+</code></pre></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>This creates <code>.husky/</code> dir and adds <code>prepare: "husky"</code> to package.json.</p></div><div class="col-zh" lang="zh-Hant"><p>這會建立 <code>.husky/</code> 目錄，並將 <code>prepare: "husky"</code> 加到 package.json。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h3>4. Create <code>.husky/pre-commit</code></h3></div><div class="col-zh" lang="zh-Hant"><h3>4. 建立 <code>.husky/pre-commit</code></h3></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Write this file (no shebang needed for Husky v9+):</p></div><div class="col-zh" lang="zh-Hant"><p>寫入這個檔案（Husky v9+ 不需要 shebang）：</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><pre><code>npx lint-staged
+npm run typecheck
+npm run test
+</code></pre></div><div class="col-zh" lang="zh-Hant"><pre><code>npx lint-staged
+npm run typecheck
+npm run test
+</code></pre></div></div>
+<div class="pair"><div class="col-en" lang="en"><p><strong>Adapt</strong>: Replace <code>npm</code> with detected package manager. If repo has no <code>typecheck</code> or <code>test</code> script in package.json, omit those lines and tell the user.</p></div><div class="col-zh" lang="zh-Hant"><p><strong>調整</strong>：將 <code>npm</code> 取代為偵測到的套件管理員。如果 repo 在 package.json 中沒有 <code>typecheck</code> 或 <code>test</code> 腳本，省略那些行並告知使用者。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h3>5. Create <code>.lintstagedrc</code></h3></div><div class="col-zh" lang="zh-Hant"><h3>5. 建立 <code>.lintstagedrc</code></h3></div></div>
+<div class="pair"><div class="col-en" lang="en"><pre><code class="language-json">{
+  &quot;*&quot;: &quot;prettier --ignore-unknown --write&quot;
+}
+</code></pre></div><div class="col-zh" lang="zh-Hant"><pre><code class="language-json">{
+  &quot;*&quot;: &quot;prettier --ignore-unknown --write&quot;
+}
+</code></pre></div></div>
+<div class="pair"><div class="col-en" lang="en"><h3>6. Create <code>.prettierrc</code> (if missing)</h3></div><div class="col-zh" lang="zh-Hant"><h3>6. 建立 <code>.prettierrc</code>（如果缺少）</h3></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Only create if no Prettier config exists. Use these defaults:</p></div><div class="col-zh" lang="zh-Hant"><p>只有當沒有 Prettier 設定存在時才建立。使用這些預設值：</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><pre><code class="language-json">{
+  &quot;useTabs&quot;: false,
+  &quot;tabWidth&quot;: 2,
+  &quot;printWidth&quot;: 80,
+  &quot;singleQuote&quot;: false,
+  &quot;trailingComma&quot;: &quot;es5&quot;,
+  &quot;semi&quot;: true,
+  &quot;arrowParens&quot;: &quot;always&quot;
+}
+</code></pre></div><div class="col-zh" lang="zh-Hant"><pre><code class="language-json">{
+  &quot;useTabs&quot;: false,
+  &quot;tabWidth&quot;: 2,
+  &quot;printWidth&quot;: 80,
+  &quot;singleQuote&quot;: false,
+  &quot;trailingComma&quot;: &quot;es5&quot;,
+  &quot;semi&quot;: true,
+  &quot;arrowParens&quot;: &quot;always&quot;
+}
+</code></pre></div></div>
+<div class="pair"><div class="col-en" lang="en"><h3>7. Verify</h3></div><div class="col-zh" lang="zh-Hant"><h3>7. 驗證</h3></div></div>
+<div class="pair"><div class="col-en" lang="en"><ul>
+<li>[ ] <code>.husky/pre-commit</code> exists and is executable</li>
+<li>[ ] <code>.lintstagedrc</code> exists</li>
+<li>[ ] <code>prepare</code> script in package.json is <code>"husky"</code></li>
+<li>[ ] <code>prettier</code> config exists</li>
+<li>[ ] Run <code>npx lint-staged</code> to verify it works</li>
+</ul></div><div class="col-zh" lang="zh-Hant"><ul>
+<li>[ ] <code>.husky/pre-commit</code> 存在且可執行</li>
+<li>[ ] <code>.lintstagedrc</code> 存在</li>
+<li>[ ] package.json 中的 <code>prepare</code> 腳本是 <code>"husky"</code></li>
+<li>[ ] <code>prettier</code> 設定存在</li>
+<li>[ ] 執行 <code>npx lint-staged</code> 來驗證它可以運作</li>
+</ul></div></div>
+<div class="pair"><div class="col-en" lang="en"><h3>8. Commit</h3></div><div class="col-zh" lang="zh-Hant"><h3>8. 提交</h3></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Stage all changed/created files and commit with message: <code>Add pre-commit hooks (husky + lint-staged + prettier)</code></p></div><div class="col-zh" lang="zh-Hant"><p>暫存所有變更/建立的檔案，並以訊息提交：<code>Add pre-commit hooks (husky + lint-staged + prettier)</code></p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>This will run through the new pre-commit hooks — a good smoke test that everything works.</p></div><div class="col-zh" lang="zh-Hant"><p>這會跑過新的 pre-commit hooks — 一個很好的煙霧測試，確認一切都能運作。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h2>Notes</h2></div><div class="col-zh" lang="zh-Hant"><h2>備註</h2></div></div>
+<div class="pair"><div class="col-en" lang="en"><ul>
+<li>Husky v9+ doesn't need shebangs in hook files</li>
+<li><code>prettier --ignore-unknown</code> skips files Prettier can't parse (images, etc.)</li>
+<li>The pre-commit runs lint-staged first (fast, staged-only), then full typecheck and tests</li>
+</ul></div><div class="col-zh" lang="zh-Hant"><ul>
+<li>Husky v9+ 不需要 hook 檔案中的 shebangs</li>
+<li><code>prettier --ignore-unknown</code> 會跳過 Prettier 無法解析的檔案（圖片等）</li>
+<li>pre-commit 先執行 lint-staged（快速、只針對已暫存），然後是完整的型別檢查與測試</li>
+</ul></div></div>
+
+</div>
+</body>
+</html>

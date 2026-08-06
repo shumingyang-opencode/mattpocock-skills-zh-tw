@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>setup-matt-pocock-skills · 前置設定 · mattpocock-skills-zh-tw</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Noto+Serif+TC:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<div class="container">
+<div class="back-link">
+  <a href="../index.html">首頁</a>
+  <a href="../map.html">技能地圖</a>
+  <a href="../learning-path.html">學習路線</a>
+  
+</div>
+<table class="fm-table">
+<tr><td>name</td><td><code>setup-matt-pocock-skills</code></td></tr>
+<tr><td>description (EN)</td><td>Configure this repo for the engineering skills — set up its issue tracker, triage label vocabulary, and domain doc layout. Run once before first use of the other engineering skills.</td></tr>
+<tr><td>說明 (繁中)</td><td>為工程技能設定這個 repo——設定它的 issue 追蹤器、分診標籤詞彙與領域文件佈局。首次使用其他工程技能前執行一次。</td></tr>
+<tr><td>disable-model-invocation</td><td><code>true</code></td></tr>
+</table>
+<h1>setup-matt-pocock-skills</h1>
+<div class="subtitle">前置設定</div>
+<div class="back-link" style="margin-top:-0.6rem">附屬文件：<a href="domain.html">domain</a>　·　<a href="issue-tracker-github.html">issue-tracker-github</a>　·　<a href="issue-tracker-gitlab.html">issue-tracker-gitlab</a>　·　<a href="issue-tracker-local.html">issue-tracker-local</a>　·　<a href="triage-labels.html">triage-labels</a></div>
+<div class="pair"><div class="col-en" lang="en"><h1>Setup Matt Pocock's Skills</h1></div><div class="col-zh" lang="zh-Hant"><h1>設定 Matt Pocock 的技能</h1></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Scaffold the per-repo configuration that the engineering skills assume:</p></div><div class="col-zh" lang="zh-Hant"><p>為工程技能假設的每個 repo 設定建立骨架：</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><ul>
+<li><strong>Issue tracker</strong> — where issues live (GitHub by default; local markdown is also supported out of the box)</li>
+<li><strong>Triage labels</strong> — the strings used for the five canonical triage roles</li>
+<li><strong>Domain docs</strong> — where <code>CONTEXT.md</code> and ADRs live, and the consumer rules for reading them</li>
+</ul></div><div class="col-zh" lang="zh-Hant"><ul>
+<li><strong>Issue 追蹤器</strong>——issue 放在哪裡（預設 GitHub；本機 markdown 也開箱即支援）</li>
+<li><strong>分診標籤</strong>——五個標準分診角色使用的字串</li>
+<li><strong>領域文件</strong>——<code>CONTEXT.md</code> 與 ADR 放在哪裡，以及讀取它們的消費規則</li>
+</ul></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>This is a prompt-driven skill, not a deterministic script. Explore, present what you found, confirm with the user, then write.</p></div><div class="col-zh" lang="zh-Hant"><p>這是一個提示驅動的技能，不是確定性腳本。探索、呈現你所發現的、與使用者確認，然後寫入。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h2>Process</h2></div><div class="col-zh" lang="zh-Hant"><h2>流程</h2></div></div>
+<div class="pair"><div class="col-en" lang="en"><h3>1. Explore</h3></div><div class="col-zh" lang="zh-Hant"><h3>1. 探索</h3></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Look at the current repo to understand its starting state. Read whatever exists; don't assume:</p></div><div class="col-zh" lang="zh-Hant"><p>檢視目前 repo，理解它的起點狀態。讀任何存在的東西；不要臆測：</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><ul>
+<li><code>git remote -v</code> and <code>.git/config</code> — is this a GitHub repo? Which one?</li>
+<li><code>AGENTS.md</code> and <code>CLAUDE.md</code> at the repo root — does either exist? Is there already an <code>## Agent skills</code> section in either?</li>
+<li><code>CONTEXT.md</code> and <code>CONTEXT-MAP.md</code> at the repo root</li>
+<li><code>docs/adr/</code> and any <code>src/*/docs/adr/</code> directories</li>
+<li><code>docs/agents/</code> — does this skill's prior output already exist?</li>
+<li><code>.scratch/</code> — sign that a local-markdown issue tracker convention is already in use</li>
+<li>Is the <code>triage</code> skill installed? (a <code>triage</code> skill folder alongside this one, or <code>triage</code> in your available skills.) This decides whether Section B runs at all.</li>
+<li>Monorepo signals — a <code>pnpm-workspace.yaml</code>, a <code>workspaces</code> field in <code>package.json</code>, or a populated <code>packages/*</code> with its own <code>src/</code>. Present only in a genuinely large multi-package repo; their absence means single-context, which is almost every repo.</li>
+</ul></div><div class="col-zh" lang="zh-Hant"><ul>
+<li><code>git remote -v</code> 與 <code>.git/config</code>——這是 GitHub repo 嗎？哪一個？</li>
+<li>repo 根目錄的 <code>AGENTS.md</code> 與 <code>CLAUDE.md</code>——兩者存在嗎？其中一個是否已經有 <code>## Agent skills</code> 章節？</li>
+<li>repo 根目錄的 <code>CONTEXT.md</code> 與 <code>CONTEXT-MAP.md</code></li>
+<li><code>docs/adr/</code> 與任何 <code>src/*/docs/adr/</code> 目錄</li>
+<li><code>docs/agents/</code>——這個技能先前的輸出是否已經存在？</li>
+<li><code>.scratch/</code>——顯示本機 markdown issue 追蹤器慣例已在使用的跡象</li>
+<li><code>triage</code> 技能有安裝嗎？（旁邊的 <code>triage</code> 技能資料夾，或在你可用的技能中。）這決定 B 章節要不要跑。</li>
+<li>Monorepo 訊號——<code>pnpm-workspace.yaml</code>、<code>package.json</code> 中的 <code>workspaces</code> 欄位，或有自己 <code>src/</code> 的 <code>packages/*</code>。只有在真正的大型多套件 repo 中才呈現；它們不存在代表單一上下文，而幾乎每個 repo 都是。</li>
+</ul></div></div>
+<div class="pair"><div class="col-en" lang="en"><h3>2. Present findings and ask</h3></div><div class="col-zh" lang="zh-Hant"><h3>2. 呈現發現並詢問</h3></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Summarise what's present and what's missing. Then take the sections in order — one section, one answer, then the next.</p></div><div class="col-zh" lang="zh-Hant"><p>總結有哪些、缺哪些。然後依序處理各章節——一個章節、一個答案，然後下一章節。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Lead each section with the recommended answer so the user can accept it in a word. Give a one-line explainer only when the choice genuinely branches; skip the section entirely when exploration already settled it (Section B when <code>triage</code> isn't installed, Section C when there's no monorepo).</p></div><div class="col-zh" lang="zh-Hant"><p>每個章節都以建議答案領頭，讓使用者一個字就能接受。只有當選擇真的分歧時才給一行說明；探索已經定案時直接跳過該章節（<code>triage</code> 未安裝時跳過 B 章節、沒有 monorepo 時跳過 C 章節）。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p><strong>Section A — Issue tracker.</strong></p></div><div class="col-zh" lang="zh-Hant"><p><strong>A 章節——Issue 追蹤器。</strong></p></div></div>
+<div class="pair"><div class="col-en" lang="en"><blockquote>
+<p>Explainer: The "issue tracker" is where issues live for this repo. Skills like <code>to-tickets</code>, <code>triage</code>, and <code>to-spec</code> read from and write to it — they need to know whether to call <code>gh issue create</code>, write a markdown file under <code>.scratch/</code>, or follow some other workflow you describe. Pick the place you actually track work for this repo.</p>
+</blockquote></div><div class="col-zh" lang="zh-Hant"><blockquote>
+<p>說明：「issue 追蹤器」是這個 repo 的 issue 所在之處。<code>to-tickets</code>、<code>triage</code> 與 <code>to-spec</code> 等技能會讀寫它——它們需要知道該呼叫 <code>gh issue create</code>、在 <code>.scratch/</code> 下寫 markdown 檔案，還是遵循你描述的其他工作流程。選一個你實際用來追蹤這個 repo 工作的場所。</p>
+</blockquote></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Default posture: these skills were designed for GitHub. If a <code>git remote</code> points at GitHub, propose that. If a <code>git remote</code> points at GitLab (<code>gitlab.com</code> or a self-hosted host), propose GitLab. Otherwise (or if the user prefers), offer:</p></div><div class="col-zh" lang="zh-Hant"><p>預設姿態：這些技能是為 GitHub 設計的。如果 <code>git remote</code> 指向 GitHub，提出 GitHub。如果 <code>git remote</code> 指向 GitLab（<code>gitlab.com</code> 或自架的 host），提出 GitLab。否則（或使用者偏好時），提供：</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><ul>
+<li><strong>GitHub</strong> — issues live in the repo's GitHub Issues (uses the <code>gh</code> CLI)</li>
+<li><strong>GitLab</strong> — issues live in the repo's GitLab Issues (uses the <a href="https://gitlab.com/gitlab-org/cli"><code>glab</code></a> CLI)</li>
+<li><strong>Local markdown</strong> — issues live as files under <code>.scratch/&lt;feature&gt;/</code> in this repo (good for solo projects or repos without a remote)</li>
+<li><strong>Other</strong> (Jira, Linear, etc.) — ask the user to describe the workflow in one paragraph; the skill will record it as freeform prose</li>
+</ul></div><div class="col-zh" lang="zh-Hant"><ul>
+<li><strong>GitHub</strong>——issue 存在 repo 的 GitHub Issues（使用 <code>gh</code> CLI）</li>
+<li><strong>GitLab</strong>——issue 存在 repo 的 GitLab Issues（使用 <a href="https://gitlab.com/gitlab-org/cli"><code>glab</code></a> CLI）</li>
+<li><strong>本機 markdown</strong>——issue 以 <code>.scratch/&lt;feature&gt;/</code> 下的檔案形式存在於此 repo（適合個人專案或沒有 remote 的 repo）</li>
+<li><strong>其他</strong>（Jira、Linear 等）——請使用者用一段話描述工作流程；技能會把它記錄為自由格式散文</li>
+</ul></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Record the choice in <code>docs/agents/issue-tracker.md</code>. The GitHub and GitLab templates carry a "PRs as a request surface" flag, defaulted <strong>off</strong> — leave it off and don't raise it; a user who wants external PRs in the triage queue can flip the flag in the file later.</p></div><div class="col-zh" lang="zh-Hant"><p>把選擇記錄在 <code>docs/agents/issue-tracker.md</code>。GitHub 與 GitLab 模板帶有「PRs as a request surface」旗標，預設<strong>關閉</strong>——保持關閉且不要提起它；想要外部 PR 進分診佇列的使用者可以之後在檔案中開啟該旗標。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p><strong>Section B — Triage label vocabulary.</strong> Skip this section entirely if the <code>triage</code> skill isn't installed (exploration told you) — an uninstalled skill needs no labels.</p></div><div class="col-zh" lang="zh-Hant"><p><strong>B 章節——分診標籤詞彙。</strong> 如果 <code>triage</code> 技能未安裝（探索已告訴你），整節跳過——未安裝的技能不需要標籤。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>If it is installed, ask exactly one question:</p></div><div class="col-zh" lang="zh-Hant"><p>如果有安裝，只問一個問題：</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><blockquote>
+<p>Do you want to keep the default triage labels? (recommended: <strong>yes</strong>)</p>
+</blockquote></div><div class="col-zh" lang="zh-Hant"><blockquote>
+<p>你想保留預設的分診標籤嗎？（建議：<strong>是</strong>）</p>
+</blockquote></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>The defaults are the five canonical roles, each label string equal to its name: <code>needs-triage</code>, <code>needs-info</code>, <code>ready-for-agent</code>, <code>ready-for-human</code>, <code>wontfix</code>. On <strong>yes</strong>, write them as-is. Only if the user says no — usually because their tracker already uses other names (e.g. <code>bug:triage</code> for <code>needs-triage</code>) — collect the overrides so <code>triage</code> applies existing labels instead of creating duplicates.</p></div><div class="col-zh" lang="zh-Hant"><p>預設就是五個標準角色，每個標籤字串等於它的名稱：<code>needs-triage</code>、<code>needs-info</code>、<code>ready-for-agent</code>、<code>ready-for-human</code>、<code>wontfix</code>。答<strong>是</strong>就原樣寫入。只有當使用者說不——通常是因為他們的追蹤器已使用其他名稱（例如用 <code>bug:triage</code> 代替 <code>needs-triage</code>）——才收集覆寫，讓 <code>triage</code> 套用既有標籤而不是建立重複的。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p><strong>Section C — Domain docs.</strong> Default to <strong>single-context</strong> — one <code>CONTEXT.md</code> + <code>docs/adr/</code> at the repo root. This fits almost every repo; write it without asking.</p></div><div class="col-zh" lang="zh-Hant"><p><strong>C 章節——領域文件。</strong> 預設<strong>單一上下文</strong>——repo 根目錄一份 <code>CONTEXT.md</code> + <code>docs/adr/</code>。這適合幾乎每個 repo；不用問就寫。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Offer <strong>multi-context</strong> — a root <code>CONTEXT-MAP.md</code> pointing to per-context <code>CONTEXT.md</code> files — only when exploration found monorepo signals. Then confirm which layout they want.</p></div><div class="col-zh" lang="zh-Hant"><p>只有當探索發現 monorepo 訊號時，才提供<strong>多上下文</strong>——根目錄的 <code>CONTEXT-MAP.md</code> 指向每個上下文的 <code>CONTEXT.md</code> 檔案。然後確認他們想要哪種佈局。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h3>3. Confirm and edit</h3></div><div class="col-zh" lang="zh-Hant"><h3>3. 確認與編輯</h3></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Show the user a draft of:</p></div><div class="col-zh" lang="zh-Hant"><p>給使用者看草稿：</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><ul>
+<li>The <code>## Agent skills</code> block to add to whichever of <code>CLAUDE.md</code> / <code>AGENTS.md</code> is being edited (see step 4 for selection rules)</li>
+<li>The contents of <code>docs/agents/issue-tracker.md</code>, <code>docs/agents/domain.md</code>, and <code>docs/agents/triage-labels.md</code> (the last only when <code>triage</code> is installed)</li>
+</ul></div><div class="col-zh" lang="zh-Hant"><ul>
+<li>要加入 <code>CLAUDE.md</code> / <code>AGENTS.md</code> 其中一個（見第 4 步的選擇規則）的 <code>## Agent skills</code> 區塊</li>
+<li><code>docs/agents/issue-tracker.md</code>、<code>docs/agents/domain.md</code> 與 <code>docs/agents/triage-labels.md</code> 的內容（最後一個只在 <code>triage</code> 已安裝時）</li>
+</ul></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Let them edit before writing.</p></div><div class="col-zh" lang="zh-Hant"><p>寫入前讓他們編輯。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h3>4. Write</h3></div><div class="col-zh" lang="zh-Hant"><h3>4. 寫入</h3></div></div>
+<div class="pair"><div class="col-en" lang="en"><p><strong>Pick the file to edit:</strong></p></div><div class="col-zh" lang="zh-Hant"><p><strong>選擇要編輯的檔案：</strong></p></div></div>
+<div class="pair"><div class="col-en" lang="en"><ul>
+<li>If <code>CLAUDE.md</code> exists, edit it.</li>
+<li>Else if <code>AGENTS.md</code> exists, edit it.</li>
+<li>If neither exists, ask the user which one to create — don't pick for them.</li>
+</ul></div><div class="col-zh" lang="zh-Hant"><ul>
+<li>如果 <code>CLAUDE.md</code> 存在，編輯它。</li>
+<li>否則如果 <code>AGENTS.md</code> 存在，編輯它。</li>
+<li>如果兩者都不存在，問使用者要建立哪個——不要替他們選。</li>
+</ul></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Never create <code>AGENTS.md</code> when <code>CLAUDE.md</code> already exists (or vice versa) — always edit the one that's already there.</p></div><div class="col-zh" lang="zh-Hant"><p>當 <code>CLAUDE.md</code> 已經存在時，絕不建立 <code>AGENTS.md</code>（反之亦然）——永遠編輯已經在那裡的。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>If an <code>## Agent skills</code> block already exists in the chosen file, update its contents in-place rather than appending a duplicate. Don't overwrite user edits to the surrounding sections.</p></div><div class="col-zh" lang="zh-Hant"><p>如果所選檔案中已有 <code>## Agent skills</code> 區塊，就地更新它的內容，而不是附加重複的。不要覆寫使用者對周邊章節的編輯。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>The block:</p></div><div class="col-zh" lang="zh-Hant"><p>區塊：</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><pre><code class="language-markdown">## Agent skills
+
+### Issue tracker
+
+[one-line summary of where issues are tracked]. See `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+[one-line summary of the label vocabulary]. See `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+[one-line summary of layout — &quot;single-context&quot; or &quot;multi-context&quot;]. See `docs/agents/domain.md`.
+</code></pre></div><div class="col-zh" lang="zh-Hant"><pre><code class="language-markdown">## Agent skills
+
+### Issue tracker
+
+[one-line summary of where issues are tracked]. See `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+[one-line summary of the label vocabulary]. See `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+[one-line summary of layout — &quot;single-context&quot; or &quot;multi-context&quot;]. See `docs/agents/domain.md`.
+</code></pre></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Include the <code>### Triage labels</code> sub-block, and write <code>docs/agents/triage-labels.md</code>, only when <code>triage</code> is installed and Section B ran. When it isn't, both are omitted.</p></div><div class="col-zh" lang="zh-Hant"><p>只在 <code>triage</code> 已安裝且 B 章節有跑時，包含 <code>### Triage labels</code> 子區塊並寫 <code>docs/agents/triage-labels.md</code>。沒安裝時，兩者都省略。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Then write the docs files using the seed templates in this skill folder as a starting point:</p></div><div class="col-zh" lang="zh-Hant"><p>然後用本技能資料夾中的種子模板作為起點寫文件檔案：</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><ul>
+<li><a href="issue-tracker-github.html">issue-tracker-github.md</a> — GitHub issue tracker</li>
+<li><a href="issue-tracker-gitlab.html">issue-tracker-gitlab.md</a> — GitLab issue tracker</li>
+<li><a href="issue-tracker-local.html">issue-tracker-local.md</a> — local-markdown issue tracker</li>
+<li><a href="triage-labels.html">triage-labels.md</a> — label mapping (only if <code>triage</code> is installed)</li>
+<li><a href="domain.html">domain.md</a> — domain doc consumer rules + layout</li>
+</ul></div><div class="col-zh" lang="zh-Hant"><ul>
+<li><a href="issue-tracker-github.html">issue-tracker-github.md</a> — GitHub issue 追蹤器</li>
+<li><a href="issue-tracker-gitlab.html">issue-tracker-gitlab.md</a> — GitLab issue 追蹤器</li>
+<li><a href="issue-tracker-local.html">issue-tracker-local.md</a> — 本機 markdown issue 追蹤器</li>
+<li><a href="triage-labels.html">triage-labels.md</a> — 標籤對應（只有 <code>triage</code> 已安裝時）</li>
+<li><a href="domain.html">domain.md</a> — 領域文件消費規則 + 佈局</li>
+</ul></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>For "other" issue trackers, write <code>docs/agents/issue-tracker.md</code> from scratch using the user's description.</p></div><div class="col-zh" lang="zh-Hant"><p>對「其他」issue 追蹤器，從零用使用者的描述寫 <code>docs/agents/issue-tracker.md</code>。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h3>5. Done</h3></div><div class="col-zh" lang="zh-Hant"><h3>5. 完成</h3></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Tell the user the setup is complete and which engineering skills will now read from these files. Mention they can edit <code>docs/agents/*.md</code> directly later — re-running this skill is only necessary if they want to switch issue trackers or restart from scratch.</p></div><div class="col-zh" lang="zh-Hant"><p>告訴使用者設定完成，以及哪些工程技能現在會讀取這些檔案。提到他們之後可以直接編輯 <code>docs/agents/*.md</code>——只有在他們想切換 issue 追蹤器或從頭重來時，才需要重跑這個技能。</p></div></div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,249 @@
+{
+  "skills": {
+    "setup-matt-pocock-skills": {
+      "cat": "engineering",
+      "level": "L0",
+      "inv": "user",
+      "title": "前置設定",
+      "description_zh": "為工程技能設定這個 repo——設定它的 issue 追蹤器、分診標籤詞彙與領域文件佈局。首次使用其他工程技能前執行一次。"
+    },
+    "ask-matt": {
+      "cat": "engineering",
+      "level": "L1",
+      "inv": "user",
+      "title": "技能路由器",
+      "description_zh": "詢問哪個技能或流程最符合你的情況。這個 repo 中技能的路由器。"
+    },
+    "grill-with-docs": {
+      "cat": "engineering",
+      "level": "L1",
+      "inv": "user",
+      "title": "詰問 · 產文件",
+      "description_zh": "鍥而不捨的訪談，磨利計畫或設計，過程中同時建立文件（ADR 與詞彙表）。"
+    },
+    "grilling": {
+      "cat": "productivity",
+      "level": "L1",
+      "inv": "model",
+      "title": "詰問原語",
+      "description_zh": "持續質詢使用者關於一項計畫、決策或想法。當使用者想要壓力測試自己的想法，或使用任何「grill」觸發詞時使用。"
+    },
+    "grill-me": {
+      "cat": "productivity",
+      "level": "L1",
+      "inv": "user",
+      "title": "個人詰問",
+      "description_zh": "一場持續的質詢，用來淬煉計畫或設計。"
+    },
+    "to-spec": {
+      "cat": "engineering",
+      "level": "L2",
+      "inv": "user",
+      "title": "生成規格",
+      "description_zh": "把目前的對話轉成規格說明並發佈到專案 Issue 追蹤器——不訪談，只綜合你已經討論過的內容。"
+    },
+    "to-tickets": {
+      "cat": "engineering",
+      "level": "L2",
+      "inv": "user",
+      "title": "拆分 Ticket",
+      "description_zh": "把計畫、規格說明或目前的對話拆成一組曳光彈 tickets，每個都宣告自己的阻塞邊，發佈到設定的追蹤器——在本機是每個 ticket 一個檔案、以文字表示邊，或在真正的追蹤器上用原生阻塞連結。"
+    },
+    "wayfinder": {
+      "cat": "engineering",
+      "level": "L2",
+      "inv": "user",
+      "title": "尋路 · 大規劃",
+      "description_zh": "把一大塊工作——大得單一代理 session 裝不下——規劃成 Issue 追蹤器上決策 tickets 的共享地圖，逐一解決，直到通往目的地的路徑清晰為止。"
+    },
+    "triage": {
+      "cat": "engineering",
+      "level": "L2",
+      "inv": "user",
+      "title": "分診",
+      "description_zh": "讓 issues 與外部 PR 穿過分診角色的狀態機——分類、驗證、視需要 grill，並撰寫可供代理使用的簡報。"
+    },
+    "to-questionnaire": {
+      "cat": "productivity",
+      "level": "L2",
+      "inv": "user",
+      "title": "轉成問卷",
+      "description_zh": "將一個您無法完全回答的決策轉化為一份由他人填寫的問卷。"
+    },
+    "implement": {
+      "cat": "engineering",
+      "level": "L3",
+      "inv": "user",
+      "title": "實作",
+      "description_zh": "依規格說明或一組 tickets 實作一份工作。"
+    },
+    "tdd": {
+      "cat": "engineering",
+      "level": "L3",
+      "inv": "model",
+      "title": "測試驅動開發",
+      "description_zh": "測試驅動開發。當使用者想以測試優先的方式建立功能或修 bug、提到「red-green-refactor」、或想要整合測試時使用。"
+    },
+    "prototype": {
+      "cat": "engineering",
+      "level": "L3",
+      "inv": "model",
+      "title": "可拋棄原型",
+      "description_zh": "建立一次性原型來回答設計問題。當使用者想確認某個狀態模型或邏輯是否合理，或想探索 UI 應該長什麼樣子時使用。"
+    },
+    "handoff": {
+      "cat": "productivity",
+      "level": "L3",
+      "inv": "user",
+      "title": "會話交接",
+      "description_zh": "將目前的對話壓縮成一份交接文件，讓另一個代理接手。"
+    },
+    "diagnosing-bugs": {
+      "cat": "engineering",
+      "level": "L3",
+      "inv": "model",
+      "title": "故障診斷",
+      "description_zh": "硬 bug 與效能回歸的診斷迴圈。當使用者說「diagnose」/「debug this」，或回報東西壞了/拋錯/失敗/很慢時使用。"
+    },
+    "code-review": {
+      "cat": "engineering",
+      "level": "L4",
+      "inv": "model",
+      "title": "程式碼審查",
+      "description_zh": "沿兩軸審查自某個固定點（commit、分支、標籤或合併基點）以來的變更——規範（軸）（程式碼是否符合此 repo 記錄的編碼規範？）與規格（軸）（程式碼是否符合原始 issue/規格的要求？）。以平行子代理執行兩種審查並排呈現。當使用者想審查分支、PR、進行中的變更，或說「review since X」時使用。"
+    },
+    "resolving-merge-conflicts": {
+      "cat": "engineering",
+      "level": "L4",
+      "inv": "model",
+      "title": "解決合併衝突",
+      "description_zh": "當你需要解決進行中的 git merge/rebase 衝突時使用。"
+    },
+    "improve-codebase-architecture": {
+      "cat": "engineering",
+      "level": "L4",
+      "inv": "user",
+      "title": "架構維護",
+      "description_zh": "掃描程式碼庫找出深化機會，以視覺 HTML 報告呈現，然後對你挑選的那個進行 grilling。"
+    },
+    "codebase-design": {
+      "cat": "engineering",
+      "level": "vocab",
+      "inv": "model",
+      "title": "深模組設計",
+      "description_zh": "設計深模組的共用詞彙。當使用者想設計或改進模組的介面、找深化的機會、決定接縫放哪裡、讓程式碼更容易測試或對 AI 更容易導覽，或另一個技能需要深模組詞彙時使用。"
+    },
+    "domain-modeling": {
+      "cat": "engineering",
+      "level": "vocab",
+      "inv": "model",
+      "title": "領域建模",
+      "description_zh": "建立並磨利專案的領域模型。當使用者想釐清領域術語或通用語言、記錄架構決策，或另一個技能需要維護領域模型時使用。"
+    },
+    "research": {
+      "cat": "engineering",
+      "level": "support",
+      "inv": "model",
+      "title": "背景研究",
+      "description_zh": "針對高可信度的主要來源調查問題，並把發現寫成 repo 中的 Markdown 檔案。當使用者想要研究某主題、蒐集文件或 API 事實，或想把閱讀的苦差事委派給背景代理時使用。"
+    },
+    "wizard": {
+      "cat": "engineering",
+      "level": "support",
+      "inv": "model",
+      "title": "互動精靈",
+      "description_zh": "產生一個互動式 bash wizard，引導人類走過只有他們能做的步驟。用於佈建基礎設施、設定憑證或 CI secrets、走訪陌生的第三方儀表板，或執行一次性遷移或切換。不要為代理自己能做的步驟叫用它。"
+    },
+    "writing-for-agents": {
+      "cat": "productivity",
+      "level": "support",
+      "inv": "model",
+      "title": "為代理寫作",
+      "description_zh": "為代理撰寫文件。建立或編輯技能，或修改 AGENTS.md 或 CLAUDE.md 時使用。"
+    },
+    "teach": {
+      "cat": "productivity",
+      "level": "support",
+      "inv": "user",
+      "title": "多階段教學",
+      "description_zh": "在此工作區內教導使用者一項新技能或概念。"
+    },
+    "wait-what": {
+      "cat": "productivity",
+      "level": "support",
+      "inv": "user",
+      "title": "重新闡述",
+      "description_zh": "停下。上一則訊息沒有被理解 — 重新闡述它。"
+    },
+    "setup-pre-commit": {
+      "cat": "misc",
+      "level": "misc",
+      "inv": "user",
+      "title": "設定 pre-commit",
+      "description_zh": "在目前的 repo 中以 lint-staged（Prettier）、型別檢查與測試設定 Husky pre-commit hooks。當使用者想要新增 pre-commit hooks、設定 Husky、設定 lint-staged，或新增提交時的格式化/型別檢查/測試時使用。"
+    },
+    "scaffold-exercises": {
+      "cat": "misc",
+      "level": "misc",
+      "inv": "user",
+      "title": "練習骨架",
+      "description_zh": "建立帶有 section、題目、解答與講解、且能通過 lint 檢查的練習目錄結構。當使用者想要建立練習骨架、建立練習樁，或設定新的課程 section 時使用。"
+    },
+    "migrate-to-shoehorn": {
+      "cat": "misc",
+      "level": "misc",
+      "inv": "user",
+      "title": "遷移至 Shoehorn",
+      "description_zh": "將測試檔案從 `as` 型別斷言遷移到 @total-typescript/shoehorn。當使用者提到 shoehorn、想在測試中取代 `as`，或需要部分測試資料時使用。"
+    },
+    "git-guardrails-claude-code": {
+      "cat": "misc",
+      "level": "misc",
+      "inv": "user",
+      "title": "Git 安全鉤子",
+      "description_zh": "設定 Claude Code hooks 來在執行前阻擋危險的 git 命令（push、reset --hard、clean、branch -D 等）。當使用者想要防止破壞性的 git 操作、新增 git 安全 hooks，或在 Claude Code 中阻擋 git push/reset 時使用。"
+    },
+    "claude-handoff": {
+      "cat": "in-progress",
+      "level": "in-progress",
+      "inv": "user",
+      "title": "Claude 交接",
+      "description_zh": "將目前的對話交給一個立即接手工作的全新背景代理。"
+    },
+    "loop-me": {
+      "cat": "in-progress",
+      "level": "in-progress",
+      "inv": "user",
+      "title": "詰問我",
+      "description_zh": "在此工作區內，針對我想建立的 workflow 之規格說明 grill 我。"
+    },
+    "setup-ts-deep-modules": {
+      "cat": "in-progress",
+      "level": "in-progress",
+      "inv": "user",
+      "title": "深模組建置",
+      "description_zh": "將 dependency-cruiser 接入 TypeScript repo，讓每個套件都是深模組 — 實作藏在子資料夾中，只能透過其進入點檔案觸達。使用者觸發。"
+    },
+    "writing-beats": {
+      "cat": "in-progress",
+      "level": "in-progress",
+      "inv": "user",
+      "title": "寫作 · 節拍",
+      "description_zh": "寫作、開採 — 將原始素材組合成一段節拍的旅程，在節拍倚靠每個術語之前先讓它落地。"
+    },
+    "writing-fragments": {
+      "cat": "in-progress",
+      "level": "in-progress",
+      "inv": "user",
+      "title": "寫作 · 碎片",
+      "description_zh": "寫作、探索 — 挖掘原始片段，還沒有結構。"
+    },
+    "writing-shape": {
+      "cat": "in-progress",
+      "level": "in-progress",
+      "inv": "user",
+      "title": "寫作 · 成型",
+      "description_zh": "寫作、開採 — 將原始素材一段一段地塑造成文章。"
+    }
+  }
+}

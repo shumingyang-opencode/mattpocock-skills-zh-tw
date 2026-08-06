@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>domain-modeling / CONTEXT-FORMAT · mattpocock-skills-zh-tw</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Noto+Serif+TC:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<div class="container">
+<div class="back-link">
+  <a href="../index.html">首頁</a>
+  <a href="../map.html">技能地圖</a>
+  <a href="../learning-path.html">學習路線</a>
+  <a href="SKILL.html">← 技能主頁 domain-modeling</a> 
+</div>
+<h1>CONTEXT-FORMAT</h1>
+<div class="subtitle">domain-modeling · 附屬文件</div>
+<div class="pair"><div class="col-en" lang="en"><h1>CONTEXT.md Format</h1></div><div class="col-zh" lang="zh-Hant"><h1>CONTEXT.md 格式</h1></div></div>
+<div class="pair"><div class="col-en" lang="en"><h2>Structure</h2></div><div class="col-zh" lang="zh-Hant"><h2>結構</h2></div></div>
+<div class="pair"><div class="col-en" lang="en"><pre><code class="language-md"># {Context Name}
+
+{One or two sentence description of what this context is and why it exists.}
+
+## Language
+
+**Order**:
+{A one or two sentence description of the term}
+_Avoid_: Purchase, transaction
+
+**Invoice**:
+A request for payment sent to a customer after delivery.
+_Avoid_: Bill, payment request
+
+**Customer**:
+A person or organization that places orders.
+_Avoid_: Client, buyer, account
+</code></pre></div><div class="col-zh" lang="zh-Hant"><pre><code class="language-md"># {Context Name}
+
+{One or two sentence description of what this context is and why it exists.}
+
+## Language
+
+**Order**:
+{A one or two sentence description of the term}
+_Avoid_: Purchase, transaction
+
+**Invoice**:
+A request for payment sent to a customer after delivery.
+_Avoid_: Bill, payment request
+
+**Customer**:
+A person or organization that places orders.
+_Avoid_: Client, buyer, account
+</code></pre></div></div>
+<div class="pair"><div class="col-en" lang="en"><h2>Rules</h2></div><div class="col-zh" lang="zh-Hant"><h2>規則</h2></div></div>
+<div class="pair"><div class="col-en" lang="en"><ul>
+<li><strong>Be opinionated.</strong> When multiple words exist for the same concept, pick the best one and list the others under <code>_Avoid_</code>.</li>
+<li><strong>Keep definitions tight.</strong> One or two sentences max. Define what it IS, not what it does.</li>
+<li><strong>Only include terms specific to this project's context.</strong> General programming concepts (timeouts, error types, utility patterns) don't belong even if the project uses them extensively. Before adding a term, ask: is this a concept unique to this context, or a general programming concept? Only the former belongs.</li>
+<li><strong>Group terms under subheadings</strong> when natural clusters emerge. If all terms belong to a single cohesive area, a flat list is fine.</li>
+</ul></div><div class="col-zh" lang="zh-Hant"><ul>
+<li><strong>要有主張。</strong> 當同一個概念存在多個詞，挑最好的，其餘列在 <code>_Avoid_</code> 底下。</li>
+<li><strong>定義要精簡。</strong> 最多一兩句。定義它是<strong>什麼</strong>，而不是它做什麼。</li>
+<li><strong>只納入這個專案上下文特有的術語。</strong> 一般程式設計概念（timeout、錯誤型別、工具模式）即使專案大量使用也不屬於。加入術語前先問：這是這個上下文獨有的概念，還是一般程式設計概念？只有前者屬於。</li>
+<li><strong>當自然聚類浮現時，把術語歸在子標題下。</strong> 如果所有術語都屬於單一內聚領域，扁平清單就夠了。</li>
+</ul></div></div>
+<div class="pair"><div class="col-en" lang="en"><h2>Single vs multi-context repos</h2></div><div class="col-zh" lang="zh-Hant"><h2>單一 vs 多上下文 repo</h2></div></div>
+<div class="pair"><div class="col-en" lang="en"><p><strong>Single context (most repos):</strong> One <code>CONTEXT.md</code> at the repo root.</p></div><div class="col-zh" lang="zh-Hant"><p><strong>單一上下文（多數 repo）：</strong> 根目錄一份 <code>CONTEXT.md</code>。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p><strong>Multiple contexts:</strong> A <code>CONTEXT-MAP.md</code> at the repo root lists the contexts, where they live, and how they relate to each other:</p></div><div class="col-zh" lang="zh-Hant"><p><strong>多個上下文：</strong> 根目錄的 <code>CONTEXT-MAP.md</code> 列出上下文、它們在哪裡、以及它們彼此如何關聯：</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><pre><code class="language-md"># Context Map
+
+## Contexts
+
+- [Ordering](./src/ordering/CONTEXT.md) — receives and tracks customer orders
+- [Billing](./src/billing/CONTEXT.md) — generates invoices and processes payments
+- [Fulfillment](./src/fulfillment/CONTEXT.md) — manages warehouse picking and shipping
+
+## Relationships
+
+- **Ordering → Fulfillment**: Ordering emits `OrderPlaced` events; Fulfillment consumes them to start picking
+- **Fulfillment → Billing**: Fulfillment emits `ShipmentDispatched` events; Billing consumes them to generate invoices
+- **Ordering ↔ Billing**: Shared types for `CustomerId` and `Money`
+</code></pre></div><div class="col-zh" lang="zh-Hant"><pre><code class="language-md"># Context Map
+
+## Contexts
+
+- [Ordering](./src/ordering/CONTEXT.md) — receives and tracks customer orders
+- [Billing](./src/billing/CONTEXT.md) — generates invoices and processes payments
+- [Fulfillment](./src/fulfillment/CONTEXT.md) — manages warehouse picking and shipping
+
+## Relationships
+
+- **Ordering → Fulfillment**: Ordering emits `OrderPlaced` events; Fulfillment consumes them to start picking
+- **Fulfillment → Billing**: Fulfillment emits `ShipmentDispatched` events; Billing consumes them to generate invoices
+- **Ordering ↔ Billing**: Shared types for `CustomerId` and `Money`
+</code></pre></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>The skill infers which structure applies:</p></div><div class="col-zh" lang="zh-Hant"><p>技能會推斷適用哪種結構：</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><ul>
+<li>If <code>CONTEXT-MAP.md</code> exists, read it to find contexts</li>
+<li>If only a root <code>CONTEXT.md</code> exists, single context</li>
+<li>If neither exists, create a root <code>CONTEXT.md</code> lazily when the first term is resolved</li>
+</ul></div><div class="col-zh" lang="zh-Hant"><ul>
+<li>如果 <code>CONTEXT-MAP.md</code> 存在，讀它來找上下文</li>
+<li>如果只有根目錄的 <code>CONTEXT.md</code>，是單一上下文</li>
+<li>如果兩者都不存在，第一個術語定案時惰性地建立根目錄的 <code>CONTEXT.md</code></li>
+</ul></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>When multiple contexts exist, infer which one the current topic relates to. If unclear, ask.</p></div><div class="col-zh" lang="zh-Hant"><p>當有多個上下文時，推斷目前主題與哪一個相關。如果不清楚，就問。</p></div></div>
+
+</div>
+</body>
+</html>

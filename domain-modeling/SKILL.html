@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>domain-modeling · 領域建模 · mattpocock-skills-zh-tw</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Noto+Serif+TC:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<div class="container">
+<div class="back-link">
+  <a href="../index.html">首頁</a>
+  <a href="../map.html">技能地圖</a>
+  <a href="../learning-path.html">學習路線</a>
+  
+</div>
+<table class="fm-table">
+<tr><td>name</td><td><code>domain-modeling</code></td></tr>
+<tr><td>description (EN)</td><td>Build and sharpen a project's domain model. Use when the user wants to pin down domain terminology or a ubiquitous language, record an architectural decision, or when another skill needs to maintain the domain model.</td></tr>
+<tr><td>說明 (繁中)</td><td>建立並磨利專案的領域模型。當使用者想釐清領域術語或通用語言、記錄架構決策，或另一個技能需要維護領域模型時使用。</td></tr>
+</table>
+<h1>domain-modeling</h1>
+<div class="subtitle">領域建模</div>
+<div class="back-link" style="margin-top:-0.6rem">附屬文件：<a href="ADR-FORMAT.html">ADR-FORMAT</a>　·　<a href="CONTEXT-FORMAT.html">CONTEXT-FORMAT</a></div>
+<div class="pair"><div class="col-en" lang="en"><h1>Domain Modeling</h1></div><div class="col-zh" lang="zh-Hant"><h1>領域模型</h1></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Actively build and sharpen the project's domain model as you design. This is the <em>active</em> discipline — challenging terms, inventing edge-case scenarios, and writing the glossary and decisions down the moment they crystallise. (Merely <em>reading</em> <code>CONTEXT.md</code> for vocabulary is not this skill — that's a one-line habit any skill can do. This skill is for when you're changing the model, not just consuming it.)</p></div><div class="col-zh" lang="zh-Hant"><p>在設計過程中主動建立並磨利專案的領域模型。這是<em>主動</em>的紀律——挑戰術語、發明邊緣案例情境，並在術語定案的那一刻把詞彙表和決策寫下來。（光是<em>讀</em> <code>CONTEXT.md</code> 來取得詞彙不是本技能——那是一行程式碼習慣，任何技能都能做。本技能是用於當你在改變模型，而不只是消費它。）</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h2>File structure</h2></div><div class="col-zh" lang="zh-Hant"><h2>檔案結構</h2></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Most repos have a single context:</p></div><div class="col-zh" lang="zh-Hant"><p>多數 repo 只有單一上下文：</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><pre><code>/
+├── CONTEXT.md
+├── docs/
+│   └── adr/
+│       ├── 0001-event-sourced-orders.md
+│       └── 0002-postgres-for-write-model.md
+└── src/
+</code></pre></div><div class="col-zh" lang="zh-Hant"><pre><code>/
+├── CONTEXT.md
+├── docs/
+│   └── adr/
+│       ├── 0001-event-sourced-orders.md
+│       └── 0002-postgres-for-write-model.md
+└── src/
+</code></pre></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>If a <code>CONTEXT-MAP.md</code> exists at the root, the repo has multiple contexts. The map points to where each one lives:</p></div><div class="col-zh" lang="zh-Hant"><p>如果根目錄有 <code>CONTEXT-MAP.md</code>，表示 repo 有多個上下文。地圖指向每個上下文所在位置：</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><pre><code>/
+├── CONTEXT-MAP.md
+├── docs/
+│   └── adr/                          ← system-wide decisions
+├── src/
+│   ├── ordering/
+│   │   ├── CONTEXT.md
+│   │   └── docs/adr/                 ← context-specific decisions
+│   └── billing/
+│       ├── CONTEXT.md
+│       └── docs/adr/
+</code></pre></div><div class="col-zh" lang="zh-Hant"><pre><code>/
+├── CONTEXT-MAP.md
+├── docs/
+│   └── adr/                          ← system-wide decisions
+├── src/
+│   ├── ordering/
+│   │   ├── CONTEXT.md
+│   │   └── docs/adr/                 ← context-specific decisions
+│   └── billing/
+│       ├── CONTEXT.md
+│       └── docs/adr/
+</code></pre></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Create files lazily — only when you have something to write. If no <code>CONTEXT.md</code> exists, create one when the first term is resolved. If no <code>docs/adr/</code> exists, create it when the first ADR is needed.</p></div><div class="col-zh" lang="zh-Hant"><p>惰性地建立檔案——只在有東西要寫時才建。如果沒有 <code>CONTEXT.md</code>，第一個術語定案時建立一個。如果沒有 <code>docs/adr/</code>，需要第一個 ADR 時建立。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h2>During the session</h2></div><div class="col-zh" lang="zh-Hant"><h2>會話期間</h2></div></div>
+<div class="pair"><div class="col-en" lang="en"><h3>Challenge against the glossary</h3></div><div class="col-zh" lang="zh-Hant"><h3>對照詞彙表挑戰</h3></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>When the user uses a term that conflicts with the existing language in <code>CONTEXT.md</code>, call it out immediately. "Your glossary defines 'cancellation' as X, but you seem to mean Y — which is it?"</p></div><div class="col-zh" lang="zh-Hant"><p>當使用者使用的術語與 <code>CONTEXT.md</code> 中既有的語言衝突時，立刻點出來。「你的詞彙表把 'cancellation' 定義為 X，但你似乎指的是 Y——哪個才對？」</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h3>Sharpen fuzzy language</h3></div><div class="col-zh" lang="zh-Hant"><h3>磨利模糊的語言</h3></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>When the user uses vague or overloaded terms, propose a precise canonical term. "You're saying 'account' — do you mean the Customer or the User? Those are different things."</p></div><div class="col-zh" lang="zh-Hant"><p>當使用者使用含糊或過載的術語時，提出精確的規範術語。「你說 'account'——你指的是 Customer 還是 User？那是不同的東西。」</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h3>Discuss concrete scenarios</h3></div><div class="col-zh" lang="zh-Hant"><h3>討論具體情境</h3></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>When domain relationships are being discussed, stress-test them with specific scenarios. Invent scenarios that probe edge cases and force the user to be precise about the boundaries between concepts.</p></div><div class="col-zh" lang="zh-Hant"><p>當領域關係正在被討論時，用具體情境壓力測試它們。發明探索邊緣案例、迫使使用者對概念之間的邊界精確起來的情境。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h3>Cross-reference with code</h3></div><div class="col-zh" lang="zh-Hant"><h3>與程式碼交叉比對</h3></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>When the user states how something works, check whether the code agrees. If you find a contradiction, surface it: "Your code cancels entire Orders, but you just said partial cancellation is possible — which is right?"</p></div><div class="col-zh" lang="zh-Hant"><p>當使用者陳述某個東西如何運作時，檢查程式碼是否同意。如果發現矛盾，把它浮上檯面：「你的程式碼取消整個 Order，但你剛才說可以部分取消——哪個才對？」</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h3>Update CONTEXT.md inline</h3></div><div class="col-zh" lang="zh-Hant"><h3>內嵌更新 CONTEXT.md</h3></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>When a term is resolved, update <code>CONTEXT.md</code> right there. Don't batch these up — capture them as they happen. Use the format in <a href="CONTEXT-FORMAT.html">CONTEXT-FORMAT.md</a>.</p></div><div class="col-zh" lang="zh-Hant"><p>當一個術語定案時，就地更新 <code>CONTEXT.md</code>。不要累積再一次處理——邊發生邊捕捉。使用 <a href="CONTEXT-FORMAT.html">CONTEXT-FORMAT.md</a> 中的格式。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p><code>CONTEXT.md</code> should be totally devoid of implementation details. Do not treat <code>CONTEXT.md</code> as a spec, a scratch pad, or a repository for implementation decisions. It is a glossary and nothing else.</p></div><div class="col-zh" lang="zh-Hant"><p><code>CONTEXT.md</code> 應該完全不含實作細節。不要把 <code>CONTEXT.md</code> 當成規格、便條紙，或實作決策的倉庫。它是詞彙表，而且僅此而已。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h3>Offer ADRs sparingly</h3></div><div class="col-zh" lang="zh-Hant"><h3>斟酌提供 ADR</h3></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Only offer to create an ADR when all three are true:</p></div><div class="col-zh" lang="zh-Hant"><p>只有三個條件都成立時，才主動提出建立 ADR：</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><ol>
+<li><strong>Hard to reverse</strong> — the cost of changing your mind later is meaningful</li>
+<li><strong>Surprising without context</strong> — a future reader will wonder "why did they do it this way?"</li>
+<li><strong>The result of a real trade-off</strong> — there were genuine alternatives and you picked one for specific reasons</li>
+</ol></div><div class="col-zh" lang="zh-Hant"><ol>
+<li><strong>難以逆轉</strong>——之後改變心意的成本是實際的</li>
+<li><strong>沒有上下文會令人驚訝</strong>——未來的讀者會想「為什麼他們要這樣做？」</li>
+<li><strong>真實取捨的結果</strong>——存在真正的替代方案，你基於特定理由選了其中一個</li>
+</ol></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>If any of the three is missing, skip the ADR. Use the format in <a href="ADR-FORMAT.html">ADR-FORMAT.md</a>.</p></div><div class="col-zh" lang="zh-Hant"><p>如果三個條件缺一，就跳過 ADR。使用 <a href="ADR-FORMAT.html">ADR-FORMAT.md</a> 中的格式。</p></div></div>
+
+</div>
+</body>
+</html>

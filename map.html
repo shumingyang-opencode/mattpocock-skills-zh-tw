@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>技能地圖 · Skill Map · mattpocock-skills-zh-tw</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Noto+Serif+TC:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<div class="container">
+<div class="back-link"><a href="index.html">← 首頁</a><a href="learning-path.html">學習路線</a></div>
+<header>
+  <h1>技能地圖</h1>
+  <div class="subtitle">Skill Map · 沿著主流程 idea → ship</div>
+  <div class="badge-line">中英對照卡片節點 · 點卡片進入逐段對照頁</div>
+</header>
+<div class="precondition">
+  <a href="setup-matt-pocock-skills/SKILL.html"><span class="label">setup-matt-pocock-skills</span><span class="tag">首次使用前運行 · 前置條件</span></a>
+  <div class="precondition-hint">↑ 每個 repo 先跑一次，種下 issue tracker 與標籤</div>
+</div>
+<div class="entry">
+  <a class="sign" href="ask-matt/SKILL.html"><span class="label">ask-matt</span><span class="tag">技能路由器 · 高速入口</span><span class="en">router</span></a>
+</div>
+<div class="zone"><div class="zone-label">主流程 · idea → ship</div><div class="highway">
+<div class="hwy-row">
+  <div class="col-left"><div class="ramp-cluster"><a class="node on-ramp small" href="diagnosing-bugs/SKILL.html"><span class="label">diagnosing-bugs</span><span class="tag">故障診斷</span><span class="en">model-invoked</span></a><a class="node on-ramp small" href="improve-codebase-architecture/SKILL.html"><span class="label">improve-codebase-architecture</span><span class="tag">架構維護</span><span class="en">user-invoked</span></a><a class="node on-ramp small" href="wayfinder/SKILL.html"><span class="label">wayfinder</span><span class="tag">尋路 · 大規劃</span><span class="en">user-invoked</span></a></div></div>
+  <div class="col-center"><div class="pair-main"><a class="node mainline" href="grill-with-docs/SKILL.html"><span class="label">grill-with-docs</span><span class="tag">詰問 · 產文件</span><span class="en">user-invoked</span></a><a class="node mainline" href="grill-me/SKILL.html"><span class="label">grill-me</span><span class="tag">個人詰問</span><span class="en">user-invoked</span></a></div></div>
+  <div class="col-right"><a class="node on-ramp" href="triage/SKILL.html"><span class="label">triage</span><span class="tag">分診</span><span class="en">user-invoked</span></a></div>
+</div>
+<div class="flow-arrow"></div>
+<div class="hwy-row">
+  <div class="col-left"></div>
+  <div class="col-center"><div class="pair-main"><a class="node service" href="prototype/SKILL.html"><span class="label">prototype</span><span class="tag">可拋棄原型</span><span class="en">model-invoked</span></a><span class="pair-arrow">↔</span><a class="node service small" href="handoff/SKILL.html"><span class="label">handoff</span><span class="tag">會話交接</span><span class="en">user-invoked</span></a></div></div>
+  <div class="col-right"><span class="side-note">繞道 · 原型支線</span></div>
+</div>
+<div class="flow-arrow"></div>
+<div class="hwy-row">
+  <div class="col-left"></div>
+  <div class="col-center"><div class="pair-main"><a class="node mainline" href="to-spec/SKILL.html"><span class="label">to-spec</span><span class="tag">生成規格</span><span class="en">user-invoked</span></a></div></div>
+  <div class="col-right"></div>
+</div>
+<div class="flow-arrow"></div>
+<div class="hwy-row">
+  <div class="col-left"></div>
+  <div class="col-center"><div class="pair-main"><a class="node mainline" href="to-tickets/SKILL.html"><span class="label">to-tickets</span><span class="tag">拆分 Ticket</span><span class="en">user-invoked</span></a></div></div>
+  <div class="col-right"></div>
+</div>
+<div class="flow-arrow"></div>
+<div class="hwy-row">
+  <div class="col-left"></div>
+  <div class="col-center"><div class="pair-main"><a class="node mainline" href="implement/SKILL.html"><span class="label">implement</span><span class="tag">實作</span><span class="en">user-invoked</span></a><span class="pair-arrow">→</span><a class="node mainline small" href="tdd/SKILL.html"><span class="label">tdd</span><span class="tag">測試驅動開發</span><span class="en">model-invoked</span></a></div></div>
+  <div class="col-right"></div>
+</div>
+<div class="flow-arrow"></div>
+<div class="hwy-row">
+  <div class="col-left"></div>
+  <div class="col-center"><div class="pair-main"><a class="node mainline" href="code-review/SKILL.html"><span class="label">code-review</span><span class="tag">程式碼審查</span><span class="en">model-invoked</span></a></div></div>
+  <div class="col-right"></div>
+</div>
+<div class="flow-arrow"></div>
+</div></div>
+<div class="primitive-annotation"><a href="grilling/SKILL.html">↑ 共享訪談原語 · grilling</a></div>
+<div class="zone"><div class="foundation">
+  <div class="foundation-title">詞彙層（路基）— 主流程運行的底層支撐</div>
+  <div class="foundation-row">
+<a class="foundation-node" href="domain-modeling/SKILL.html"><span class="label">domain-modeling</span><span class="en">領域建模</span></a><a class="foundation-node" href="domain-modeling/ADR-FORMAT.html"><span class="label">ADR-FORMAT</span><span class="en">附屬</span></a><a class="foundation-node" href="domain-modeling/CONTEXT-FORMAT.html"><span class="label">CONTEXT-FORMAT</span><span class="en">附屬</span></a><a class="foundation-node" href="codebase-design/SKILL.html"><span class="label">codebase-design</span><span class="en">深模組設計</span></a><a class="foundation-node" href="codebase-design/DEEPENING.html"><span class="label">DEEPENING</span><span class="en">附屬</span></a><a class="foundation-node" href="codebase-design/DESIGN-IT-TWICE.html"><span class="label">DESIGN-IT-TWICE</span><span class="en">附屬</span></a><span class="foundation-note">術語 · 決策 · 模組設計</span>
+</div></div></div>
+<div class="legend"><span class="legend-item"><span class="legend-dot "></span>主流程 Mainline</span><span class="legend-item"><span class="legend-dot ramp"></span>進入匝道 On-ramp</span><span class="legend-item"><span class="legend-dot service"></span>繞道服務區 Service</span><span class="legend-item"><span class="legend-dot standalone"></span>獨立技能 Standalone</span><span class="legend-item"><span class="legend-dot meta"></span>元技能 Meta</span><span class="legend-item"><span class="legend-dash"></span>詞彙層 Vocabulary (dashed)</span></div>
+<div class="zone"><div class="zone-label">獨立可用 · 不依賴主流程</div><div class="h-zone"><div class="h-row"><a class="node standalone" href="research/SKILL.html"><span class="label">research</span><span class="tag">背景研究</span><span class="en">model-invoked</span></a><a class="node standalone" href="teach/SKILL.html"><span class="label">teach</span><span class="tag">多階段教學</span><span class="en">user-invoked</span></a><a class="node standalone" href="resolving-merge-conflicts/SKILL.html"><span class="label">resolving-merge-conflicts</span><span class="tag">解決合併衝突</span><span class="en">model-invoked</span></a><a class="node standalone" href="to-questionnaire/SKILL.html"><span class="label">to-questionnaire</span><span class="tag">轉成問卷</span><span class="en">user-invoked</span></a><a class="node standalone" href="wait-what/SKILL.html"><span class="label">wait-what</span><span class="tag">重新闡述</span><span class="en">user-invoked</span></a><a class="node standalone" href="wizard/SKILL.html"><span class="label">wizard</span><span class="tag">互動精靈</span><span class="en">model-invoked</span></a></div><div class="h-note">可獨立使用，無須進入主流程</div></div></div>
+<div class="zone"><div class="zone-label">元技能 · 寫作參考</div><div class="h-zone"><div class="h-row"><a class="node meta" href="writing-for-agents/SKILL.html"><span class="label">writing-for-agents</span><span class="tag">為代理寫作</span><span class="en">model-invoked</span></a></div><div class="h-note">關於技能系統本身的技能</div></div></div>
+<footer>
+  <div>這是 <a href="https://github.com/mattpocock/skills">mattpocock/skills</a> 的繁體中文翻譯學習站（zh-TW）· 翻譯僅限自然語言說明，保留目錄/技能名/指令/程式碼/路徑，不影響安裝行為。</div>
+  <div>內容版權 © Matt Pocock（MIT License）· 翻譯 © shumingyang-opencode · 對照排版參考 <a href="https://cnife.github.io/learn-mattpocock-skills/">learn-mattpocock-skills</a></div>
+</footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>prototype / UI · mattpocock-skills-zh-tw</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Noto+Serif+TC:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<div class="container">
+<div class="back-link">
+  <a href="../index.html">首頁</a>
+  <a href="../map.html">技能地圖</a>
+  <a href="../learning-path.html">學習路線</a>
+  <a href="SKILL.html">← 技能主頁 prototype</a> 
+</div>
+<h1>UI</h1>
+<div class="subtitle">prototype · 附屬文件</div>
+<div class="pair"><div class="col-en" lang="en"><h1>UI Prototype</h1></div><div class="col-zh" lang="zh-Hant"><h1>UI 原型</h1></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Generate <strong>several radically different UI variations</strong> on a single route, switchable from a floating bottom bar. The user flips between variants in the browser, picks one (or steals bits from each), then throws the rest away.</p></div><div class="col-zh" lang="zh-Hant"><p>在單一路由上產生<strong>數個截然不同的 UI 變體</strong>，可從浮動底欄切換。使用者在瀏覽器中來回切換變體，選一個（或從每個變體偷幾塊），然後把其他丟掉。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>If the question is about logic/state rather than what something looks like — wrong branch. Use <a href="LOGIC.html">LOGIC.md</a>.</p></div><div class="col-zh" lang="zh-Hant"><p>如果問題關乎邏輯 / 狀態而不是「長什麼樣子」——錯的分支。改用 <a href="LOGIC.html">LOGIC.md</a>。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h2>When this is the right shape</h2></div><div class="col-zh" lang="zh-Hant"><h2>什麼時候這是正確的形狀</h2></div></div>
+<div class="pair"><div class="col-en" lang="en"><ul>
+<li>"What should this page look like?"</li>
+<li>"I want to see a few options for this dashboard before committing."</li>
+<li>"Try a different layout for the settings screen."</li>
+<li>Any time the user would otherwise spend a day picking between three vague mockups in their head.</li>
+</ul></div><div class="col-zh" lang="zh-Hant"><ul>
+<li>「這個頁面應該長什麼樣子？」</li>
+<li>「我想在做決定之前，先看看這個儀表板有哪幾種選項。」</li>
+<li>「為設定畫面試試不同的排版。」</li>
+<li>任何當使用者原本會花一整天在心中比較三個模糊 mockup 的時刻。</li>
+</ul></div></div>
+<div class="pair"><div class="col-en" lang="en"><h2>Two sub-shapes — strongly prefer sub-shape A</h2></div><div class="col-zh" lang="zh-Hant"><h2>兩種子形狀——強烈偏好子形狀 A</h2></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>A UI prototype is much easier to judge when it's <strong>butting up against the rest of the app</strong> — real header, real sidebar, real data, real density. A throwaway route on its own is a vacuum: every variant looks fine in isolation. Default to sub-shape A whenever there's a plausible existing page to host the variants. Only reach for sub-shape B if the prototype genuinely has no nearby home.</p></div><div class="col-zh" lang="zh-Hant"><p>當 UI 原型<strong>貼著應用程式其他部分</strong>時，會容易判斷得多——真正的頁首、真正的側欄、真正的資料、真正的密度。孤立的一條拋棄式路由是真空：每個變體在隔離時看起來都很好。只要有合理的既有頁面可以容納變體，就預設使用子形狀 A。只有當原型真的沒有鄰近的家可放時，才使用子形狀 B。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h3>Sub-shape A — adjustment to an existing page (preferred)</h3></div><div class="col-zh" lang="zh-Hant"><h3>子形狀 A——調整既有頁面（偏好）</h3></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>The route already exists. Variants are rendered <strong>on the same route</strong>, gated by a <code>?variant=</code> URL search param. The existing data fetching, params, and auth all stay — only the rendering swaps. This is the default; pick it unless there's a specific reason not to.</p></div><div class="col-zh" lang="zh-Hant"><p>路由已存在。變體<strong>在同一個路由</strong>上渲染，由 <code>?variant=</code> URL 搜尋參數控制。既有的資料擷取、參數與認證全部保留——只有渲染內容換掉。這是預設；除非有特定理由，否則選它。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>If the prototype is for something that doesn't yet have a page but <em>would naturally live inside one</em> (a new section of the dashboard, a new card on the settings screen, a new step in an existing flow) — that's still sub-shape A. Mount the variants inside the host page.</p></div><div class="col-zh" lang="zh-Hant"><p>如果原型是為了一個還沒有頁面、但<em>自然會住在某個頁面內</em>的東西（儀表板的新區塊、設定畫面的新卡片、既有流程的新步驟）——那仍然是子形狀 A。把變體掛載在主機頁面內。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h3>Sub-shape B — a new page (last resort)</h3></div><div class="col-zh" lang="zh-Hant"><h3>子形狀 B——新頁面（最後手段）</h3></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Only use this when the thing being prototyped genuinely has no existing page to live inside — e.g. an entirely new top-level surface, or a flow that can't be embedded anywhere sensible.</p></div><div class="col-zh" lang="zh-Hant"><p>只有在被製作原型的東西真的沒有既有頁面可以棲身時才用——例如一個全新的頂層表面，或一條無法嵌進任何合理地方的流程。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Create a <strong>throwaway route</strong> following whatever routing convention the project already uses — don't invent a new top-level structure. Name it so it's obviously a prototype (e.g. include the word <code>prototype</code> in the path or filename). Same <code>?variant=</code> pattern.</p></div><div class="col-zh" lang="zh-Hant"><p>建立一條<strong>一次性路由</strong>，遵循專案既有的路由慣例——不要發明新的頂層結構。命名要明顯看得出來是原型（例如在路徑或檔名中包含 <code>prototype</code> 這個詞）。使用相同的 <code>?variant=</code> 模式。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Before committing to sub-shape B, sanity-check: is there really no existing page this could be embedded in? An empty route hides design problems that a populated one would expose.</p></div><div class="col-zh" lang="zh-Hant"><p>在採用子形狀 B 之前先自我檢查：真的沒有既有頁面可以嵌入嗎？空路由會隱藏有內容的路由才會暴露的設計問題。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>In both sub-shapes the floating bottom bar is identical.</p></div><div class="col-zh" lang="zh-Hant"><p>在兩個子形狀中，浮動底欄完全相同。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h2>Process</h2></div><div class="col-zh" lang="zh-Hant"><h2>流程</h2></div></div>
+<div class="pair"><div class="col-en" lang="en"><h3>1. State the question and pick N</h3></div><div class="col-zh" lang="zh-Hant"><h3>1. 寫下問題並選擇 N</h3></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Default to <strong>3 variants</strong>. More than 5 stops being radically different and starts being noise — cap there.</p></div><div class="col-zh" lang="zh-Hant"><p>預設 <strong>3 個變體</strong>。超過 5 個就不再是「截然不同」而開始變成噪音——就此封頂。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Write down the plan in one line, in the prototype's location or a top-of-file comment:</p></div><div class="col-zh" lang="zh-Hant"><p>用一行寫下計畫，放在原型所在處或檔案頂端的註解：</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><blockquote>
+<p>"Three variants of the settings page, switchable via <code>?variant=</code>, on the existing <code>/settings</code> route."</p>
+</blockquote></div><div class="col-zh" lang="zh-Hant"><blockquote>
+<p>「設定頁面的三種變體，在既有 <code>/settings</code> 路由上，透過 <code>?variant=</code> 切換。」</p>
+</blockquote></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>This works whether the user is here to push back or not.</p></div><div class="col-zh" lang="zh-Hant"><p>這在使用者在場想反駁或不在場時都適用。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h3>2. Generate radically different variants</h3></div><div class="col-zh" lang="zh-Hant"><h3>2. 產生截然不同的變體</h3></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Draft each variant. Hold each one to:</p></div><div class="col-zh" lang="zh-Hant"><p>草擬每個變體。每個都要符合：</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><ul>
+<li>The page's purpose and the data it has access to.</li>
+<li>The project's component library / styling system (TailwindCSS, shadcn, MUI, plain CSS, whatever).</li>
+<li>A clear exported component name, e.g. <code>VariantA</code>, <code>VariantB</code>, <code>VariantC</code>.</li>
+</ul></div><div class="col-zh" lang="zh-Hant"><ul>
+<li>頁面的用途以及它能取得的資料。</li>
+<li>專案的元件庫 / 樣式系統（TailwindCSS、shadcn、MUI、純 CSS，不拘）。</li>
+<li>清楚的匯出元件名稱，例如 <code>VariantA</code>、<code>VariantB</code>、<code>VariantC</code>。</li>
+</ul></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Variants must be <strong>structurally different</strong> — different layout, different information hierarchy, different primary affordance, not just different colours. Three slightly-tweaked card grids isn't a UI prototype, it's wallpaper. If two drafts come out too similar, redo one with explicit "do not use a card grid" guidance.</p></div><div class="col-zh" lang="zh-Hant"><p>變體必須<strong>結構上不同</strong>——不同的排版、不同的資訊階層、不同的主要操作方式，而不只是不同的顏色。三個微調過的火烤網格不是 UI 原型，是壁紙。如果兩個草稿太相似，重做其中一個，並明確加上「不要用卡片網格」的指引。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h3>3. Wire them together</h3></div><div class="col-zh" lang="zh-Hant"><h3>3. 把它們接起來</h3></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Create a single switcher component on the route:</p></div><div class="col-zh" lang="zh-Hant"><p>在路由上建立單一切換器元件：</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><pre><code class="language-tsx">// pseudo-code — adapt to the project's framework
+const variant = searchParams.get('variant') ?? 'A';
+return (
+  &lt;&gt;
+    {variant === 'A' &amp;&amp; &lt;VariantA {...data} /&gt;}
+    {variant === 'B' &amp;&amp; &lt;VariantB {...data} /&gt;}
+    {variant === 'C' &amp;&amp; &lt;VariantC {...data} /&gt;}
+    &lt;PrototypeSwitcher variants={['A','B','C']} current={variant} /&gt;
+  &lt;/&gt;
+);
+</code></pre></div><div class="col-zh" lang="zh-Hant"><pre><code class="language-tsx">// pseudo-code — adapt to the project's framework
+const variant = searchParams.get('variant') ?? 'A';
+return (
+  &lt;&gt;
+    {variant === 'A' &amp;&amp; &lt;VariantA {...data} /&gt;}
+    {variant === 'B' &amp;&amp; &lt;VariantB {...data} /&gt;}
+    {variant === 'C' &amp;&amp; &lt;VariantC {...data} /&gt;}
+    &lt;PrototypeSwitcher variants={['A','B','C']} current={variant} /&gt;
+  &lt;/&gt;
+);
+</code></pre></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>For sub-shape A (existing page): keep all the existing data fetching above the switcher; only the rendered subtree changes per variant.</p></div><div class="col-zh" lang="zh-Hant"><p>子形狀 A（既有頁面）：把所有既有的資料擷取留在切換器之上；只有渲染出來的子樹會依變體改變。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>For sub-shape B (new page): the throwaway route under <code>/prototype/&lt;name&gt;</code> mounts the same switcher.</p></div><div class="col-zh" lang="zh-Hant"><p>子形狀 B（新頁面）：<code>/prototype/&lt;name&gt;</code> 下的一次性路由掛載同一個切換器。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h3>4. Build the floating switcher</h3></div><div class="col-zh" lang="zh-Hant"><h3>4. 建立浮動切換器</h3></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>A small fixed-position bar at the bottom-centre of the screen with three pieces:</p></div><div class="col-zh" lang="zh-Hant"><p>螢幕底部中央一個固定位置的小列，包含三部分：</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><ul>
+<li><strong>Left arrow</strong> — cycles to the previous variant (wraps around).</li>
+<li><strong>Variant label</strong> — shows the current variant key and, if the variant exports a name, that name too. e.g. <code>B — Sidebar layout</code>.</li>
+<li><strong>Right arrow</strong> — cycles forward (wraps around).</li>
+</ul></div><div class="col-zh" lang="zh-Hant"><ul>
+<li><strong>左箭頭</strong>——切到前一個變體（循環）。</li>
+<li><strong>變體標籤</strong>——顯示目前的變體鍵，如果該變體有匯出名稱，也顯示名稱。例如 <code>B — Sidebar layout</code>。</li>
+<li><strong>右箭頭</strong>——往前循環（循環）。</li>
+</ul></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Behaviour:</p></div><div class="col-zh" lang="zh-Hant"><p>行為：</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><ul>
+<li>Clicking an arrow updates the URL search param (use the framework's router — <code>router.replace</code> on Next, <code>navigate</code> on React Router, etc) so the variant is shareable and reload-stable.</li>
+<li>Keyboard: <code>←</code> and <code>→</code> arrow keys also cycle. Don't intercept arrow keys when an <code>&lt;input&gt;</code>, <code>&lt;textarea&gt;</code>, or <code>[contenteditable]</code> is focused.</li>
+<li>Visually distinct from the page (e.g. high-contrast pill, subtle shadow) so it's obviously not part of the design being evaluated.</li>
+<li>Hidden in production builds — gate on <code>process.env.NODE_ENV !== 'production'</code> or an equivalent check, so a stray prototype merge can't ship the bar to users.</li>
+</ul></div><div class="col-zh" lang="zh-Hant"><ul>
+<li>點擊箭頭會更新 URL 搜尋參數（使用框架的路由器——Next 用 <code>router.replace</code>、React Router 用 <code>navigate</code> 等），讓變體可分享、重新整理後狀態仍在。</li>
+<li>鍵盤：<code>←</code> 和 <code>→</code> 方向鍵也可以循環。當 <code>&lt;input&gt;</code>、<code>&lt;textarea&gt;</code> 或 <code>[contenteditable]</code> 取得焦點時，不要攔截方向鍵。</li>
+<li>視覺上與頁面明顯不同（例如高對比藥丸、細微陰影），讓它明顯不屬於正在被評估的設計。</li>
+<li>在正式建置中隱藏——用 <code>process.env.NODE_ENV !== 'production'</code> 或等效檢查控制，讓不小心併入的正式原型不會把這列送給使用者。</li>
+</ul></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Put the switcher in a single shared component so both sub-shapes can reuse it. Locate it wherever shared UI lives in the project.</p></div><div class="col-zh" lang="zh-Hant"><p>把切換器放進單一共用元件，讓兩種子形狀都能重用。放在專案中共享 UI 所在之處。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h3>5. Hand it over</h3></div><div class="col-zh" lang="zh-Hant"><h3>5. 交付</h3></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Surface the URL (and the <code>?variant=</code> keys). The user will flip through whenever they get to it. The interesting feedback is usually <strong>"I want the header from B with the sidebar from C"</strong> — that's the actual design they want.</p></div><div class="col-zh" lang="zh-Hant"><p>公開 URL（以及 <code>?variant=</code> 鍵）。使用者有空就會來回切換。有趣的回饋通常是<strong>「我想要 B 的頁首配 C 的側欄」</strong>——那才是他們真正想要的設計。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h3>6. Capture the answer and clean up</h3></div><div class="col-zh" lang="zh-Hant"><h3>6. 留存答案並清理</h3></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Once a variant has won, capture the answer — which variant and why — then capture the prototype the way the <a href="SKILL.html">SKILL</a> describes. Fold the winner into the real code and move the rest onto the throwaway branch, not into main:</p></div><div class="col-zh" lang="zh-Hant"><p>一旦某個變體勝出，留存答案——哪個變體、為什麼——然後依照 <a href="SKILL.html">SKILL</a> 描述的方式留存原型。把勝者折疊進正式程式碼，其餘送到一次性分支，而不是 main：</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><ul>
+<li><strong>Sub-shape A</strong> — fold the winner into the existing page; drop the losing variants and the switcher from main.</li>
+<li><strong>Sub-shape B</strong> — promote the winning variant to a real route; drop the throwaway route and the switcher from main.</li>
+</ul></div><div class="col-zh" lang="zh-Hant"><ul>
+<li><strong>子形狀 A</strong>——把勝者折疊進既有頁面；把落選變體和切換器從 main 移除。</li>
+<li><strong>子形狀 B</strong>——把勝出的變體提升為正式路由；把一次性路由和切換器從 main 移除。</li>
+</ul></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>The full set of variants is the primary source, so it lands on the throwaway branch, not the bin — variant components and the switcher left in the main branch rot fast and confuse the next reader.</p></div><div class="col-zh" lang="zh-Hant"><p>完整的變體集合是主要來源，所以它進入一次性分支，而不是垃圾桶——留在 main 分支的變體元件和切換器會很快腐化，並誤導下一位讀者。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h2>Anti-patterns</h2></div><div class="col-zh" lang="zh-Hant"><h2>反模式</h2></div></div>
+<div class="pair"><div class="col-en" lang="en"><ul>
+<li><strong>Variants that differ only in colour or copy.</strong> That's a tweak, not a prototype. Real variants disagree about structure.</li>
+<li><strong>Sharing too much code between variants.</strong> A shared <code>&lt;Header&gt;</code> is fine; a shared <code>&lt;Layout&gt;</code> defeats the point. Each variant should be free to throw out the layout.</li>
+<li><strong>Wiring variants to real mutations.</strong> Read-only prototypes are fine. If a variant needs to mutate, point it at a stub — the question is "what should this look like", not "does the backend work".</li>
+<li><strong>Promoting the prototype directly to production.</strong> The variant code was written under prototype constraints (no tests, minimal error handling). Rewrite it properly when you fold it in.</li>
+</ul></div><div class="col-zh" lang="zh-Hant"><ul>
+<li><strong>只差顏色或文案的變體。</strong> 那是微調，不是原型。真正的變體在結構上意見不合。</li>
+<li><strong>在變體之間共享太多程式碼。</strong> 共享 <code>&lt;Header&gt;</code> 沒問題；共享 <code>&lt;Layout&gt;</code> 就失去意義了。每個變體都應該能自由丟棄排版。</li>
+<li><strong>把變體接上真正的變動操作。</strong> 唯讀原型沒問題。如果變體需要變動，把它指向一個樁——問題是「這個東西應該長什麼樣子」，不是「後端能不能運作」。</li>
+<li><strong>直接把原型提升進正式環境。</strong> 變體程式碼是在原型的限制下寫的（沒有測試、極簡錯誤處理）。折疊進去時要好好重寫。</li>
+</ul></div></div>
+
+</div>
+</body>
+</html>

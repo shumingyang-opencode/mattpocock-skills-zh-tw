@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>setup-matt-pocock-skills / issue-tracker-local · mattpocock-skills-zh-tw</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Noto+Serif+TC:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<div class="container">
+<div class="back-link">
+  <a href="../index.html">首頁</a>
+  <a href="../map.html">技能地圖</a>
+  <a href="../learning-path.html">學習路線</a>
+  <a href="SKILL.html">← 技能主頁 setup-matt-pocock-skills</a> 
+</div>
+<h1>issue-tracker-local</h1>
+<div class="subtitle">setup-matt-pocock-skills · 附屬文件</div>
+<div class="pair"><div class="col-en" lang="en"><h1>Issue tracker: Local Markdown</h1></div><div class="col-zh" lang="zh-Hant"><h1>Issue 追蹤器：本機 Markdown</h1></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Issues and specs for this repo live as markdown files in <code>.scratch/</code>.</p></div><div class="col-zh" lang="zh-Hant"><p>這個 repo 的 issue 與規格以 <code>.scratch/</code> 中的 markdown 檔案形式存在。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h2>Conventions</h2></div><div class="col-zh" lang="zh-Hant"><h2>慣例</h2></div></div>
+<div class="pair"><div class="col-en" lang="en"><ul>
+<li>One feature per directory: <code>.scratch/&lt;feature-slug&gt;/</code></li>
+<li>The spec is <code>.scratch/&lt;feature-slug&gt;/spec.md</code></li>
+<li>Implementation issues are one file per ticket at <code>.scratch/&lt;feature-slug&gt;/issues/&lt;NN&gt;-&lt;slug&gt;.md</code>, numbered from <code>01</code> — never a single combined tickets file</li>
+<li>Triage state is recorded as a <code>Status:</code> line near the top of each issue file (see <code>triage-labels.md</code> for the role strings)</li>
+<li>Comments and conversation history append to the bottom of the file under a <code>## Comments</code> heading</li>
+</ul></div><div class="col-zh" lang="zh-Hant"><ul>
+<li>每個功能一個目錄：<code>.scratch/&lt;feature-slug&gt;/</code></li>
+<li>規格是 <code>.scratch/&lt;feature-slug&gt;/spec.md</code></li>
+<li>實作 issue 每個 ticket 一個檔案，位於 <code>.scratch/&lt;feature-slug&gt;/issues/&lt;NN&gt;-&lt;slug&gt;.md</code>，從 <code>01</code> 開始編號——絕不共用單一合併的 tickets 檔案</li>
+<li>分診狀態以 <code>Status:</code> 一行記錄在每個 issue 檔案的頂端附近（角色字串見 <code>triage-labels.md</code>）</li>
+<li>留言與對話歷史在 <code>## Comments</code> 標題下附加到檔案底部</li>
+</ul></div></div>
+<div class="pair"><div class="col-en" lang="en"><h2>When a skill says "publish to the issue tracker"</h2></div><div class="col-zh" lang="zh-Hant"><h2>當技能說「publish to the issue tracker」</h2></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Create a new file under <code>.scratch/&lt;feature-slug&gt;/</code> (creating the directory if needed).</p></div><div class="col-zh" lang="zh-Hant"><p>在 <code>.scratch/&lt;feature-slug&gt;/</code> 下建立新檔案（需要的話建立目錄）。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h2>When a skill says "fetch the relevant ticket"</h2></div><div class="col-zh" lang="zh-Hant"><h2>當技能說「fetch the relevant ticket」</h2></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Read the file at the referenced path. The user will normally pass the path or the issue number directly.</p></div><div class="col-zh" lang="zh-Hant"><p>讀取所引用路徑的檔案。使用者通常會直接傳路徑或 issue 編號。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h2>Wayfinding operations</h2></div><div class="col-zh" lang="zh-Hant"><h2>尋路操作</h2></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Used by <code>/wayfinder</code>. The <strong>map</strong> is a file with one <strong>child</strong> file per ticket.</p></div><div class="col-zh" lang="zh-Hant"><p>由 <code>/wayfinder</code> 使用。<strong>地圖</strong>是一個檔案，每個 ticket 一個<strong>子</strong>檔案。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><ul>
+<li><strong>Map</strong>: <code>.scratch/&lt;effort&gt;/map.md</code> — the Notes / Decisions-so-far / Fog body.</li>
+<li><strong>Child ticket</strong>: <code>.scratch/&lt;effort&gt;/issues/NN-&lt;slug&gt;.md</code>, numbered from <code>01</code>, with the question in the body. A <code>Type:</code> line records the ticket type (<code>research</code>/<code>prototype</code>/<code>grilling</code>/<code>task</code>); a <code>Status:</code> line records <code>claimed</code>/<code>resolved</code>.</li>
+<li><strong>Blocking</strong>: a <code>Blocked by: NN, NN</code> line near the top. A ticket is unblocked when every file it lists is <code>resolved</code>.</li>
+<li><strong>Frontier</strong>: scan <code>.scratch/&lt;effort&gt;/issues/</code> for files that are open, unblocked, and unclaimed; first by number wins.</li>
+<li><strong>Claim</strong>: set <code>Status: claimed</code> and save before any work.</li>
+<li><strong>Resolve</strong>: append the answer under an <code>## Answer</code> heading, set <code>Status: resolved</code>, then append a context pointer (gist + link) to the map's Decisions-so-far in <code>map.md</code>.</li>
+</ul></div><div class="col-zh" lang="zh-Hant"><ul>
+<li><strong>地圖</strong>：<code>.scratch/&lt;effort&gt;/map.md</code>——Notes / Decisions-so-far / Fog 的內容。</li>
+<li><strong>子 ticket</strong>：<code>.scratch/&lt;effort&gt;/issues/NN-&lt;slug&gt;.md</code>，從 <code>01</code> 開始編號，問題在內容中。<code>Type:</code> 一行記錄 ticket 型別（<code>research</code>/<code>prototype</code>/<code>grilling</code>/<code>task</code>）；<code>Status:</code> 一行記錄 <code>claimed</code>/<code>resolved</code>。</li>
+<li><strong>阻塞</strong>：頂端附近的 <code>Blocked by: NN, NN</code> 一行。當它列出的每個檔案都 <code>resolved</code> 時，ticket 就未阻塞。</li>
+<li><strong>前沿</strong>：掃描 <code>.scratch/&lt;effort&gt;/issues/</code> 找開啟、未阻塞且未被認領的檔案；編號最小的第一個勝出。</li>
+<li><strong>認領</strong>：任何工作前設定 <code>Status: claimed</code> 並儲存。</li>
+<li><strong>解決</strong>：在 <code>## Answer</code> 標題下附加答案，設定 <code>Status: resolved</code>，然後在 <code>map.md</code> 的地圖 Decisions-so-far 附加一個上下文指標（gist + 連結）。</li>
+</ul></div></div>
+
+</div>
+</body>
+</html>

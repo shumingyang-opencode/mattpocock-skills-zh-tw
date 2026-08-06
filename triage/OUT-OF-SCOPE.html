@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>triage / OUT-OF-SCOPE · mattpocock-skills-zh-tw</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Noto+Serif+TC:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<div class="container">
+<div class="back-link">
+  <a href="../index.html">首頁</a>
+  <a href="../map.html">技能地圖</a>
+  <a href="../learning-path.html">學習路線</a>
+  <a href="SKILL.html">← 技能主頁 triage</a> 
+</div>
+<h1>OUT-OF-SCOPE</h1>
+<div class="subtitle">triage · 附屬文件</div>
+<div class="pair"><div class="col-en" lang="en"><h1>Out-of-Scope Knowledge Base</h1></div><div class="col-zh" lang="zh-Hant"><h1>超出範圍知識庫</h1></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>The <code>.out-of-scope/</code> directory in a repo stores persistent records of rejected feature requests. It serves two purposes:</p></div><div class="col-zh" lang="zh-Hant"><p>repo 中的 <code>.out-of-scope/</code> 目錄儲存被拒絕功能請求的持久記錄。它有兩個用途：</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><ol>
+<li><strong>Institutional memory</strong> — why a feature was rejected, so the reasoning isn't lost when the issue is closed</li>
+<li><strong>Deduplication</strong> — when a new issue comes in that matches a prior rejection, the skill can surface the previous decision instead of re-litigating it</li>
+</ol></div><div class="col-zh" lang="zh-Hant"><ol>
+<li><strong>組織記憶</strong> — 功能為何被拒絕，這樣 issue 關閉時推理不會遺失</li>
+<li><strong>去重複</strong> — 當新進的 issue 與先前的拒絕相符時，技能可以浮現先前的決策，而不是重新爭論一遍</li>
+</ol></div></div>
+<div class="pair"><div class="col-en" lang="en"><h2>Directory structure</h2></div><div class="col-zh" lang="zh-Hant"><h2>目錄結構</h2></div></div>
+<div class="pair"><div class="col-en" lang="en"><pre><code>.out-of-scope/
+├── dark-mode.md
+├── plugin-system.md
+└── graphql-api.md
+</code></pre></div><div class="col-zh" lang="zh-Hant"><pre><code>.out-of-scope/
+├── dark-mode.md
+├── plugin-system.md
+└── graphql-api.md
+</code></pre></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>One file per <strong>concept</strong>, not per issue. Multiple issues requesting the same thing are grouped under one file.</p></div><div class="col-zh" lang="zh-Hant"><p>每個<strong>概念</strong>一個檔案，而不是每個 issue 一個。請求相同內容的多個 issues 會歸入同一個檔案。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h2>File format</h2></div><div class="col-zh" lang="zh-Hant"><h2>檔案格式</h2></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>The file should be written in a relaxed, readable style — more like a short design document than a database entry. Use paragraphs, code samples, and examples to make the reasoning clear and useful to someone encountering it for the first time.</p></div><div class="col-zh" lang="zh-Hant"><p>檔案應以輕鬆、可讀的風格撰寫——比較像一份簡短的設計文件，而不是資料庫條目。用段落、程式碼範例與實例讓推理清楚明瞭，對第一次接觸它的人有用。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>```markdown</p>
+<h1>Dark Mode</h1>
+<p>This project does not support dark mode or user-facing theming.</p>
+<h2>Why this is out of scope</h2>
+<p>The rendering pipeline assumes a single color palette defined in
+<code>ThemeConfig</code>. Supporting multiple themes would require:</p>
+<ul>
+<li>A theme context provider wrapping the entire component tree</li>
+<li>Per-component theme-aware style resolution</li>
+<li>A persistence layer for user theme preferences</li>
+</ul>
+<p>This is a significant architectural change that doesn't align with the
+project's focus on content authoring. Theming is a concern for downstream
+consumers who embed or redistribute the output.</p>
+<p>```ts</p></div><div class="col-zh" lang="zh-Hant"><p>```markdown</p>
+<h1>Dark Mode</h1>
+<p>This project does not support dark mode or user-facing theming.</p>
+<h2>Why this is out of scope</h2>
+<p>The rendering pipeline assumes a single color palette defined in
+<code>ThemeConfig</code>. Supporting multiple themes would require:</p>
+<ul>
+<li>A theme context provider wrapping the entire component tree</li>
+<li>Per-component theme-aware style resolution</li>
+<li>A persistence layer for user theme preferences</li>
+</ul>
+<p>This is a significant architectural change that doesn't align with the
+project's focus on content authoring. Theming is a concern for downstream
+consumers who embed or redistribute the output.</p>
+<p>```ts</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>// The current ThemeConfig interface is not designed for runtime switching:
+interface ThemeConfig {
+  colors: ColorPalette; // single palette, resolved at build time
+  fonts: FontStack;
+}
+```</p></div><div class="col-zh" lang="zh-Hant"><p>// The current ThemeConfig interface is not designed for runtime switching:
+interface ThemeConfig {
+  colors: ColorPalette; // single palette, resolved at build time
+  fonts: FontStack;
+}
+```</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h2>Prior requests</h2></div><div class="col-zh" lang="zh-Hant"><h2>Prior requests</h2></div></div>
+<div class="pair"><div class="col-en" lang="en"><ul>
+<li>
+<h1>42 — "Add dark mode support"</h1>
+</li>
+<li>
+<h1>87 — "Night theme for accessibility"</h1>
+</li>
+<li>
+<h1>134 — "Dark theme option"</h1>
+```</li>
+</ul></div><div class="col-zh" lang="zh-Hant"><ul>
+<li>
+<h1>42 — "Add dark mode support"</h1>
+</li>
+<li>
+<h1>87 — "Night theme for accessibility"</h1>
+</li>
+<li>
+<h1>134 — "Dark theme option"</h1>
+```</li>
+</ul></div></div>
+<div class="pair"><div class="col-en" lang="en"><h3>Naming the file</h3></div><div class="col-zh" lang="zh-Hant"><h3>為檔案命名</h3></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Use a short, descriptive kebab-case name for the concept: <code>dark-mode.md</code>, <code>plugin-system.md</code>, <code>graphql-api.md</code>. The name should be recognizable enough that someone browsing the directory understands what was rejected without opening the file.</p></div><div class="col-zh" lang="zh-Hant"><p>為概念使用簡短、具描述性的 kebab-case 名稱：<code>dark-mode.md</code>、<code>plugin-system.md</code>、<code>graphql-api.md</code>。名稱要夠容易辨識，讓瀏覽目錄的人不需要開啟檔案就能理解什麼被拒絕了。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h3>Writing the reason</h3></div><div class="col-zh" lang="zh-Hant"><h3>撰寫理由</h3></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>The reason should be substantive — not "we don't want this" but why. Good reasons reference:</p></div><div class="col-zh" lang="zh-Hant"><p>理由應該有實質內容——不是「我們不想要這個」，而是為什麼。好的理由會引用：</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><ul>
+<li>Project scope or philosophy ("This project focuses on X; theming is a downstream concern")</li>
+<li>Technical constraints ("Supporting this would require Y, which conflicts with our Z architecture")</li>
+<li>Strategic decisions ("We chose to use A instead of B because...")</li>
+</ul></div><div class="col-zh" lang="zh-Hant"><ul>
+<li>專案範圍或理念（「本專案聚焦於 X；theming 是下游的考量」）</li>
+<li>技術限制（「支援這個需要 Y，而這與我們的 Z 架構衝突」）</li>
+<li>策略決策（「我們選擇使用 A 而非 B，因為……」）</li>
+</ul></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>The reason should be durable. Avoid referencing temporary circumstances ("we're too busy right now") — those aren't real rejections, they're deferrals.</p></div><div class="col-zh" lang="zh-Hant"><p>理由應該耐用。避免引用暫時的情況（「我們現在太忙了」）——那些不是真正的拒絕，而是延後。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h2>When to check <code>.out-of-scope/</code></h2></div><div class="col-zh" lang="zh-Hant"><h2>何時檢查 <code>.out-of-scope/</code></h2></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>During triage (Step 1: Gather context), read all files in <code>.out-of-scope/</code>. When evaluating a new issue:</p></div><div class="col-zh" lang="zh-Hant"><p>在分診期間（第 1 步：收集上下文），讀取 <code>.out-of-scope/</code> 中的所有檔案。評估新 issue 時：</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><ul>
+<li>Check if the request matches an existing out-of-scope concept</li>
+<li>Matching is by concept similarity, not keyword — "night theme" matches <code>dark-mode.md</code></li>
+<li>If there's a match, surface it to the maintainer: "This is similar to <code>.out-of-scope/dark-mode.md</code> — we rejected this before because [reason]. Do you still feel the same way?"</li>
+</ul></div><div class="col-zh" lang="zh-Hant"><ul>
+<li>檢查請求是否與現有的超出範圍概念相符</li>
+<li>比對依概念相似度，而非關鍵字——「night theme」會對應到 <code>dark-mode.md</code></li>
+<li>如果有相符，把它浮現給維護者：「這類似 <code>.out-of-scope/dark-mode.md</code>——我們先前因為 [reason] 拒絕過這個。你現在還是一樣的看法嗎？」</li>
+</ul></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>The maintainer may:</p></div><div class="col-zh" lang="zh-Hant"><p>維護者可以：</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><ul>
+<li><strong>Confirm</strong> — the new issue gets added to the existing file's "Prior requests" list, then closed</li>
+<li><strong>Reconsider</strong> — the out-of-scope file gets deleted or updated, and the issue proceeds through normal triage</li>
+<li><strong>Disagree</strong> — the issues are related but distinct, proceed with normal triage</li>
+</ul></div><div class="col-zh" lang="zh-Hant"><ul>
+<li><strong>確認</strong> — 新 issue 被加到既有檔案的「Prior requests（先前請求）」清單，然後關閉</li>
+<li><strong>重新考慮</strong> — 超出範圍的檔案被刪除或更新，issue 繼續走正常分診</li>
+<li><strong>不同意</strong> — 這些 issues 相關但不同，繼續正常分診</li>
+</ul></div></div>
+<div class="pair"><div class="col-en" lang="en"><h2>When to write to <code>.out-of-scope/</code></h2></div><div class="col-zh" lang="zh-Hant"><h2>何時寫入 <code>.out-of-scope/</code></h2></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Only when an <strong>enhancement</strong> (not a bug) is <em>rejected</em> as <code>wontfix</code>. This applies to enhancement PRs exactly as it does to issues — a rejected PR is recorded here so the same request doesn't return as fresh code.</p></div><div class="col-zh" lang="zh-Hant"><p>只有當<strong>enhancement</strong>（而非 bug）以 <code>wontfix</code> 被<em>拒絕</em>時。這對 enhancement PR 的適用，與對 issues 完全相同——被拒絕的 PR 會記錄在這裡，這樣相同的請求不會以新程式碼的形式再次出現。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Do <strong>not</strong> write here when something is closed as <code>wontfix</code> because it's <strong>already implemented</strong>. That's a built feature, not a rejected one; recording it would poison the dedup checks with false rejections. Instead, the closing comment points to where the feature already lives.</p></div><div class="col-zh" lang="zh-Hant"><p>當某個東西因為<strong>已實作</strong>而以 <code>wontfix</code> 關閉時，<strong>不要</strong>寫在這裡。那是已建置的功能，而不是被拒絕的；記錄它會以虛假的拒絕污染去重複檢查。相反地，關閉評論會指向該功能已經存在的地方。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>The flow:</p></div><div class="col-zh" lang="zh-Hant"><p>流程：</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><ol>
+<li>Maintainer decides a feature request is out of scope</li>
+<li>Check if a matching <code>.out-of-scope/</code> file already exists</li>
+<li>If yes: append the new issue to the "Prior requests" list</li>
+<li>If no: create a new file with the concept name, decision, reason, and first prior request</li>
+<li>Post a comment on the issue explaining the decision and mentioning the <code>.out-of-scope/</code> file</li>
+<li>Close the issue with the <code>wontfix</code> label</li>
+</ol></div><div class="col-zh" lang="zh-Hant"><ol>
+<li>維護者決定某個功能請求超出範圍</li>
+<li>檢查是否已有相符的 <code>.out-of-scope/</code> 檔案</li>
+<li>如果有：把新 issue 附加到「Prior requests（先前請求）」清單</li>
+<li>如果沒有：建立新檔案，包含概念名稱、決策、理由與第一筆先前請求</li>
+<li>在 issue 上貼評論，說明決策並提及 <code>.out-of-scope/</code> 檔案</li>
+<li>以 <code>wontfix</code> 標籤關閉 issue</li>
+</ol></div></div>
+<div class="pair"><div class="col-en" lang="en"><h2>Updating or removing out-of-scope files</h2></div><div class="col-zh" lang="zh-Hant"><h2>更新或移除超出範圍的檔案</h2></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>If the maintainer changes their mind about a previously rejected concept:</p></div><div class="col-zh" lang="zh-Hant"><p>如果維護者對先前拒絕的概念改變了想法：</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><ul>
+<li>Delete the <code>.out-of-scope/</code> file</li>
+<li>The skill does not need to reopen old issues — they're historical records</li>
+<li>The new issue that triggered the reconsideration proceeds through normal triage</li>
+</ul></div><div class="col-zh" lang="zh-Hant"><ul>
+<li>刪除 <code>.out-of-scope/</code> 檔案</li>
+<li>技能不需要重新開啟舊 issues——它們是歷史記錄</li>
+<li>觸發重新考慮的新 issue 繼續走正常分診</li>
+</ul></div></div>
+
+</div>
+</body>
+</html>

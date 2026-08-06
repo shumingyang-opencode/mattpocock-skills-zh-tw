@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>to-questionnaire · 轉成問卷 · mattpocock-skills-zh-tw</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Noto+Serif+TC:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<div class="container">
+<div class="back-link">
+  <a href="../index.html">首頁</a>
+  <a href="../map.html">技能地圖</a>
+  <a href="../learning-path.html">學習路線</a>
+  
+</div>
+<table class="fm-table">
+<tr><td>name</td><td><code>to-questionnaire</code></td></tr>
+<tr><td>description (EN)</td><td>Turn a decision you can't fully answer into a questionnaire for someone else to fill in.</td></tr>
+<tr><td>說明 (繁中)</td><td>將一個您無法完全回答的決策轉化為一份由他人填寫的問卷。</td></tr>
+<tr><td>disable-model-invocation</td><td><code>true</code></td></tr>
+</table>
+<h1>to-questionnaire</h1>
+<div class="subtitle">轉成問卷</div>
+<div class="pair"><div class="col-en" lang="en"><p>Turn something the user can't answer alone into a <strong>questionnaire</strong> — a Markdown document they hand to one person to fill in async, or fill out together over a meeting. The recipient holds knowledge the user lacks; the questionnaire pulls it out of them.</p></div><div class="col-zh" lang="zh-Hant"><p>將一個使用者無法獨自回答的事情轉化為一份<strong>問卷</strong> — 一份 Markdown 文件，他們把它交給一個人非同步填寫，或在會議中一起填寫。收件人握有使用者缺乏的知識；問卷把它從他們身上引出來。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p><strong>Grill the send, not the subject.</strong> Interview the user only about the <em>send</em>, which they can always answer: who it goes to, and what they need back. The questions in the document then target the <strong>gap</strong> between what the recipient knows and what the user needs.</p></div><div class="col-zh" lang="zh-Hant"><p><strong>質詢的是寄送，不是主題。</strong> 只訪問使用者關於_寄送_的事，這他們總是能回答：寄給誰，以及他們需要回覆什麼。文件中的問題然後針對收件人所知與使用者所需之間的<strong>缺口</strong>。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><ol>
+<li><strong>Who is it going to?</strong> Ask, in one exchange, the recipient's role, expertise, and relationship to the user. This fixes the questionnaire's tone and how much context it must carry. Done when you know who the recipient is and what they know that the user doesn't.</li>
+</ol></div><div class="col-zh" lang="zh-Hant"><ol>
+<li><strong>要寄給誰？</strong> 在一個來回中詢問收件人的角色、專業以及與使用者的關係。這決定了問卷的語氣以及它必須承載多少脈絡。當您知道收件人是誰以及他們知道什麼使用者不知道的事時，就完成了。</li>
+</ol></div></div>
+<div class="pair"><div class="col-en" lang="en"><ol start="2">
+<li><strong>What do you need back?</strong> Ask, in one exchange, the specific decisions or facts the user can't resolve alone and needs from this person. Done when you have a concrete list of what the user must walk away able to do or decide.</li>
+</ol></div><div class="col-zh" lang="zh-Hant"><ol start="2">
+<li><strong>您需要回覆什麼？</strong> 在一個來回中詢問使用者無法獨自解決、且需要從此人身上取得的具體決策或事實。當您有了一個具體清單，列出使用者必須能帶著去做或決策的事時，就完成了。</li>
+</ol></div></div>
+<div class="pair"><div class="col-en" lang="en"><ol start="3">
+<li><strong>Write the questionnaire.</strong> Draft questions aimed at the gap from steps 1–2, following the Document structure below. Write it to <code>to-questionnaire-&lt;slug&gt;.md</code> in the current directory (slug from the topic) and report the path. Done when the file exists and every item the user named in step 2 is covered by a question.</li>
+</ol></div><div class="col-zh" lang="zh-Hant"><ol start="3">
+<li><strong>撰寫問卷。</strong> 起草針對第 1–2 步缺口的問題，遵循下方的文件結構。將它寫到目前目錄的 <code>to-questionnaire-&lt;slug&gt;.md</code>（slug 取自主題），並回報路徑。當檔案存在且使用者在第 2 步提出的每一項都被一個問題涵蓋時，就完成了。</li>
+</ol></div></div>
+<div class="pair"><div class="col-en" lang="en"><h2>Document structure</h2></div><div class="col-zh" lang="zh-Hant"><h2>文件結構</h2></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Frame the document as a <strong>discovery questionnaire</strong>: the user lacks context, the recipient holds it. Order questions most-important-first — async means you may only get one pass — and group them under <code>##</code> headings by theme once there are more than a handful. Write it using the template below.</p></div><div class="col-zh" lang="zh-Hant"><p>將文件框定為一份<strong>發現問卷</strong>：使用者缺乏脈絡，收件人握有它。以最重要的優先排序問題 — 非同步意味著您可能只有一次機會 — 當問題超過幾則時，按主題分組在 <code>##</code> 標題下。使用下面的範本撰寫。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p><questionnaire-template></p>
+<h1><Questionnaire title></h1>
+<p><strong>Purpose:</strong> why this questionnaire exists and the decision riding on it.</p>
+<p><strong>From:</strong> <the user> — <strong>To:</strong> <the recipient> — <strong>How your answers will be used:</strong> <where they go></p>
+<h2>Context</h2>
+<p>One paragraph orienting a recipient who wasn't in the user's head. Enough to answer well, not a page.</p>
+<h2>How to answer</h2>
+<p>Deadline and rough effort. Partial answers and "I don't know" are useful — flag anything you're unsure of rather than skipping it.</p>
+<h2><Theme heading></h2>
+<p>One <code>##</code> section per theme. Under each, its questions, most-important-first. Every question is one idea — never compound — with an answer stub directly beneath, and a one-line <em>why this matters</em> only where the question could be misread or invite a throwaway answer.</p>
+<p><question-example></p>
+<h3>What load is the system expected to handle at launch?</h3>
+<p><em>Why this matters: it decides whether we provision for burst traffic now or defer it.</em></p>
+<blockquote>
+<p></question-example></p>
+</blockquote>
+<h2>Anything else?</h2>
+<p>A closing catch-all: anything we didn't ask that we should know?</p>
+<p></questionnaire-template></p></div><div class="col-zh" lang="zh-Hant"><p><questionnaire-template></p>
+<h1>&lt;問卷標題&gt;</h1>
+<p><strong>Purpose（目的）：</strong> 這份問卷為什麼存在，以及它所承載的決策。</p>
+<p><strong>From（寄件者）：</strong> &lt;使用者&gt; — <strong>To（收件人）：</strong> &lt;收件人&gt; — <strong>How your answers will be used（您的回答將如何使用）：</strong> &lt;它們去向何處&gt;</p>
+<h2>Context</h2>
+<p>一段用來導向一個不在使用者腦中的收件人的段落。足以好好回答即可，不是一整頁。</p>
+<h2>How to answer</h2>
+<p>截止時間與粗略的努力程度。部分回答與「我不知道」都很有用 — 標記任何您不確定的東西，而不是跳過它。</p>
+<h2>&lt;主題標題&gt;</h2>
+<p>每個主題一個 <code>##</code> 段落。在其下，是它的問題，最重要的優先。每個問題都是一個想法 — 絕不複合 — 正下方有一個作答欄位，並且只有當問題可能被誤讀或引來敷衍回答時，才加一行_為什麼這很重要_。</p>
+<p><question-example></p>
+<h3>What load is the system expected to handle at launch?</h3>
+<p><em>Why this matters: it decides whether we provision for burst traffic now or defer it.</em></p>
+<blockquote>
+<p></question-example></p>
+</blockquote>
+<h2>Anything else?</h2>
+<p>一個收尾的包羅萬象：任何我們沒問但您認為我們應該知道的事？</p>
+<p></questionnaire-template></p></div></div>
+
+</div>
+</body>
+</html>

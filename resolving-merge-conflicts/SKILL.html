@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>resolving-merge-conflicts · 解決合併衝突 · mattpocock-skills-zh-tw</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Noto+Serif+TC:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<div class="container">
+<div class="back-link">
+  <a href="../index.html">首頁</a>
+  <a href="../map.html">技能地圖</a>
+  <a href="../learning-path.html">學習路線</a>
+  
+</div>
+<table class="fm-table">
+<tr><td>name</td><td><code>resolving-merge-conflicts</code></td></tr>
+<tr><td>description (EN)</td><td>Use when you need to resolve an in-progress git merge/rebase conflict.</td></tr>
+<tr><td>說明 (繁中)</td><td>當你需要解決進行中的 git merge/rebase 衝突時使用。</td></tr>
+</table>
+<h1>resolving-merge-conflicts</h1>
+<div class="subtitle">解決合併衝突</div>
+<div class="pair"><div class="col-en" lang="en"><ol>
+<li><strong>See the current state</strong> of the merge/rebase. Check git history, and the conflicting files.</li>
+</ol></div><div class="col-zh" lang="zh-Hant"><ol>
+<li><strong>檢視目前狀態</strong>，也就是 merge/rebase 的目前狀態。檢查 git 歷史與衝突檔案。</li>
+</ol></div></div>
+<div class="pair"><div class="col-en" lang="en"><ol start="2">
+<li><strong>Find the primary sources</strong> for each conflict. Understand deeply why each change was made, and what the original intent was. Read the commit messages, check the PRs, check original issues/tickets.</li>
+</ol></div><div class="col-zh" lang="zh-Hant"><ol start="2">
+<li><strong>為每個衝突找出主要來源</strong>。深入理解每個變更為什麼被做，以及原始意圖是什麼。讀 commit 訊息、查 PR、查原始 issue/ticket。</li>
+</ol></div></div>
+<div class="pair"><div class="col-en" lang="en"><ol start="3">
+<li><strong>Resolve each hunk.</strong> Preserve both intents where possible. Where incompatible, pick the one matching the merge's stated goal and note the trade-off. Do <strong>not</strong> invent new behaviour. Always resolve; never <code>--abort</code>.</li>
+</ol></div><div class="col-zh" lang="zh-Hant"><ol start="3">
+<li><strong>解決每個 hunk。</strong> 盡可能保留兩邊的意圖。在不相容之處，選擇符合 merge 陳述目標的一方，並記下取捨。<strong>不要</strong>發明新行為。永遠解決；絕不 <code>--abort</code>。</li>
+</ol></div></div>
+<div class="pair"><div class="col-en" lang="en"><ol start="4">
+<li>Discover the project's <strong>automated checks</strong> and run them — typically typecheck, then tests, then format. Fix anything the merge broke.</li>
+</ol></div><div class="col-zh" lang="zh-Hant"><ol start="4">
+<li>找出專案的<strong>自動化檢查</strong>並執行它們——通常是 typecheck，然後測試，然後格式。修好任何被 merge 弄壞的東西。</li>
+</ol></div></div>
+<div class="pair"><div class="col-en" lang="en"><ol start="5">
+<li><strong>Finish the merge/rebase.</strong> Stage everything and commit. If rebasing, continue the rebase process until all commits are rebased.</li>
+</ol></div><div class="col-zh" lang="zh-Hant"><ol start="5">
+<li><strong>完成 merge/rebase。</strong> 把所有東西加入並 commit。如果是在 rebase，繼續 rebase 流程直到所有 commit 都 rebase 完。</li>
+</ol></div></div>
+
+</div>
+</body>
+</html>
