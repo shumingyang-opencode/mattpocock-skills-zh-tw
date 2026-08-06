@@ -507,6 +507,138 @@ def card_html(skill: str, meta: dict, color_cls: str = "lv-cyan") -> str:
             f'</a>')
 
 
+def install_page() -> str:
+    repo = "shumingyang-opencode/mattpocock-skills-zh-tw"
+    html = page_open("安裝指南 · Install Guide", "")
+    html += """<div class="back-link"><a href="index.html">← 首頁</a><a href="map.html">全景圖</a><a href="learning-path.html">學習路線</a></div>
+<header>
+  <h1>安裝指南</h1>
+  <div class="subtitle">Install Guide · 把這包技能裝進 OpenCode 或 TRAE（IDE / CLI）</div>
+  <div class="badge-line">裝好之後，每個 repo 先跑一次 /setup-matt-pocock-skills，再從 /ask-matt 開始</div>
+</header>
+<div class="guide">
+
+<h2>這是什麼</h2>
+<p>這是一組「給 AI 工程師用的代理技能」的繁體中文版。技能就是一段可重用的指令集，裝進你的 agent（OpenCode / TRAE / Claude Code…）之後，agent 就能執行 <code>/grill-with-docs</code>、<code>/tdd</code>、<code>/code-review</code> 這類工作流。<strong>本 repo 是翻譯版：只改說明文字，指令、路徑、技能名全部照原樣，所以安裝方式跟上游完全一樣。</strong></p>
+
+<div class="embed-panel">
+  <div class="embed-head">
+    <span class="embed-title">📦 shumingyang-opencode/mattpocock-skills-zh-tw</span>
+    <a class="btn" href="https://github.com/shumingyang-opencode/mattpocock-skills-zh-tw" target="_blank" rel="noopener">在 GitHub 開啟 ↗</a>
+  </div>
+  <div id="repo-status" class="repo-status">正在載入 GitHub repo…</div>
+  <div id="repo-readme" class="repo-readme"></div>
+  <div id="repo-tree" class="repo-tree"></div>
+</div>
+
+<h2>方式一（推薦）：skills.sh 一鍵安裝</h2>
+<p><a href="https://skills.sh" target="_blank" rel="noopener">skills.sh</a> 是開放的技能安裝器，支援 OpenCode 與 TRAE。在終端機執行：</p>
+<h3>安裝到 OpenCode</h3>
+<pre>npx skills@latest add shumingyang-opencode/mattpocock-skills-zh-tw -a opencode</pre>
+<h3>安裝到 TRAE（國際版）</h3>
+<pre>npx skills@latest add shumingyang-opencode/mattpocock-skills-zh-tw -a trae</pre>
+<h3>安裝到 TRAE 中國版</h3>
+<pre>npx skills@latest add shumingyang-opencode/mattpocock-skills-zh-tw -a trae-cn</pre>
+<p class="hint">加上 <code>-g</code> 表示裝到全域（所有專案都可用）；不加則裝進目前專案。想一次裝到兩個 agent 就同時寫 <code>-a opencode -a trae</code>。</p>
+<ul>
+  <li>互動安裝時會問要裝哪些技能——<strong>務必勾選 <code>setup-matt-pocock-skills</code></strong>，它是其他技能的前置。</li>
+  <li>可以選擇 symlink（推薦，方便日後更新）或 copy 兩種裝法。</li>
+  <li>日後更新：<code>npx skills update</code>。</li>
+  <li>想先看看有哪些技能再裝：<code>npx skills add shumingyang-opencode/mattpocock-skills-zh-tw --list</code></li>
+</ul>
+
+<h2>方式二：手動複製（OpenCode）</h2>
+<p>不習慣用安裝器的話，直接把技能資料夾複製進去。OpenCode 讀取技能的兩個位置：</p>
+<ul>
+  <li>全域：<code>~/.config/opencode/skills/</code>（Windows 是 <code>C:\\Users\\&lt;你&gt;\\.config\\opencode\\skills\\</code>）</li>
+  <li>專案：<code>.agents/skills/</code>（放在你的專案根目錄）</li>
+</ul>
+<p>先把 repo 抓下來，再把 <code>skills/</code> 底下每個技能資料夾複製進去。PowerShell 範例：</p>
+<pre># 抓 repo
+git clone https://github.com/shumingyang-opencode/mattpocock-skills-zh-tw.git
+cd mattpocock-skills-zh-tw
+
+# 複製全部技能到 OpenCode 全域目錄
+Copy-Item -Path "skills\\*\\*" -Destination "$env:USERPROFILE\\.config\\opencode\\skills\\" -Recurse -Force</pre>
+<p class="hint">複製後，OpenCode 重新載入（或重開）就會看到這些技能。</p>
+
+<h2>方式三：手動複製（TRAE）</h2>
+<p>TRAE 讀取技能的位置（參見 <a href="https://docs.trae.ai/ide/skills" target="_blank" rel="noopener">TRAE Skills 文件</a>）：</p>
+<ul>
+  <li>全域（國際版）：<code>~/.trae/skills/</code></li>
+  <li>全域（中國版）：<code>~/.trae-cn/skills/</code></li>
+  <li>專案：<code>.trae/skills/</code></li>
+</ul>
+<pre># 複製全部技能到 TRAE 全域目錄（國際版範例）
+Copy-Item -Path "skills\\*\\*" -Destination "$env:USERPROFILE\\.trae\\skills\\" -Recurse -Force</pre>
+
+<h2>開始使用</h2>
+<ol>
+  <li>在 agent 中、每個 repo 執行一次 <code>/setup-matt-pocock-skills</code>——設定 issue tracker、分診標籤與文件位置。</li>
+  <li>不知道下一步該用哪個技能？輸入 <code>/ask-matt</code>，它會依你的處境推薦。</li>
+  <li>本網站就是這包技能的閱讀版：<a href="map.html">全景圖</a>看關係，<a href="learning-path.html">學習路線</a>照順序學，每個技能頁都是中英逐段對照。</li>
+</ol>
+
+<h2>注意</h2>
+<ul>
+  <li>這是<strong>翻譯版</strong>；想用英文原版，請安裝上游：<code>npx skills@latest add mattpocock/skills</code>。</li>
+  <li><strong>不要兩套都裝</strong>——每個技能會出現兩次。</li>
+  <li>翻譯只動說明文字，若遇問題請先比對上游行為。</li>
+</ul>
+
+</div>
+"""
+    html += f"""<script src="https://cdn.jsdelivr.net/npm/marked@12/marked.min.js"></script>
+<script>
+(async function () {{
+  const REPO = "{repo}";
+  const status = document.getElementById("repo-status");
+  const readme = document.getElementById("repo-readme");
+  const tree = document.getElementById("repo-tree");
+  try {{
+    const r = await fetch("https://api.github.com/repos/" + REPO + "/readme");
+    if (r.ok) {{
+      const j = await r.json();
+      const md = atob(j.content.replace(/\\s/g, ""));
+      readme.innerHTML = marked.parse(md);
+    }}
+  }} catch (e) {{}}
+  try {{
+    const t = await fetch("https://api.github.com/repos/" + REPO + "/git/trees/main?recursive=1");
+    if (t.ok) {{
+      const j = await t.json();
+      const files = (j.tree || []).filter(x => x.type === "blob");
+      const dirs = {{}};
+      for (const f of files) {{
+        const parts = f.path.split("/");
+        const key = parts.length > 1 ? parts[0] + "/" : "";
+        (dirs[key] = dirs[key] || []).push(f.path);
+      }}
+      let h = '<div class="tree-group">';
+      for (const d of Object.keys(dirs).filter(k => k).sort()) {{
+        h += '<details open><summary>&#128193; ' + d + '</summary><ul>';
+        for (const p of dirs[d].sort()) {{
+          const n = p.split("/").pop();
+          h += '<li><a href="https://github.com/' + REPO + '/blob/main/' + p + '" target="_blank" rel="noopener">' + n + '</a></li>';
+        }}
+        h += '</ul></details>';
+      }}
+      h += '</div>';
+      tree.innerHTML = h;
+      status.textContent = "✓ 已載入 GitHub repo 內容";
+      status.style.color = "var(--emerald)";
+    }}
+  }} catch (e) {{}}
+}})();
+</script>
+"""
+    html += footer()
+    html += page_close()
+    out = ROOT / "install.html"
+    out.write_text(html, encoding="utf-8")
+    print("  ✓ install.html")
+
+
 def index_page() -> str:
     html = page_open("Matt Pocock 技能包 · 繁中解讀", "")
     html += """<header>
@@ -526,6 +658,12 @@ def index_page() -> str:
     <span class="ec-en">Learning Path</span>
     <span class="ec-desc">不想只看懂、想真的上手？從 L0 一路練到 L4，分層分類照著走。</span>
   </a>
+  <a class="entry-card" href="install.html">
+    <span class="ec-icon">📦</span>
+    <span class="ec-title">安裝指南</span>
+    <span class="ec-en">Install Guide</span>
+    <span class="ec-desc">把這包技能裝進 OpenCode 或 TRAE（IDE / CLI），一步步照著做就會用。內嵌 GitHub repo 可直接瀏覽。</span>
+  </a>
 </div>
 """
     html += footer(include_entries=True)
@@ -539,7 +677,7 @@ def footer(include_entries: bool = False) -> str:
     links = ('<br><a href="map.html">全景圖</a> · <a href="learning-path.html">學習路線</a>' if include_entries else "")
     return f"""<footer>
   <div>這是 <a href="https://github.com/mattpocock/skills">mattpocock/skills</a> 的繁體中文翻譯學習站——翻譯只動說明文字，指令、路徑、技能名一律照原樣，安裝照常可用。</div>
-  <div>內容 © <a href="https://github.com/mattpocock">Matt Pocock</a>（MIT License）· 繁中翻譯與這個站 © OpenCode Agent（deepseek-v4-flash）{links}</div>
+  <div>內容 © <a href="https://github.com/mattpocock">Matt Pocock</a>（MIT License）· 使用 OpenCode 與 deepseek-v4-flash 進行繁中翻譯與網站設計建置{links}</div>
 </footer>
 """
 
@@ -573,6 +711,7 @@ def main():
     print("[views]")
     map_page()
     learning_path_page()
+    install_page()
     index_page()
     write_data()
     print("Done.")
