@@ -516,6 +516,45 @@ footer a { color: var(--text-soft); }
   line-height: 1.7;
 }
 .callout strong { color: #c8f5df; }
+
+/* ---------- Upstream sync / TODO panel (homepage) ---------- */
+.sync-panel {
+  border: 1px solid var(--line-strong);
+  border-radius: 14px;
+  background: var(--surface);
+  padding: 1rem 1.2rem;
+  margin: 1.6rem auto 0;
+  max-width: 860px;
+}
+.sync-panel h2 {
+  font-family: var(--font-display);
+  font-size: 1.02rem;
+  color: #f0f2ff;
+  margin-bottom: 0.6rem;
+}
+.sync-meta { font-size: 0.82rem; color: var(--text-soft); line-height: 1.8; }
+.sync-meta code { font-family: var(--font-mono); font-size: 0.78em; }
+.sync-badge {
+  display: inline-block;
+  margin-left: 0.4rem;
+  padding: 0.08rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.68rem;
+  font-weight: 600;
+}
+.sync-badge.ok { color: #c8f5df; border: 1px solid rgba(52, 211, 153, 0.5); background: rgba(52, 211, 153, 0.1); }
+.sync-badge.warn { color: #fdeab9; border: 1px solid rgba(251, 191, 36, 0.5); background: rgba(251, 191, 36, 0.1); }
+.sync-list { margin-top: 0.7rem; }
+.sync-list summary { cursor: pointer; color: var(--cyan); font-size: 0.82rem; }
+.sync-list ul { margin: 0.5rem 0 0.3rem 1.1rem; }
+.sync-list li { font-size: 0.78rem; color: var(--text-soft); margin: 0.25rem 0; line-height: 1.5; }
+.sync-list li code { font-family: var(--font-mono); font-size: 0.85em; color: #7dd3e0; background: rgba(34, 211, 238, 0.1); padding: 0.04rem 0.3rem; border-radius: 4px; }
+.sync-reason { color: var(--text-muted); }
+.sync-note { color: var(--amber); font-size: 0.72rem; }
+.sync-empty { font-size: 0.82rem; color: var(--text-muted); margin-top: 0.6rem; }
+.sync-muted { font-size: 0.76rem; color: var(--text-muted); margin-top: 0.5rem; }
+.sync-hint { font-size: 0.76rem; color: var(--text-muted); margin-top: 0.7rem; border-top: 1px solid var(--line); padding-top: 0.6rem; }
+.sync-hint strong { color: var(--emerald); }
 .repo-readme { font-size: 0.85rem; color: var(--text-soft); line-height: 1.75; }
 .repo-readme h1, .repo-readme h2, .repo-readme h3 { color: #f0f2ff; font-family: var(--font-display); margin: 0.7rem 0 0.3rem; }
 .repo-readme p { margin: 0.4rem 0; }

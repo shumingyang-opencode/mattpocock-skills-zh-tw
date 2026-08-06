@@ -1,0 +1,16 @@
+{
+  "aligned": {
+    "release": "v1.2.2",
+    "commit": "8b36d4fb2635b3c21998dcd8144439c9e5ba7302",
+    "date": "2026-08-05"
+  },
+  "upstream": {
+    "release": "v1.2.2",
+    "commit": "8b36d4fb2635b3c21998dcd8144439c9e5ba7302",
+    "date": "2026-08-05"
+  },
+  "up_to_date": true,
+  "pending": [],
+  "non_md_count": 0,
+  "checked_at": "2026-08-06T07:44:04Z"
+}

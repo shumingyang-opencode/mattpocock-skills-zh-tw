@@ -1,4 +1,6 @@
 > 這是 [mattpocock/skills](https://github.com/mattpocock/skills) 的**繁體中文翻譯版**（`mattpocock-skills-zh-tw`）。本 repo 只翻譯自然語言說明，保留目錄名稱、技能名稱、指令、程式碼區塊、路徑與工具識別符，以維持安裝與運行行為。英文原文請見上游 repo；安裝方式請依下方說明進行。
+>
+> **目前對齊上游 `mattpocock/skills` release `v1.2.2`（commit `8b36d4f`，2026-08-05）。** 上游有更新時，首頁「待辦事項 · 上游同步」面板會列出待翻譯項目。
 
 <p>
   <a href="https://www.aihero.dev/s/skills-newsletter">

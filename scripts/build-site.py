@@ -656,6 +656,44 @@ Copy-Item -Path "skills\\*\\*" -Destination "$env:USERPROFILE\\.trae\\skills\\" 
     print("  ✓ install.html")
 
 
+def sync_panel() -> str:
+    status_path = ROOT / "docs" / "upstream-status.json"
+    try:
+        st = json.loads(status_path.read_text(encoding="utf-8"))
+    except Exception:
+        return ('<div class="sync-panel"><h2>待辦事項 · 上游同步</h2>'
+                '<p class="sync-muted">尚未初始化（docs/upstream-status.json 不存在）。</p></div>')
+    aligned = st.get("aligned", {})
+    upstream = st.get("upstream", {})
+    pending = st.get("pending", [])
+    non_md = st.get("non_md_count", 0)
+    up_to_date = st.get("up_to_date", False)
+
+    badge = ('<span class="sync-badge ok">已同步</span>' if up_to_date
+             else f'<span class="sync-badge warn">落後 {len(pending)} 項</span>')
+    aligned_line = f'對齊上游 <code>{aligned.get("release", "?")}</code>（<code>{str(aligned.get("commit", ""))[:7]}</code>）'
+    upstream_line = f'上游目前 <code>{upstream.get("release", "?")}</code>（<code>{str(upstream.get("commit", ""))[:7]}</code>）'
+
+    html = ('<div class="sync-panel"><h2>待辦事項 · 上游同步</h2>'
+            f'<div class="sync-meta">{aligned_line} · {upstream_line} {badge}</div>')
+    if pending:
+        items = "".join(
+            f'<li><code>{e.get("kind")}</code> {e.get("from", "")}{" → " if e.get("kind") == "rename" else ""}{e.get("path")}'
+            f'<span class="sync-reason">（{e.get("reason", "")}）</span>'
+            + (f'<br><span class="sync-note">{e.get("note", "")}</span>' if e.get("note") else "")
+            + "</li>"
+            for e in pending
+        )
+        html += (f'<details class="sync-list"><summary>待翻譯／整理項目（{len(pending)} 項）</summary>'
+                 f'<ul>{items}</ul></details>')
+    else:
+        html += '<p class="sync-empty">目前沒有待辦事項。</p>'
+    if non_md:
+        html += f'<p class="sync-muted">另有 {non_md} 個非翻譯檔案在上游有變更（更新流程會自動同步）。</p>'
+    html += '<p class="sync-hint">要我更新上游？說「<strong>更新上游</strong>」即可。</p></div>'
+    return html
+
+
 def index_page() -> str:
     html = page_open("Matt Pocock 技能包 · 繁中解讀", "")
     html += """<header>
@@ -683,6 +721,7 @@ def index_page() -> str:
   </a>
 </div>
 """
+    html += sync_panel()
     html += footer()
     html += page_close()
     out = ROOT / "index.html"
