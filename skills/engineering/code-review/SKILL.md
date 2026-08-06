@@ -1,89 +1,89 @@
 ---
 name: code-review
-description: Review the changes since a fixed point (commit, branch, tag, or merge-base) along two axes — Standards (does the code follow this repo's documented coding standards?) and Spec (does the code match what the originating issue/spec asked for?). Runs both reviews in parallel sub-agents and reports them side by side. Use when the user wants to review a branch, a PR, work-in-progress changes, or asks to "review since X".
+description: 沿兩軸審查自某個固定點（commit、分支、標籤或合併基點）以來的變更——規範（軸）（程式碼是否符合此 repo 記錄的編碼規範？）與規格（軸）（程式碼是否符合原始 issue/規格的要求？）。以平行子代理執行兩種審查並排呈現。當使用者想審查分支、PR、進行中的變更，或說「review since X」時使用。
 ---
 
-Two-axis review of the diff between `HEAD` and a fixed point the user supplies:
+對 `HEAD` 與使用者提供的固定點之間的 diff 做雙軸審查：
 
-- **Standards** — does the code conform to this repo's documented coding standards?
-- **Spec** — does the code faithfully implement the originating issue / spec?
+- **規範（軸）**——程式碼是否符合此 repo 記錄的編碼規範？
+- **規格（軸）**——程式碼是否忠實實作原始 issue / 規格？
 
-Both axes run as **parallel sub-agents** so they don't pollute each other's context, then this skill aggregates their findings.
+兩個軸都以**平行子代理**執行，讓它們不污染彼此的上下文，然後本技能匯總它們的發現。
 
-The issue tracker should have been provided to you — run `/setup-matt-pocock-skills` if `docs/agents/issue-tracker.md` is missing.
+Issue 追蹤器應該已經提供給你——如果 `docs/agents/issue-tracker.md` 缺失，執行 `/setup-matt-pocock-skills`。
 
-## Process
+## 流程
 
-### 1. Pin the fixed point
+### 1. 釘住固定點
 
-Whatever the user said is the fixed point — a commit SHA, branch name, tag, `main`, `HEAD~5`, etc. If they didn't specify one, ask for it.
+無論使用者說的固定點是什麼——一個 commit SHA、分支名稱、標籤、`main`、`HEAD~5` 等。如果他們沒指定，就問。
 
-Capture the diff command once: `git diff <fixed-point>...HEAD` (three-dot, so the comparison is against the merge-base). Also note the list of commits via `git log <fixed-point>..HEAD --oneline`.
+把 diff 指令記下來一次：`git diff <fixed-point>...HEAD`（三點，這樣比較對象是合併基點）。也要用 `git log <fixed-point>..HEAD --oneline` 記下 commit 清單。
 
-Before going further, confirm the fixed point resolves (`git rev-parse <fixed-point>`) and the diff is non-empty. A bad ref or empty diff should fail here — not inside two parallel sub-agents.
+進一步之前，確認固定點能解析（`git rev-parse <fixed-point>`）而且 diff 非空。壞的 ref 或空的 diff 應該在這裡失敗——而不是在兩個平行子代理內部。
 
-### 2. Identify the spec source
+### 2. 找出規格來源
 
-Look for the originating spec, in this order:
+依此順序尋找原始規格：
 
-1. Issue references in the commit messages (`#123`, `Closes #45`, GitLab `!67`, etc.) — fetch via the workflow in `docs/agents/issue-tracker.md`.
-2. A path the user passed as an argument.
-3. A spec file under `docs/`, `specs/`, or `.scratch/` matching the branch name or feature.
-4. If nothing is found, ask the user where the spec is. If they say there isn't one, the **Spec** sub-agent will skip and report "no spec available".
+1. commit 訊息中的 issue 引用（`#123`、`Closes #45`、GitLab `!67` 等）——透過 `docs/agents/issue-tracker.md` 中的工作流程擷取。
+2. 使用者以參數傳入的路徑。
+3. `docs/`、`specs/` 或 `.scratch/` 下符合分支名稱或功能的規格檔。
+4. 如果什麼都沒找到，問使用者規格在哪。如果他們說沒有，**規格**子代理會跳過並回報「no spec available」。
 
-### 3. Identify the standards sources
+### 3. 找出規範來源
 
-Anything in the repo that documents how code should be written, such as `CODING_STANDARDS.md` or `CONTRIBUTING.md`.
+repo 中任何記錄程式碼應如何撰寫的東西，例如 `CODING_STANDARDS.md` 或 `CONTRIBUTING.md`。
 
-On top of whatever the repo documents, the Standards axis always carries the **smell baseline** below — a fixed set of Fowler code smells (_Refactoring_, ch.3) that applies even when a repo documents nothing. Two rules bind it:
+在 repo 記錄的任何東西之上，規範軸永遠攜帶下面這份**壞味道基線**——一組固定的 Fowler 壞味道（_Refactoring_，第 3 章），即使 repo 什麼都沒記錄也適用。兩條規則綁定它：
 
-- **The repo overrides.** A documented repo standard always wins; where it endorses something the baseline would flag, suppress the smell.
-- **Always a judgement call.** Each smell is a labelled heuristic ("possible Feature Envy"), never a hard violation — and, like any standard here, skip anything tooling already enforces.
+- **repo 優先。** 記錄在案的 repo 標準永遠勝出；當它背書基線會標記的某個東西時，抑制該壞味道。
+- **永遠是判斷。** 每個壞味道都是帶標籤的啟發式（「可能是 Feature Envy」），從來不是硬性違規——而且像這裡的任何標準一樣，跳過任何工具已經強制的東西。
 
-Each smell reads *what it is* → *how to fix*; match it against the diff:
+每個壞味道讀成*它是什麼* → *如何修*；把它對上 diff：
 
-- **Mysterious Name** — a function, variable, or type whose name doesn't reveal what it does or holds. → rename it; if no honest name comes, the design's murky.
-- **Duplicated Code** — the same logic shape appears in more than one hunk or file in the change. → extract the shared shape, call it from both.
-- **Feature Envy** — a method that reaches into another object's data more than its own. → move the method onto the data it envies.
-- **Data Clumps** — the same few fields or params keep travelling together (a type wanting to be born). → bundle them into one type, pass that.
-- **Primitive Obsession** — a primitive or string standing in for a domain concept that deserves its own type. → give the concept its own small type.
-- **Repeated Switches** — the same `switch`/`if`-cascade on the same type recurs across the change. → replace with polymorphism, or one map both sites share.
-- **Shotgun Surgery** — one logical change forces scattered edits across many files in the diff. → gather what changes together into one module.
-- **Divergent Change** — one file or module is edited for several unrelated reasons. → split so each module changes for one reason.
-- **Speculative Generality** — abstraction, parameters, or hooks added for needs the spec doesn't have. → delete it; inline back until a real need shows.
-- **Message Chains** — long `a.b().c().d()` navigation the caller shouldn't depend on. → hide the walk behind one method on the first object.
-- **Middle Man** — a class or function that mostly just delegates onward. → cut it, call the real target direct.
-- **Refused Bequest** — a subclass or implementer that ignores or overrides most of what it inherits. → drop the inheritance, use composition.
+- **神祕名稱（Mysterious Name）**——函式、變數或型別的名字看不出它做什麼或存什麼。→ 重新命名；如果想不出誠實的名字，設計很模糊。
+- **重複程式碼（Duplicated Code）**——相同的邏輯形狀在變更中出現於多個 hunk 或檔案。→ 抽取共享形狀，兩邊都呼叫它。
+- **特徵依附（Feature Envy）**——方法觸及另一個物件的資料比自己的多。→ 把方法移到它所羨慕的資料上。
+- **資料叢集（Data Clumps）**——相同的幾個欄位或參數一直結伴同行（一個想出生的型別）。→ 把它們捆成一個型別，傳那個。
+- **基本型別執著（Primitive Obsession）**——用基本型別或字串代替某個值得擁有自己型別的領域概念。→ 給那個概念一個自己的小型別。
+- **重複 switch（Repeated Switches）**——同一型別上相同的 `switch` / `if` 級聯在變更中重複出現。→ 用多型取代，或一個兩處共享的 map。
+- **散彈槍手術（Shotgun Surgery）**——一個邏輯變更迫使 diff 中許多檔案被散落編輯。→ 把一起變更的東西收攏到一個模組。
+- **發散式變更（Divergent Change）**——一個檔案或模組因幾個無關的理由被編輯。→ 拆分，讓每個模組只為一個理由變更。
+- **投機性一般化（Speculative Generality）**——為規格沒有的需求加入的抽象、參數或鉤子。→ 刪掉它；在真實需求出現前內嵌回去。
+- **訊息鏈（Message Chains）**——長 `a.b().c().d()` 導覽，呼叫者不該依賴它。→ 把這趟走訪藏到第一個物件上的單一方法後面。
+- **中間人（Middle Man）**——類別或函式多半只是轉手往下委派。→ 砍掉它，直接呼叫真正的目標。
+- **拒絕遺贈（Refused Bequest）**——子類別或實作者忽略或覆寫它繼承的大部分東西。→ 放棄繼承，改用組合。
 
-### 4. Spawn both sub-agents in parallel
+### 4. 平行啟動兩個子代理
 
-Send a single message with two `Agent` tool calls. Use the `general-purpose` subagent for both.
+發送單一訊息、兩個 `Agent` 工具呼叫。兩者都用 `general-purpose` 子代理。
 
-**Standards sub-agent prompt** — include:
+**規範子代理提示**——包含：
 
-- The full diff command and commit list.
-- The list of standards-source files you found in step 3, **plus the smell baseline from step 3** pasted in full — the sub-agent has no other access to it.
-- The brief: "Report — per file/hunk where relevant — (a) every place the diff violates a documented standard: cite the standard (file + the rule); and (b) any baseline smell you spot: name it and quote the hunk. Distinguish hard violations from judgement calls — documented-standard breaches can be hard, but baseline smells are always judgement calls, and a documented repo standard overrides the baseline. Skip anything tooling enforces. Under 400 words."
+- 完整的 diff 指令與 commit 清單。
+- 你在第 3 步找到的規範來源檔案清單，**加上第 3 步的壞味道基線完整貼上**——子代理沒有其他途徑取得它。
+- 簡報：「回報——在相關處逐檔案 / hunk——(a) diff 違反記錄在案標準的每一處：引用標準（檔案 + 規則）；以及 (b) 你注意到的任何基線壞味道：指出名字並引用 hunk。區分硬性違規與判斷——記錄在案的標準違規可以是硬性的，但基線壞味道永遠是判斷，而且記錄在案的 repo 標準覆蓋基線。跳過任何工具已強制的東西。400 字以內。」
 
-**Spec sub-agent prompt** — include:
+**規格子代理提示**——包含：
 
-- The diff command and commit list.
-- The path or fetched contents of the spec.
-- The brief: "Report: (a) requirements the spec asked for that are missing or partial; (b) behaviour in the diff that wasn't asked for (scope creep); (c) requirements that look implemented but where the implementation looks wrong. Quote the spec line for each finding. Under 400 words."
+- diff 指令與 commit 清單。
+- 規格的路徑或擷取的內容。
+- 簡報：「回報：(a) 規格要求但缺失或部分實作的需求；(b) diff 中沒有被要求卻存在的行為（範圍蔓延）；(c) 看起來已實作但實作看起來錯誤的需求。每個發現引用規格的原文。400 字以內。」
 
-If the spec is missing, skip the Spec sub-agent and note this in the final report.
+如果規格缺失，跳過規格子代理並在最終報告中註明。
 
-### 5. Aggregate
+### 5. 匯總
 
-Present the two reports under `## Standards` and `## Spec` headings, verbatim or lightly cleaned. Do **not** merge or rerank findings — the two axes are deliberately separate (see _Why two axes_).
+在 `## Standards` 與 `## Spec` 標題下呈現兩份報告，原樣或輕度清理。**不要**合併或重新排序發現——兩個軸刻意分開（見《為什麼兩軸》）。
 
-End with a one-line summary: total findings per axis, and the worst issue _within each axis_ (if any). Don't pick a single winner across axes — that's the reranking the separation exists to prevent.
+以一行摘要結尾：每個軸的發現總數，以及*每個軸內*最嚴重的問題（如果有的話）。不要跨軸選一個總冠軍——那正是分離所要防止的重新排序。
 
-## Why two axes
+## 為什麼兩軸
 
-A change can pass one axis and fail the other:
+一個變更可以過一軸而掛另一軸：
 
-- Code that follows every standard but implements the wrong thing → **Standards pass, Spec fail.**
-- Code that does exactly what the issue asked but breaks the project's conventions → **Spec pass, Standards fail.**
+- 遵循所有標準但實作錯誤的東西 → **規範過、規格掛。**
+- 確切做了 issue 要求但破壞專案慣例的程式碼 → **規格過、規範掛。**
 
-Reporting them separately stops one axis from masking the other.
+分開回報能阻止一個軸掩蓋另一個。

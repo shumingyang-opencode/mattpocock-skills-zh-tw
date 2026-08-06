@@ -1,45 +1,45 @@
 ---
 name: writing-fragments
-description: Writing, explore — mine raw fragments, no structure yet.
+description: 寫作、探索 — 挖掘原始片段，還沒有結構。
 disable-model-invocation: true
 ---
 
 <what-to-do>
 
-This is pure **explore**: widen the space of what could be written without committing to structure — committing is _exploit_, a separate skill's job. Run a grilling session that produces fragments, interviewing the user relentlessly about whatever they want to write about. Imposing phases, outlines, or article structure is out of scope here.
+這是純粹的**探索**：擴大可能被寫出的空間，而不承諾結構 — 承諾是_開採_，那是另一個技能的工作。執行一場產生片段的 grilling session，持續訪問使用者關於他們想寫的任何事。在這裡施加階段、大綱或文章結構是超出範圍的。
 
-As fragments emerge from either side of the conversation, append them to a single markdown file.
+當片段從對話的任何一方浮現時，將它們附加到單一 markdown 檔案中。
 
-If the user did not pass a path, ask once where to save the document, then remember it for the rest of the session.
+如果使用者沒有傳入路徑，問一次要儲存在哪裡，然後在整個 session 的剩餘時間記住它。
 
-Capture fragments from the very first thing the user says, including the initial prompt.
+從使用者說的第一件事就捕捉片段，包括最初的提示。
 
-On first write, put a single H1 at the top with a working title (it can change later) and nothing else — no metadata, no TOC, no date.
+首次寫入時，在頂部放一個帶有工作標題的單一 H1（之後可以改變），沒有其他東西 — 沒有中繼資料、沒有目錄、沒有日期。
 
 </what-to-do>
 
 <supporting-info>
 
-## What is a fragment
+## 什麼是片段
 
-A fragment is any piece of text that might survive into the final article. It must be _readable by the author_ — the author can tell what it means — but it does not need to define its terms or be comprehensible to a cold reader. The bar is "is this a piece of good writing?", not "is this a self-contained argument?"
+片段是任何可能存活到最終文章的文字片段。它必須_對作者可讀_ — 作者能分辨它是什麼意思 — 但它不需要定義它的術語，也不需要讓一個陌生的讀者能理解。門檻是「這是一段好寫作嗎？」，而不是「這是一個自包含的論證嗎？」
 
-Fragments are deliberately heterogeneous. Examples of what could be a fragment:
+片段刻意地異質。可能是片段的例子：
 
-- A sharp sentence you'd want to deploy somewhere but don't yet know where.
-- A claim with a one-line justification.
-- A vignette: a thing that happened, a code snippet, a scenario, an analogy.
-- A half-thought: "something about how X feels like Y, work this out later."
-- A quote, a piece of dialogue, an overheard line.
-- A list of related observations that hang together by feel.
-- A complaint, a confession, a punchline.
-- A **leading word** — a compact metaphor or coinage the whole piece can hang on (one term that names the idea, the way _tracer bullets_ or _fog of war_ names a whole pattern).
+- 一個您想在某處部署但還不知道在哪裡的銳利句子。
+- 一個帶有一行理由的主張。
+- 一個插曲：一件發生過的事、一段程式碼片段、一個情境、一個類比。
+- 一個半成品想法：「X 感覺像 Y 的某件事，之後再想出來。」
+- 一段引用、一段對話、一句偷聽到的話。
+- 一串靠感覺聚在一起的相關觀察。
+- 一句抱怨、一段告白、一個爆點。
+- 一個**領頭詞** — 整個作品可以掛在上面的緊湊隱喻或新造詞（一個為想法命名的術語，就像 _tracer bullets_ 或 _fog of war_ 為整個模式命名一樣）。
 
-Of these, the leading word is the most valuable fragment to land. It is load-bearing: name the right one in explore and it shapes the structure, the transitions, and the title later — paying dividends through the entire exploit phase. When the conversation circles a recurring idea, push to coin a word for it.
+其中，領頭詞是最有價值的要落地的片段。它是承重的：在探索中命名正確的那個，它會塑造後來的結構、過渡與標題 — 在整個開採階段都支付紅利。當對話繞著一個反覆出現的想法打轉，推動為它造一個詞。
 
-The novelist's diary is the model: years of unstructured noticings that later get mined for raw material. Fragments are noticings.
+小說家的日記是模型：多年的非結構化觀察，之後被挖掘為原始素材。片段就是觀察。
 
-## File format
+## 檔案格式
 
 ```markdown
 # Working title
@@ -66,14 +66,14 @@ A reaction to it.
 - And want to be near each other
 ```
 
-Fragments are separated by a horizontal rule (`\n---\n`). No headings inside the body. No tags. No order beyond the order they were added.
+片段以水平線（`\n---\n`）分隔。正文中沒有標題。沒有標籤。除了加入的順序之外沒有順序。
 
-## Writing rhythm
+## 寫作節奏
 
-Append silently. Don't ask permission for each fragment. Mention what you added in passing ("adding that"), but don't interrupt the conversation with save dialogs.
+靜默地附加。不要為每個片段請求許可。順帶一提地提到您加入了什麼（「adding that」），但不要用儲存對話方塊打斷對話。
 
-Before every write: re-read the file from disk. The user may have edited, reordered, or deleted fragments between turns — preserve their changes. Never overwrite the file; only append (or, if the user asks, edit a specific fragment in place).
+在每次寫作之前：從磁碟重新讀取檔案。使用者可能在回合之間編輯、重新排序或刪除了片段 — 保留他們的變更。永遠不要覆寫檔案；只附加（或者，如果使用者要求，就地編輯特定片段）。
 
-The user can say "cut the last one", "rewrite that one sharper", "merge those two" at any time. Treat those as first-class instructions.
+使用者隨時可以說「砍掉最後一個」、「把那句改得更銳利」、「把那兩個合併」。把它們當作第一等的指令。
 
 </supporting-info>

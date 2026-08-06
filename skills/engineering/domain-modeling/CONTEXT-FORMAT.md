@@ -1,6 +1,6 @@
-# CONTEXT.md Format
+# CONTEXT.md 格式
 
-## Structure
+## 結構
 
 ```md
 # {Context Name}
@@ -22,18 +22,18 @@ A person or organization that places orders.
 _Avoid_: Client, buyer, account
 ```
 
-## Rules
+## 規則
 
-- **Be opinionated.** When multiple words exist for the same concept, pick the best one and list the others under `_Avoid_`.
-- **Keep definitions tight.** One or two sentences max. Define what it IS, not what it does.
-- **Only include terms specific to this project's context.** General programming concepts (timeouts, error types, utility patterns) don't belong even if the project uses them extensively. Before adding a term, ask: is this a concept unique to this context, or a general programming concept? Only the former belongs.
-- **Group terms under subheadings** when natural clusters emerge. If all terms belong to a single cohesive area, a flat list is fine.
+- **要有主張。** 當同一個概念存在多個詞，挑最好的，其餘列在 `_Avoid_` 底下。
+- **定義要精簡。** 最多一兩句。定義它是**什麼**，而不是它做什麼。
+- **只納入這個專案上下文特有的術語。** 一般程式設計概念（timeout、錯誤型別、工具模式）即使專案大量使用也不屬於。加入術語前先問：這是這個上下文獨有的概念，還是一般程式設計概念？只有前者屬於。
+- **當自然聚類浮現時，把術語歸在子標題下。** 如果所有術語都屬於單一內聚領域，扁平清單就夠了。
 
-## Single vs multi-context repos
+## 單一 vs 多上下文 repo
 
-**Single context (most repos):** One `CONTEXT.md` at the repo root.
+**單一上下文（多數 repo）：** 根目錄一份 `CONTEXT.md`。
 
-**Multiple contexts:** A `CONTEXT-MAP.md` at the repo root lists the contexts, where they live, and how they relate to each other:
+**多個上下文：** 根目錄的 `CONTEXT-MAP.md` 列出上下文、它們在哪裡、以及它們彼此如何關聯：
 
 ```md
 # Context Map
@@ -51,10 +51,10 @@ _Avoid_: Client, buyer, account
 - **Ordering ↔ Billing**: Shared types for `CustomerId` and `Money`
 ```
 
-The skill infers which structure applies:
+技能會推斷適用哪種結構：
 
-- If `CONTEXT-MAP.md` exists, read it to find contexts
-- If only a root `CONTEXT.md` exists, single context
-- If neither exists, create a root `CONTEXT.md` lazily when the first term is resolved
+- 如果 `CONTEXT-MAP.md` 存在，讀它來找上下文
+- 如果只有根目錄的 `CONTEXT.md`，是單一上下文
+- 如果兩者都不存在，第一個術語定案時惰性地建立根目錄的 `CONTEXT.md`
 
-When multiple contexts exist, infer which one the current topic relates to. If unclear, ask.
+當有多個上下文時，推斷目前主題與哪一個相關。如果不清楚，就問。

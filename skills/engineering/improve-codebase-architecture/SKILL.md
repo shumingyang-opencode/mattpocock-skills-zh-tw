@@ -1,71 +1,71 @@
 ---
 name: improve-codebase-architecture
-description: Scan a codebase for deepening opportunities, present them as a visual HTML report, then grill through whichever one you pick.
+description: 掃描程式碼庫找出深化機會，以視覺 HTML 報告呈現，然後對你挑選的那個進行 grilling。
 disable-model-invocation: true
 ---
 
-# Improve Codebase Architecture
+# 改善程式碼庫架構
 
-Surface architectural friction and propose **deepening opportunities** — refactors that turn shallow modules into deep ones. The aim is testability and AI-navigability.
+浮現架構摩擦並提出**深化機會**——把淺模組變成深模組的重構。目標是測試性與對 AI 的可導覽性。
 
-This command is _informed_ by the project's domain model and built on a shared design vocabulary:
+這個指令_受_專案的領域模型_啟發_，並建立在共享的設計詞彙上：
 
-- Run the `/codebase-design` skill for the architecture vocabulary (**module**, **interface**, **depth**, **seam**, **adapter**, **leverage**, **locality**) and its principles (the deletion test, "the interface is the test surface", "one adapter = hypothetical seam, two = real"). Use these terms exactly in every suggestion — don't drift into "component," "service," "API," or "boundary."
-- The domain language in `CONTEXT.md` gives names to good seams; ADRs in `docs/adr/` record decisions this command should not re-litigate.
+- 執行 `/codebase-design` 技能取得架構詞彙（**模組**、**介面**、**深度**、**接縫**、**轉接器**、**槓桿收益**、**局部性**）及其原則（刪除測試、「介面就是測試表面」、「一個轉接器 = 假設性接縫，兩個 = 真實」）。在每個建議中精確使用這些術語——不要漂移成「component」「service」「API」或「boundary」。
+- `CONTEXT.md` 中的領域語言為好接縫命名；`docs/adr/` 中的 ADR 記錄了這個指令不該重新爭論的決策。
 
-## Process
+## 流程
 
-### 1. Explore
+### 1. 探索
 
-**Scope before you scan — YAGNI.** Deepening a module pays off by making future changes to it easier, so put extra weight on the parts of the codebase that have recently changed. Decide *where* to look before you look:
+**掃描前先定範圍——YAGNI。** 深化模組的回報來自於讓未來對它的變更更容易，所以對程式碼庫最近變更的部分要特別加權。在看你之前先決定*往哪看*：
 
-- If the user named a direction — a module, a subsystem, a pain point — take it, and skip the inference below.
-- Otherwise, walk back a good stretch of the commit history (`git log --oneline`) to find the codebase's hot spots — the files and areas that keep coming up — and let those paths pull your attention first. If the changes are scattered with no clear hot spot, widen the net.
+- 如果使用者指定了方向——一個模組、一個子系統、一個痛點——採用它，並跳過下面的推斷。
+- 否則，往回走一段良好的 commit 歷史（`git log --oneline`）找出程式碼庫的熱點——那些一直出現的檔案與區域——讓那些路徑先吸引你的注意力。如果變更四散、沒有清楚熱點，就擴大網子。
 
-Read the project's domain glossary (`CONTEXT.md`) and any ADRs in the area you're touching first.
+先讀專案的領域詞彙表（`CONTEXT.md`）與你要觸及區域中的任何 ADR。
 
-Then use the Agent tool with `subagent_type=Explore` to walk the codebase. Don't follow rigid heuristics — explore organically and note where you experience friction:
+然後用 Agent 工具、`subagent_type=Explore` 走訪程式碼庫。不要遵循僵硬的啟發式——有機地探索，並記下你感到摩擦的地方：
 
-- Where does understanding one concept require bouncing between many small modules?
-- Where are modules **shallow** — interface nearly as complex as the implementation?
-- Where have pure functions been extracted just for testability, but the real bugs hide in how they're called (no **locality**)?
-- Where do tightly-coupled modules leak across their seams?
-- Which parts of the codebase are untested, or hard to test through their current interface?
+- 哪裡理解一個概念需要在許多小模組之間彈跳？
+- 哪裡有模組**淺**——介面幾乎跟實作一樣複雜？
+- 哪裡有純函式只是為了可測試性被抽出來，但真正的 bug 藏在它們如何被呼叫（沒有**局部性**）？
+- 哪裡有緊密耦合的模組跨越接縫洩漏？
+- 程式碼庫的哪些部分沒有測試，或難以透過它們目前的介面測試？
 
-Apply the **deletion test** to anything you suspect is shallow: would deleting it concentrate complexity, or just move it? A "yes, concentrates" is the signal you want.
+對任何你懷疑是淺的東西套用**刪除測試**：刪掉它會集中複雜度，還是只是搬移？「會，集中」就是你要的訊號。
 
-### 2. Present candidates as an HTML report
+### 2. 以 HTML 報告呈現候選
 
-Write a self-contained HTML file to the OS temp directory so nothing lands in the repo. Resolve the temp dir from `$TMPDIR`, falling back to `/tmp` (or `%TEMP%` on Windows), and write to `<tmpdir>/architecture-review-<timestamp>.html` so each run gets a fresh file. Open it for the user — `xdg-open <path>` on Linux, `open <path>` on macOS, `start <path>` on Windows — and tell them the absolute path.
+把自足的 HTML 檔案寫到作業系統的暫存目錄，讓什麼都不落進 repo。從 `$TMPDIR` 解析暫存目錄，回退到 `/tmp`（Windows 用 `%TEMP%`），寫到 `<tmpdir>/architecture-review-<timestamp>.html`，讓每次執行都有新檔案。為使用者開啟它——Linux 用 `xdg-open <path>`、macOS 用 `open <path>`、Windows 用 `start <path>`——並告訴他們絕對路徑。
 
-The report uses **Tailwind via CDN** for layout and styling, and **Mermaid via CDN** for diagrams where a graph/flow/sequence reliably communicates the structure. Mix Mermaid with hand-crafted CSS/SVG visuals — use Mermaid when relationships are graph-shaped (call graphs, dependencies, sequences), and hand-built divs/SVG when you want something more editorial (mass diagrams, cross-sections, collapse animations). Each candidate gets a **before/after visualisation**. Be visual.
+報告使用 **Tailwind via CDN** 做佈局與樣式、**Mermaid via CDN** 做圖表，在圖/流程/序列能可靠傳達結構時使用。把 Mermaid 與手工打造的 CSS/SVG 視覺混用——當關係是圖形狀時用 Mermaid（呼叫圖、相依、序列），當你想要更具編輯性的東西時用手工的 div/SVG（質量圖、剖面、摺疊動畫）。每個候選都有**前/後視覺化**。要視覺化。
 
-For each candidate, render a card with:
+每個候選渲染一張卡片：
 
-- **Files** — which files/modules are involved
-- **Problem** — why the current architecture is causing friction
-- **Solution** — plain English description of what would change
-- **Benefits** — explained in terms of locality and leverage, and how tests would improve
-- **Before / After diagram** — side-by-side, custom-drawn, illustrating the shallowness and the deepening
-- **Recommendation strength** — one of `Strong`, `Worth exploring`, `Speculative`, rendered as a badge
+- **檔案**——涉及哪些檔案/模組
+- **問題**——為什麼目前架構造成摩擦
+- **解決方案**——用白話描述會改變什麼
+- **好處**——以局部性與槓桿收益來解釋，以及測試會如何改善
+- **前 / 後圖**——並排、手工繪製，說明淺度與深化
+- **建議強度**——`Strong`、`Worth exploring`、`Speculative` 其中一個，渲染成徽章
 
-End the report with a **Top recommendation** section: which candidate you'd tackle first and why.
+以**頂級建議**章節結束報告：你會先處理哪個候選、為什麼。
 
-**Use CONTEXT.md vocabulary for the domain, and the `/codebase-design` vocabulary for the architecture.** If `CONTEXT.md` defines "Order," talk about "the Order intake module" — not "the FooBarHandler," and not "the Order service."
+**領域用 CONTEXT.md 詞彙，架構用 `/codebase-design` 詞彙。** 如果 `CONTEXT.md` 定義了「Order」，就說「the Order intake module」——不是「the FooBarHandler」，也不是「the Order service」。
 
-**ADR conflicts**: if a candidate contradicts an existing ADR, only surface it when the friction is real enough to warrant revisiting the ADR. Mark it clearly in the card (e.g. a warning callout: _"contradicts ADR-0007 — but worth reopening because…"_). Don't list every theoretical refactor an ADR forbids.
+**ADR 衝突**：如果候選與既有 ADR 矛盾，只有當摩擦真實到值得重開該 ADR 時才浮現它。在卡片中清楚標記（例如警告 callout：_"與 ADR-0007 矛盾——但值得重新討論，因為……"_）。不要列出每個 ADR 禁止的理論性重構。
 
-See [HTML-REPORT.md](HTML-REPORT.md) for the full HTML scaffold, diagram patterns, and styling guidance.
+完整 HTML 骨架、圖表模式與樣式指引見 [HTML-REPORT.md](HTML-REPORT.md)。
 
-Do NOT propose interfaces yet. After the file is written, ask the user: "Which of these would you like to explore?"
+**還不要**提出介面。檔案寫好之後，問使用者：「你想探索哪一個？」
 
-### 3. Grilling loop
+### 3. Grilling 迴圈
 
-Once the user picks a candidate, run the `/grilling` skill to walk the decision tree with them — constraints, dependencies, the shape of the deepened module, what sits behind the seam, what tests survive.
+一旦使用者選了候選，執行 `/grilling` 技能與他們走決策樹——約束、相依、深化後模組的形狀、接縫後面是什麼、哪些測試會存活。
 
-Side effects happen inline as decisions crystallize — run the `/domain-modeling` skill to keep the domain model current as you go:
+副作用在決策定案時內嵌發生——邊做邊執行 `/domain-modeling` 技能讓領域模型保持最新：
 
-- **Naming a deepened module after a concept not in `CONTEXT.md`?** Add the term to `CONTEXT.md`. Create the file lazily if it doesn't exist.
-- **Sharpening a fuzzy term during the conversation?** Update `CONTEXT.md` right there.
-- **User rejects the candidate with a load-bearing reason?** Offer an ADR, framed as: _"Want me to record this as an ADR so future architecture reviews don't re-suggest it?"_ Only offer when the reason would actually be needed by a future explorer to avoid re-suggesting the same thing — skip ephemeral reasons ("not worth it right now") and self-evident ones.
-- **Want to explore alternative interfaces for the deepened module?** Run the `/codebase-design` skill and use its design-it-twice parallel sub-agent pattern.
+- **以 `CONTEXT.md` 中沒有的概念命名深化後的模組？** 把術語加進 `CONTEXT.md`。如果不存在，惰性地建立檔案。
+- **在對話中磨利了模糊術語？** 就地更新 `CONTEXT.md`。
+- **使用者以承重的理由拒絕候選？** 提供 ADR，措辭如下：「_要我把它記錄成 ADR，讓未來的架構審查不會再建議它嗎？_」只有當該理由真的會被未來的探索者需要以避免再建議同樣東西時才提供——跳過一時性的理由（「現在不值得」）與顯而易見的理由。
+- **想為深化後的模組探索替代介面？** 執行 `/codebase-design` 技能，用它的 design-it-twice 平行子代理模式。

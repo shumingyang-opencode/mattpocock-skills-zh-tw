@@ -1,42 +1,42 @@
-# Writing Agent Briefs
+# 撰寫代理簡報
 
-An agent brief is a structured comment posted on a GitHub issue or PR when it moves to `ready-for-agent`. It is the authoritative specification that an AFK agent will work from. The original body and discussion are context — the agent brief is the contract.
+代理簡報是當 issue 或 PR 移入 `ready-for-agent` 時，貼在 GitHub issue 或 PR 上的結構化評論。它是 AFK 代理據以工作的權威規格說明。原始內文與討論是脈絡——代理簡報才是合約。
 
-The brief states **what the agent should do**, which stretches to both surfaces: for an issue, that's building the change from nothing; for a PR, it's what's left to do *to the existing diff* — finish it, close gaps, address review points. Same principles either way; the PR example below shows the difference.
+簡報陳述**代理應該做什麼**，這延伸到兩個介面：對 issue 而言，是從零開始建置這項變更；對 PR 而言，是*對既有 diff* 還剩什麼要做——完成它、補上缺口、處理審查意見。兩種情況的原則相同；下方的 PR 範例會顯示差異。
 
-## Principles
+## 原則
 
-### Durability over precision
+### 耐用勝於精確
 
-The issue may sit in `ready-for-agent` for days or weeks. The codebase will change in the meantime. Write the brief so it stays useful even as files are renamed, moved, or refactored.
+issue 可能會在 `ready-for-agent` 停留數天或數週。程式碼庫在此期間會改變。撰寫簡報時，要讓它在檔案被重新命名、移動或重構後依然有用。
 
-- **Do** describe interfaces, types, and behavioral contracts
-- **Do** name specific types, function signatures, or config shapes that the agent should look for or modify
-- **Don't** reference file paths — they go stale
-- **Don't** reference line numbers
-- **Don't** assume the current implementation structure will remain the same
+- **要** 描述介面、型別與行為合約
+- **要** 指名代理應尋找或修改的具體型別、函式簽名或設定形狀
+- **不要** 引用檔案路徑——它們會過時
+- **不要** 引用行號
+- **不要** 假設目前的實作結構會保持不變
 
-### Behavioral, not procedural
+### 行為式，而非程序式
 
-Describe **what** the system should do, not **how** to implement it. The agent will explore the codebase fresh and make its own implementation decisions.
+描述系統應該做**什麼**，而不是**如何**實作。代理會重新探索程式碼庫，做出自己的實作決策。
 
-- **Good:** "The `SkillConfig` type should accept an optional `schedule` field of type `CronExpression`"
-- **Bad:** "Open src/types/skill.ts and add a schedule field on line 42"
-- **Good:** "When a user runs `/triage` with no arguments, they should see a summary of issues needing attention"
-- **Bad:** "Add a switch statement in the main handler function"
+- **好：**「`SkillConfig` 型別應該接受型別為 `CronExpression` 的選用 `schedule` 欄位」
+- **壞：**「開啟 src/types/skill.ts，並在第 42 行加上 schedule 欄位」
+- **好：**「當使用者以無參數執行 `/triage` 時，他們應該看到需要關注的 issues 摘要」
+- **壞：**「在 main handler 函式中加上一個 switch 陳述式」
 
-### Complete acceptance criteria
+### 完整的驗收標準
 
-The agent needs to know when it's done. Every agent brief must have concrete, testable acceptance criteria. Each criterion should be independently verifiable.
+代理需要知道何時算完成。每個代理簡報都必須有具體、可測試的驗收標準。每個標準都應該可以獨立驗證。
 
-- **Good:** "Running `gh issue list --label needs-triage` returns issues that have been through initial classification"
-- **Bad:** "Triage should work correctly"
+- **好：**「執行 `gh issue list --label needs-triage` 會回傳已通過初步分類的 issues」
+- **壞：**「Triage 應該正常運作」
 
-### Explicit scope boundaries
+### 明確的範圍邊界
 
-State what is out of scope. This prevents the agent from gold-plating or making assumptions about adjacent features.
+明確說明什麼是超出範圍的。這能防止代理鍍金，或對相鄰功能做出臆測。
 
-## Template
+## 範本
 
 ```markdown
 ## Agent Brief
@@ -67,9 +67,9 @@ Be specific about edge cases and error conditions.
 - Adjacent feature that might seem related but is separate
 ```
 
-## Examples
+## 範例
 
-### Good agent brief (bug)
+### 好的代理簡報（bug）
 
 ```markdown
 ## Agent Brief
@@ -104,7 +104,7 @@ and append "..." to indicate truncation.
 - Multi-line description support
 ```
 
-### Good agent brief (enhancement)
+### 好的代理簡報（enhancement）
 
 ```markdown
 ## Agent Brief
@@ -145,9 +145,9 @@ checked for matches.
 - Bug reports (only enhancement rejections go to `.out-of-scope/`)
 ```
 
-### Good agent brief (PR)
+### 好的代理簡報（PR）
 
-For a PR, "Current behavior" describes the state of the diff, and the brief asks the agent to finish or fix it rather than build from scratch.
+對 PR 而言，「Current behavior（目前行為）」描述 diff 的狀態，簡報要求代理完成或修復它，而不是從零開始建置。
 
 ```markdown
 ## Agent Brief
@@ -182,7 +182,7 @@ is untouched when the flag is absent.
 - Changing the JSON shape of the success payload the PR already defined
 ```
 
-### Bad agent brief
+### 壞的代理簡報
 
 ```markdown
 ## Agent Brief
@@ -198,10 +198,11 @@ The function around line 150 has the issue.
 - src/types.ts (line 42)
 ```
 
-This is bad because:
-- No category
-- Vague description ("the triage thing is broken")
-- References file paths and line numbers that will go stale
-- No acceptance criteria
-- No scope boundaries
-- No description of current vs desired behavior
+這個很糟糕，因為：
+
+- 沒有類別
+- 描述含糊（「the triage thing is broken」）
+- 引用了會過時的檔案路徑與行號
+- 沒有驗收標準
+- 沒有範圍邊界
+- 沒有描述目前行為與期望行為的差異

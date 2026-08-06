@@ -1,8 +1,8 @@
 # Misc
 
-Tools I keep around but rarely use — not promoted in the plugin.
+我保留在身邊但很少使用的工具 — 在 plugin 中沒有被推廣。
 
-- **[git-guardrails-claude-code](./git-guardrails-claude-code/SKILL.md)** — Set up Claude Code hooks to block dangerous git commands (push, reset --hard, clean, etc.) before they execute.
-- **[migrate-to-shoehorn](./migrate-to-shoehorn/SKILL.md)** — Migrate test files from `as` type assertions to @total-typescript/shoehorn.
-- **[scaffold-exercises](./scaffold-exercises/SKILL.md)** — Create exercise directory structures with sections, problems, solutions, and explainers.
-- **[setup-pre-commit](./setup-pre-commit/SKILL.md)** — Set up Husky pre-commit hooks with lint-staged, Prettier, type checking, and tests.
+- **[git-guardrails-claude-code](./git-guardrails-claude-code/SKILL.md)** — 設定 Claude Code hooks 來在執行前阻擋危險的 git 命令（push、reset --hard、clean 等）。
+- **[migrate-to-shoehorn](./migrate-to-shoehorn/SKILL.md)** — 將測試檔案從 `as` 型別斷言遷移到 @total-typescript/shoehorn。
+- **[scaffold-exercises](./scaffold-exercises/SKILL.md)** — 建立帶有 section、題目、解答與講解的練習目錄結構。
+- **[setup-pre-commit](./setup-pre-commit/SKILL.md)** — 以 lint-staged、Prettier、型別檢查與測試設定 Husky pre-commit hooks。

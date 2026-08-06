@@ -1,38 +1,38 @@
 ---
 name: tdd
-description: Test-driven development. Use when the user wants to build features or fix bugs test-first, mentions "red-green-refactor", or wants integration tests.
+description: 測試驅動開發。當使用者想以測試優先的方式建立功能或修 bug、提到「red-green-refactor」、或想要整合測試時使用。
 ---
 
-# Test-Driven Development
+# 測試驅動開發
 
-TDD is the red → green loop. This skill is the reference that makes that loop produce tests worth keeping: what a good test is, where tests go, the anti-patterns, and the rules of the loop. Every section applies on every cycle — consult them before and during the loop, not after.
+TDD 就是紅 → 綠的迴圈。本技能是讓這個迴圈產出值得保留之測試的參考文件：什麼是好測試、測試放哪裡、反模式，以及迴圈的規則。每個章節在每個循環都適用——在迴圈之前和之中查閱它們，而不是事後。
 
-When exploring the codebase, read `CONTEXT.md` (if it exists) so test names and interface vocabulary match the project's domain language, and respect ADRs in the area you're touching.
+探索程式碼時，先讀 `CONTEXT.md`（如果存在），讓測試名稱和介面詞彙符合專案的領域語言，並尊重你要觸及區域中的 ADR。
 
-## What a good test is
+## 什麼是好測試
 
-Tests verify behavior through public interfaces, not implementation details. Code can change entirely; tests shouldn't. A good test reads like a specification — "user can checkout with valid cart" tells you exactly what capability exists — and survives refactors because it doesn't care about internal structure.
+測試透過公開介面驗證行為，而不是實作細節。程式碼可以完全改變；測試不應該。好測試讀起來像規格說明——「使用者可以用有效的購物車結帳」確切告訴你存在什麼能力——而且能安然度過重構，因為它不在乎內部結構。
 
-See [tests.md](tests.md) for examples and [mocking.md](mocking.md) for mocking guidelines.
+範例見 [tests.md](tests.md)，模擬指引見 [mocking.md](mocking.md)。
 
-## Seams — where tests go
+## 接縫——測試放哪裡
 
-A **seam** is the public boundary you test at: the interface where you observe behavior without reaching inside. Tests live at seams, never against internals.
+**接縫**是你測試所處的公開邊界：你在那裡觀察行為而不伸進內部。測試放在接縫，絕不對著內部。
 
-**Test only at pre-agreed seams.** Before writing any test, write down the seams under test and confirm them with the user. No test is written at an unconfirmed seam. You can't test everything — agreeing the seams up front is how testing effort lands on the critical paths and complex logic instead of every edge case.
+**只在事前約定的接縫上測試。** 寫任何測試之前，先寫下將被測試的接縫並與使用者確認。不會在未確認的接縫上寫測試。你不可能測試一切——事先約定接縫，就是讓測試心力落在關鍵路徑與複雜邏輯上，而不是每個邊緣案例。
 
-Ask: "What's the public interface, and which seams should we test?"
+問：「公開介面是什麼，我們該測試哪些接縫？」
 
-When the shape of that interface is itself in question — how deep the module is, where the seam belongs, what the interface should expose — use the `/codebase-design` skill for the vocabulary. It is the shared source of the module, interface, depth, seam, adapter, leverage and locality terms, and it is a reference to consult, not a session to run.
+當那個介面的形狀本身有疑問時——模組要多深、接縫該放哪裡、介面該暴露什麼——用 `/codebase-design` 技能取得詞彙。它是模組、介面、深度、接縫、轉接器、槓桿收益與局部性這些術語的共同來源，而且是要查閱的參考文件，不是要執行的會話。
 
-## Anti-patterns
+## 反模式
 
-- **Implementation-coupled** — mocks internal collaborators, tests private methods, or verifies through a side channel (querying the database instead of using the interface). The tell: the test breaks when you refactor but behavior hasn't changed.
-- **Tautological** — the assertion recomputes the expected value the way the code does (`expect(add(a, b)).toBe(a + b)`, a snapshot derived by hand the same way, a constant asserted equal to itself), so it passes by construction and can never disagree with the code. Expected values must come from an independent source of truth — a known-good literal, a worked example, the spec.
-- **Horizontal slicing** — writing all tests first, then all implementation. Bulk tests verify _imagined_ behavior: you test the _shape_ of things rather than user-facing behavior, the tests go insensitive to real changes, and you commit to test structure before understanding the implementation. Work in **vertical slices** instead — one test → one implementation → repeat, each test a **tracer bullet** that responds to what the last cycle taught you.
+- **耦合實作細節**——模擬內部協作者、測試私有方法，或透過側通道驗證（查資料庫而不是用介面）。特徵：重構時測試壞掉，但行為沒有改變。
+- **同義反覆**——斷言用跟程式碼相同的方式重新計算期望值（`expect(add(a, b)).toBe(a + b)`、用手以同樣方式導出的快照、跟自己比較的常數），所以它依構造而通過、永遠不會與程式碼意見不合。期望值必須來自獨立的真實來源——已知良好的常數、實際算過的範例、規格。
+- **水平切片**——先寫全部測試，再寫全部實作。大量測試驗證的是_想像中_的行為：你測試的是東西的_形狀_而不是使用者可見的行為，測試對真實變動變得不敏感，而且你在理解實作之前就承諾了測試結構。改用**垂直切片**——一個測試 → 一個實作 → 重複，每個測試都是一顆回應上一循環所學的**曳光彈**。
 
-## Rules of the loop
+## 迴圈的規則
 
-- **Red before green.** Write the failing test first, then only enough code to pass it. Don't anticipate future tests or add speculative features.
-- **One slice at a time.** One seam, one test, one minimal implementation per cycle.
-- **Refactoring is not part of the loop.** It belongs to the review stage (see the `code-review` skill), not the red → green implementation cycle.
+- **先紅後綠。** 先寫失敗測試，然後只寫足以讓它通過的程式碼。不要預期未來的測試或加投機性的功能。
+- **一次一個切片。** 每個循環一個接縫、一個測試、一個最小實作。
+- **重構不是迴圈的一部分。** 它屬於審查階段（見 `code-review` 技能），不屬於紅 → 綠的實作循環。

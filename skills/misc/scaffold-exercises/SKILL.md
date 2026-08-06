@@ -1,37 +1,37 @@
 ---
 name: scaffold-exercises
-description: Create exercise directory structures with sections, problems, solutions, and explainers that pass linting. Use when user wants to scaffold exercises, create exercise stubs, or set up a new course section.
+description: 建立帶有 section、題目、解答與講解、且能通過 lint 檢查的練習目錄結構。當使用者想要建立練習骨架、建立練習樁，或設定新的課程 section 時使用。
 ---
 
-# Scaffold Exercises
+# 建立練習骨架（Scaffold Exercises）
 
-Create exercise directory structures that pass `pnpm ai-hero-cli internal lint`, then commit with `git commit`.
+建立能通過 `pnpm ai-hero-cli internal lint` 的練習目錄結構，然後用 `git commit` 提交。
 
-## Directory naming
+## 目錄命名
 
-- **Sections**: `XX-section-name/` inside `exercises/` (e.g., `01-retrieval-skill-building`)
-- **Exercises**: `XX.YY-exercise-name/` inside a section (e.g., `01.03-retrieval-with-bm25`)
-- Section number = `XX`, exercise number = `XX.YY`
-- Names are dash-case (lowercase, hyphens)
+- **Sections**：`exercises/` 內部的 `XX-section-name/`（例如 `01-retrieval-skill-building`）
+- **練習**：section 內部的 `XX.YY-exercise-name/`（例如 `01.03-retrieval-with-bm25`）
+- Section 號碼 = `XX`，練習號碼 = `XX.YY`
+- 名稱使用 dash-case（小寫、連字號）
 
-## Exercise variants
+## 練習變體
 
-Each exercise needs at least one of these subfolders:
+每個練習至少需要以下子資料夾之一：
 
-- `problem/` - student workspace with TODOs
-- `solution/` - reference implementation
-- `explainer/` - conceptual material, no TODOs
+- `problem/` - 帶有 TODO 的學生工作區
+- `solution/` - 參考實作
+- `explainer/` - 概念性材料，沒有 TODO
 
-When stubbing, default to `explainer/` unless the plan specifies otherwise.
+建立樁時，除非計畫另有指定，否則預設使用 `explainer/`。
 
-## Required files
+## 必備檔案
 
-Each subfolder (`problem/`, `solution/`, `explainer/`) needs a `readme.md` that:
+每個子資料夾（`problem/`、`solution/`、`explainer/`）需要一個 `readme.md`，它必須：
 
-- Is **not empty** (must have real content, even a single title line works)
-- Has no broken links
+- **不是空的**（必須有真實內容，即使是單一標題行也可以）
+- 沒有壞掉的連結
 
-When stubbing, create a minimal readme with a title and a description:
+建立樁時，建立一個帶有標題與描述的最小 readme：
 
 ```md
 # Exercise Title
@@ -39,46 +39,46 @@ When stubbing, create a minimal readme with a title and a description:
 Description here
 ```
 
-If the subfolder has code, it also needs a `main.ts` (>1 line). But for stubs, a readme-only exercise is fine.
+如果子資料夾有程式碼，它也需要一個 `main.ts`（>1 行）。但對於樁，一個只有 readme 的練習也可以。
 
-## Workflow
+## 工作流程
 
-1. **Parse the plan** - extract section names, exercise names, and variant types
-2. **Create directories** - `mkdir -p` for each path
-3. **Create stub readmes** - one `readme.md` per variant folder with a title
-4. **Run lint** - `pnpm ai-hero-cli internal lint` to validate
-5. **Fix any errors** - iterate until lint passes
+1. **解析計畫** - 擷取 section 名稱、練習名稱與變體類型
+2. **建立目錄** - 為每個路徑 `mkdir -p`
+3. **建立樁 readmes** - 每個變體資料夾一個帶有標題的 `readme.md`
+4. **執行 lint** - `pnpm ai-hero-cli internal lint` 來驗證
+5. **修正任何錯誤** - 反覆直到 lint 通過
 
-## Lint rules summary
+## Lint 規則摘要
 
-The linter (`pnpm ai-hero-cli internal lint`) checks:
+linter（`pnpm ai-hero-cli internal lint`）檢查：
 
-- Each exercise has subfolders (`problem/`, `solution/`, `explainer/`)
-- At least one of `problem/`, `explainer/`, or `explainer.1/` exists
-- `readme.md` exists and is non-empty in the primary subfolder
-- No `.gitkeep` files
-- No `speaker-notes.md` files
-- No broken links in readmes
-- No `pnpm run exercise` commands in readmes
-- `main.ts` required per subfolder unless it's readme-only
+- 每個練習都有子資料夾（`problem/`、`solution/`、`explainer/`）
+- `problem/`、`explainer/` 或 `explainer.1/` 至少有一個存在
+- 主要子資料夾中 `readme.md` 存在且非空
+- 沒有 `.gitkeep` 檔案
+- 沒有 `speaker-notes.md` 檔案
+- readme 中沒有壞掉的連結
+- readme 中沒有 `pnpm run exercise` 命令
+- 每個子資料夾需要 `main.ts`，除非它只有 readme
 
-## Moving/renaming exercises
+## 移動/重新命名練習
 
-When renumbering or moving exercises:
+重新編號或移動練習時：
 
-1. Use `git mv` (not `mv`) to rename directories - preserves git history
-2. Update the numeric prefix to maintain order
-3. Re-run lint after moves
+1. 使用 `git mv`（不是 `mv`）來重新命名目錄 - 保留 git 歷史
+2. 更新數字前綴以維持順序
+3. 移動後重新執行 lint
 
-Example:
+範例：
 
 ```bash
 git mv exercises/01-retrieval/01.03-embeddings exercises/01-retrieval/01.04-embeddings
 ```
 
-## Example: stubbing from a plan
+## 範例：從計畫建立樁
 
-Given a plan like:
+給定一個像這樣的計畫：
 
 ```
 Section 05: Memory Skill Building
@@ -87,7 +87,7 @@ Section 05: Memory Skill Building
 - 05.03 Long-term Memory
 ```
 
-Create:
+建立：
 
 ```bash
 mkdir -p exercises/05-memory-skill-building/05.01-introduction-to-memory/explainer
@@ -95,7 +95,7 @@ mkdir -p exercises/05-memory-skill-building/05.02-short-term-memory/{explainer,p
 mkdir -p exercises/05-memory-skill-building/05.03-long-term-memory/explainer
 ```
 
-Then create readme stubs:
+然後建立 readme 樁：
 
 ```
 exercises/05-memory-skill-building/05.01-introduction-to-memory/explainer/readme.md -> "# Introduction to Memory"

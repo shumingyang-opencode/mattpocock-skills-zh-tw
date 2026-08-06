@@ -1,42 +1,42 @@
 ---
 name: setup-pre-commit
-description: Set up Husky pre-commit hooks with lint-staged (Prettier), type checking, and tests in the current repo. Use when user wants to add pre-commit hooks, set up Husky, configure lint-staged, or add commit-time formatting/typechecking/testing.
+description: 在目前的 repo 中以 lint-staged（Prettier）、型別檢查與測試設定 Husky pre-commit hooks。當使用者想要新增 pre-commit hooks、設定 Husky、設定 lint-staged，或新增提交時的格式化/型別檢查/測試時使用。
 ---
 
-# Setup Pre-Commit Hooks
+# 設定 Pre-Commit Hooks
 
-## What This Sets Up
+## 這會設定什麼
 
 - **Husky** pre-commit hook
-- **lint-staged** running Prettier on all staged files
-- **Prettier** config (if missing)
-- **typecheck** and **test** scripts in the pre-commit hook
+- **lint-staged** 在所有已暫存的檔案上執行 Prettier
+- **Prettier** 設定（如果缺少）
+- pre-commit hook 中的 **typecheck** 與 **test** 腳本
 
-## Steps
+## 步驟
 
-### 1. Detect package manager
+### 1. 偵測套件管理員
 
-Check for `package-lock.json` (npm), `pnpm-lock.yaml` (pnpm), `yarn.lock` (yarn), `bun.lockb` (bun). Use whichever is present. Default to npm if unclear.
+檢查 `package-lock.json`（npm）、`pnpm-lock.yaml`（pnpm）、`yarn.lock`（yarn）、`bun.lockb`（bun）。使用存在的那個。如果不清楚，預設為 npm。
 
-### 2. Install dependencies
+### 2. 安裝相依套件
 
-Install as devDependencies:
+安裝為 devDependencies：
 
 ```
 husky lint-staged prettier
 ```
 
-### 3. Initialize Husky
+### 3. 初始化 Husky
 
 ```bash
 npx husky init
 ```
 
-This creates `.husky/` dir and adds `prepare: "husky"` to package.json.
+這會建立 `.husky/` 目錄，並將 `prepare: "husky"` 加到 package.json。
 
-### 4. Create `.husky/pre-commit`
+### 4. 建立 `.husky/pre-commit`
 
-Write this file (no shebang needed for Husky v9+):
+寫入這個檔案（Husky v9+ 不需要 shebang）：
 
 ```
 npx lint-staged
@@ -44,9 +44,9 @@ npm run typecheck
 npm run test
 ```
 
-**Adapt**: Replace `npm` with detected package manager. If repo has no `typecheck` or `test` script in package.json, omit those lines and tell the user.
+**調整**：將 `npm` 取代為偵測到的套件管理員。如果 repo 在 package.json 中沒有 `typecheck` 或 `test` 腳本，省略那些行並告知使用者。
 
-### 5. Create `.lintstagedrc`
+### 5. 建立 `.lintstagedrc`
 
 ```json
 {
@@ -54,9 +54,9 @@ npm run test
 }
 ```
 
-### 6. Create `.prettierrc` (if missing)
+### 6. 建立 `.prettierrc`（如果缺少）
 
-Only create if no Prettier config exists. Use these defaults:
+只有當沒有 Prettier 設定存在時才建立。使用這些預設值：
 
 ```json
 {
@@ -70,22 +70,22 @@ Only create if no Prettier config exists. Use these defaults:
 }
 ```
 
-### 7. Verify
+### 7. 驗證
 
-- [ ] `.husky/pre-commit` exists and is executable
-- [ ] `.lintstagedrc` exists
-- [ ] `prepare` script in package.json is `"husky"`
-- [ ] `prettier` config exists
-- [ ] Run `npx lint-staged` to verify it works
+- [ ] `.husky/pre-commit` 存在且可執行
+- [ ] `.lintstagedrc` 存在
+- [ ] package.json 中的 `prepare` 腳本是 `"husky"`
+- [ ] `prettier` 設定存在
+- [ ] 執行 `npx lint-staged` 來驗證它可以運作
 
-### 8. Commit
+### 8. 提交
 
-Stage all changed/created files and commit with message: `Add pre-commit hooks (husky + lint-staged + prettier)`
+暫存所有變更/建立的檔案，並以訊息提交：`Add pre-commit hooks (husky + lint-staged + prettier)`
 
-This will run through the new pre-commit hooks — a good smoke test that everything works.
+這會跑過新的 pre-commit hooks — 一個很好的煙霧測試，確認一切都能運作。
 
-## Notes
+## 備註
 
-- Husky v9+ doesn't need shebangs in hook files
-- `prettier --ignore-unknown` skips files Prettier can't parse (images, etc.)
-- The pre-commit runs lint-staged first (fast, staged-only), then full typecheck and tests
+- Husky v9+ 不需要 hook 檔案中的 shebangs
+- `prettier --ignore-unknown` 會跳過 Prettier 無法解析的檔案（圖片等）
+- pre-commit 先執行 lint-staged（快速、只針對已暫存），然後是完整的型別檢查與測試

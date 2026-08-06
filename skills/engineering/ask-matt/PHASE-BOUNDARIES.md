@@ -1,55 +1,55 @@
-# Phase boundaries
+# 階段邊界
 
-A **phase** is a chunk of work inside a session — the grilling, the implementation, the QA. The definition is fuzzy on purpose: a phase ends when you think *"ok, we're done with that"*.
+**phase（階段）** 是 session 內的一塊工作——grilling、實作、QA。這個定義是刻意模糊的：當你心想*「好，我們搞定這個了」*時，階段就結束了。
 
-The **phase boundary** is the gap between two phases, and it is the only place this decision belongs. Mid-phase there is no decision to make — continue, or split the work that's left into subagents. Compacting mid-phase makes the agent lose the thread.
+**階段邊界**是兩個階段之間的間隙，也是這個決策唯一歸屬的地方。在階段中途沒有要做的決策——繼續，或把剩餘的工作拆給子代理。在階段中途 compact 會讓代理失去頭緒。
 
-## The five options
+## 五個選項
 
-| Option       | What it does                                                    |
-| ------------ | --------------------------------------------------------------- |
-| **Continue** | Stay in the session. No context switch at all.                    |
-| **`/clear`** | Empty the context window and start from nothing.                  |
-| **`/handoff`** | Write a portable markdown file and seed a session anywhere with it. |
-| **Subagent** | Send the task to its own context window and get a report back.     |
-| **`/compact`** | Compress this context and seed a fresh session with the summary.  |
+| Option（選項）      | 作用                                                             |
+| ------------------- | ---------------------------------------------------------------- |
+| **Continue（繼續）** | 留在 session 中。完全不做上下文切換。                              |
+| **`/clear`**        | 清空上下文視窗，從零開始。                                         |
+| **`/handoff`**      | 寫一個可攜帶的 markdown 檔案，並用它孕育出任何地方的 session。      |
+| **Subagent（子代理）** | 把任務送到它自己的上下文視窗，並拿回一份報告。                      |
+| **`/compact`**      | 壓縮這個上下文，並以摘要孕育出一個新的 session。                    |
 
-## The tree
+## 決策樹
 
-Work top to bottom at the boundary. The first **yes** wins.
+在邊界上從上到下逐一檢視。第一個**「是」**勝出。
 
-**1. Can you continue in this session?** Two things make the answer yes: the next phase needs this phase as a **primary source**, or you have enough [smart zone](https://www.aihero.dev/ai-coding-dictionary/smart-zone) left (~150k tokens) for the next phase to fit. Grilling → implementation is the standard yes: the implementation wants the reasoning verbatim, not a summary of it. Continue costs nothing and loses nothing, so rule it out before anything else.
+**1. 你能在這次 session 中繼續嗎？** 有兩件事會讓答案為「是」：下一個階段需要把這個階段當作**主要來源**，或者你還有足夠的[智慧區](https://www.aihero.dev/ai-coding-dictionary/smart-zone)（約 150k tokens）容納下一個階段。Grilling → 實作是標準的「是」：實作要的是逐字的推理，而不是它的摘要。Continue（繼續）不花任何成本，也不失去任何東西，所以要先排除其他一切選項。
 
-**2. Is the context irrelevant to what comes next?** Is everything in this session — the exploration, the decisions, the dead ends — disposable? If so, **`/clear`**. It is the cheapest move on the board: it takes no time and hands back the whole window. `/clear` also isn't terminal — the old session stays resumable.
+**2. 這個上下文跟接下來要做的事無關嗎？** 這次 session 中的一切——探索、決策、死路——都可丟棄嗎？如果是，**`/clear`**。這是棋盤上最便宜的招法：不花時間，並把整個視窗還給你。`/clear` 也不是終點——舊的 session 仍可恢復。
 
-The cost of getting this wrong is one-way. Clear a *relevant* context and you lose the **why** behind what you built, and no amount of reading the diff back gets it returned.
+搞錯這個的成本是單向的。清掉*相關*的上下文，你就失去建置背後的那個**「為什麼」**，而無論你回頭讀多少次 diff，都找不回來。
 
-**3. Do you need to hand off?** `/handoff` is narrow. You need it only when you are:
+**3. 你需要 hand off（交接）嗎？** `/handoff` 的範圍很窄。只有在以下情況你才需要它：
 
-- swapping to a **new harness** (Claude → Codex),
-- moving to a **new directory** or repo,
-- sending the work to a **colleague**,
-- or forking a side task you found **mid-phase** without derailing what you're doing.
+- 換到**新的執行環境**（Claude → Codex），
+- 移動到**新的目錄**或 repo，
+- 把工作交給**同事**，
+- 或在**階段中途**岔出你發現的旁支任務，而不打斷你正在做的事。
 
-That list is the whole clause. What `/handoff` buys is **portability** — a file that travels. If nothing is travelling, you don't need it.
+這份清單就是全部的條件。`/handoff` 買到的是**可攜帶性**——一個可以帶著走的檔案。如果沒有東西在移動，你就不需要它。
 
-**4. Can the task be done AFK?** Is it scoped tightly enough to run with you away from the keyboard, no steering? Then send it to a **subagent** and leave this session untouched. Automated review is the standard case: the agent reads the diff and reports, and you aren't needed while it does.
+**4. 這個任務可以 AFK 完成嗎？** 它的範圍是否緊密到可以讓你在離開鍵盤、不做任何操控的情況下運行？如果是，把它交給**子代理**，並讓這次 session 保持原樣。自動化審查是標準案例：代理讀取 diff 並回報，過程中不需要你。
 
-**5. Otherwise, `/compact`.** Relevant context, same harness, same directory, and you need to stay in the loop — this is where the tree lands, and it lands here often. Pass it an instruction (`/compact we're going to QA this area`) so the summary keeps what the next phase needs.
+**5. 否則，`/compact`。** 上下文相關、執行環境相同、目錄相同，而你必須留在迴圈中——決策樹最後會落在這裡，而且經常如此。給它一個指令（`/compact we're going to QA this area`），讓摘要保留下一個階段需要的內容。
 
-`/compact` is the **default, not the first reach**. It sits at the bottom because the four questions above it are all cheaper or more precise. The failure mode when people start here is a fresh session that is confidently wrong about a decision the summary flattened.
+`/compact` 是**預設選項，而不是第一個伸手去拿的**。它位於底部，因為它上面的四個問題都更便宜或更精確。當人們從這裡開始時的失敗模式是：一個新的 session 對摘要所碾平的那個決策，充滿信心地犯錯。
 
-## Primary and secondary sources
+## 主要來源與次要來源
 
-Every move except **Continue** turns a **primary source** into a **secondary source** — the session as it happened, replaced by a summary of it. The trade is always the same shape:
+除了 **Continue（繼續）** 之外，每個動作都會把**主要來源**變成**次要來源**——原本發生的 session，被它的摘要取代。這個取捨的形狀始終相同：
 
-| Source                            | Information | Noise | Room to move |
-| --------------------------------- | ----------- | ----- | ------------ |
-| Primary (Continue)                | Full        | Lots  | Little       |
-| Secondary (`/compact`, `/handoff`) | Lossy       | Less  | Lots         |
+| 來源                            | 資訊 | 雜訊 | 活動空間 |
+| ------------------------------- | ---- | ---- | -------- |
+| 主要（Continue／繼續）           | 完整 | 多   | 小       |
+| 次要（`/compact`、`/handoff`）   | 有損 | 少   | 大       |
 
-This is why question 1 comes first. You only pay the lossiness when staying costs more than it saves.
+這就是為什麼問題 1 要放最前面。只有當留下來耗費的成本超過它所省下的時，你才需要付出有損的代價。
 
-## These are judgement calls
+## 這些都是判斷
 
-The questions are not objective — each has taste in it, and the same boundary can go two ways on two days. The value is in asking them **in order**, at the boundary rather than in the middle of the work.
+這些問題不是客觀的——每個都含有品味，而且同一個邊界在不同日子可能會有不同的答案。價值在於**依序**提出它們，在邊界上而非工作中途提出。

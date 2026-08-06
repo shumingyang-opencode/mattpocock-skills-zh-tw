@@ -1,25 +1,25 @@
-# Issue tracker integrations are limited to mainstream tools
+# Issue tracker 整合僅限於主流工具
 
-`setup-matt-pocock-skills` only offers first-class support for **mainstream** issue trackers. Requests to add support for niche, new, or single-vendor experimental trackers are out of scope.
+`setup-matt-pocock-skills` 只對**主流** issue tracker 提供第一等支援。為小眾、新興或單一廠商的實驗性 tracker 新增支援的要求，均屬超出範圍。
 
-## Why this is out of scope
+## 為什麼這超出範圍
 
-Every issue-tracker backend hard-codes a CLI shape into the skills (commands, flags, output parsing). Each new backend is permanent maintenance surface — it has to keep working as the tool's CLI evolves, and it has to keep being tested against `/to-spec`, `/to-tickets`, `/triage`, and friends. That cost is only worth paying for trackers a meaningful fraction of users actually have.
+每個 issue-tracker 後端都把 CLI 形態硬編碼進技能（指令、旗標、輸出解析）。每個新後端都是永久性的維護面 — 它必須隨著工具的 CLI 演進而持續可用，也必須持續被 `/to-spec`、`/to-tickets`、`/triage` 及其同儕測試。這成本只值得為實際上有相當比例使用者持有的 tracker 付出。
 
-"Mainstream" is a judgment call, not a numeric bar:
+「主流」是判斷，不是數字門檻：
 
-- GitHub, GitLab, and Backlog.md are the kind of tools we'd consider mainstream — broadly known, widely used, well past the experimental phase.
-- A brand-new agent-focused tool with a few hundred GitHub stars is not, no matter how interesting the design.
+- GitHub、GitLab 與 Backlog.md 是我們視為主流的工具 — 廣為人知、被廣泛使用、早已脫離實驗階段。
+- 一個只有幾百顆 GitHub star 的全新、以代理為焦點的工具不算主流，無論設計多有趣。
 
-Stars, age, and download counts are useful signals when making the call but none of them is the rule. The rule is: would a typical engineer recognise this tool and have plausibly chosen it for their team?
+star 數、年齡與下載量是有用的訊號，但沒有哪一個是規則。規則是一般的工程師是否認得這個工具、並合理地為團隊選用它。
 
-The escape hatches for non-mainstream trackers already exist:
+非主流 tracker 的逃生門已經存在：
 
-- `local markdown` for lightweight in-repo tracking.
-- `other/custom` for users who want to wire something up themselves.
+- 輕量的 repo 內追蹤用 `local markdown`。
+- 想自己接線的人用 `other/custom`。
 
-Neither requires the core skills to know about the specific tool.
+兩者都不需要核心技能知道特定工具。
 
-## Prior requests
+## 先前的請求
 
-- #99 — "Add dex as an issue tracker backend" (dex was ~3 months old and ~300 stars at the time of the request)
+- #99 —「把 dex 加入為 issue tracker 後端」（dex 在請求當下約 3 個月大、約 300 顆 star）

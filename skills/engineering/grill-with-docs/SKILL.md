@@ -1,7 +1,7 @@
 ---
 name: grill-with-docs
-description: A relentless interview to sharpen a plan or design, which also creates docs (ADR's and glossary) as we go.
+description: 鍥而不捨的訪談，磨利計畫或設計，過程中同時建立文件（ADR 與詞彙表）。
 disable-model-invocation: true
 ---
 
-Run a `/grilling` session, using the `/domain-modeling` skill.
+使用 `/domain-modeling` 技能，執行一場 `/grilling` session。

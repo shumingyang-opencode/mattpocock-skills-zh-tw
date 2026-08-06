@@ -1,73 +1,73 @@
-## What it does
+## 用途
 
-`research` answers a question by reading the sources that own the answer, then leaves a cited Markdown file in the repo. It works only from **[primary sources](https://www.aihero.dev/ai-coding-dictionary/primary-source)** — official docs, source code, specs, first-party APIs — and follows every claim back to the source that owns it, so it will not repeat a blog post's account of an API when the API's own docs are reachable.
+`research` 透過閱讀持有答案的來源來回答問題，然後在儲存庫中留下一份帶引用的 Markdown 檔案。它只從**[主要來源](https://www.aihero.dev/ai-coding-dictionary/primary-source)**工作——官方文件、原始碼、規格說明、第一方 API——並把每項聲稱追溯回持有它的來源，所以當 API 自己的文件可及時，它不會重複某篇部落格文章對該 API 的敘述。
 
-It does not answer you in the conversation. The output is a file, written where the repo already keeps such notes, with a link on each claim. That is the point: a document you can react to, hand to another agent, or throw away, rather than an answer that vanishes when the [session](https://www.aihero.dev/ai-coding-dictionary/session) ends.
+它不會在對話中回答你。輸出是一份檔案，寫在儲存庫已經存放此類筆記的地方，每項聲稱都附帶連結。這就是重點：一份你可以回應、交給另一個代理或丟掉的文件，而不是一個在[會話](https://www.aihero.dev/ai-coding-dictionary/session)結束時消失的答案。
 
-## When to reach for it
+## 何時使用
 
-Type `/research`, or the [agent](https://www.aihero.dev/ai-coding-dictionary/agent) reaches for it automatically when a task turns into reading legwork.
+輸入 `/research`，或當任務變成閱讀跑腿工作時，[代理](https://www.aihero.dev/ai-coding-dictionary/agent)會自動採用它。
 
-Reach for it when the next step is *finding something out* from outside the working directory — how a third-party API behaves, what a spec actually says, whether a version claim holds — and you'd rather not stall your own thread doing the reading. What you need decides which skill:
+當下一步是從工作目錄之外*查明某件事*——第三方 API 如何運作、規格說明實際說了什麼、某個版本聲稱是否成立——而且你寧可不要自己停下來做閱讀時取用它。你需要什麼決定哪個技能：
 
-| What you need | Reach for |
+| 你需要 | 取用 |
 | --- | --- |
-| An external fact a decision is waiting on | `research` |
-| A decision made *with* you, by interview | [grilling](https://aihero.dev/skills-grilling) |
-| A durable architecture decision, written into `CONTEXT.md` and ADRs | [grill-with-docs](https://aihero.dev/skills-grill-with-docs) |
-| To find out whether an approach works in your codebase | [prototype](https://aihero.dev/skills-prototype) |
-| A plan too big to hold in one session | [wayfinder](https://aihero.dev/skills-wayfinder) |
+| 一個決策在等待的外部事實 | `research` |
+| 一個*與你一起*、透過訪談做出的決策 | [grilling](https://aihero.dev/skills-grilling) |
+| 一個持久、寫入 `CONTEXT.md` 與 ADR 的架構決策 | [grill-with-docs](https://aihero.dev/skills-grill-with-docs) |
+| 查明某個做法是否在你的代碼庫中有效 | [prototype](https://aihero.dev/skills-prototype) |
+| 一個大到塞不進單一會話的計畫 | [wayfinder](https://aihero.dev/skills-wayfinder) |
 
-The line between `research` and `grill-with-docs` is the **shelf life of what comes back**. Research produces short-lived assets — what this library's auth mechanism does as of this week. An ADR records a decision you keep. If what you are producing is a decision rather than a fact, you are [grilling](https://www.aihero.dev/ai-coding-dictionary/grilling), not researching.
+`research` 與 `grill-with-docs` 之間的界線是**回傳內容的保存期限**。研究產出短命的資產——這個函式庫的認證機制截至本週做什麼。ADR 記錄一個你保留的決策。如果你產出的是決策而非事實，你是在 [grilling](https://www.aihero.dev/ai-coding-dictionary/grilling)，不是在研究。
 
-## Delegated legwork
+## 委派的跑腿工作
 
-The defining move is that the reading runs as a **background agent**. You keep working; it goes off, follows each claim to its primary source, writes one Markdown file, and reports back. Research is legwork you delegate, not thinking you outsource — you get a document to grill, plan, or design against, and you still make the call.
+定義性的動作是閱讀以**背景代理**的方式執行。你繼續工作；它走開、把每項聲稱追溯到其主要來源、寫一份 Markdown 檔案，然後回報。研究是你委派的跑腿工作，不是外包的思考——你得到一份可供 grill、規劃或設計的文件，而裁量權仍然在你手上。
 
-The delegation is unguarded, and the background agent can spawn a further background agent of its own. This is the skill's best-documented rough edge.
+委派是沒有防護的，而背景代理可以再產生自己的背景代理。這是此技能最廣為記載的粗糙邊緣。
 
-Where the file lands is decided by the repo, not by the skill: it matches whatever convention already exists for notes, and if there is none it picks somewhere sensible and tells you where. It writes one file per run.
+檔案落在哪裡由儲存庫決定，不是由技能決定：它會配合已存在的筆記慣例，而如果沒有慣例，它會挑一個合理的地方並告訴你。每次執行寫一份檔案。
 
-## Common questions
+## 常見問題
 
-**It spawned a second research agent — is that meant to happen?**
+**它產生第二個研究代理——這是預期的嗎？**
 
-No. This is an open bug, [issue #530](https://github.com/mattpocock/skills/issues/530). The skill tells its caller to spin up a background agent but does not restrict the agent type, so the agent it spawns is a `general-purpose` one that holds the `Agent` tool and the same instructions — and fires them again. One reporter measured a single research task costing roughly 450k [tokens](https://www.aihero.dev/ai-coding-dictionary/token) across three overlapping runs, with the duplicate finishing half an hour later entirely out of view. It reproduces outside Claude Code too; the same nesting was confirmed in Codex with GPT-5.6-sol. There is no shipped fix. Users have patched their own installed copy with a line telling an agent that is already a [subagent](https://www.aihero.dev/ai-coding-dictionary/subagent) to do the work itself, which helps but is instruction-level, not structural. Watch your background task list after invoking, and stop the duplicate.
+不是。這是未結 bug，[issue #530](https://github.com/mattpocock/skills/issues/530)。技能告訴它的呼叫者啟動背景代理，但沒有限制代理型別，所以它產生的代理是持有 `Agent` 工具與相同指示的 `general-purpose` 代理——然後又觸發它們一次。一位回報者測量到單一研究任務在三場重疊執行中花費約 450k [token](https://www.aihero.dev/ai-coding-dictionary/token)，重複的執行在完全看不到的地方半小時後完成。它在 Claude Code 之外也能重現；同樣的巢狀在 Codex 配 GPT-5.6-sol 上也獲得確認。沒有發布的修復。使用者以一行指示修補自己安裝的副本，告訴已經是[子代理](https://www.aihero.dev/ai-coding-dictionary/subagent)的代理自己完成工作，這有幫助，但屬於指示層級，不是結構層級。呼叫後留意你的背景任務清單，並停掉重複的。
 
-The opposite failure exists as well: if your own global instructions forbid an agent from re-delegating work, the background agent will politely decline the task and the skill quietly does nothing.
+相反的失敗也存在：如果你自己的全域指示禁止代理重新委派工作，背景代理會禮貌地拒絕任務，而技能默默地什麼都不做。
 
-**Where should the file live — and should I commit it?**
+**檔案該放在哪裡——我該提交它嗎？**
 
-The skill puts the file where the repo already keeps notes and does not have an opinion beyond that. The community one is fairly settled: ADRs are kept, research files are not. The sharpest version of it, from a Discord thread on exactly this question: "ADRs yes. Everything else archive or delete after done. It otherwise becomes cruft of work and can poison future repo reads if you've drifted away from the spec/research." A research file records what was true on the day it was written, so a stale one is worse than none. On balance these artifacts don't really belong in git, and there is no canonical home for them — people use Obsidian, a separate knowledge repo, or the issue tracker instead.
+技能把檔案放在儲存庫已經存放筆記的地方，除此之外沒有意見。社群共識相當確定：ADR 保留，研究檔案不保留。最尖銳的版本，來自正好討論這個問題的 Discord 串：「ADRs yes. Everything else archive or delete after done. It otherwise becomes cruft of work and can poison future repo reads if you've drifted away from the spec/research.」研究檔案記錄的是寫下當天為真的事，所以過時的比沒有更糟。總體而言，這些產物並不真正屬於 git，也沒有標準的家——人們改用 Obsidian、分開的知識儲存庫，或 issue 追蹤器。
 
-**What counts as a "high-trust" primary source, and who decides?**
+**什麼才算「高可信度」的主要來源，由誰決定？**
 
-The [model](https://www.aihero.dev/ai-coding-dictionary/model) does. The skill names the *kinds* of source that qualify — official docs, source code, specs, first-party APIs — and there is no allowlist, no domain gate, and no verification pass. This was the loudest objection when the skill was first proposed and it has never been answered publicly: "Five research subagents pointed at junk just gives you five confident wrong answers faster. How are you gating what counts as high-trust sources?" The mitigation you actually have is the citation on each claim. Follow two or three of them. If they land on a summary of the thing rather than the thing, the run failed at its one job.
+[模型](https://www.aihero.dev/ai-coding-dictionary/model)決定。技能點名符合資格的來源*類型*——官方文件、原始碼、規格說明、第一方 API——沒有允許清單、沒有領域限制、沒有驗證輪。這是技能最初被提議時最大的反對意見，而且從未被公開回答：「Five research subagents pointed at junk just gives you five confident wrong answers faster. How are you gating what counts as high-trust sources?」你實際擁有的緩解是每項聲稱上的引用。追蹤其中兩三個。如果它們落在某件事的摘要上，而不是那件事本身，執行就在它唯一的職責上失敗了。
 
-**Does a later session reuse what an earlier run found?**
+**之後的會話會重用先前執行找到的東西嗎？**
 
-No. Nothing auto-loads a past research file; it is a document sitting in the repo until a human or a skill points at it. This was raised early as the strongest challenge to the design — "the value's the markdown becoming context the agent re-reads later, not the fetch itself. A write-once dead file is just a fancy search" — and the shipped skill does not solve it. In practice the file earns its keep by being fed into the next step deliberately: attach it to a spec, quote it into a grilling session, point a [ticket](https://www.aihero.dev/ai-coding-dictionary/ticket) at it.
+不會。沒有東西自動載入過去的研究檔案；它是一份坐在儲存庫裡的文件，直到人類或技能指向它。這在早期被提出，作為對設計最強的挑戰——「the value's the markdown becoming context the agent re-reads later, not the fetch itself. A write-once dead file is just a fancy search」——而發布的技能沒有解決它。實際上，檔案靠被刻意餵進下一步來證明價值：把它附加到規格說明、在 grilling 會話中引用它、用 [ticket](https://www.aihero.dev/ai-coding-dictionary/ticket) 指向它。
 
-**Why not just ask the agent to go read the docs?**
+**為什麼不直接叫代理去看文件？**
 
-You can, and a two-line prompt saying exactly that was the practice this skill replaced. Two things the skill buys over the prompt: it runs in the background so your session keeps its [context](https://www.aihero.dev/ai-coding-dictionary/context) clean, and the primary-source constraint and the cited-file output come out the same way every time rather than however you happened to phrase it. Against a [harness](https://www.aihero.dev/ai-coding-dictionary/harness)'s own deep-research mode, the difference is the artifact and the source discipline, not the search. If a two-line prompt gets you what you need on a small question, use the two-line prompt.
+你可以，而一段正好這樣說的兩行提示詞，就是此技能取代的做法。技能比提示詞多買到兩樣東西：它在背景執行，所以你的會話保持[上下文](https://www.aihero.dev/ai-coding-dictionary/context)乾淨；而且主要來源約束與引用檔案輸出每次都以相同方式產出，而不是取決於你碰巧怎麼措辭。相對於[執行環境](https://www.aihero.dev/ai-coding-dictionary/harness)自己的深度研究模式，差異在於產物與來源紀律，不在於搜尋。如果兩行提示詞能在小問題上給你需要的東西，就用兩行提示詞。
 
-**When does it stop reading?**
+**它什麼時候停止閱讀？**
 
-There is no stopping criterion in the skill, and this shows up as two complaints that look opposite but are the same gap: agents that go far too deep, and agents that cover a topic broadly while missing the one specific detail that mattered. One practitioner put it as "deep-research skills are a bit too deep sometimes. And telling an agent to research usually results in missing crucial details." Scoping is on you. A narrow, answerable question — one API, one behaviour, one version claim — comes back far better than "research X".
+技能中沒有停止標準，而這以兩種看起來相反、其實是同一個缺口的方式出現：跑得太深的代理，以及廣泛涵蓋主題卻漏掉唯一重要細節的代理。一位實務工作者說：「deep-research skills are a bit too deep sometimes. And telling an agent to research usually results in missing crucial details.」範圍界定是你的事。狹窄、可回答的問題——一個 API、一個行為、一個版本聲稱——回來的結果遠比「research X」好。
 
-**`/wayfinder` created research tickets — do I resolve those myself?**
+**`/wayfinder` 建立了研究 ticket——那些我自己解決嗎？**
 
-No, it now fires them for you. In the unreleased changes since v1.1, a charting session spawns a `/research` subagent per research ticket and burns them down in parallel, capturing findings on a throwaway `research/<name>` branch with a [context pointer](https://www.aihero.dev/ai-coding-dictionary/context-pointer) from the ticket. Research tickets are the one exception to wayfinder's one-ticket-per-session rule, because they are [AFK](https://www.aihero.dev/ai-coding-dictionary/afk) — nothing waits on you. Two known snags with those branches: the subagent has been seen opening a draft PR from a branch that is never meant to merge ([issue #576](https://github.com/mattpocock/skills/issues/576)), and deleting the branch later breaks the context pointers the tickets hold.
+不是，它現在會替你觸發它們。在 v1.1 之後尚未發布的變更中，繪製地圖的會話會為每個研究 ticket 產生一個 `/research` 子代理，並平行把它們燒掉，在一次性 `research/<name>` 分支上捕捉發現，並從 ticket 帶[上下文指標](https://www.aihero.dev/ai-coding-dictionary/context-pointer)。研究 ticket 是 wayfinder 每會話一個 ticket 規則的唯一例外，因為它們是 [AFK](https://www.aihero.dev/ai-coding-dictionary/afk)——沒有什麼在等你。那些分支有兩個已知的卡點：子代理曾被看到從一個從不打算合併的分支開草稿 PR（[issue #576](https://github.com/mattpocock/skills/issues/576)），而稍後刪除分支會弄壞 ticket 持有的上下文指標。
 
-## It's working if
+## 這樣就算成功
 
-- Your own session keeps going. If you are sitting watching it read, the delegation didn't happen.
-- Exactly one new background task appears. A second one with a near-identical name is the nesting bug.
-- One new Markdown file shows up, in the folder the repo already uses for notes, and the agent tells you the path.
-- Every claim in it carries a link, and following two at random lands you on an official doc, a spec, or the actual source file — not on someone's write-up of it.
-- You can make the decision you were stuck on from the file alone, without going back to the sources yourself.
+- 你自己的會話持續進行。如果你坐在那看它閱讀，委派就沒發生。
+- 正好出現一個新背景任務。第二個名稱幾乎相同的，就是巢狀 bug。
+- 出現一份新的 Markdown 檔案，在儲存庫已用於筆記的資料夾中，而代理告訴你路徑。
+- 其中每項聲稱都附帶連結，而隨機追蹤兩個會把你帶到官方文件、規格說明或實際的原始檔——而不是某人對它的轉述。
+- 你能僅憑那份檔案做出你卡住的決策，不必自己再回去查來源。
 
-## Where it fits
+## 它在哪裡適用
 
-A reach-for-it-anytime standalone that feeds the thinking skills rather than sitting in the build chain. Its file is something to take *into* the flow: [grilling](https://aihero.dev/skills-grilling) and [grill-with-docs](https://aihero.dev/skills-grill-with-docs) ask sharper questions when the facts are already on the table, and [to-spec](https://aihero.dev/skills-to-spec) can synthesise against it. [wayfinder](https://aihero.dev/skills-wayfinder) is the one skill that invokes it directly, resolving each research ticket on its map with a `/research` subagent. For the whole map, see [ask-matt](https://aihero.dev/skills-ask-matt).
+一個隨時可取用的獨立技能，餵養思考型技能，而不是待在建置鏈中。它的檔案是該*帶進*流程的東西：當事實已經攤在桌上時，[grilling](https://aihero.dev/skills-grilling) 與 [grill-with-docs](https://aihero.dev/skills-grill-with-docs) 會問出更銳利的問題，而 [to-spec](https://aihero.dev/skills-to-spec) 可以對照它綜合。wayfinder 是唯一直接呼叫它的技能，以 `/research` 子代理解決它地圖上每個研究 ticket。至於整張地圖，見 [ask-matt](https://aihero.dev/skills-ask-matt)。

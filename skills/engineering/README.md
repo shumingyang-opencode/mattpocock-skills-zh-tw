@@ -1,32 +1,32 @@
-# Engineering
+# 工程技能
 
-Skills I use daily for code work.
+我每天做程式工作時使用的技能。
 
-## User-invoked
+## 使用者叫用
 
-Reachable only when you type them (Claude Code: `disable-model-invocation: true`; Codex: `policy.allow_implicit_invocation: false` in `agents/openai.yaml`).
+只有當你輸入它們時才可觸達（Claude Code：`disable-model-invocation: true`；Codex：在 `agents/openai.yaml` 中 `policy.allow_implicit_invocation: false`）。
 
-- **[ask-matt](./ask-matt/SKILL.md)** — Ask which skill or flow fits your situation. A router over the user-invoked skills in this repo.
-- **[grill-with-docs](./grill-with-docs/SKILL.md)** — Grilling session that also builds your project's domain model, sharpening terminology and updating `CONTEXT.md` and ADRs inline.
-- **[triage](./triage/SKILL.md)** — Move issues through a state machine of triage roles.
-- **[improve-codebase-architecture](./improve-codebase-architecture/SKILL.md)** — Scan a codebase for deepening opportunities, present them as a visual HTML report, then grill through whichever one you pick.
-- **[setup-matt-pocock-skills](./setup-matt-pocock-skills/SKILL.md)** — Configure this repo for the engineering skills (issue tracker, triage labels, domain doc layout). Run once per repo.
-- **[to-spec](./to-spec/SKILL.md)** — Turn the current conversation into a spec and publish it to the issue tracker.
-- **[to-tickets](./to-tickets/SKILL.md)** — Break any plan, spec, or conversation into a set of tracer-bullet tickets, each declaring its blocking edges — text in a local file, or native blocking links on a real tracker.
-- **[implement](./implement/SKILL.md)** — Build the work described by a spec or set of tickets, driving `/tdd` at pre-agreed seams and closing out with `/code-review` before committing.
-- **[wayfinder](./wayfinder/SKILL.md)** — Plan a huge chunk of work — more than one agent session can hold — as a shared map of decision tickets on the issue tracker, resolved one at a time until the way to the destination is clear.
+- **[ask-matt](./ask-matt/SKILL.md)** — 詢問哪個技能或流程最符合你的情況。這個 repo 中使用者叫用技能的路由器。
+- **[grill-with-docs](./grill-with-docs/SKILL.md)** — 同時建立專案領域模型的 grilling session，磨利術語並就地更新 `CONTEXT.md` 與 ADRs。
+- **[triage](./triage/SKILL.md)** — 讓 issues 穿過分診角色的狀態機。
+- **[improve-codebase-architecture](./improve-codebase-architecture/SKILL.md)** — 掃描程式碼庫找出深化機會，以視覺化 HTML 報告呈現，然後對你挑選的任何一個進行 grill。
+- **[setup-matt-pocock-skills](./setup-matt-pocock-skills/SKILL.md)** — 為工程技能設定這個 repo（issue tracker、分診標籤、領域文件布局）。每個 repo 執行一次。
+- **[to-spec](./to-spec/SKILL.md)** — 把目前的對話轉成規格說明並發佈到 Issue 追蹤器。
+- **[to-tickets](./to-tickets/SKILL.md)** — 把任何計畫、規格說明或對話拆成一組曳光彈 tickets，每個都宣告自己的阻塞邊——在本機檔案中寫成文字，或在真正的追蹤器上用原生阻塞連結。
+- **[implement](./implement/SKILL.md)** — 建置規格說明或一組 tickets 所描述的工作，在事先約定的接縫上驅動 `/tdd`，並在 commit 前以 `/code-review` 收尾。
+- **[wayfinder](./wayfinder/SKILL.md)** — 規劃一大塊工作——大得單一代理 session 裝不下——作為 Issue 追蹤器上決策 tickets 的共享地圖，逐一解決，直到通往目的地的路徑清晰為止。
 
-## Model-invoked
+## 模型叫用
 
-Model- or user-reachable (rich trigger phrasing so the model can reach for them).
+可由模型或使用者觸達（使用豐富的觸發措辭，讓模型可以伸手取用它們）。
 
-- **[prototype](./prototype/SKILL.md)** — Build a throwaway prototype to answer a design question: a single shareable HTML file for state/logic, or several toggleable UI variations.
+- **[prototype](./prototype/SKILL.md)** — 建立一次性原型回答設計問題：一個可分享的單一 HTML 檔案處理狀態／邏輯，或幾種可切換的 UI 變體。
 
-- **[diagnosing-bugs](./diagnosing-bugs/SKILL.md)** — Disciplined diagnosis loop for hard bugs and performance regressions: build a feedback loop that goes red on this bug → minimise → hypothesise → instrument → fix → regression-test.
-- **[research](./research/SKILL.md)** — Investigate a question against high-trust primary sources and capture the findings as a cited Markdown file in the repo, run as a background agent.
-- **[tdd](./tdd/SKILL.md)** — Test-driven development with a red-green-refactor loop. Builds features or fixes bugs one vertical slice at a time.
-- **[domain-modeling](./domain-modeling/SKILL.md)** — Actively build and sharpen a project's domain model — challenge terms, stress-test with scenarios, update `CONTEXT.md` and ADRs inline.
-- **[codebase-design](./codebase-design/SKILL.md)** — Shared discipline and vocabulary for designing deep modules: small interfaces, clean seams, testable through the interface.
-- **[code-review](./code-review/SKILL.md)** — Two-axis review of the diff since a fixed point: **Standards** (does it follow the repo's coding standards, plus a Fowler smell baseline?) and **Spec** (does it faithfully implement the originating issue/spec?), run as parallel sub-agents.
-- **[resolving-merge-conflicts](./resolving-merge-conflicts/SKILL.md)** — Work through an in-progress git merge or rebase conflict hunk by hunk, resolving by intent traced to each side's primary source, then finish the operation — never `--abort`.
-- **[wizard](./wizard/SKILL.md)** — Generate an interactive bash wizard that walks a human through steps only they can perform: provisioning infrastructure, setting up credentials or CI secrets, walking an unfamiliar third-party dashboard, or running a one-off migration or cutover.
+- **[diagnosing-bugs](./diagnosing-bugs/SKILL.md)** — 針對棘手 bug 與效能回歸的有紀律診斷迴圈：建立對這個 bug 顯示紅色的回饋迴圈 → 最小化 → 假設 → 插樁 → 修復 → 回歸測試。
+- **[research](./research/SKILL.md)** — 針對高可信度的主要來源調查一個問題，並把發現作為一份有引用的 Markdown 檔案留在 repo 中，以背景代理執行。
+- **[tdd](./tdd/SKILL.md)** — 帶有紅-綠-重構迴圈的測試驅動開發。一次一個垂直切片建置功能或修復 bug。
+- **[domain-modeling](./domain-modeling/SKILL.md)** — 主動建立並磨利專案的領域模型——質疑術語、以情境壓力測試、就地更新 `CONTEXT.md` 與 ADRs。
+- **[codebase-design](./codebase-design/SKILL.md)** — 設計深模組的共享紀律與詞彙：小介面、乾淨接縫、可透過介面測試。
+- **[code-review](./code-review/SKILL.md)** — 針對自固定基點以來的 diff 做雙軸審查：**規範**（是否符合 repo 的程式碼規範，加上 Fowler 壞味道基線？）與**規格**（是否忠實實作源頭的 issue／spec？），以平行子代理執行。
+- **[resolving-merge-conflicts](./resolving-merge-conflicts/SKILL.md)** — 逐塊處理進行中的 git merge 或 rebase 衝突，依追溯到每一方主要來源的意圖解決，然後完成操作——絕不 `--abort`。
+- **[wizard](./wizard/SKILL.md)** — 產生一個互動式 bash wizard，引導人類走過只有他們能做的步驟：佈建基礎設施、設定憑證或 CI secrets、走訪陌生的第三方儀表板，或執行一次性遷移或切換。

@@ -1,44 +1,44 @@
 ---
 name: git-guardrails-claude-code
-description: Set up Claude Code hooks to block dangerous git commands (push, reset --hard, clean, branch -D, etc.) before they execute. Use when user wants to prevent destructive git operations, add git safety hooks, or block git push/reset in Claude Code.
+description: 設定 Claude Code hooks 來在執行前阻擋危險的 git 命令（push、reset --hard、clean、branch -D 等）。當使用者想要防止破壞性的 git 操作、新增 git 安全 hooks，或在 Claude Code 中阻擋 git push/reset 時使用。
 ---
 
-# Setup Git Guardrails
+# 設定 Git 護欄（Setup Git Guardrails）
 
-Sets up a PreToolUse hook that intercepts and blocks dangerous git commands before Claude executes them.
+設定一個 PreToolUse hook，在 Claude 執行危險 git 命令之前攔截並阻擋它們。
 
-## What Gets Blocked
+## 會被阻擋的內容
 
-- `git push` (all variants including `--force`)
+- `git push`（所有變體，包含 `--force`）
 - `git reset --hard`
 - `git clean -f` / `git clean -fd`
 - `git branch -D`
 - `git checkout .` / `git restore .`
 
-When blocked, Claude sees a message telling it that it does not have authority to access these commands.
+當被阻擋時，Claude 會看到一則訊息，告訴它沒有權限存取這些命令。
 
-## Steps
+## 步驟
 
-### 1. Ask scope
+### 1. 詢問範圍
 
-Ask the user: install for **this project only** (`.claude/settings.json`) or **all projects** (`~/.claude/settings.json`)?
+詢問使用者：只為**此專案**安裝（`.claude/settings.json`）還是**所有專案**（`~/.claude/settings.json`）？
 
-### 2. Copy the hook script
+### 2. 複製 hook 腳本
 
-The bundled script is at: [scripts/block-dangerous-git.sh](scripts/block-dangerous-git.sh)
+隨附的腳本位於：[scripts/block-dangerous-git.sh](scripts/block-dangerous-git.sh)
 
-Copy it to the target location based on scope:
+根據範圍將它複製到目標位置：
 
-- **Project**: `.claude/hooks/block-dangerous-git.sh`
-- **Global**: `~/.claude/hooks/block-dangerous-git.sh`
+- **專案**：`.claude/hooks/block-dangerous-git.sh`
+- **全域**：`~/.claude/hooks/block-dangerous-git.sh`
 
-Make it executable with `chmod +x`.
+用 `chmod +x` 使它可執行。
 
-### 3. Add hook to settings
+### 3. 將 hook 加入設定
 
-Add to the appropriate settings file:
+加到適當的設定檔：
 
-**Project** (`.claude/settings.json`):
+**專案**（`.claude/settings.json`）：
 
 ```json
 {
@@ -58,7 +58,7 @@ Add to the appropriate settings file:
 }
 ```
 
-**Global** (`~/.claude/settings.json`):
+**全域**（`~/.claude/settings.json`）：
 
 ```json
 {
@@ -78,18 +78,18 @@ Add to the appropriate settings file:
 }
 ```
 
-If the settings file already exists, merge the hook into existing `hooks.PreToolUse` array — don't overwrite other settings.
+如果設定檔已經存在，將 hook 合併到既有的 `hooks.PreToolUse` 陣列中 — 不要覆寫其他設定。
 
-### 4. Ask about customization
+### 4. 詢問客製化
 
-Ask if user wants to add or remove any patterns from the blocked list. Edit the copied script accordingly.
+詢問使用者是否要從阻擋清單中新增或移除任何模式。據此編輯已複製的腳本。
 
-### 5. Verify
+### 5. 驗證
 
-Run a quick test:
+執行一個快速測試：
 
 ```bash
 echo '{"tool_input":{"command":"git push origin main"}}' | <path-to-script>
 ```
 
-Should exit with code 2 and print a BLOCKED message to stderr.
+應該以代碼 2 結束，並在 stderr 列印一則 BLOCKED 訊息。

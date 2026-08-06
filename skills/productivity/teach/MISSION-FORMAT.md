@@ -1,31 +1,31 @@
-# MISSION.md Format
+# MISSION.md 格式
 
-`MISSION.md` lives at the workspace root. It captures the _reason_ the user is learning this topic. Every teaching decision — what to teach next, which resources to surface, which exercises to design — should trace back to this document.
+`MISSION.md` 位於工作區根目錄。它捕捉使用者_為什麼_要學習這個主題。每個教學決策 — 接下來教什麼、要呈現哪些資源、要設計哪些練習 — 都應該能追溯到這份文件。
 
-## Template
+## 範本
 
 ```md
-# Mission: {Topic}
+# Mission: {主題}
 
 ## Why
-{1-3 sentences. The concrete real-world goal the user is chasing. What changes in their life or work when they have this skill? Avoid abstract framings like "to understand X" — push for the underlying outcome.}
+{1-3 句。使用者追尋的具體真實世界目標。當他們擁有這項技能時，他們的生活或工作會有什麼改變？避免抽象框架如「了解 X」— 往底層成果推進。}
 
 ## Success looks like
-- {A specific, observable thing the user will be able to do}
-- {Another specific thing}
+- {使用者將能做的某件具體、可觀察的事}
+- {另一件具體的事}
 - {…}
 
 ## Constraints
-- {Time, budget, prior commitments, learning preferences, anything that bounds the approach}
+- {時間、預算、先前的承諾、學習偏好，任何限制方法的事物}
 
 ## Out of scope
-- {Adjacent topics the user explicitly does not want to chase right now — protects the zone of proximal development}
+- {使用者現在明確不想追尋的鄰近主題 — 保護近側發展區}
 ```
 
-## Rules
+## 規則
 
-- **One mission per workspace.** If the user wants to learn two unrelated things, that is two workspaces.
-- **Concrete over abstract.** "Run a half marathon by October" beats "get fitter." "Ship a Rust CLI to my team" beats "learn Rust."
-- **Push back on vagueness.** If the user cannot articulate why, interview them before writing anything. A bad mission is worse than no mission.
-- **Revise when reality shifts.** Missions change. When the user's goal moves, update this file — don't leave a stale mission steering future sessions.
-- **Keep it short.** If `MISSION.md` runs past a screen, it has stopped being a compass and started being a plan.
+- **每個工作區一個任務。** 如果使用者想學兩件不相關的事，那就是兩個工作區。
+- **具體優於抽象。**「十月前跑完半程馬拉松」勝過「變得更健康」。「向我的團隊交付一個 Rust CLI」勝過「學 Rust」。
+- **對模糊提出異議。** 如果使用者無法闡明原因，在寫任何東西之前先訪問他們。一個糟糕的任務比沒有任務更糟。
+- **當現實改變時修訂。** 任務會改變。當使用者的目標移動時，更新這個檔案 — 不要留下一個過時的任務來引導未來的 session。
+- **保持簡短。** 如果 `MISSION.md` 超過一個螢幕，它就不再是指南針，而是變成了一份計畫。

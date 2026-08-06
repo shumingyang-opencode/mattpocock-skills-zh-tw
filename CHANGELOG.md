@@ -4,253 +4,253 @@
 
 ### Patch Changes
 
-- [#766](https://github.com/mattpocock/skills/pull/766) [`4aaccb5`](https://github.com/mattpocock/skills/commit/4aaccb58d40559d7e3c59a029b2290ae5ba538de) Thanks [@mattpocock](https://github.com/mattpocock)! - Make `writing-for-agents` model-invokable in Codex again.
+- [#766](https://github.com/mattpocock/skills/pull/766) [`4aaccb5`](https://github.com/mattpocock/skills/commit/4aaccb58d40559d7e3c59a029b2290ae5ba538de) 感謝 [@mattpocock](https://github.com/mattpocock)! - 讓 `writing-for-agents` 在 Codex 中再次可被模型觸發。
 
-  - Drop `policy.allow_implicit_invocation: false` from `agents/openai.yaml`. Codex filtered the skill out of the model-visible skills list, so its description could not trigger it — only an explicit `$writing-for-agents` mention worked.
-  - Update the stale `interface.display_name` and `interface.short_description`, which still named the old `writing-great-skills` skill.
-  - Move the skill from the **User-invoked** list to the **Model-invoked** list in `README.md` and `skills/productivity/README.md`.
+  - 從 `agents/openai.yaml` 移除 `policy.allow_implicit_invocation: false`。Codex 原本把該技能過濾出模型可見的技能清單，因此它的 description 無法觸發它 — 只有明確的 `$writing-for-agents` 提及才有效。
+  - 更新過時的 `interface.display_name` 與 `interface.short_description`，它們仍指著舊的 `writing-great-skills` 技能。
+  - 把技能從 `README.md` 與 `skills/productivity/README.md` 的 **User-invoked** 清單移到 **Model-invoked** 清單。
 
 ## 1.2.0
 
 ### Minor Changes
 
-- [#551](https://github.com/mattpocock/skills/pull/551) [`697d4ce`](https://github.com/mattpocock/skills/commit/697d4ce9742da558fd1ba6697c8e9775e2e302dd) Thanks [@mattpocock](https://github.com/mattpocock)! - Add Codex metadata alongside each skill's Claude Code frontmatter so the set works in both harnesses without generated copies.
+- [#551](https://github.com/mattpocock/skills/pull/551) [`697d4ce`](https://github.com/mattpocock/skills/commit/697d4ce9742da558fd1ba6697c8e9775e2e302dd) 感謝 [@mattpocock](https://github.com/mattpocock)! - 在每個技能的 Claude Code frontmatter 旁加上 Codex 中繼資料，使整組技能在兩個 harness 中都能運作，無須產生副本。
 
-  - Add an `agents/openai.yaml` beside every `SKILL.md` with Codex UI metadata (`interface.display_name`, `interface.short_description`).
-  - Mark every user-invoked skill with `policy.allow_implicit_invocation: false`, the Codex analog of `disable-model-invocation: true`, so Codex excludes it from implicit invocation while explicit `$skill` invocation still works.
-  - Document the dual-harness invocation model in `.agents/invocation.md`, `CLAUDE.md`, and the promoted-bucket READMEs.
-  - Add `AGENTS.md` as a symlink to `CLAUDE.md` so Codex reads the same repo instructions.
+  - 在每個 `SKILL.md` 旁加上帶 Codex UI 中繼資料（`interface.display_name`、`interface.short_description`）的 `agents/openai.yaml`。
+  - 用 `policy.allow_implicit_invocation: false` 標記每個 user-invoked 技能，這是 `disable-model-invocation: true` 的 Codex 對應物，讓 Codex 把它排除在隱含觸發之外，同時顯式 `$skill` 觸發仍有效。
+  - 在 `.agents/invocation.md`、`CLAUDE.md` 與已推廣 bucket 的 README 中記錄雙 harness 觸發模型。
+  - 新增 `AGENTS.md` 作為指向 `CLAUDE.md` 的 symlink，讓 Codex 讀到相同的 repo 指令。
 
-- [#593](https://github.com/mattpocock/skills/pull/593) [`0f2bdbd`](https://github.com/mattpocock/skills/commit/0f2bdbdb06220d2df3718b8f0483157c6c8a8600) Thanks [@mattpocock](https://github.com/mattpocock)! - Graduate **`to-questionnaire`** out of `in-progress/` into the **Productivity** bucket, so it ships in the plugin. It turns a decision you can't answer alone into a Markdown questionnaire for the one person who can — filled in async, or worked through together in a meeting.
+- [#593](https://github.com/mattpocock/skills/pull/593) [`0f2bdbd`](https://github.com/mattpocock/skills/commit/0f2bdbdb06220d2df3718b8f0483157c6c8a8600) 感謝 [@mattpocock](https://github.com/mattpocock)! - 將 **`to-questionnaire`** 從 `in-progress/` 升級到 **Productivity** bucket，使它隨 plugin 發布。它把你無法獨自回答的決策，變成唯一能回答那人的 Markdown 問卷 — 非同步填寫，或會議中一起完成。
 
-  Its defining move is that it grills you about the **send**, not the subject: a normal grilling session interrogates the topic, which is exactly what you can't answer here, so the interview asks only who the questionnaire is going to and what you need back, then aims every question at the gap between the two.
+  它的定義性動作是詰問你關於**寄送（send）**，而非主題：一般的詰問 session 盤問主題，而這正是你這裡無法回答的，所以訪談只問問卷要寄給誰、你需要什麼回覆，然後把每個問題瞄準兩者之間的落差。
 
-  Now wired as a promoted skill — plugin entry, top-level + Productivity READMEs under **User-invoked**, a docs page at `docs/productivity/to-questionnaire.md`, and a Standalone route in `ask-matt` framing it as the inverse of `/grill-me` (mine someone else, not yourself).
+  現在已接線為已推廣技能 — plugin 條目、頂層 + Productivity README 的 **User-invoked** 下、`docs/productivity/to-questionnaire.md` 的 docs 頁，以及 `ask-matt` 中把它定位為 `/grill-me` 之逆的 Standalone 路線（挖掘別人，不是自己）。
 
-- [#680](https://github.com/mattpocock/skills/pull/680) [`b3376f8`](https://github.com/mattpocock/skills/commit/b3376f8d39848dd08572ec2667da4739a67c8c04) Thanks [@mattpocock](https://github.com/mattpocock)! - Graduate **`wizard`** out of `in-progress/` into the **Engineering** bucket, so it ships in the plugin — and make it model-invoked. It generates an interactive bash script that walks a human through a manual procedure — third-party setup, a one-off migration, an A→B state transition — opening each URL, saying what to click, capturing the values, and writing them into `.env` files and GitHub Actions secrets.
+- [#680](https://github.com/mattpocock/skills/pull/680) [`b3376f8`](https://github.com/mattpocock/skills/commit/b3376f8d39848dd08572ec2667da4739a67c8c04) 感謝 [@mattpocock](https://github.com/mattpocock)! - 將 **`wizard`** 從 `in-progress/` 升級到 **Engineering** bucket，使它隨 plugin 發布 — 並把它改為 model-invoked。它產生互動式 bash 腳本，引導人類完成手動程序 — 第三方設定、一次性遷移、A→B 狀態轉換 — 開啟每個 URL、說要點什麼、擷取值，並寫入 `.env` 檔案與 GitHub Actions secrets。
 
-  The delightful UX is pre-solved by the bundled `template.sh` (progress with time-remaining, confirmation gates, cross-platform URL opening including WSL, hidden secret entry, idempotent `.env` upserts, `gh secret`/`gh variable` writes with graceful degradation, closing skip summary). Everything above the `STAGES` marker is a fixed library that's never hand-edited — the skill's job is only to scope the procedure and author its **stages**.
+  愉快的 UX 由內建的 `template.sh` 預先解決（帶剩餘時間的進度、確認關卡、含 WSL 的跨平台 URL 開啟、隱藏密碼輸入、冪等的 `.env` 更新、帶優雅退化的 `gh secret`/`gh variable` 寫入、結束時的跳過摘要）。`STAGES` 標記以上的所有東西都是固定的函式庫，絕不手工編輯 — 技能的工作只是界定程序範圍並撰寫其 **stages**。
 
-  Engineering rather than Productivity: it reads `.env*`, `docker-compose*`, framework config and every `secrets.*`/`vars.*` reference in `.github/workflows/` to scope itself, writes CI secrets, and verifies its output with `bash -n` and `shellcheck`.
+  屬於 Engineering 而非 Productivity：它讀取 `.env*`、`docker-compose*`、框架設定與 `.github/workflows/` 中的每個 `secrets.*`/`vars.*` 參照來界定自己的範圍、寫 CI secrets，並以 `bash -n` 與 `shellcheck` 驗證輸出。
 
-  Because it is model-invoked, the agent can reach for it the moment it hits a step only a human can perform, instead of dumping numbered instructions into the chat and hoping you follow them. Typing `/wizard` works exactly as before — model-invocation only ever _adds_ the agent's reach. The description is written as the pointer that decides when it fires: what it produces, four trigger branches (provisioning infrastructure, setting up credentials or CI secrets, walking an unfamiliar third-party dashboard, a one-off migration or cutover), and an explicit non-trigger — don't invoke it for steps the agent can perform itself. Work an agent can do, an agent should do; the wizard is for the clicks, approvals and dashboard trips you would not hand to one. The stage-list confirmation before a line is written now doubles as the proposal when the agent fires it mid-build.
+  因為它是 model-invoked，代理在遇到只有人才能執行的步驟的那一刻就能伸手，而不是把編號的指示倒進對話並祈禱你照做。輸入 `/wizard` 跟以前一樣有效 — 模型觸發永遠只會*增加*代理的觸及範圍。description 寫成決定它何時觸發的指標：它產生什麼、四個觸發分支（佈建基礎設施、設定憑證或 CI secrets、走過不熟悉的第三方儀表板、一次性遷移或切換），以及一個明確的非觸發條件 — 代理自己能做的步驟不要觸發它。代理能做的，就該代理做；wizard 是給你不會交給代理的點擊、核准與儀表板行程。寫入任何一行前的 stage-list 確認，現在同時充當代理在構建中途觸發它時的提案。
 
-  Now wired as a promoted skill — plugin entry, top-level + Engineering READMEs under **Model-invoked**, a docs page at `docs/engineering/wizard.md`, and a Standalone route in `ask-matt` for the steps only a human can take. Model-invocation also puts it out of the reach of [#693](https://github.com/mattpocock/skills/issues/693), which drops user-invoked skills from the listing on Claude's desktop and web surfaces.
+  現在已接線為已推廣技能 — plugin 條目、頂層 + Engineering README 的 **Model-invoked** 下、`docs/engineering/wizard.md` 的 docs 頁，以及 `ask-matt` 中給只有人能做的步驟的 Standalone 路線。模型觸發也讓它脫離 [#693](https://github.com/mattpocock/skills/issues/693) 的影響，該 issue 會把 user-invoked 技能從 Claude 桌面與網頁介面的列表移除。
 
-- [#763](https://github.com/mattpocock/skills/pull/763) [`77d207e`](https://github.com/mattpocock/skills/commit/77d207ef03219cc603e2832e1159cbdd1c91818e) Thanks [@mattpocock](https://github.com/mattpocock)! - Reshape the **`prototype`** skill around two ideas: the demo is **a single shareable HTML file**, and the prototype is **a primary source**.
+- [#763](https://github.com/mattpocock/skills/pull/763) [`77d207e`](https://github.com/mattpocock/skills/commit/77d207ef03219cc603e2832e1159cbdd1c91818e) 感謝 [@mattpocock](https://github.com/mattpocock)! - 把 **`prototype`** 技能圍繞兩個想法重塑：demo 是**單一可共享的 HTML 檔案**，而原型是**主要來源**。
 
-  The logic branch now produces one self-contained file (plain HTML/CSS/JS, no build, no server) instead of a terminal app — a non-developer can open it by double-click and drive it in their own domain language: a labelled state panel, always-available free-play buttons, and a set of tabbed **guided walkthroughs**, each a scenario with the ordered buttons to press underneath it. The portable pure-logic module still lifts into the real code; the HTML shell is the throwaway.
+  邏輯分支現在產出單一自含檔案（純 HTML/CSS/JS，無建置、無伺服器），取代終端機應用程式 — 非開發者可以雙擊開啟，並用他們自己的領域語言操作：標籤化的狀態面板、永遠可用的自由操作按鈕，以及一組分頁的**引導式逐步操作（guided walkthroughs）**，每個都是一個情境，下面帶要依序按下的按鈕。可攜的純邏輯模組仍會搬進真正的程式碼；HTML 外殼才是被丟棄的部分。
 
-  Throwaway no longer means deleted. Rather than being removed once it has answered its question, the prototype is captured as runnable evidence on a throwaway branch (`prototype/<name>`) out of main, with a context pointer to it left on the implementation issue — so the main branch keeps only the validated decision while the exploration stays findable. The answer (verdict + question) is still captured durably in an issue/ADR/commit.
+  Throwaway（丟棄）不再意味著刪除。原型回答完問題後不會被移除，而是被捕捉為一次性分支（`prototype/<name>`，離開 main）上的可執行證據，並在實作 issue 上留下指向它的脈絡指標 — 如此 main 分支只保留經過驗證的決策，而探索過程保持可尋。答案（判定 + 問題）仍持久地捕捉在 issue/ADR/commit 中。
 
-- [#536](https://github.com/mattpocock/skills/pull/536) [`42a5b70`](https://github.com/mattpocock/skills/commit/42a5b70fcacc7baff1977b13f3919fb2f63af14e) Thanks [@mattpocock](https://github.com/mattpocock)! - Ship the skill set as a native **Claude Code plugin**, listed in Claude Code's official marketplace. You can now subscribe to the promoted skills as a managed, read-only bundle instead of copying editable files:
+- [#536](https://github.com/mattpocock/skills/pull/536) [`42a5b70`](https://github.com/mattpocock/skills/commit/42a5b70fcacc7baff1977b13f3919fb2f63af14e) 感謝 [@mattpocock](https://github.com/mattpocock)! - 以原生 **Claude Code plugin** 發布技能集，並列入 Claude Code 的官方 marketplace。現在你可以把已推廣技能訂閱為受管、唯讀的 bundle，而非複製可編輯檔案：
 
   ```bash
   claude plugins install mattpocock-skills
   ```
 
-  Or, from inside a session:
+  或從 session 內：
 
   ```
   /plugin install mattpocock-skills
   ```
 
-  There is no marketplace to add first — the official marketplace is configured by default.
+  無須先新增 marketplace — 官方 marketplace 預設已設定。
 
-  `.claude-plugin/plugin.json` carries the full plugin metadata (version, description, author, license, keywords) and the explicit list of promoted skills. `skills.sh` remains the universal installer (and the path for Codex and other harnesses today); a native Codex plugin is deferred — see `.agents/adr/0002-ship-as-a-claude-code-plugin.md` for why.
+  `.claude-plugin/plugin.json` 帶有完整的 plugin 中繼資料（version、description、author、license、keywords）以及已推廣技能的顯式清單。`skills.sh` 仍是通用安裝程式（也是 Codex 與其他 harness 目前的路徑）；原生 Codex plugin 已暫緩 — 原因見 `.agents/adr/0002-ship-as-a-claude-code-plugin.md`。
 
-- [#751](https://github.com/mattpocock/skills/pull/751) [`355fa74`](https://github.com/mattpocock/skills/commit/355fa7420b418af838998f7ec4365ceda1c8dfcc) Thanks [@mattpocock](https://github.com/mattpocock)! - Add **`wait-what`** — a one-word corrective for model verbosity. Type it the moment a message doesn't land, and the agent re-pitches it: a little context, ASD-STE100 Simplified Technical English, and the ubiquitous language from your `CONTEXT.md`. User-invoked, three lines long.
+- [#751](https://github.com/mattpocock/skills/pull/751) [`355fa74`](https://github.com/mattpocock/skills/commit/355fa7420b418af838998f7ec4365ceda1c8dfcc) 感謝 [@mattpocock](https://github.com/mattpocock)! - 新增 **`wait-what`** — 一個針對模型囉嗦的一個字矯正。訊息一落空的瞬間輸入它，代理就會重新說明：一點上下文、ASD-STE100 簡化技術英文，以及你 `CONTEXT.md` 中的共通語言。User-invoked，只有三行。
 
-  The mechanism is the name. Concision skills fail by growing — a 400-line skill still leaves the model verbose — so this one is a single precise leading word and nothing else. Names that describe the _output_ (`/tldr`, `/no-fluff`) make the model clip words and lose you further; naming the _listener's_ state asks for both halves at once, fewer words **and** the context you were missing. It also reuses the leading words already in your global `CLAUDE.md`, so the skill, `CLAUDE.md` and every `CONTEXT.md` reach for the same tokens.
+  機制就是名稱本身。精簡技能會因為變長而失敗 — 400 行的技能仍讓模型囉嗦 — 所以這一個技能是單一精確的領頭詞，除此之外什麼都沒有。描述*輸出*的名稱（`/tldr`、`/no-fluff`）會讓模型剪裁字詞、讓你更迷失；命名*聽者*的狀態則一次要求兩半 — 更少的字**以及**你缺少的上下文。它也重用你全域 `CLAUDE.md` 中既有的領頭詞，因此技能、`CLAUDE.md` 與每個 `CONTEXT.md` 都伸手向同一組 token。
 
-  It repairs one message; it doesn't prevent the next one. The cure for jargon is a shared language built upfront with `/grill-with-docs`; this is what you reach for when you don't have one yet.
+  它修復一則訊息；它不預防下一則。行話的解藥是先用 `/grill-with-docs` 建立共享語言；當你還沒有共享語言時，這就是你伸手的東西。
 
-- [#763](https://github.com/mattpocock/skills/pull/763) [`77d207e`](https://github.com/mattpocock/skills/commit/77d207ef03219cc603e2832e1159cbdd1c91818e) Thanks [@mattpocock](https://github.com/mattpocock)! - Name the `/wayfinder` unit a **decision ticket**, and burn research tickets down with subagents.
+- [#763](https://github.com/mattpocock/skills/pull/763) [`77d207e`](https://github.com/mattpocock/skills/commit/77d207ef03219cc603e2832e1159cbdd1c91818e) 感謝 [@mattpocock](https://github.com/mattpocock)! - 把 `/wayfinder` 的單位命名為**決策 ticket（decision ticket）**，並用子代理燒掉研究 ticket。
 
-  People kept reading a wayfinder ticket as an ordinary _implementation_ ticket — a slice of a build to execute — when wayfinder uses them as **decision tickets**: questions whose resolution is a decision. The skill description and its opening line now introduce the term (and say what makes it one), with the `ask-matt` / engineering README blurbs and the docs page matching — while "ticket" stays the everyday word once the term is established. `CONTEXT.md` records **Decision ticket** as a domain term, so the "avoid: ticket" guidance no longer contradicts wayfinder's deliberate use of the word.
+  人們一直把 wayfinder ticket 讀成普通的_實作_ ticket — 一個要執行的建置切片 — 而 wayfinder 其實把它們用作**決策 ticket**：其解決方案是決策的問題。技能 description 與開頭一行現在引入此術語（並說明它為什麼是決策 ticket），`ask-matt`/engineering README 的簡介與 docs 頁同步 — 而術語確立後「ticket」仍是日常用字。`CONTEXT.md` 把 **Decision ticket** 記錄為領域術語，因此「avoid: ticket」的指引不再與 wayfinder 刻意使用這個字相矛盾。
 
-  Research tickets are no longer parked for a separately-launched session. Research stays a real ticket type — it's a genuine shared blocker that downstream decisions hang on, and that dependency is exactly what the frontier's blocking edges exist to render. What changes is how it's resolved: because research is AFK, charting doesn't stop and read it. After creating the tickets, the charting session fires a `/research` subagent for each research ticket to burn it down in parallel, capturing the findings on a throwaway `research/<name>` branch with a context pointer. Research tickets are the one exception to _one ticket per session_.
+  研究 ticket 不再停置給另行啟動的 session。研究仍是一個真實的 ticket 類型 — 它是下游決策所依賴的真正共享阻塞項，而那個依賴正是前沿的阻塞邊存在的目的。改變的是它如何解決：因為研究是 AFK 的，繪圖不會停下來讀它。建立 ticket 之後，繪圖 session 為每個研究 ticket 觸發一個 `/research` 子代理，平行把它們燒掉，把發現捕捉在一次性 `research/<name>` 分支並帶脈絡指標。研究 ticket 是「一個 session 一個 ticket」的唯一例外。
 
-- [#763](https://github.com/mattpocock/skills/pull/763) [`77d207e`](https://github.com/mattpocock/skills/commit/77d207ef03219cc603e2832e1159cbdd1c91818e) Thanks [@mattpocock](https://github.com/mattpocock)! - **Breaking:** rename **`writing-great-skills`** → **`writing-for-agents`**, restructure it, and add a new leading word.
+- [#763](https://github.com/mattpocock/skills/pull/763) [`77d207e`](https://github.com/mattpocock/skills/commit/77d207ef03219cc603e2832e1159cbdd1c91818e) 感謝 [@mattpocock](https://github.com/mattpocock)! - **破壞性變更：** 把 **`writing-great-skills`** 改名為 **`writing-for-agents`**、重組它，並新增領頭詞。
 
-  The reference now covers any document an agent consumes — skills, `AGENTS.md` / `CLAUDE.md`, docs reached by a pointer — not just skills. `GLOSSARY.md` is merged into `SKILL.md` (one authoritative treatment per term; the `_Avoid_` synonym lists and the standalone Predictability definition are gone); the skill-only mechanics (frontmatter, model- vs user-invoked, router skills, the invocation cut of splitting) are disclosed to a new `SKILL-MECHANICS.md`. The skill is now **model-invoked**: it fires when creating or editing skills or modifying `AGENTS.md`/`CLAUDE.md`. `ask-matt`'s pointer updated. Reinstall under the new name; the old name is gone (no alias).
+  此參考現在涵蓋代理消費的任何文件 — 技能、`AGENTS.md`/`CLAUDE.md`、透過指標取得的 docs — 而不只是技能。`GLOSSARY.md` 併入 `SKILL.md`（每個術語一個權威處理；`_Avoid_` 同義詞清單與獨立的 Predictability 定義已移除）；技能專屬的機制（frontmatter、model- vs user-invoked、路由器技能、拆分的觸發切分）揭露到新的 `SKILL-MECHANICS.md`。技能現在是 **model-invoked**：建立或編輯技能、或修改 `AGENTS.md`/`CLAUDE.md` 時觸發。`ask-matt` 的指標已更新。以新名稱重新安裝；舊名稱已消失（無別名）。
 
-  The pruning section gains **cache**. Single source of truth now reaches past the document into the environment — `package.json` scripts, config files, directory layout, `--help` output are themselves authoritative, so a doc that restates them is a cache of a lookup, earning its load only when the lookup is expensive. The positive target: cache what the agent cannot find by looking (unwritten conventions, the reason behind a choice, gotchas no config confesses), and leave one-file, one-command lookups to the environment, where they cannot go stale.
+  精簡章節新增**快取**。單一事實來源現在延伸到文件之外進入環境 — `package.json` 的 scripts、設定檔、目錄排版、`--help` 輸出本身都是權威，所以重述它們的文件是查詢的快取，只有當查詢昂貴時才值得其負擔。正面目標：快取代理無法用「看」找到的東西（未寫下的慣例、選擇背後的理由、任何設定都不會坦白的陷阱），並把一個檔案、一個指令的查詢留給環境 — 它們在那裡不會過時。
 
-- [#533](https://github.com/mattpocock/skills/pull/533) [`45afd80`](https://github.com/mattpocock/skills/commit/45afd8074a8b7de5fe073845d080fa9dd6c429fa) Thanks [@mattpocock](https://github.com/mattpocock)! - Add a YAGNI scoping filter to the **`improve-codebase-architecture`** skill's Explore step. Instead of scanning the whole repo evenly, it now scopes to where change is actually landing: if you name a direction it takes it, otherwise it reads the last ~20 commit messages to bias exploration toward actively-developed paths. A deepening opportunity in code nobody touches is a refactor you'll never cash in — the leverage only pays off where you keep editing — so the report stops tidying dormant corners of the repo.
+- [#533](https://github.com/mattpocock/skills/pull/533) [`45afd80`](https://github.com/mattpocock/skills/commit/45afd8074a8b7de5fe073845d080fa9dd6c429fa) 感謝 [@mattpocock](https://github.com/mattpocock)! - 在 **`improve-codebase-architecture`** 技能的 Explore 步驟新增 YAGNI 範圍過濾器。它不再均勻掃描整個 repo，而是把範圍侷限在變更真正落地的地方：如果你指定方向就採用，否則它讀取最近約 20 則 commit 訊息，把探索偏向積極開發中的路徑。沒人碰的程式碼裡的加深機會，是永遠不會兌現的重構 — 槓桿只在你不斷編輯的地方才有回報 — 因此報告不再整理 repo 沉睡角落的雜物。
 
 ### Patch Changes
 
-- [#763](https://github.com/mattpocock/skills/pull/763) [`77d207e`](https://github.com/mattpocock/skills/commit/77d207ef03219cc603e2832e1159cbdd1c91818e) Thanks [@mattpocock](https://github.com/mattpocock)! - Sharpen `/ask-matt` — the router now covers phase boundaries, the two wayfinder mistakes, and two skills it never mentioned.
+- [#763](https://github.com/mattpocock/skills/pull/763) [`77d207e`](https://github.com/mattpocock/skills/commit/77d207ef03219cc603e2832e1159cbdd1c91818e) 感謝 [@mattpocock](https://github.com/mattpocock)! - 磨利 `/ask-matt` — 路由器現在涵蓋階段邊界、兩個 wayfinder 錯誤，以及兩個它從未提及的技能。
 
-  **Phase boundaries.** A **phase** is a chunk of work inside a session — the grilling, the implementation, the QA — and the boundary between two of them is where you decide what to do with the context you've built. The two-bullet `Crossing sessions` section is replaced by a decision tree carrying all five options in order (**continue**, `/clear`, `/handoff`, **subagent**, `/compact`), with the reasoning disclosed in a new `PHASE-BOUNDARIES.md`. Three fixes come with it:
+  **階段邊界（Phase boundaries）。** **phase** 是 session 內的一塊工作 — 詰問、實作、QA — 而兩者之間的邊界正是你決定怎麼處理已建立的上下文的地方。兩個項目的 `Crossing sessions` 章節被帶全部五個選項的決策樹取代（**continue**、`/clear`、`/handoff`、**subagent**、`/compact`），推理揭露在新的 `PHASE-BOUNDARIES.md`。伴隨三個修正：
 
-  - **`/handoff` was oversold.** It read as the general bridge between context windows. It's narrow: you need it only when something has to _travel_ — a new harness, a new directory, a colleague, or a side task forked mid-phase. What it buys is portability.
-  - **`/compact` is the default, not the first reach.** It sits at the bottom of the tree, after the four cheaper or more precise questions above it. Starting there produces a session that's confidently wrong about whatever the summary flattened.
-  - **Two branches were missing entirely.** **Continue** is the one to rule out first — it's the only move that keeps the conversation as a primary source rather than a summary of one — and a **subagent** handles anything scoped tightly enough to run AFK.
+  - **`/handoff` 被過度銷售。** 它被讀成上下文視窗之間的通用橋樑。它其實很窄：只有當某些東西必須*移動*時你才需要它 — 新的 harness、新目錄、同事、或中途分叉的支線任務。它買到的是可攜性。
+  - **`/compact` 是預設，不是第一選擇。** 它位於決策樹底部，在四個更便宜或更精確的問題之後。從那裡開始會產生一個對摘要壓平的任何東西都自信地搞錯的 session。
+  - **兩個分支原本完全缺失。** **Continue** 是最先該排除的選項 — 它是唯一讓對話保持為主要來源而非其摘要的動作 — 而 **subagent** 處理任何範圍緊到足以 AFK 執行的任務。
 
-  Context hygiene's escape hatch now says `/compact` rather than `/handoff` (same harness, same directory, at a boundary — the handoff clause doesn't apply), and the smart zone figure is updated from ~120k to ~150k tokens.
+  上下文衛生的逃生門現在說 `/compact` 而非 `/handoff`（同 harness、同目錄、在邊界上 — handoff 條款不適用），智慧區數字也從約 120k 更新為約 150k token。
 
-  **Wayfinder routing.** The two mistakes people most often make with the heaviest, most cognitively demanding flow:
+  **Wayfinder 路由。** 人們對這個最重、認知上最費力的流程最常犯的兩個錯誤：
 
-  - **Over-reaching for it.** It's slower and denser than a single grill, so it's flagged as the heaviest flow and reserved for the idea that genuinely won't fit one session — a well-scoped feature belongs on `/grill-with-docs`, not here.
-  - **Losing the way at the handoff.** When the map clears, wayfinder hands off, it doesn't build: merge onto the main flow at `/to-spec` (which collapses the map's linked decisions into a buildable plan) rather than looping the map straight into `/implement`. Straight-to-`/implement` is only for efforts that turned out genuinely small.
+  - **過度伸手。** 它比單次 grill 更慢更密，所以被標記為最重的流程，並保留給真正裝不進一個 session 的想法 — 範圍良好的功能屬於 `/grill-with-docs`，不屬於這裡。
+  - **交接時迷失方向。** 地圖清晰時，wayfinder 交接，不建構：從 `/to-spec` 併入主流程（它把地圖的連結決策收攏成可建構的計畫），而非把地圖直接迴圈進 `/implement`。直衝 `/implement` 只留給真的很小的成果。
 
-  **Missing routes.** `/grilling` and `/resolving-merge-conflicts` were absent from the router altogether and are now in it, and `grill-me` splits from `grill-with-docs` on whether you are in a working directory.
+  **缺失的路線。** `/grilling` 與 `/resolving-merge-conflicts` 原本完全不在路由器中，現在已加入，而 `grill-me` 以你是否在工作目錄中為準，從 `grill-with-docs` 分出。
 
-- [#502](https://github.com/mattpocock/skills/pull/502) [`44eed54`](https://github.com/mattpocock/skills/commit/44eed545186ffd0263e8004867750b80cfddd215) Thanks [@mattpocock](https://github.com/mattpocock)! - Make `/setup-matt-pocock-skills` friendlier and align the local-markdown tracker with the current spec.
+- [#502](https://github.com/mattpocock/skills/pull/502) [`44eed54`](https://github.com/mattpocock/skills/commit/44eed545186ffd0263e8004867750b80cfddd215) 感謝 [@mattpocock](https://github.com/mattpocock)! - 讓 `/setup-matt-pocock-skills` 更友善，並讓 local-markdown tracker 對齊目前的 spec。
 
-  - **Triage labels** are now asked about only when the `triage` skill is installed, and then as a single recommended-yes question ("keep the default triage labels?") instead of an override interrogation. When `triage` isn't installed, the section — and `docs/agents/triage-labels.md` — are skipped.
-  - **External PRs as a request surface** is no longer a setup question. The GitHub/GitLab templates still carry the flag, defaulted off; a user can flip it in `docs/agents/issue-tracker.md` later.
-  - **Domain docs** default to single-context without asking; multi-context is only offered when the repo shows monorepo signals.
-  - **Local-markdown tickets** are now one file per ticket under `.scratch/<feature>/issues/<NN>-<slug>.md` — never a single combined `tickets.md`. `/to-tickets` and the local issue-tracker template now agree, and the spec file is `spec.md` (not `PRD.md`) to match `/to-spec`.
+  - **Triage 標籤**現在只在 `triage` 技能已安裝時才被詢問，且是單一推薦-是問題（「保留預設的 triage 標籤？」），而非覆寫式的盤問。`triage` 未安裝時，該章節 — 以及 `docs/agents/triage-labels.md` — 被跳過。
+  - **外部 PR 作為請求介面**不再是設定問題。GitHub/GitLab 模板仍帶旗標，預設關閉；使用者日後可在 `docs/agents/issue-tracker.md` 開啟它。
+  - **領域文件**預設為單上下文而不詢問；只有當 repo 顯示 monorepo 訊號時才提供多上下文。
+  - **Local-markdown tickets** 現在是 `.scratch/<feature>/issues/<NN>-<slug>.md` 下每個 ticket 一個檔案 — 絕不是單一合併的 `tickets.md`。`/to-tickets` 與 local issue-tracker 模板現在一致，spec 檔案是 `spec.md`（而非 `PRD.md`），以對齊 `/to-spec`。
 
-  Docs pages for `setup-matt-pocock-skills` and `to-tickets` re-synced.
+  `setup-matt-pocock-skills` 與 `to-tickets` 的 docs 頁已重新同步。
 
-- [#532](https://github.com/mattpocock/skills/pull/532) [`170ad48`](https://github.com/mattpocock/skills/commit/170ad48655825783d0193e850e31a9aac957bb95) Thanks [@mattpocock](https://github.com/mattpocock)! - Reword **`grilling`** for general use. Its description and body no longer scope the interview to a software plan: "this plan" → "this", "enact the plan" → "act on it", and "exploring the codebase" → "exploring the environment". The technique is unchanged; it now reads as a stress-test of any plan, decision, or idea.
+- [#532](https://github.com/mattpocock/skills/pull/532) [`170ad48`](https://github.com/mattpocock/skills/commit/170ad48655825783d0193e850e31a9aac957bb95) 感謝 [@mattpocock](https://github.com/mattpocock)! - 將 **`grilling`** 的措辭改為通用用途。它的 description 與正文不再把訪談範圍限定於軟體計畫：「this plan」→「this」、「enact the plan」→「act on it」、「exploring the codebase」→「exploring the environment」。技術不變；它現在讀起來像對任何計畫、決策或想法的壓力測試。
 
-- [#593](https://github.com/mattpocock/skills/pull/593) [`a4b2009`](https://github.com/mattpocock/skills/commit/a4b2009a1a3ac9575506c10b4c84f08f9bba7a38) Thanks [@mattpocock](https://github.com/mattpocock)! - Rework **`grilling`** from one-question-at-a-time to round-by-round. It now maps the decision tree and asks the whole **frontier** — every question whose prerequisites are already settled — in a single numbered round, then recomputes the frontier from the user's answers and asks the next round. Same 13 questions land in ~3 rounds instead of 13. Facts the environment can answer are dispatched to background sub-agents so research never blocks the round: only questions downstream of a running exploration wait for it. The session ends when the frontier is empty.
+- [#593](https://github.com/mattpocock/skills/pull/593) [`a4b2009`](https://github.com/mattpocock/skills/commit/a4b2009a1a3ac9575506c10b4c84f08f9bba7a38) 感謝 [@mattpocock](https://github.com/mattpocock)! - 把 **`grilling`** 從一次一題重作為一輪一輪。它現在繪製決策樹，並在單一編號的回合中問整個**前沿** — 每個前置條件已解決的問題 — 再從使用者的回答重新計算前沿，問下一輪。同樣 13 個問題落在約 3 回合，而非 13 回合。環境能回答的事實分派給背景子代理，因此研究絕不阻塞回合：只有一個進行中探索下游的問題才等它。session 在前沿空掉時結束。
 
-  Every question in a round is emitted in one fixed shape — `❓ **Q1** - **<title>**`, then the body (prose or multiple choices), then the recommendation on its own `➡️` line. A round reads as a scannable numbered list with each recommendation visually separated from the question, so you can answer by number instead of quoting questions back.
+  每回合的每個問題以一個固定形狀發射 — `❓ **Q1** - **<title>**`，接著是正文（散文或多選），然後是推薦放在自己的 `➡️` 行。一輪讀起來像可掃描的編號清單，每個推薦與問題視覺分離，因此你可以按編號回答，而不是把問題引述回去。
 
-  `grill-me`, `grill-with-docs` and `triage` run the frontier a round at a time as well — `triage`'s grill step and `grilling`'s Codex `short_description` now say so instead of describing the old rhythm. The opt-out for one-question-at-a-time (a line in your global `CLAUDE.md`) is unchanged.
+  `grill-me`、`grill-with-docs` 與 `triage` 也一次跑一輪前沿 — `triage` 的 grill 步驟與 `grilling` 的 Codex `short_description` 現在如此陳述，而非描述舊的節奏。一次一題的退出機制（你全域 `CLAUDE.md` 中的一行）不變。
 
-- [#752](https://github.com/mattpocock/skills/pull/752) [`c66bdee`](https://github.com/mattpocock/skills/commit/c66bdeeee002d81e3f8b21403c07f9a0d7bea6da) Thanks [@mattpocock](https://github.com/mattpocock)! - Remove six skills from the repo. None of them was in the Claude Code plugin, but all six were installable through [skills.sh](https://skills.sh/mattpocock/skills), which serves every skill in the repo — so this is what leaves that listing, and where each one went.
+- [#752](https://github.com/mattpocock/skills/pull/752) [`c66bdee`](https://github.com/mattpocock/skills/commit/c66bdeeee002d81e3f8b21403c07f9a0d7bea6da) 感謝 [@mattpocock](https://github.com/mattpocock)! - 從 repo 移除六個技能。它們都不在 Claude Code plugin 中，但六個都可透過 [skills.sh](https://skills.sh/mattpocock/skills) 安裝 — 它服務 repo 中的每個技能 — 所以這就是離開該列表的項目，以及每個的去向。
 
-  Four retired skills, each already absorbed by a skill that does the job better:
+  四個退休技能，每個都已由做得更好的技能吸收：
 
-  - **`ubiquitous-language`** → **`/domain-modeling`**, which builds and maintains the whole domain model rather than dumping a glossary from one conversation.
-  - **`design-an-interface`** → **`/codebase-design`**. Nothing is lost: the "design it twice" technique — parallel sub-agents generating radically different designs, from Ousterhout — ships inside that skill as `DESIGN-IT-TWICE.md`.
-  - **`qa`** → **`/triage`** and **`/to-tickets`**.
-  - **`request-refactor-plan`** → **`/to-spec`** and **`/improve-codebase-architecture`**.
+  - **`ubiquitous-language`** → **`/domain-modeling`**，它建立並維護整個領域模型，而非從一次對話傾印詞彙表。
+  - **`design-an-interface`** → **`/codebase-design`**。沒有遺失任何東西：「design it twice」技術 — 平行子代理產生截然不同的設計，源自 Ousterhout — 以 `DESIGN-IT-TWICE.md` 內建在該技能中。
+  - **`qa`** → **`/triage`** 與 **`/to-tickets`**。
+  - **`request-refactor-plan`** → **`/to-spec`** 與 **`/improve-codebase-architecture`**。
 
-  And two that were only ever mine — tied to my own machine and never meant for anyone else. The `personal/` bucket goes with them:
+  還有兩個本來就只是我的 — 綁在我的機器上，從不打算給別人。`personal/` bucket 隨它們離開：
 
   - **`edit-article`**
-  - **`obsidian-vault`**, which hardcoded a path to my own Obsidian vault.
+  - **`obsidian-vault`**，它把路徑硬編碼到我自己 的 Obsidian vault。
 
-  `skills/deprecated/` stays as a bucket, now empty. `skills/in-progress/` is unchanged and is now described for what it actually is: a beta channel, published on purpose, installable one skill at a time through skills.sh.
+  `skills/deprecated/` 保持為 bucket，現在是空的。`skills/in-progress/` 不變，現在照它實際的樣子描述：beta 頻道，刻意發布，可透過 skills.sh 一次安裝一個技能。
 
-- [#734](https://github.com/mattpocock/skills/pull/734) [`a2f9333`](https://github.com/mattpocock/skills/commit/a2f9333669ff53db762c87ecda5a15442060a3be) Thanks [@mattpocock](https://github.com/mattpocock)! - Finish the `to-prd` → `to-spec` rename: "spec" is now the only term in the shipped text.
+- [#734](https://github.com/mattpocock/skills/pull/734) [`a2f9333`](https://github.com/mattpocock/skills/commit/a2f9333669ff53db762c87ecda5a15442060a3be) 感謝 [@mattpocock](https://github.com/mattpocock)! - 完成 `to-prd` → `to-spec` 改名：「spec」現在是發布文字中唯一的術語。
 
-  - **`to-spec`** no longer opens with "you may know this document as a PRD" — the parenthetical is dropped from the skill and its docs page. The local-markdown tracker template drops the same hedge.
-  - **`code-review`** talks about the originating issue/spec rather than issue/PRD, in its frontmatter description, its two-axis summary, and the spec-source search order. Both READMEs re-synced.
-  - **The GitHub and GitLab tracker templates** now say "Issues and specs for this repo live as GitHub/GitLab issues" — they had been left on "PRDs" when the local template was updated, so the stale term propagated into every repo they were written into.
-  - **`docs/engineering/research.md`** pointed at `https://aihero.dev/skills-to-prd`, a dead slug for the renamed skill; it now links `to-spec` like the other nineteen docs pages do.
+  - **`to-spec`** 不再以「you may know this document as a PRD」開頭 — 括號從技能與其 docs 頁移除。Local-markdown tracker 模板移除同一個迴避語。
+  - **`code-review`** 談的是原始 issue/spec，而非 issue/PRD — 在其 frontmatter description、雙軸摘要與 spec-source 搜尋順序中。兩個 README 已重新同步。
+  - **GitHub 與 GitLab tracker 模板**現在說「Issues and specs for this repo live as GitHub/GitLab issues」— 它們在 local 模板更新時被留在「PRDs」，因此過時的術語傳播進每個被寫入的 repo。
+  - **`docs/engineering/research.md`** 原本指向 `https://aihero.dev/skills-to-prd`，這是改名技能的死亡 slug；它現在像其他十九個 docs 頁一樣連結 `to-spec`。
 
-  The CHANGELOG and existing changesets still name PRDs where they document the rename itself, which is correct.
+  CHANGELOG 與既有 changesets 在記錄改名本身的地方仍指名 PRD，這是正確的。
 
 ## 1.1.0
 
 ### Minor Changes
 
-- [#406](https://github.com/mattpocock/skills/pull/406) [`930a450`](https://github.com/mattpocock/skills/commit/930a450089f77a49af09001d955db8452a4b867d) Thanks [@mattpocock](https://github.com/mattpocock)! - Bring the **`ask-matt`** router up to date with the full skill set. It now maps five skills it was missing: **`tdd`** (woven into the main flow as the red-green engine `implement` drives), **`diagnosing-bugs`** (a new "Something's broken" on-ramp — there was previously no route for a bug), **`domain-modeling`** and **`codebase-design`** (a new "Vocabulary underneath" section), and **`grilling`** (the shared interview primitive). `prototype` is fleshed out as a standalone and the description broadens from "user-invoked skills" to "the skills". A maintenance rule is added to `CLAUDE.md` so any future skill add/rename/remove or flow change triggers an `ask-matt` re-check, beside the existing docs-page re-sync rule.
+- [#406](https://github.com/mattpocock/skills/pull/406) [`930a450`](https://github.com/mattpocock/skills/commit/930a450089f77a49af09001d955db8452a4b867d) 感謝 [@mattpocock](https://github.com/mattpocock)! - 讓 **`ask-matt`** 路由器跟上完整的技能集。它現在繪製了原本缺失的五個技能：**`tdd`**（織入主流程，作為 `implement` 驅動的紅-綠引擎）、**`diagnosing-bugs`**（新的「Something's broken」入口 — 原本沒有給 bug 的路線）、**`domain-modeling`** 與 **`codebase-design`**（新的「Vocabulary underneath」章節）、以及 **`grilling`**（共享訪談原語）。`prototype` 被充實為獨立技能，description 也從「user-invoked skills」拓寬為「the skills」。`CLAUDE.md` 新增一條維護規則，讓未來任何技能的新增/改名/移除或流程變更，除了既有的 docs 頁重新同步規則外，也觸發 `ask-matt` 重新檢查。
 
-- [#464](https://github.com/mattpocock/skills/pull/464) [`639df6e`](https://github.com/mattpocock/skills/commit/639df6e7386dfddc739b2aecdeff37a876f2483b) Thanks [@mattpocock](https://github.com/mattpocock)! - Promote and harden **`code-review`**. The in-progress **`review`** skill is renamed to **`code-review`** and moved from `in-progress/` into `engineering/`: it now ships in the plugin, is listed in the top-level and Engineering READMEs (Model-invoked), and has a docs page at `docs/engineering/code-review.md`. The `/implement` skill and docs point at `/code-review`.
+- [#464](https://github.com/mattpocock/skills/pull/464) [`639df6e`](https://github.com/mattpocock/skills/commit/639df6e7386dfddc739b2aecdeff37a876f2483b) 感謝 [@mattpocock](https://github.com/mattpocock)! - 推廣並強化 **`code-review`**。進行中的 **`review`** 技能改名為 **`code-review`**，並從 `in-progress/` 移到 `engineering/`：它現在隨 plugin 發布、列在頂層與 Engineering README（Model-invoked）、並在 `docs/engineering/code-review.md` 有 docs 頁。`/implement` 技能與 docs 指向 `/code-review`。
 
-  It also gains an always-on **Fowler smell baseline** on its Standards axis — a curated ~12 high-signal "Bad Smells in Code" (Mysterious Name, Duplicated Code, Feature Envy, Data Clumps, Primitive Obsession, Repeated Switches, Shotgun Surgery, Divergent Change, Speculative Generality, Message Chains, Middle Man, Refused Bequest) inlined into `SKILL.md` as a fixed baseline alongside whatever the repo documents, not a new third axis. Two binding rules keep it safe: a documented repo standard overrides the baseline, and every smell is reported as a judgement call, never a hard violation.
+  它在 Standards 軸上也新增了常開的 **Fowler 壞味道基線** — 約 12 個精心挑選的高訊號「Bad Smells in Code」（Mysterious Name、Duplicated Code、Feature Envy、Data Clumps、Primitive Obsession、Repeated Switches、Shotgun Surgery、Divergent Change、Speculative Generality、Message Chains、Middle Man、Refused Bequest）內建進 `SKILL.md` 作為固定基線，與 repo 文件化的任何東西並存，而非新的第三軸。兩條綁定規則保護它：repo 文件化的標準覆寫基線，且每個壞味道都回報為判斷，絕不是硬性違規。
 
-- [#464](https://github.com/mattpocock/skills/pull/464) [`639df6e`](https://github.com/mattpocock/skills/commit/639df6e7386dfddc739b2aecdeff37a876f2483b) Thanks [@mattpocock](https://github.com/mattpocock)! - Sharpen **`grilling`** on two fronts.
+- [#464](https://github.com/mattpocock/skills/pull/464) [`639df6e`](https://github.com/mattpocock/skills/commit/639df6e7386dfddc739b2aecdeff37a876f2483b) 感謝 [@mattpocock](https://github.com/mattpocock)! - 在兩個前線磨利 **`grilling`**。
 
-  **A confirmation gate.** The agent won't enact the plan until you confirm the shared understanding has been reached — turning the skill's existing "shared understanding" completion criterion into an explicit stop-gate. The `description` also recruits the pretrained **`grill`** leading word ("Grill the user relentlessly") to sharpen invocation, and the docs page is re-synced.
+  **確認關卡。** 在你確認共享理解已達成之前，代理不會執行計畫 — 把技能既有的「shared understanding」完成標準變成明確的停止關卡。`description` 也招募已預訓練的 **`grill`** 領頭詞（「Grill the user relentlessly」）來磨利觸發，docs 頁已重新同步。
 
-  **Facts vs. decisions.** Grilling now splits _facts_ (look them up — explore the codebase) from _decisions_ (put each one to the human and wait for their answer). The old blanket line — "if a question can be answered by exploring the codebase, explore the codebase instead" — was written for the live-human case, but once another skill runs grilling inside a resolve-the-ticket frame it read as license to answer _decisions_ autonomously too. Separating the two keeps a grilling agent from racing ahead and answering its own questions.
+  **事實 vs 決策。** Grilling 現在把_事實_（查出來 — 探索程式碼庫）與_決策_（每個交給人並等回答）分開。舊的籠統行 —「如果問題可以藉由探索程式碼庫回答，就改為探索程式碼庫」— 是為即時人類案例寫的，但一旦另一個技能在「解決這個 ticket」的框架內跑 grilling，它讀起來就像也允許自主回答_決策_。分開兩者讓詰問代理不會衝上前自問自答。
 
-- [#463](https://github.com/mattpocock/skills/pull/463) [`af6d692`](https://github.com/mattpocock/skills/commit/af6d6922c3e2b5288eef155346cbe319e4ed3bd0) Thanks [@mattpocock](https://github.com/mattpocock)! - Add two adjacent Steering failure modes to **`writing-great-skills`**, both about how language you think of as "off" still steers the agent. **Negation** — the _elephant_ — is steering by prohibition: naming what _not_ to do drags the forbidden behaviour into context and makes it _more_ available, not less (_don't think of an elephant_), so the cure is to prompt the **positive**. **Negative Space** — the void — is blindness to the steering done by what you leave _out_: every decision a skill declines is delegated to the agent's priors rather than left neutral, so the cure is to read a draft for its silences and decide each omission deliberately (fill it, or leave it open as a real **branch**). Kept as two entries, not one — they carry different diagnostics and different cures — each a full `GLOSSARY.md` entry plus a `SKILL.md` failure-mode bullet, matching how every other failure mode is carried.
+- [#463](https://github.com/mattpocock/skills/pull/463) [`af6d692`](https://github.com/mattpocock/skills/commit/af6d6922c3e2b5288eef155346cbe319e4ed3bd0) 感謝 [@mattpocock](https://github.com/mattpocock)! - 為 **`writing-great-skills`** 新增兩個相鄰的 Steering 失敗模式，兩者都關於你認為「關掉」的語言如何仍然引導代理。**否定（Negation）** — 大象 — 是以禁止引導：指名_不要_做的事會把被禁的行為拖進上下文，讓它_更_可用而非更少（_不要想大象_），所以解藥是提示**正向**。**負空間（Negative Space）** — 虛無 — 是對你_省略_之物所造成的引導的盲目：技能拒絕的每個決策都被委派給代理的先驗，而非保持中性，所以解藥是讀草稿找出它的沉默，並刻意決定每個省略（填上它，或留成真正的**分支**）。保持為兩條而非一條 — 它們帶有不同的診斷與不同的解藥 — 每個都是完整的 `GLOSSARY.md` 條目加上 `SKILL.md` 失敗模式項目，與其他每個失敗模式的承載方式一致。
 
-- [`850873c`](https://github.com/mattpocock/skills/commit/850873cd73d5f81826ebf512ad35d2b1e113001f) Thanks [@mattpocock](https://github.com/mattpocock)! - Make the **`prototype`** skill model-invoked, so the agent can reach for it autonomously (and other skills can too). Its description is rewritten around the leading word _prototype_ — throwaway code that answers a design question — with one trigger per branch (state/logic sanity-check, or UI exploration).
+- [`850873c`](https://github.com/mattpocock/skills/commit/850873cd73d5f81826ebf512ad35d2b1e113001f) 感謝 [@mattpocock](https://github.com/mattpocock)! - 讓 **`prototype`** 技能變為 model-invoked，使代理能自主伸手（其他技能也能）。它的 description 圍繞領頭詞 _prototype_ 重寫 — 回答設計問題的一次性程式碼 — 每個分支一個觸發（狀態/邏輯健全性檢查，或 UI 探索）。
 
-- [#409](https://github.com/mattpocock/skills/pull/409) [`0d74d01`](https://github.com/mattpocock/skills/commit/0d74d01cbc64ca27778a49b38599f70c534e76a0) Thanks [@mattpocock](https://github.com/mattpocock)! - Add the **`research`** skill — a small, model-invoked skill that spins up a **background agent** to investigate a question against **primary sources** (official docs, source code, specs, first-party APIs), then leaves a single cited Markdown file wherever the repo keeps such notes. It's delegable reading legwork: you keep working while it reads, and get back a document to grill, plan, or design against. Listed in the top-level and Engineering READMEs (Model-invoked), added to `.claude-plugin/plugin.json`, given a docs page at `docs/engineering/research.md`, and routed as a Standalone in `ask-matt`.
+- [#409](https://github.com/mattpocock/skills/pull/409) [`0d74d01`](https://github.com/mattpocock/skills/commit/0d74d01cbc64ca27778a49b38599f70c534e76a0) 感謝 [@mattpocock](https://github.com/mattpocock)! - 新增 **`research`** 技能 — 一個小型、model-invoked 的技能，啟動**背景代理**以**主要來源**（官方文件、原始碼、spec、第一方 API）調查問題，然後在 repo 存放此類筆記的地方留下一份帶引用的 Markdown 檔案。它是可委派的閱讀雜務：它讀的時候你繼續工作，然後拿回一份可以拿來詰問、規劃或設計的文件。列在頂層與 Engineering README（Model-invoked）、加入 `.claude-plugin/plugin.json`、在 `docs/engineering/research.md` 有 docs 頁，並在 `ask-matt` 中路由為 Standalone。
 
-- [#469](https://github.com/mattpocock/skills/pull/469) [`a0329ba`](https://github.com/mattpocock/skills/commit/a0329ba95751f58566ed7ab484475917a68f1629) Thanks [@mattpocock](https://github.com/mattpocock)! - Split the **`to-issues`** skill into a lean **Process** and a **Reference** section, and teach it to handle a **wide refactor** — a single mechanical change (like renaming a column) whose **blast radius** fans across the whole codebase, breaking thousands of call sites at once so no vertical slice can land green. The drafting step now points at two co-located reference blocks: the **Vertical slice rules** for ordinary tracer bullets, and **Wide refactors**, which slices the change by **expand–contract** (expand the new form beside the old, migrate call sites in batches sized by blast radius, then contract the old form away) so CI stays green batch to batch — or, when it can't, only at a final integrate-and-verify issue. The issue body template moves into Reference too.
+- [#469](https://github.com/mattpocock/skills/pull/469) [`a0329ba`](https://github.com/mattpocock/skills/commit/a0329ba95751f58566ed7ab484475917a68f1629) 感謝 [@mattpocock](https://github.com/mattpocock)! - 把 **`to-issues`** 技能拆成精簡的 **Process** 與 **Reference** 章節，並教它處理**大範圍重構（wide refactor）** — 單一機械性變更（如改名欄位）的**影響半徑（blast radius）** 扇形展開橫跨整個程式碼庫，一次破壞數千個呼叫點，使任何垂直切片都無法轉綠。撰寫步驟現在指向兩個同處的參考區塊：普通曳光彈用的 **Vertical slice rules**，與 **Wide refactors** — 它用**擴展-收縮（expand–contract）**（在舊形式旁擴展新形式、按影響半徑分尺寸批量遷移呼叫點、再收縮掉舊形式）切分變更，使 CI 一批批保持綠 — 或做不到時，只在最終的「整合並驗證」issue 才停。issue 內文模板也移進 Reference。
 
-- [#464](https://github.com/mattpocock/skills/pull/464) [`386d4ff`](https://github.com/mattpocock/skills/commit/386d4ff719a7c420ad1454232d0436b01f1b8c17) Thanks [@mattpocock](https://github.com/mattpocock)! - Unify the planning skills. **`to-prd` is renamed to `to-spec`** — "spec" is now the single through-line term (it still opens with "you may know this document as a PRD" for discoverability). **`to-plan` and `to-issues` are merged into one `to-tickets` skill, and `to-issues` is deleted.**
+- [#464](https://github.com/mattpocock/skills/pull/464) [`386d4ff`](https://github.com/mattpocock/skills/commit/386d4ff719a7c420ad1454232d0436b01f1b8c17) 感謝 [@mattpocock](https://github.com/mattpocock)! - 統一律畫技能。**`to-prd` 改名為 `to-spec`** —「spec」現在是單一的貫穿術語（為了可發現性，它仍以「you may know this document as a PRD」開頭）。**`to-plan` 與 `to-issues` 合併成單一 `to-tickets` 技能，`to-issues` 被刪除。**
 
-  `to-tickets` breaks a plan, spec, or conversation into a set of **tickets** — tracer-bullet vertical slices, each declaring its **blocking edges**. That one artifact reads two ways depending on the tracker `/setup-matt-pocock-skills` configured: a **local file** (`tickets.md`) writes the edges as text and you work it top-to-bottom by hand; a **real tracker** writes them as native blocking links, so any ticket whose blockers are done is on the frontier and several agents can run at once. The edges live in the ticket either way — the medium only decides whether anything acts on them in parallel.
+  `to-tickets` 把計畫、spec 或對話拆成一組 **tickets** — 曳光彈垂直切片，每個宣告其**阻塞邊（blocking edges）**。這個產物依 `/setup-matt-pocock-skills` 設定的 tracker 有兩種讀法：**本機檔案**（`tickets.md`）把邊寫成文字，你手工自上而下處理；**真實 tracker** 把它們寫成原生阻塞連結，因此任何阻塞項已完成的 ticket 都在前沿，且可以同時跑多個代理。邊無論如何都活在 ticket 中 — 媒介只決定是否有任何東西平行作用於它們。
 
-  Publishing prefers the tracker's **native sub-issues** for parent → slice and **native blocking edges** for `Blocked by` where the tracker supports them, keeping the `## Parent` / `## Blocked by` body sections as the fallback. The "What to build" template points at where a `/prototype`'s code lives rather than inlining a snippet from it.
+  發布偏好 tracker 的**原生子 issue** 給 parent → slice，**原生阻塞邊**給 `Blocked by`（tracker 支援時），保留 `## Parent`/`## Blocked by` 內文章節作為備援。「What to build」模板指向 `/prototype` 程式碼所在處，而非內嵌其中的片段。
 
-  `ask-matt`'s main flow now routes `idea → /to-spec → /to-tickets → /implement`, and there are human-facing docs pages at `docs/engineering/to-spec.md` and `docs/engineering/to-tickets.md`.
+  `ask-matt` 的主流程現在路由 `idea → /to-spec → /to-tickets → /implement`，並在 `docs/engineering/to-spec.md` 與 `docs/engineering/to-tickets.md` 有人看的 docs 頁。
 
-- [#464](https://github.com/mattpocock/skills/pull/464) [`0557d57`](https://github.com/mattpocock/skills/commit/0557d57579d9b3d39839fdaf8d4a6542b17539ce) Thanks [@mattpocock](https://github.com/mattpocock)! - Settle wayfinder's place in the docs as a **situational on-ramp**, not the new main entry flow — the grill-led _idea → ship_ chain stays the front door (crowning wayfinder as the default spine is a v2-sized move, not a 1.1). The **`ask-matt`** router now names wayfinder's concrete triggers — a greenfield project or a huge feature build, too big for one session — and the two grill front doors (**`grill-me`**, **`grill-with-docs`**) signpost _up_ to wayfinder for the effort that's too big to hold in one session, so the on-ramp is discoverable from where a reader actually starts.
+- [#464](https://github.com/mattpocock/skills/pull/464) [`0557d57`](https://github.com/mattpocock/skills/commit/0557d57579d9b3d39839fdaf8d4a6542b17539ce) 感謝 [@mattpocock](https://github.com/mattpocock)! - 把 wayfinder 在 docs 中的地位定為**情境式入口（situational on-ramp）**，而非新的主要入口流程 — grill 主導的 _idea → ship_ 鏈保持正門（把 wayfinder 立為預設脊椎是 v2 規模的動作，不是 1.1）。**`ask-matt`** 路由器現在指名 wayfinder 的具體觸發 — 綠地專案或超大功能建置，超出一個 session 容量 — 而兩個 grill 正門（**`grill-me`**、**`grill-with-docs`**）為裝不進一個 session 的成果向上指向 wayfinder，因此入口從讀者真正開始的地方即可發現。
 
-- [#464](https://github.com/mattpocock/skills/pull/464) [`639df6e`](https://github.com/mattpocock/skills/commit/639df6e7386dfddc739b2aecdeff37a876f2483b) Thanks [@mattpocock](https://github.com/mattpocock)! - Graduate and reframe **`wayfinder`** — the skill for planning a huge chunk of work, more than one agent session can hold. It moves out of `in-progress/` into `engineering/` (plugin entry, top-level + Engineering READMEs under **User-invoked**, a docs page at `docs/engineering/wayfinder.md`, and a route in `ask-matt`), landing as a mature skill. The rename and reframe that got it there:
+- [#464](https://github.com/mattpocock/skills/pull/464) [`639df6e`](https://github.com/mattpocock/skills/commit/639df6e7386dfddc739b2aecdeff37a876f2483b) 感謝 [@mattpocock](https://github.com/mattpocock)! - 升級並重新定位 **`wayfinder`** — 規劃超出單一代理 session 容量的龐大工作的技能。它從 `in-progress/` 移到 `engineering/`（plugin 條目、頂層 + Engineering README 的 **User-invoked** 下、`docs/engineering/wayfinder.md` 的 docs 頁、`ask-matt` 中的路線），以成熟技能落地。讓它達成的改名與重新定位：
 
-  - **`decision-mapping` is renamed to `wayfinder`**, invoked as `/wayfinder`. "Decision map" was jargony and inaccurate — only one ticket type is actually a decision. The reframe charts a route through a foggy problem instead, giving one coherent leading-word frame — **fog of war**, **frontier**, **the map** — rather than an invented term layered on top.
-  - **Destination as the leading word.** Wayfinding finds the _way_ to a destination; it doesn't charge at building it. Naming the destination is the first act of charting — it fixes the scope and shapes every ticket — so the map gains a `## Destination` field every session orients to, and triage pins it before any ticket exists.
-  - **Plan, don't do.** The map produces **decisions, not deliverables**; it's done when nothing is left to decide before someone builds the thing. An effort can override this in its Notes.
-  - **The map is an index, not a store.** A decision lives in exactly one place — its ticket — so the map only gists and links, never restates; graduating fog into a ticket clears the graduated patch so nothing lingers in two places.
-  - **Collaborative by default.** The map moves off a local Markdown file onto the repo's issue tracker: a single `wayfinder:map` issue whose tickets are its child issues — one shared URL the team can watch. Sessions load the map at low resolution and zoom into tickets on demand. Wayfinder stays tracker-agnostic (GitHub, GitLab, local-markdown) behind a pointer in `docs/agents/issue-tracker.md`, and `setup-matt-pocock-skills` seeds the "Wayfinding operations" section.
-  - **Claim by assignment, not a label.** A session claims a ticket by assigning it to the driving dev — the assignee _is_ the claim — freeing the label vocabulary to `wayfinder:<type>` alone.
-  - **Native blocking.** Blocking prefers the tracker's native dependency relationship, which renders the frontier visually in the tracker's own UI so the human sees what's takeable without opening the map. GitHub and GitLab templates spell out the native recipe, with a body-convention fallback.
-  - **Fog vs. out of scope, split.** Two plainly-named map sections — `## Not yet specified` (in-scope fog that graduates as the frontier advances) and `## Out of scope` (work ruled beyond the destination, closed, never graduating) — so beyond-destination work no longer reads as takeable frontier.
-  - **A fourth `task` ticket type.** For literal manual work that blocks a decision (provisioning access, moving data, signing up for a service) — the one type that _does_ rather than decides, earning its place by unblocking a decision.
-  - **HITL / AFK ticket classification.** Every ticket type is **HITL** (human in the loop — grilling, prototype) or **AFK** (agent alone — research; task is either). A HITL ticket only resolves through the live exchange, so "wait for the human" falls out of the label — a grilling agent that answers its own questions has, by definition, broken HITL. (This fixes students' reports of `/wayfinder` grilling _itself_ instead of the human.)
-  - **No-fog early exit restored.** If the opening breadth-first grilling surfaces no fog, the journey is small enough for one session — so it stops and asks how you'd like to proceed rather than building a map nobody needs.
+  - **`decision-mapping` 改名為 `wayfinder`**，以 `/wayfinder` 觸發。「Decision map」既行話又不準確 — 只有一種 ticket 類型真的是決策。重新定位改為穿過迷霧般的問題繪製路線，給出單一連貫的領頭詞框架 — **fog of war（戰爭迷霧）**、**frontier（前沿）**、**the map（地圖）** — 而非層層疊加發明的術語。
+  - **目的地作為領頭詞。** Wayfinding 找到通往目的地的*路*；它不衝去建構它。命名目的地是繪圖的第一個動作 — 它固定範圍、形塑每個 ticket — 因此地圖增加 `## Destination` 欄位，每個 session 都朝它定位，而 triage 在任何 ticket 存在之前就釘住它。
+  - **規劃，不要動手。** 地圖產出**決策，而非交付物**；當有人在建構之前已沒有什麼可決策時，它就完成。成果可以在其 Notes 中覆寫這個設定。
+  - **地圖是指標，不是倉庫。** 一個決策確切存在於一個地方 — 它的 ticket — 因此地圖只摘要與連結，絕不重述；把迷霧升級為 ticket 會清空升級過的那塊，使任何東西都不會殘留在兩個地方。
+  - **預設協作。** 地圖從本機 Markdown 檔案移到 repo 的 issue tracker：單一 `wayfinder:map` issue，其 tickets 是它的子 issue — 團隊可觀看的單一共享 URL。Session 以低解析度載入地圖，並按需放大到 tickets。Wayfinder 保持 tracker 無關（GitHub、GitLab、local-markdown），透過 `docs/agents/issue-tracker.md` 的指標，而 `setup-matt-pocock-skills` 種下「Wayfinding operations」章節。
+  - **以指派認領，而非標籤。** Session 透過把 ticket 指派給驅動開發者來認領它 — 受指派者*就是*認領 — 把標籤詞彙解放為只有 `wayfinder:<type>`。
+  - **原生阻塞。** 阻塞偏好 tracker 的原生依賴關係，它會在 tracker 自己的 UI 中視覺渲染前沿，使人無須打開地圖就能看到什麼可拿。GitHub 與 GitLab 模板寫明原生配方，附內文慣例備援。
+  - **迷霧 vs 超出範圍，分開。** 兩個命名清楚的圖章節 — `## Not yet specified`（範圍內的迷霧，前沿推進時升級）與 `## Out of scope`（被判定超出目的地的工作，已關閉，永不升級）— 如此超出目的地的讀起來就不會像是可拿的前沿。
+  - **第四種 `task` ticket 類型。** 給阻塞決策的具體手動工作（佈建存取權、移動資料、註冊服務）— 唯一*動手*而非決策的類型，藉由解除決策阻塞而贏得地位。
+  - **HITL / AFK ticket 分類。** 每個 ticket 類型是 **HITL**（人在迴圈中 — 詰問、原型）或 **AFK**（代理獨自 — 研究；task 兩者皆可）。HITL ticket 只能透過即時交流解決，因此「等人」從標籤中自然浮出 — 自問自答的詰問代理，依定義就是破壞了 HITL。（這修好了學生們回報的 `/wayfinder` 詰問_它自己_而非詰問人的現象。）
+  - **恢復無迷霧早期退出。** 若開場的寬度優先詰問沒有浮現任何迷霧，旅程小到一個 session 就夠 — 於是它停下來問你想怎麼進行，而非建構一張沒人要的地圖。
 
 ### Patch Changes
 
-- [#464](https://github.com/mattpocock/skills/pull/464) [`639df6e`](https://github.com/mattpocock/skills/commit/639df6e7386dfddc739b2aecdeff37a876f2483b) Thanks [@mattpocock](https://github.com/mattpocock)! - Reshape **`tdd`** into a reference-only skill and add a missing anti-pattern.
+- [#464](https://github.com/mattpocock/skills/pull/464) [`639df6e`](https://github.com/mattpocock/skills/commit/639df6e7386dfddc739b2aecdeff37a876f2483b) 感謝 [@mattpocock](https://github.com/mattpocock)! - 把 **`tdd`** 重塑為純參考技能，並新增缺失的反模式。
 
-  **Reference-only.** The red → green → refactor loop is anchored by leading words the model already holds, so the step-by-step Workflow was largely restating the loop. Dropped the Workflow and per-cycle checklist; folded their one durable idea — vertical slices / tracer bullets — into the Anti-patterns section and a short Rules-of-the-loop list. Introduced **seam** as the leading word for where tests go: test only at pre-agreed seams, confirmed with the user before any test is written. Also dropped the refactor stage — TDD is now red → green; refactoring belongs to the review stage, so the refactor rule and `refactoring.md` moved out (its home is `code-review`).
+  **純參考。** 紅 → 綠 → 重構迴圈由模型已經握有的領頭詞錨定，因此逐步的 Workflow 大體上是在重述迴圈。移除 Workflow 與每週期檢查表；把它們唯一耐久的主意 — 垂直切片 / 曳光彈 — 折進 Anti-patterns 章節與簡短的 Rules-of-the-loop 清單。引入 **seam** 作為測試放哪裡的領頭詞：只在事前約定的接縫測試，並在任何測試寫出前與使用者確認。也移除重構階段 — TDD 現在是紅 → 綠；重構屬於審查階段，因此重構規則與 `refactoring.md` 移出（其家是 `code-review`）。
 
-  **Tautological tests.** Added the tautological-test anti-pattern: a test whose assertion is recomputed the way the code computes it passes by construction and gives zero confidence — distinct from the implementation-coupling anti-pattern already covered. Added as a peer at the same sites: a Philosophy principle (expected values must come from an independent source of truth), a checklist gate, and a BAD/GOOD example pair in `tests.md`.
+  **同義反覆測試。** 新增同義反覆測試反模式：斷言用程式碼計算的方式重新計算的測試，會因建構而通過、卻給零信心 — 與已涵蓋的實作耦合反模式不同。在相同位置新增為同級：一條 Philosophy 原則（期望值必須來自獨立的真相來源）、一條檢查表關卡，以及 `tests.md` 中的一對 BAD/GOOD 範例。
 
-- [`e00eadb`](https://github.com/mattpocock/skills/commit/e00eadb4bb32c3d5a631ead1a5ed5d6a7c5f74e2) Thanks [@mattpocock](https://github.com/mattpocock)! - Extend the **`triage`** skill to triage external pull requests, treating a PR as an issue with attached code that runs through the same roles and state machine. PRs flow inline alongside issues (gated by a per-repo setup toggle), discovery surfaces only external PRs, the bug-only "reproduce" step is generalized into a single "verify the claim" step, and a redundancy check resolves already-implemented requests to `wontfix` without polluting the out-of-scope knowledge base. `setup-matt-pocock-skills` gains the PRs-as-a-request-surface toggle for GitHub/GitLab.
+- [`e00eadb`](https://github.com/mattpocock/skills/commit/e00eadb4bb32c3d5a631ead1a5ed5d6a7c5f74e2) 感謝 [@mattpocock](https://github.com/mattpocock)! - 擴充 **`triage`** 技能以分診外部 pull request，把 PR 視為附帶程式碼、流經相同角色與狀態機的 issue。PR 與 issues 並排流動（由 per-repo 設定開關把關）、發現介面只浮現外部 PR、僅限 bug 的「reproduce」步驟概括為單一「verify the claim」步驟、冗餘檢查把已實作的請求解析為 `wontfix` 而不污染超出範圍的知識庫。`setup-matt-pocock-skills` 為 GitHub/GitLab 新增 PRs-as-a-request-surface 開關。
 
-- [#472](https://github.com/mattpocock/skills/pull/472) [`d869d45`](https://github.com/mattpocock/skills/commit/d869d45afc32beab1c2d1350f8de5e81589512cd) Thanks [@mattpocock](https://github.com/mattpocock)! - Fix **`wayfinder`** hardcoding the issue-tracker doc path, which broke the indirection the rest of the suite relies on.
+- [#472](https://github.com/mattpocock/skills/pull/472) [`d869d45`](https://github.com/mattpocock/skills/commit/d869d45afc32beab1c2d1350f8de5e81589512cd) 感謝 [@mattpocock](https://github.com/mattpocock)! - 修復 **`wayfinder`** 硬編碼 issue-tracker 文件路徑的問題，這破壞了整套技能依賴的間接層。
 
-  `to-issues`, `to-prd`, and `triage` never name a path — they resolve the tracker through the `### Issue tracker` block that `setup-matt-pocock-skills` writes into `CLAUDE.md` / `AGENTS.md`, which points at the tracker doc wherever it lives. Wayfinder instead pinned the literal `docs/agents/issue-tracker.md`, so in a repo that keeps its agent docs elsewhere it silently fell back to the local-markdown tracker — even one whose `CLAUDE.md` clearly declares GitHub issues. It now resolves the doc via that same pointer and reads its "Wayfinding operations" section by name, keeping the indirection consistent across the suite.
+  `to-issues`、`to-prd` 與 `triage` 從不指名路徑 — 它們透過 `setup-matt-pocock-skills` 寫進 `CLAUDE.md`/`AGENTS.md` 的 `### Issue tracker` 區塊解析 tracker，該區塊指向 tracker 文件所在處。Wayfinder 反而釘住字面上的 `docs/agents/issue-tracker.md`，因此在把代理文件放在別處的 repo 中，它會默默回退到 local-markdown tracker — 即使是 `CLAUDE.md` 清楚宣告 GitHub issues 的那種。它現在透過同一個指標解析文件，並按名稱讀取其「Wayfinding operations」章節，讓間接層在整套技能中保持一致。
 
 ## 1.0.1
 
 ### Patch Changes
 
-- [`d20ee26`](https://github.com/mattpocock/skills/commit/d20ee2684e2a9442698ac3c1e0f2c5b68c4cf296) Thanks [@mattpocock](https://github.com/mattpocock)! - Make the **`teach`** skill reuse-first. Lessons are now built from reusable **components** in `./assets/` — stylesheets, quiz widgets, simulators, diagram helpers. Reuse is the default: the agent reads `./assets/` before authoring a lesson, builds from what's there, and extracts anything new and reusable into a component rather than inlining it.
+- [`d20ee26`](https://github.com/mattpocock/skills/commit/d20ee2684e2a9442698ac3c1e0f2c5b68c4cf296) 感謝 [@mattpocock](https://github.com/mattpocock)! - 讓 **`teach`** 技能重用優先。課程現在由 `./assets/` 中可重用的**元件**建立 — 樣式表、測驗 widget、模擬器、圖表輔助。重用是預設：代理在撰寫課程前先讀 `./assets/`、從既有的東西建立，並把任何新的、可重用的東西抽成元件，而非內嵌它。
 
 ## 1.0.0
 
 ### Major Changes
 
-- [`47bde84`](https://github.com/mattpocock/skills/commit/47bde84da032afb2e5058f997f3bbca47d321dbd) Thanks [@mattpocock](https://github.com/mattpocock)! - Add the **`ask-matt`** skill — a user-invoked router that points you at the right skill or flow for your situation.
+- [`47bde84`](https://github.com/mattpocock/skills/commit/47bde84da032afb2e5058f997f3bbca47d321dbd) 感謝 [@mattpocock](https://github.com/mattpocock)! - 新增 **`ask-matt`** 技能 — 一個 user-invoked 路由器，為你的處境指出正確的技能或流程。
 
-  **Breaking:** `ask-matt` routes over the other user-invoked skills in this repo, so it expects them to be installed.
+  **破壞性變更：** `ask-matt` 在此 repo 的其他 user-invoked 技能上路由，因此它預期它們已安裝。
 
-- [`47bde84`](https://github.com/mattpocock/skills/commit/47bde84da032afb2e5058f997f3bbca47d321dbd) Thanks [@mattpocock](https://github.com/mattpocock)! - Add the shared design skills and rewire existing skills onto them.
+- [`47bde84`](https://github.com/mattpocock/skills/commit/47bde84da032afb2e5058f997f3bbca47d321dbd) 感謝 [@mattpocock](https://github.com/mattpocock)! - 新增共享設計技能，並把既有技能重新接線到它們。
 
-  - New **`codebase-design`** skill — the deep-module vocabulary (module, interface, depth, seam, adapter) and the principles for putting a lot of behaviour behind a small interface. The language that previously lived in `improve-codebase-architecture/LANGUAGE.md` now lives here, generalized for reuse across skills.
-  - New **`domain-modeling`** skill — actively build and sharpen a project's domain model, stress-testing terms against the glossary and keeping `CONTEXT.md` and ADRs current.
-  - `improve-codebase-architecture` now draws its architecture vocabulary from `/codebase-design` and its domain model from `/domain-modeling`.
-  - `tdd` now leans on `/codebase-design` for interface-design guidance — its inline `deep-modules.md` / `interface-design.md` notes were removed in favour of the shared skill.
-  - `grill-with-docs` now builds the domain model inline via `/domain-modeling`.
+  - 新的 **`codebase-design`** 技能 — 深模組詞彙（module、interface、depth、seam、adapter）與「把大量行為放在小型介面之後」的原則。先前住在 `improve-codebase-architecture/LANGUAGE.md` 的語言現在住在這裡，泛化為跨技能重用。
+  - 新的 **`domain-modeling`** 技能 — 主動建立並磨利專案的領域模型，對照詞彙表壓力測試術語，並保持 `CONTEXT.md` 與 ADR 更新。
+  - `improve-codebase-architecture` 現在從 `/codebase-design` 取得架構詞彙，從 `/domain-modeling` 取得領域模型。
+  - `tdd` 現在依賴 `/codebase-design` 取得介面設計指引 — 其內嵌的 `deep-modules.md`/`interface-design.md` 筆記已移除，改用共享技能。
+  - `grill-with-docs` 現在透過 `/domain-modeling` 內嵌建立領域模型。
 
-  **Breaking:** these skills now depend on the new `codebase-design` / `domain-modeling` skills, so you must install them too.
+  **破壞性變更：** 這些技能現在依賴新的 `codebase-design`/`domain-modeling` 技能，因此你也必須安裝它們。
 
-- [`47bde84`](https://github.com/mattpocock/skills/commit/47bde84da032afb2e5058f997f3bbca47d321dbd) Thanks [@mattpocock](https://github.com/mattpocock)! - Remove the **`caveman`** and **`zoom-out`** skills.
+- [`47bde84`](https://github.com/mattpocock/skills/commit/47bde84da032afb2e5058f997f3bbca47d321dbd) 感謝 [@mattpocock](https://github.com/mattpocock)! - 移除 **`caveman`** 與 **`zoom-out`** 技能。
 
-  - `caveman` was a duplicate of another skill I was testing and was never meant to be public.
-  - `zoom-out` went unused in practice, so it's been removed from the repo.
+  - `caveman` 是另一個我正在測試的技能的重複，從不打算公開。
+  - `zoom-out` 在實務中未被使用，因此已從 repo 移除。
 
-  **Breaking:** both skills have been removed.
+  **破壞性變更：** 兩個技能都已移除。
 
-- [`47bde84`](https://github.com/mattpocock/skills/commit/47bde84da032afb2e5058f997f3bbca47d321dbd) Thanks [@mattpocock](https://github.com/mattpocock)! - Rename the **`diagnose`** skill to **`diagnosing-bugs`**.
+- [`47bde84`](https://github.com/mattpocock/skills/commit/47bde84da032afb2e5058f997f3bbca47d321dbd) 感謝 [@mattpocock](https://github.com/mattpocock)! - 把 **`diagnose`** 技能改名為 **`diagnosing-bugs`**。
 
-  **Breaking:** invoke it as `/diagnosing-bugs` — the old `/diagnose` name no longer exists.
+  **破壞性變更：** 以 `/diagnosing-bugs` 觸發 — 舊的 `/diagnose` 名稱已不存在。
 
-- [`47bde84`](https://github.com/mattpocock/skills/commit/47bde84da032afb2e5058f997f3bbca47d321dbd) Thanks [@mattpocock](https://github.com/mattpocock)! - Replace **`write-a-skill`** with **`writing-great-skills`**.
+- [`47bde84`](https://github.com/mattpocock/skills/commit/47bde84da032afb2e5058f997f3bbca47d321dbd) 感謝 [@mattpocock](https://github.com/mattpocock)! - 用 **`writing-great-skills`** 取代 **`write-a-skill`**。
 
-  - Removed `write-a-skill`.
-  - Added `writing-great-skills` (plus its `GLOSSARY.md`) — a reference for writing and editing skills well: the vocabulary and principles that make a skill predictable, hunting no-ops down to the sentence level.
-  - Exposed `grilling` as a model-invoked skill — the reusable interview loop behind `grill-me` and `grill-with-docs`.
+  - 移除 `write-a-skill`。
+  - 新增 `writing-great-skills`（加上其 `GLOSSARY.md`）— 良好撰寫與編輯技能的參考：讓技能可預測的詞彙與原則，把 no-op 狩獵到句子層級。
+  - 把 `grilling` 暴露為 model-invoked 技能 — `grill-me` 與 `grill-with-docs` 背後可重用的訪談迴圈。
 
-  **Breaking:** `write-a-skill` has been removed; use `writing-great-skills` instead.
+  **破壞性變更：** `write-a-skill` 已移除；請改用 `writing-great-skills`。
 
 ### Minor Changes
 
-- [`47bde84`](https://github.com/mattpocock/skills/commit/47bde84da032afb2e5058f997f3bbca47d321dbd) Thanks [@mattpocock](https://github.com/mattpocock)! - Add the **`resolving-merge-conflicts`** skill — a loop for resolving an in-progress git merge or rebase conflict. Standalone, with no dependencies on other skills.
+- [`47bde84`](https://github.com/mattpocock/skills/commit/47bde84da032afb2e5058f997f3bbca47d321dbd) 感謝 [@mattpocock](https://github.com/mattpocock)! - 新增 **`resolving-merge-conflicts`** 技能 — 解決進行中的 git merge 或 rebase 衝突的迴圈。獨立技能，不依賴其他技能。
 
-- [`47bde84`](https://github.com/mattpocock/skills/commit/47bde84da032afb2e5058f997f3bbca47d321dbd) Thanks [@mattpocock](https://github.com/mattpocock)! - Rename the skill taxonomy from **Commands / Skills** to **User-invoked / Model-invoked** across the docs, and add `docs/invocation.md` defining the split: user-invoked skills are reachable only when you type them and exist to orchestrate; model-invoked skills can also be reached automatically when the task fits. A user-invoked skill may invoke model-invoked skills, but never another user-invoked one.
+- [`47bde84`](https://github.com/mattpocock/skills/commit/47bde84da032afb2e5058f997f3bbca47d321dbd) 感謝 [@mattpocock](https://github.com/mattpocock)! - 把技能分類法從 **Commands / Skills** 改名為 **User-invoked / Model-invoked**（橫跨文件），並新增定義此區分的 `docs/invocation.md`：user-invoked 技能只在輸入時觸發、存在目的是指揮；model-invoked 技能在任務符合時也可被自動觸發。user-invoked 技能可以觸發 model-invoked 技能，但永遠不能觸發另一個 user-invoked 技能。
 
 ### Patch Changes
 
-- [`47bde84`](https://github.com/mattpocock/skills/commit/47bde84da032afb2e5058f997f3bbca47d321dbd) Thanks [@mattpocock](https://github.com/mattpocock)! - Tighten the **`review`** skill: fail-fast ref check, single-sourced rules, and no-op cuts.
+- [`47bde84`](https://github.com/mattpocock/skills/commit/47bde84da032afb2e5058f997f3bbca47d321dbd) 感謝 [@mattpocock](https://github.com/mattpocock)! - 收緊 **`review`** 技能：fail-fast ref 檢查、單一來源規則、與 no-op 削減。

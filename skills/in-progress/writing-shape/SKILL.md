@@ -1,79 +1,79 @@
 ---
 name: writing-shape
-description: Writing, exploit — shape raw material into an article, paragraph by paragraph.
+description: 寫作、開採 — 將原始素材一段一段地塑造成文章。
 disable-model-invocation: true
 ---
 
 <what-to-do>
 
-The user has passed (or will pass) a markdown file of raw material. Treat it as the input pile — anything from a tidy list of fragments to a wall of unstructured prose to a transcript. The format does not matter. Read it end-to-end before doing anything else.
+使用者已傳入（或將傳入）一份原始素材的 markdown 檔案。將它視為輸入堆積 — 從一份整潔的片段清單，到一堵非結構化的散文牆，再到一份逐字稿。格式不重要。在做其他任何事情之前，把它從頭到尾讀一遍。
 
-Then run a shaping session that produces a separate article document. This is **exploit**: the exploring is done, the pile is fixed — commit to a structure and mine the pile to fill it. Do not edit the raw material file — it is read-only to this skill.
+然後執行一場塑形 session，產出一份獨立文章的檔案。這是**開採**：探索已經完成，堆積已固定 — 承諾一個結構並挖掘這堆素材來填滿它。不要編輯原始素材檔案 — 對這個技能來說它是唯讀的。
 
-If the user did not say where to save the article, ask once and remember the path.
+如果使用者沒有說要把文章儲存在哪裡，問一次並記住路徑。
 
 </what-to-do>
 
 <supporting-info>
 
-## The loop
+## 迴圈（The loop）
 
-1. **Read the pile.** Read the input file in full. Form a sense of what's in it.
-2. **Establish the prerequisites.** Settle with the user what the reader knows walking in — the concepts that are **grounded** from the start. Everything else must be grounded by a block before a later block can lean on it. See [Grounding](#grounding).
-3. **Draft 2–3 candidate openings.** Each opening should imply a different thesis or angle for the article. Show all of them. Force the user to pick or compose a hybrid. The chosen opening defines what the rest of the article must do.
-4. **Grow paragraph by paragraph.** After the opening lands, ask "given this opening, what does the reader need to hear next?" Pull material from the pile to answer. The next block may only lean on grounded concepts, and grounds new ones as it lands. Argue about the form the next block takes — a paragraph, a list, a table, a callout, a quote, a code block. Each format choice should be deliberate and defensible.
-5. **Append to the article file as you go.** Don't batch. Write each agreed paragraph or block immediately so the user can see the article taking shape.
-6. **Loop step 4 until the article is done.** The user decides when it's done.
+1. **讀取堆積。** 完整讀取輸入檔案。形成對其中內容的感覺。
+2. **確立前提。** 與使用者確定讀者走進來時知道什麼 — 那些從一開始就**已落地（grounded）**的概念。其他一切都必須在一個區塊落地之後，後面的區塊才能倚靠它。參閱 [Grounding](#grounding)。
+3. **起草 2–3 個候選開頭。** 每個開頭都應該暗示文章的不同論點或角度。全部展示。迫使使用者挑選或組成一個混合體。被選中的開頭定義了文章其餘部分必須做的事。
+4. **一段一段地生長。** 在開頭落地之後，問「基於這個開頭，讀者接下來需要聽到什麼？」從堆積中拉取材料來回答。下一個區塊只能倚靠已落地的概念，並在降落時落地新的。論證下一個區塊採取的形式 — 一個段落、一個清單、一個表格、一個呼籲框、一段引用、一個程式碼區塊。每個格式選擇都應該是有意的且可辯護的。
+5. **邊進行邊附加到文章檔案。** 不要批次處理。立即寫下每個達成一致的段落或區塊，讓使用者能看到文章成形。
+6. **循環步驟 4 直到文章完成。** 使用者決定何時完成。
 
-## Grounding
+## Grounding（落地）
 
-Every **concept** has to be **grounded** before a block can lean on it: the reader either walked in knowing it or met it in an earlier block. A block that reaches for an ungrounded concept loses the reader. The unit is the concept, not the word for it — a block can lean on an idea the reader lacks even with no jargon in sight. Where a concept has a name — a **term** — grounding it means landing the idea and the term together.
+每個**概念**都必須在區塊可以倚靠它之前**落地**：讀者要不是走進來時就知道它，就是在前面的區塊中遇過它。一個伸手去拿未落地概念的區塊會失去讀者。單位是概念，不是它的詞語 — 一個區塊可以倚靠讀者缺乏的想法，即使眼前沒有任何術語。當一個概念有一個名稱 — 一個**術語** — 落地它意味著把想法與術語一起降落。
 
-A concept gets grounded one of two ways:
+一個概念透過兩種方式之一落地：
 
-- **Prerequisite** — grounded before the opening. The reader brings it. Fixed at the start.
-- **Introduced** — a block establishes it, and from then on it's grounded for the rest of the article.
+- **Prerequisite（前提）** — 在開頭之前落地。讀者帶它進來。在開始時固定。
+- **Introduced（引介）** — 一個區塊確立它，從那以後它在文章的其餘部分都已落地。
 
-Keep a running list of what's grounded. When you ask "what does the reader need to hear next?", an ungrounded concept the next move needs is itself the answer: ground it first — here or in an earlier block — or you can't make the move. This is the gap-naming of [Pulling from the pile](#pulling-from-the-pile) one level up: there the pile is missing material; here the article is missing a foundation.
+保持一份已落地清單。當您問「讀者接下來需要聽到什麼？」時，下一個動作需要的未落地概念本身就是答案：先落地它 — 在這裡或在前面的區塊中 — 否則您無法做出這個動作。這是 [Pulling from the pile](#pulling-from-the-pile) 高一層的缺口命名：在那裡堆積缺少材料；在這裡文章缺少一個基礎。
 
-The lever is what you make a prerequisite versus what you ground inside the article. Demand too much up front and you shut readers out; ground too much inside and the opening drowns in definitions. Settle it with the user when you establish prerequisites.
+槓桿是您把什麼當作前提，與您在文章內部落地什麼。前面要求太多，您會把讀者拒之門外；內部落地太多，開頭會淹沒在定義中。當您確立前提時與使用者解決這個。
 
-## Conversational feel
+## 對話感（Conversational feel）
 
-This is a grilling session inverted. In ideation, the question was "what are you actually noticing?" Here it's "what is this article actually arguing, and in what order does the reader need to hear it?" Push back. Refuse to let weak transitions slide. If a paragraph doesn't earn its place, cut it.
+這是一場倒過來的 grilling session。在構思中，問題是「您實際上在注意到什麼？」在這裡是「這篇文章實際上在論證什麼，讀者需要以什麼順序聽到它？」提出異議。拒絕讓軟弱的過渡蒙混過關。如果一個段落不值得它的位置，砍掉它。
 
-Specific moves to keep using:
+持續使用的具體動作：
 
-- "What does this paragraph do for the reader that the previous one didn't?"
-- "If I cut this, what breaks?"
-- "Is this prose, or should it be a list? Why prose?"
-- "This sentence is doing two jobs — split it or pick one."
-- "The opening promised X. We've drifted to Y. Either re-thread it or change the opening."
+- 「這個段落為讀者做了什麼前一段沒有做的事？」
+- 「如果我砍掉這個，什麼會壞？」
+- 「這是散文，還是應該是一個清單？為什麼是散文？」
+- 「這句話在做兩份工作 — 拆開它或挑一個。」
+- 「開頭承諾了 X。我們漂流到 Y 了。要么重新穿線，要么改變開頭。」
 
-## Pulling from the pile
+## 從堆積中拉取
 
-Treat the raw material as a quarry, not a script. Pull a fragment, rework it to fit the surrounding paragraph, and place it. A fragment may be split across multiple paragraphs, merged with another, or paraphrased. The pile's job is to be mined; the article's job is to read as one voice.
+把原始素材當作採石場，而不是劇本。拉取一個片段，重作它來適應周圍的段落，並放置它。一個片段可能被拆分到多個段落、與另一個合併或改寫。堆積的工作是被開採；文章的工作是讀起來像一個聲音。
 
-If the pile lacks something the article needs, name the gap explicitly: "We need an example here and the pile doesn't have one — give me one now or we cut this section."
+如果堆積缺少文章需要的東西，明確地命名缺口：「我們這裡需要一個例子，而堆積沒有 — 現在給我一個，否則我們砍掉這個段落。」
 
-## Format arguments to actually have
+## 真正該有的格式論證
 
-When choosing how to render a block, weigh these tradeoffs out loud with the user, not silently:
+在選擇如何渲染一個區塊時，大聲與使用者權衡這些取捨，而不是默默進行：
 
-- **Prose vs. list.** Prose carries argument; lists carry parallel items. If items aren't truly parallel, prose is better. If they are, a list is faster to scan.
-- **Inline vs. callout.** Tips, warnings, and asides go in callouts (`> [!TIP]`, `> [!NOTE]`) — but only if they'd genuinely derail the main argument inline. Otherwise leave them inline.
-- **Table vs. repeated structure.** If the same shape repeats 3+ times with the same fields, a table. Otherwise prose with bold leads.
-- **Quote vs. paraphrase.** Quote when the original wording is the point. Paraphrase when only the idea matters.
-- **Code block vs. inline code.** Multi-line, runnable, or illustrative → block. Single token or identifier → inline.
+- **散文 vs. 清單。** 散文承載論證；清單承載平行項目。如果項目不是真正平行的，散文更好。如果是，清單掃讀更快。
+- **行內 vs. 呼籲框。** 提示、警告與題外話進呼籲框（`> [!TIP]`、`> [!NOTE]`）— 但只在它們真的會在行內使主要論證脫軌時。否則把它們留在行內。
+- **表格 vs. 重複結構。** 如果相同的形狀重複 3+ 次且欄位相同，用表格。否則用帶有粗體領頭的散文。
+- **引用 vs. 改寫。** 當原始的措辭就是重點時引用。當只有想法重要時改寫。
+- **程式碼區塊 vs. 行內程式碼。** 多行、可執行或說明性的 → 區塊。單一 token 或識別符 → 行內。
 
-## Writing rhythm
+## 寫作節奏
 
-Append to the article file as each block is agreed. Re-read the file from disk before every write — the user may have edited between turns. Never overwrite blindly. If the user wants a paragraph rewritten, edit that specific paragraph in place; leave the rest alone.
+在每個區塊達成一致時附加到文章檔案。在每次寫作之前從磁碟重新讀取檔案 — 使用者可能在回合之間編輯過。絕不盲目覆寫。如果使用者想要一個段落被重寫，就地編輯那個特定段落；其餘的不動。
 
-## Out of scope
+## 超出範圍
 
-- Mining for new fragments that aren't in the pile (handle gaps as in "Pulling from the pile").
-- Editing the raw material file.
-- Publishing, formatting for a specific platform, or adding frontmatter the user didn't ask for.
+- 挖掘不在堆積中的新片段（按「從堆積中拉取」的方式處理缺口）。
+- 編輯原始素材檔案。
+- 發布、為特定平台格式化，或新增使用者沒有要求的 frontmatter。
 
 </supporting-info>

@@ -1,15 +1,15 @@
 ---
 name: domain-modeling
-description: Build and sharpen a project's domain model. Use when the user wants to pin down domain terminology or a ubiquitous language, record an architectural decision, or when another skill needs to maintain the domain model.
+description: 建立並磨利專案的領域模型。當使用者想釐清領域術語或通用語言、記錄架構決策，或另一個技能需要維護領域模型時使用。
 ---
 
-# Domain Modeling
+# 領域模型
 
-Actively build and sharpen the project's domain model as you design. This is the *active* discipline — challenging terms, inventing edge-case scenarios, and writing the glossary and decisions down the moment they crystallise. (Merely *reading* `CONTEXT.md` for vocabulary is not this skill — that's a one-line habit any skill can do. This skill is for when you're changing the model, not just consuming it.)
+在設計過程中主動建立並磨利專案的領域模型。這是*主動*的紀律——挑戰術語、發明邊緣案例情境，並在術語定案的那一刻把詞彙表和決策寫下來。（光是*讀* `CONTEXT.md` 來取得詞彙不是本技能——那是一行程式碼習慣，任何技能都能做。本技能是用於當你在改變模型，而不只是消費它。）
 
-## File structure
+## 檔案結構
 
-Most repos have a single context:
+多數 repo 只有單一上下文：
 
 ```
 /
@@ -21,7 +21,7 @@ Most repos have a single context:
 └── src/
 ```
 
-If a `CONTEXT-MAP.md` exists at the root, the repo has multiple contexts. The map points to where each one lives:
+如果根目錄有 `CONTEXT-MAP.md`，表示 repo 有多個上下文。地圖指向每個上下文所在位置：
 
 ```
 /
@@ -37,38 +37,38 @@ If a `CONTEXT-MAP.md` exists at the root, the repo has multiple contexts. The ma
 │       └── docs/adr/
 ```
 
-Create files lazily — only when you have something to write. If no `CONTEXT.md` exists, create one when the first term is resolved. If no `docs/adr/` exists, create it when the first ADR is needed.
+惰性地建立檔案——只在有東西要寫時才建。如果沒有 `CONTEXT.md`，第一個術語定案時建立一個。如果沒有 `docs/adr/`，需要第一個 ADR 時建立。
 
-## During the session
+## 會話期間
 
-### Challenge against the glossary
+### 對照詞彙表挑戰
 
-When the user uses a term that conflicts with the existing language in `CONTEXT.md`, call it out immediately. "Your glossary defines 'cancellation' as X, but you seem to mean Y — which is it?"
+當使用者使用的術語與 `CONTEXT.md` 中既有的語言衝突時，立刻點出來。「你的詞彙表把 'cancellation' 定義為 X，但你似乎指的是 Y——哪個才對？」
 
-### Sharpen fuzzy language
+### 磨利模糊的語言
 
-When the user uses vague or overloaded terms, propose a precise canonical term. "You're saying 'account' — do you mean the Customer or the User? Those are different things."
+當使用者使用含糊或過載的術語時，提出精確的規範術語。「你說 'account'——你指的是 Customer 還是 User？那是不同的東西。」
 
-### Discuss concrete scenarios
+### 討論具體情境
 
-When domain relationships are being discussed, stress-test them with specific scenarios. Invent scenarios that probe edge cases and force the user to be precise about the boundaries between concepts.
+當領域關係正在被討論時，用具體情境壓力測試它們。發明探索邊緣案例、迫使使用者對概念之間的邊界精確起來的情境。
 
-### Cross-reference with code
+### 與程式碼交叉比對
 
-When the user states how something works, check whether the code agrees. If you find a contradiction, surface it: "Your code cancels entire Orders, but you just said partial cancellation is possible — which is right?"
+當使用者陳述某個東西如何運作時，檢查程式碼是否同意。如果發現矛盾，把它浮上檯面：「你的程式碼取消整個 Order，但你剛才說可以部分取消——哪個才對？」
 
-### Update CONTEXT.md inline
+### 內嵌更新 CONTEXT.md
 
-When a term is resolved, update `CONTEXT.md` right there. Don't batch these up — capture them as they happen. Use the format in [CONTEXT-FORMAT.md](./CONTEXT-FORMAT.md).
+當一個術語定案時，就地更新 `CONTEXT.md`。不要累積再一次處理——邊發生邊捕捉。使用 [CONTEXT-FORMAT.md](./CONTEXT-FORMAT.md) 中的格式。
 
-`CONTEXT.md` should be totally devoid of implementation details. Do not treat `CONTEXT.md` as a spec, a scratch pad, or a repository for implementation decisions. It is a glossary and nothing else.
+`CONTEXT.md` 應該完全不含實作細節。不要把 `CONTEXT.md` 當成規格、便條紙，或實作決策的倉庫。它是詞彙表，而且僅此而已。
 
-### Offer ADRs sparingly
+### 斟酌提供 ADR
 
-Only offer to create an ADR when all three are true:
+只有三個條件都成立時，才主動提出建立 ADR：
 
-1. **Hard to reverse** — the cost of changing your mind later is meaningful
-2. **Surprising without context** — a future reader will wonder "why did they do it this way?"
-3. **The result of a real trade-off** — there were genuine alternatives and you picked one for specific reasons
+1. **難以逆轉**——之後改變心意的成本是實際的
+2. **沒有上下文會令人驚訝**——未來的讀者會想「為什麼他們要這樣做？」
+3. **真實取捨的結果**——存在真正的替代方案，你基於特定理由選了其中一個
 
-If any of the three is missing, skip the ADR. Use the format in [ADR-FORMAT.md](./ADR-FORMAT.md).
+如果三個條件缺一，就跳過 ADR。使用 [ADR-FORMAT.md](./ADR-FORMAT.md) 中的格式。

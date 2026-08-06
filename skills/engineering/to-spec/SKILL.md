@@ -1,75 +1,75 @@
 ---
 name: to-spec
-description: Turn the current conversation into a spec and publish it to the project issue tracker — no interview, just synthesis of what you've already discussed.
+description: 把目前的對話轉成規格說明並發佈到專案 Issue 追蹤器——不訪談，只綜合你已經討論過的內容。
 disable-model-invocation: true
 ---
 
-This skill takes the current conversation context and codebase understanding and produces a spec. Do NOT interview the user — just synthesize what you already know.
+這個技能取用目前對話的上下文與程式碼庫理解，產出一份規格說明。**不要**訪談使用者——只要綜合你已經知道的內容。
 
-The issue tracker and triage label vocabulary should have been provided to you — run `/setup-matt-pocock-skills` if not.
+Issue 追蹤器與分診標籤詞彙應該已經提供給你——如果沒有，執行 `/setup-matt-pocock-skills`。
 
-## Process
+## 流程
 
-1. Explore the repo to understand the current state of the codebase, if you haven't already. Use the project's domain glossary vocabulary throughout the spec, and respect any ADRs in the area you're touching.
+1. 探索 repo 以了解程式碼庫目前的狀態，如果你還沒做的話。在整份規格說明中，使用專案的領域詞彙表詞彙，並尊重你接觸區域的任何 ADR。
 
-2. Sketch out the seams at which you're going to test the feature. Existing seams should be preferred to new ones. Use the highest seam possible. If new seams are needed, propose them at the highest point you can. The fewer seams across the codebase, the better - the ideal number is one.
+2. 勾勒出你將測試該功能的接縫。既有接縫應優先於新接縫。使用盡可能最高的接縫。如果需要新接縫，在你能達到的最高點提出它們。整個程式碼庫的接縫越少越好——理想數量是一個。
 
-Check with the user that these seams match their expectations.
+與使用者確認這些接縫符合他們的期望。
 
-3. Write the spec using the template below, then publish it to the project issue tracker. Apply the `ready-for-agent` triage label - no need for additional triage.
+3. 使用下方範本撰寫規格說明，然後發佈到專案 Issue 追蹤器。套用 `ready-for-agent` 分診標籤——不需要額外的分診。
 
 <spec-template>
 
-## Problem Statement
+## 問題陳述
 
-The problem that the user is facing, from the user's perspective.
+使用者正面臨的問題，從使用者的視角出發。
 
-## Solution
+## 解決方案
 
-The solution to the problem, from the user's perspective.
+問題的解決方案，從使用者的視角出發。
 
-## User Stories
+## 使用者故事
 
-A LONG, numbered list of user stories. Each user story should be in the format of:
+一份**很長**、編號的使用者故事清單。每個使用者故事的格式應為：
 
-1. As an <actor>, I want a <feature>, so that <benefit>
+1. 作為 <actor>，我想要 <feature>，以便 <benefit>
 
 <user-story-example>
-1. As a mobile bank customer, I want to see balance on my accounts, so that I can make better informed decisions about my spending
+1. 作為行動銀行客戶，我想要查看帳戶餘額，以便對我的支出做出更明智的決策
 </user-story-example>
 
-This list of user stories should be extremely extensive and cover all aspects of the feature.
+這份使用者故事清單應該極其詳盡，涵蓋功能的各個面向。
 
-## Implementation Decisions
+## 實作決策
 
-A list of implementation decisions that were made. This can include:
+已作實作決策的清單。可以包含：
 
-- The modules that will be built/modified
-- The interfaces of those modules that will be modified
-- Technical clarifications from the developer
-- Architectural decisions
-- Schema changes
-- API contracts
-- Specific interactions
+- 將被建置／修改的模組
+- 那些將被修改的模組的介面
+- 來自開發者的技術釐清
+- 架構決策
+- Schema 變更
+- API 合約
+- 特定的互動
 
-Do NOT include specific file paths or code snippets. They may end up being outdated very quickly.
+**不要**包含具體的檔案路徑或程式碼片段。它們很可能很快就過時。
 
-Exception: if a prototype produced a snippet that encodes a decision more precisely than prose can (state machine, reducer, schema, type shape), inline it within the relevant decision and note briefly that it came from a prototype. Trim to the decision-rich parts — not a working demo, just the important bits.
+例外：如果原型產出了一個比散文更能精確編碼決策的片段（狀態機、reducer、schema、型別形狀），就把它內嵌在相關決策中，並簡短註明它來自原型。只保留富含決策的部分——不是可運作的示範，只是重要的片段。
 
-## Testing Decisions
+## 測試決策
 
-A list of testing decisions that were made. Include:
+已作測試決策的清單。包含：
 
-- A description of what makes a good test (only test external behavior, not implementation details)
-- Which modules will be tested
-- Prior art for the tests (i.e. similar types of tests in the codebase)
+- 說明什麼構成好的測試（只測試外部行為，不測試實作細節）
+- 哪些模組將被測試
+- 測試的既有先例（也就是程式碼庫中類似型別的測試）
 
-## Out of Scope
+## 超出範圍
 
-A description of the things that are out of scope for this spec.
+這份規格說明超出範圍之事的描述。
 
-## Further Notes
+## 補充說明
 
-Any further notes about the feature.
+關於此功能的任何補充說明。
 
 </spec-template>

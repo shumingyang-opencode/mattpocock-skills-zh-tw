@@ -1,97 +1,97 @@
-## What it does
+## 用途
 
-`implement` builds work that has already been decided. You point it at a [ticket](https://www.aihero.dev/ai-coding-dictionary/ticket), a [spec](https://www.aihero.dev/ai-coding-dictionary/spec), or the plan you just agreed in the conversation, and it writes the code, drives [tdd](https://aihero.dev/skills-tdd) at the seams, typechecks as it goes, runs [code-review](https://aihero.dev/skills-code-review) at the end, and commits to the current branch.
+`implement` 建置已經被決定的工作。你把它指向某個 [ticket](https://www.aihero.dev/ai-coding-dictionary/ticket)、[規格說明](https://www.aihero.dev/ai-coding-dictionary/spec)，或你剛在對話中同意的計畫，它就會撰寫程式碼、在接縫處驅動 [tdd](https://aihero.dev/skills-tdd)、邊做邊做型別檢查、在結尾執行 [code-review](https://aihero.dev/skills-code-review)，並提交到目前的分支。
 
-It never reopens the plan. There is no interview, no clarifying round, no proposal of a different approach. Whatever was settled upstream is the input, and the skill's whole job is to turn that into a commit. That is what separates it from typing "build this" at a fresh [agent](https://www.aihero.dev/ai-coding-dictionary/agent), which will happily redesign the work while it builds it.
+它從不重新打開計畫。沒有訪談、沒有澄清輪、沒有提議不同做法。上游定案的一切就是輸入，而技能的整個工作就是把它變成一次 commit。這正是它與對全新[代理](https://www.aihero.dev/ai-coding-dictionary/agent)輸入「build this」的區別，後者會在建置時樂意地重新設計工作。
 
-## When to reach for it
+## 何時使用
 
-You invoke this by typing `/implement` — the agent won't reach for it on its own. It ships with `disable-model-invocation: true`, so no other skill can call it either. Wherever [ask-matt](https://aihero.dev/skills-ask-matt) or [to-tickets](https://aihero.dev/skills-to-tickets) says "then `/implement` per ticket", that is an instruction to you, not something the agent will do unprompted.
+你輸入 `/implement` 來呼叫它——代理不會自行使用它。它隨附 `disable-model-invocation: true`，所以其他技能也不能呼叫它。無論 [ask-matt](https://aihero.dev/skills-ask-matt) 或 [to-tickets](https://aihero.dev/skills-to-tickets) 在哪裡說「then `/implement` per ticket」，那是給你的指示，不是代理會未經提示就做的事。
 
-Where the work currently lives decides whether this is the right skill:
+工作目前所在的位置決定這是否為正確的技能：
 
-| The work is… | Reach for |
+| 工作目前… | 取用 |
 | --- | --- |
-| A ticket on the tracker | `/implement #42`, one ticket per [session](https://www.aihero.dev/ai-coding-dictionary/session), [clearing](https://www.aihero.dev/ai-coding-dictionary/clearing) context between tickets |
-| A spec, not yet split up, and the build spans sessions | [to-tickets](https://aihero.dev/skills-to-tickets) first, then `/implement` per ticket |
-| A spec, and the build is small | `/implement` directly against the spec |
-| Only in the conversation you just had, and it's still small | `/implement` right there, in the same window |
-| Not written down anywhere yet | [grill-with-docs](https://aihero.dev/skills-grill-with-docs), or [grill-me](https://aihero.dev/skills-grill-me) if there's no codebase |
-| One concrete behaviour you want test-first, with no spec | [tdd](https://aihero.dev/skills-tdd) directly |
-| Already built, and you want it checked | [code-review](https://aihero.dev/skills-code-review) directly |
+| 追蹤器上的一個 ticket | `/implement #42`，每個[會話](https://www.aihero.dev/ai-coding-dictionary/session)處理一個 ticket，ticket 之間[清空](https://www.aihero.dev/ai-coding-dictionary/clearing)上下文 |
+| 一份尚未拆分的規格說明，且建置橫跨多個會話 | 先 [to-tickets](https://aihero.dev/skills-to-tickets)，然後逐 ticket 執行 `/implement` |
+| 一份規格說明，且建置很小 | 直接針對規格說明執行 `/implement` |
+| 只存在於你剛才的對話中，而且仍然很小 | 直接在同一視窗執行 `/implement` |
+| 還沒有寫在任何地方 | [grill-with-docs](https://aihero.dev/skills-grill-with-docs)，若沒有代碼庫則用 [grill-me](https://aihero.dev/skills-grill-me) |
+| 一個你想要測試優先的具體行為，沒有規格說明 | 直接 [tdd](https://aihero.dev/skills-tdd) |
+| 已經建置好，你想要它被檢查 | 直接 [code-review](https://aihero.dev/skills-code-review) |
 
-The same-session case is worth naming because the skill's own first line doesn't cover it. `SKILL.md` says "the spec or tickets", which nudges the [model](https://www.aihero.dev/ai-coding-dictionary/model) to go hunting for a file that doesn't exist. If the plan lives only in the thread, say so when you invoke it.
+同一會話的案例值得指名，因為技能自己的第一行沒涵蓋它。`SKILL.md` 說「the spec or tickets」，這會誘使[模型](https://www.aihero.dev/ai-coding-dictionary/model)去找一份不存在的檔案。如果計畫只存在於對話中，呼叫時說出來。
 
-## Prerequisites
+## 前置條件
 
-`implement` commits to the branch you are on. It does not create one, and it does not ask. Check you are on the branch you want the work on before you start.
+`implement` 會提交到你目前所在的分支。它不建立分支，也不詢問。開始前先確認你在想要工作所在的分支上。
 
-If the tickets came from [to-tickets](https://aihero.dev/skills-to-tickets), the tracker they live on was configured by [setup-matt-pocock-skills](https://aihero.dev/skills-setup-matt-pocock-skills). `code-review` reads the same configuration to find the originating spec at close-out.
+如果 ticket 來自 [to-tickets](https://aihero.dev/skills-to-tickets)，它們所在的追蹤器是由 [setup-matt-pocock-skills](https://aihero.dev/skills-setup-matt-pocock-skills) 設定的。`code-review` 在收尾時讀取相同的設定來找原始規格說明。
 
-## What one run does
+## 一次執行做什麼
 
-A run is five beats, in order:
+一次執行是五拍，依序：
 
-1. Read the ticket or spec and work out the seams.
-2. Drive [tdd](https://aihero.dev/skills-tdd) at the pre-agreed seams, one red-green slice at a time.
-3. Typecheck often, run single test files as it goes.
-4. Run the full test suite once, at the end.
-5. Run [code-review](https://aihero.dev/skills-code-review), then commit to the current branch.
+1. 讀取 ticket 或規格說明，並找出接縫。
+2. 在預先約定的接縫處驅動 [tdd](https://aihero.dev/skills-tdd)，一次一個紅-綠切片。
+3. 頻繁做型別檢查，邊做邊跑單一測試檔案。
+4. 在結尾跑一次完整的測試套件。
+5. 執行 [code-review](https://aihero.dev/skills-code-review)，然後提交到目前的分支。
 
-One run covers one ticket. The tickets [to-tickets](https://aihero.dev/skills-to-tickets) produces are tracer-bullet vertical slices sized to fit a single fresh [context window](https://www.aihero.dev/ai-coding-dictionary/context-window), so the intended rhythm is: clear context, implement one ticket, commit, clear again. Each ticket is self-contained, which is what makes the previous ticket's context disposable.
+一次執行涵蓋一個 ticket。[to-tickets](https://aihero.dev/skills-to-tickets) 產出的 ticket 是曳光彈式的垂直切片，大小適合放進單一全新的[上下文視窗](https://www.aihero.dev/ai-coding-dictionary/context-window)，所以預期的節奏是：清空上下文、實作一個 ticket、提交、再清空。每個 ticket 都自成一體，這正是讓前一個 ticket 的上下文變成可拋棄的原因。
 
-## Pre-agreed seams
+## 預先約定的接縫
 
-The idea the skill runs on is the **seam**: the public boundary you observe behaviour at, without reaching inside. Tests live at seams. Working at a seam agreed before any code is written is what keeps the tests durable, because the implementation underneath can be rewritten without the tests moving.
+此技能賴以運作的概念是**接縫**：你觀察行為的公開邊界，而不深入內部。測試活在接縫處。在任何程式碼寫出之前就約定的接縫上工作，是讓測試持久的原因，因為底下的實作可以在不移動測試的情況下被重寫。
 
-The word "pre-agreed" is doing real work, and it is also the skill's weakest joint. Nothing inside `implement` agrees the seams. `tdd` is the skill that asks, and it refuses to write a test at an unconfirmed seam. So in practice the agreement happens either upstream in the spec, or in the first exchange of the run. If it happens nowhere, the precondition never fires and the run quietly becomes "just write the code". Naming the seams in the spec is what stops that.
+「預先約定」這個詞在做實際的工作，但它也是技能最弱的關節。`implement` 內部沒有東西會約定接縫。`tdd` 是那個會詢問的技能，而且它拒絕在未確認的接縫上寫測試。所以實際上，約定發生在上游的規格說明中，或發生在執行的第一次交流中。如果它沒在任何地方發生，前置條件永遠不會觸發，執行就悄悄變成「just write the code」。在規格說明中指名接縫正是阻止那件事的辦法。
 
-## Common questions
+## 常見問題
 
-**It finished, but my ticket is still open and the acceptance criteria are still unchecked.**
+**它完成了，但我的 ticket 仍然開著，驗收標準仍未勾選。**
 
-Correct, and expected. `implement` has no completion step. It ends at the commit and never touches the work item, confirmed on GitHub Issues and on the local markdown tracker, so it is not a tracker integration problem. It also does not act on the findings `code-review` produced, and does not tick the `- [ ]` boxes on the originating issue. Close the ticket and reconcile the criteria yourself. This bites hardest on a dependency chain, because `to-tickets` defines the frontier as tickets whose blockers are all closed. If nothing gets closed, nothing ever becomes visibly unblocked.
+正確，而且是預期的。`implement` 沒有完成步驟。它止步於 commit，從不觸碰工作項目——這在 GitHub Issues 與本機 markdown 追蹤器上都已確認，所以不是追蹤器整合問題。它也不會處理 `code-review` 產出的發現，不會勾選原始 issue 上的 `- [ ]` 方框。你自己關閉 ticket 並核對標準。這在相依鏈上咬得最痛，因為 `to-tickets` 把前沿定義為所有阻塞者都已關閉的 ticket。如果沒有東西被關閉，就永遠不會有東西變成可見的未阻塞。
 
-**Can I point it at all my tickets at once, or run several in parallel?**
+**我可以一次把它指向所有 ticket，或平行執行多個嗎？**
 
-No. One invocation, one ticket. Batch dispatch across a ticket queue and [subagent](https://www.aihero.dev/ai-coding-dictionary/subagent) fan-out are both requested repeatedly, and neither exists. Running several `/implement` sessions side by side in one checkout is worse than unsupported: one field report describes a `git commit --amend` in one session landing on another session's commit, a stash vanishing from `refs/stash`, and commits landing on the wrong branch, all in a single afternoon across three issues. The sessions share one working directory, one index, and one HEAD. Git worktrees are the community workaround, and note that `refs/stash` is shared across worktrees too, so worktrees alone do not fix the stash case. If you want parallelism today, you are assembling it yourself.
+不行。一次呼叫，一個 ticket。跨 ticket 佇列的批次派發與[子代理](https://www.aihero.dev/ai-coding-dictionary/subagent)扇出都被反覆要求，但兩者都不存在。在同一個 checkout 中並排執行多個 `/implement` 會話，比不支援還糟：一則實地回報描述了某個會話中的 `git commit --amend` 落在另一個會話的 commit 上、一個 stash 從 `refs/stash` 消失、commit 落在錯誤的分支，全部發生在一個下午、橫跨三個 issue。這些會話共享一個工作目錄、一個 index、一個 HEAD。Git worktree 是社群的變通方案，而且要注意 `refs/stash` 在 worktree 之間也是共享的，所以光靠 worktree 不能修好 stash 的案例。如果你今天想要平行性，你得自己組裝它。
 
-**Can it open a pull request instead of committing?**
+**它可以開 pull request 而不是提交嗎？**
 
-Not built in. It commits straight to the current branch, which several people find too eager: the code lands before they have had a chance to verify it works. There is no configuration flag and no PR mode. People override it in the invocation ("commit to a branch and open a PR") or by editing their local copy of the skill.
+沒有內建。它直接提交到目前的分支，這讓幾個人覺得太急：程式碼在他們有機會驗證它能運作之前就落地了。沒有設定旗標，也沒有 PR 模式。人們會在呼叫中覆寫它（「commit to a branch and open a PR」），或編輯技能的本機副本。
 
-**`code-review` says it cannot see my changes.**
+**`code-review` 說它看不到我的變更。**
 
-`code-review` reviews `git diff <fixed-point>...HEAD`, which excludes staged and working-tree changes. `implement` runs it before committing, so unless an interim commit already exists there is nothing in that diff to review. Multiple people have reported this and it is unfixed on both sides. Commit first, then review against the point you branched from.
+`code-review` 審查 `git diff <fixed-point>...HEAD`，這會排除已暫存與工作樹的變更。`implement` 在提交前執行它，所以除非已有過渡性 commit，否則那個 diff 裡沒有東西可審查。多人已回報此事，而兩邊都未修復。先 commit，再以你分叉的點做審查。
 
-Separately, some people deliberately do not want the review inside the run at all, because an agent reviewing the code it just wrote is biased toward its own solution. Running [code-review](https://aihero.dev/skills-code-review) in a fresh session against a fixed point is a legitimate alternative, and is the same reason that skill runs its two axes in separate sub-agents.
+另外，有些人刻意完全不想要執行中的審查，因為審查自己剛寫的程式碼的代理會偏袒自己的方案。在全新會話中針對固定點執行 [code-review](https://aihero.dev/skills-code-review) 是合理的替代方案，而那也正是該技能在兩個獨立子代理中執行兩個軸的原因。
 
-**One ticket burned 150k tokens. Am I using it wrong?**
+**一個 ticket 燒掉 150k 個 token。我用錯了嗎？**
 
-Probably the ticket is too big rather than the skill being misused. A run does codebase exploration, a red-green loop per seam, a full suite, and a review, so a non-trivial ticket exceeding 100k [tokens](https://www.aihero.dev/ai-coding-dictionary/token) is normal rather than a sign something broke. The lever is upstream: right-size the tickets in [to-tickets](https://aihero.dev/skills-to-tickets) so each fits one fresh window. If a single ticket keeps blowing out, split it rather than raising the [effort](https://www.aihero.dev/ai-coding-dictionary/effort) level.
+大概是 ticket 太大，而不是技能被誤用。一次執行會做代碼庫探索、每個接縫一個紅-綠迴圈、完整套件與一次審查，所以一個非瑣碎的 ticket 超過 100k [token](https://www.aihero.dev/ai-coding-dictionary/token) 是正常的，而不是某個東西壞了的跡象。施力點在上游：在 [to-tickets](https://aihero.dev/skills-to-tickets) 中把 ticket 尺寸調整正確，讓每個都能放進一個全新的視窗。如果單一 ticket 不斷爆掉，拆開它，而不是調高[投入](https://www.aihero.dev/ai-coding-dictionary/effort)等級。
 
-**`/implement #2` in a fresh session worked on something completely unrelated.**
+**在全新會話中執行 `/implement #2` 卻處理了完全無關的東西。**
 
-`#2` is resolved against whatever numbered list the agent can see, which in a fresh session may be a todo file, a checklist, or another work list rather than the configured tracker. The resolution is confident rather than fail-closed, so the mistake is not obvious until it has started. Pass the full reference, the issue URL or `owner/repo#2`, and ask it to confirm the title back before it begins.
+`#2` 是相對於代理能看到的任何編號清單解析的，在全新會話中可能是 todo 檔案、檢查清單或另一份工作清單，而不是已設定的追蹤器。解析是自信的，而不是失敗即封閉的，所以錯誤要等到開始後才明顯。傳入完整參照、issue URL 或 `owner/repo#2`，並要求它在開始前把標題回報確認。
 
-## It's working if
+## 這樣就算成功
 
-- The session opens by reading the ticket or spec and restating what it will build, rather than asking you what to build.
-- You can see an actual `/tdd` invocation in the trace, not just tests appearing in the diff.
-- Typechecks and single test files run repeatedly during the run, and the full suite runs once near the end.
-- The run reaches a commit on your current branch without you prompting it to carry on.
-- The diff is one ticket's worth of change: a vertical slice through every layer, not several tickets swept together.
+- 會話以讀取 ticket 或規格說明並重述它要建置什麼開始，而不是問你要建置什麼。
+- 你可以在追蹤紀錄中看到實際的 `/tdd` 呼叫，而不只是測試出現在 diff 中。
+- 型別檢查與單一測試檔案在執行期間反覆執行，而完整套件在接近尾聲時執行一次。
+- 執行在你目前的分支上到達一次 commit，不需要你催促它繼續。
+- diff 是一個 ticket 份量的變更：穿透每個層的垂直切片，而不是幾張 ticket 混在一起。
 
-## Where it fits
+## 它在哪裡適用
 
-`implement` is the build step of the main chain, second from the end:
+`implement` 是主鏈的建置步驟，倒數第二個：
 
 ```txt
 grill-with-docs → to-spec → to-tickets → implement → code-review
 ```
 
-Its neighbours are [to-tickets](https://aihero.dev/skills-to-tickets), which produces the tickets it consumes and declares the blocking edges that decide their order; [tdd](https://aihero.dev/skills-tdd), which it drives internally at each seam; and [code-review](https://aihero.dev/skills-code-review), which it runs before committing. It sits downstream of the planning skills and trusts them. It does not re-validate the shape of what it was handed, so a badly-structured map or a horizontally-layered ticket gets built as written.
+它的鄰居是 [to-tickets](https://aihero.dev/skills-to-tickets)——它產生此技能消費的 ticket，並宣告決定它們順序的阻塞邊；[tdd](https://aihero.dev/skills-tdd)——它在每個接縫內部驅動它；以及 [code-review](https://aihero.dev/skills-code-review)——它在提交前執行。它座落於規劃技能的下游並信任它們。它不會重新驗證交給它的東西的形狀，所以結構不良的地圖或水平分層的 ticket 會按原文被建置。
 
-That trust is why [wayfinder](https://aihero.dev/skills-wayfinder) merges onto the chain at [to-spec](https://aihero.dev/skills-to-spec) rather than looping its map straight into `implement`. Go straight to `implement` from a map only when the effort turned out genuinely small.
+正是這種信任讓 [wayfinder](https://aihero.dev/skills-wayfinder) 在 [to-spec](https://aihero.dev/skills-to-spec) 處匯入鏈中，而不是把它的地圖直接迴圈進 `implement`。只有當工作結果真的很小時，才從地圖直接去 `implement`。
 
-[ask-matt](https://aihero.dev/skills-ask-matt) is the router over the whole set when you are not sure which flow you are in.
+當你不確定自己身處哪條流程時，[ask-matt](https://aihero.dev/skills-ask-matt) 是整套技能的路由器。

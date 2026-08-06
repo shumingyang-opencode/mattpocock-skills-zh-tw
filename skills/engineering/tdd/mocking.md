@@ -1,25 +1,25 @@
-# When to Mock
+# 何時模擬
 
-Mock at **system boundaries** only:
+只在**系統邊界**模擬：
 
-- External APIs (payment, email, etc.)
-- Databases (sometimes - prefer test DB)
-- Time/randomness
-- File system (sometimes)
+- 外部 API（付款、電子郵件等）
+- 資料庫（有時——偏好測試資料庫）
+- 時間 / 隨機性
+- 檔案系統（有時）
 
-Don't mock:
+不要模擬：
 
-- Your own classes/modules
-- Internal collaborators
-- Anything you control
+- 你自己的類別 / 模組
+- 內部協作者
+- 任何你能控制的東西
 
-## Designing for Mockability
+## 為可模擬性而設計
 
-At system boundaries, design interfaces that are easy to mock:
+在系統邊界，設計容易模擬的介面：
 
-**1. Use dependency injection**
+**1. 使用依賴注入**
 
-Pass external dependencies in rather than creating them internally:
+把外部相依傳入，而不是在內部建立：
 
 ```typescript
 // Easy to mock
@@ -34,9 +34,9 @@ function processPayment(order) {
 }
 ```
 
-**2. Prefer SDK-style interfaces over generic fetchers**
+**2. 偏好 SDK 風格的介面，而不是通用 fetcher**
 
-Create specific functions for each external operation instead of one generic function with conditional logic:
+為每個外部操作建立特定函式，而不是一個帶條件邏輯的通用函式：
 
 ```typescript
 // GOOD: Each function is independently mockable
@@ -52,8 +52,8 @@ const api = {
 };
 ```
 
-The SDK approach means:
-- Each mock returns one specific shape
-- No conditional logic in test setup
-- Easier to see which endpoints a test exercises
-- Type safety per endpoint
+SDK 方式的好處：
+- 每個 mock 回傳一個特定形狀
+- 測試設定中沒有條件邏輯
+- 更容易看出一個測試觸及哪些端點
+- 每個端點都有型別安全
