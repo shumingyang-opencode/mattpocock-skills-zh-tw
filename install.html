@@ -28,6 +28,7 @@
     <a class="btn" href="https://github.com/shumingyang-opencode/mattpocock-skills-zh-tw" target="_blank" rel="noopener">在 GitHub 開啟 ↗</a>
   </div>
   <div id="repo-status" class="repo-status">正在載入 GitHub repo…</div>
+  <p class="repo-note">GitHub 官方網頁不允許被 iframe 嵌入（frame-ancestors 'none'），所以這裡改用內嵌式瀏覽 repo 的 README 與檔案樹；想看原本網頁請按右上「在 GitHub 開啟」。</p>
   <div id="repo-readme" class="repo-readme"></div>
   <div id="repo-tree" class="repo-tree"></div>
 </div>
@@ -96,11 +97,9 @@ Copy-Item -Path "skills\*\*" -Destination "$env:USERPROFILE\.trae\skills\" -Recu
   const readme = document.getElementById("repo-readme");
   const tree = document.getElementById("repo-tree");
   try {
-    const r = await fetch("https://api.github.com/repos/" + REPO + "/readme");
+    const r = await fetch("https://raw.githubusercontent.com/" + REPO + "/main/README.md");
     if (r.ok) {
-      const j = await r.json();
-      const md = atob(j.content.replace(/\s/g, ""));
-      readme.innerHTML = marked.parse(md);
+      readme.innerHTML = marked.parse(await r.text());
     }
   } catch (e) {}
   try {

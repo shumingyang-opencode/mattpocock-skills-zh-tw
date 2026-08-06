@@ -489,6 +489,7 @@ footer a { color: var(--text-soft); }
 }
 .btn:hover { border-color: var(--cyan); box-shadow: 0 4px 18px rgba(34, 211, 238, 0.2); color: #e6f7fb; }
 .repo-status { font-size: 0.7rem; color: var(--text-muted); margin-bottom: 0.6rem; }
+.repo-note { font-size: 0.72rem; color: var(--text-muted); margin: 0 0 0.6rem; line-height: 1.6; }
 .repo-readme { font-size: 0.85rem; color: var(--text-soft); line-height: 1.75; }
 .repo-readme h1, .repo-readme h2, .repo-readme h3 { color: #f0f2ff; font-family: var(--font-display); margin: 0.7rem 0 0.3rem; }
 .repo-readme p { margin: 0.4rem 0; }
