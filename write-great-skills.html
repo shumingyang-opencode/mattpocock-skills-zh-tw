@@ -19,11 +19,53 @@
 </header>
 <div class="video-panel">
   <div class="video-head"><span class="video-title">▶ The Missing Manual · How To Write Great Skills</span><span class="video-en">AI Engineer World's Fair · Matt Pocock</span></div>
-  <div class="video-embed">
+  <div id="video-youtube" class="video-embed">
     <iframe src="https://www.youtube-nocookie.com/embed/UNzCG3lw6O0" title="Building Great Agent Skills: The Missing Manual" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  </div>
+  <div id="video-internal" class="video-embed" hidden>
+    <video id="video-internal-player" controls preload="metadata" src="https://GitLab.ovt.com:8081/steven.yang/ai-agent-tech/-/raw/main/public/yt_video/agent-skills/Building_Great_Agent_Skills_-_The_Missing_Manual-[UNzCG3lw6O0].mp4">
+      您的瀏覽器不支援 HTML5 影片播放。
+    </video>
+    <p id="video-internal-hint" class="video-hint">若無法播放，請確認已連上公司內網 / VPN。</p>
+    <p class="video-note">公司內部版本：<a href="https://steven.yang.pages.ovt.com/ai-agent-tech/watch.html?cat=agent-skills&amp;id=UNzCG3lw6O0" target="_blank" rel="noopener">在公司內網開啟完整播放頁 ↗</a></p>
   </div>
   <p class="video-note">想聽原音逐字版？這支影片是整套框架的出處；下方重點摘要可以直接當導覽用。</p>
 </div>
+<script>
+(function () {
+  var yt = document.getElementById("video-youtube");
+  var internal = document.getElementById("video-internal");
+  var player = document.getElementById("video-internal-player");
+  var hint = document.getElementById("video-internal-hint");
+  var isCn = false;
+  function showYoutube() { yt.hidden = false; internal.hidden = true; }
+  function showInternal() { yt.hidden = true; internal.hidden = false; }
+  function geoOk() {
+    if (isCn) { showInternal(); return; }
+    showYoutube();
+  }
+  function geoFail() { showYoutube(); }
+  try {
+    fetch("https://ipwho.is/")
+      .then(function (r) { return r.json(); })
+      .then(function (d) { isCn = (d && d.country_code === "CN"); geoOk(); })
+      .catch(function () {
+        return fetch("https://ipinfo.io/json")
+          .then(function (r) { return r.json(); })
+          .then(function (d) { isCn = (d && d.country === "CN"); geoOk(); })
+          .catch(geoFail);
+      });
+  } catch (e) { geoFail(); }
+  if (player) {
+    player.addEventListener("error", function () {
+      if (hint) hint.classList.add("show");
+    });
+    player.addEventListener("loadeddata", function () {
+      if (hint) hint.classList.remove("show");
+    });
+  }
+})();
+</script>
 <div class="callout guide-callout">
   <strong>演講重點摘錄（含時間戳）</strong>
   <ul>
