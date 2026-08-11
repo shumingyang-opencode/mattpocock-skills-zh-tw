@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>版本歷史 · Changelog · mattpocock-skills-zh-tw</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Noto+Serif+TC:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<div class="container">
+<div class="back-link"><a href="index.html">← 首頁</a><a href="map.html">全景圖</a><a href="learning-path.html">學習路線</a><a href="zones.html">六大區</a><a href="write-great-skills.html">如何寫出好技能</a></div>
+<header>
+  <h1>版本歷史</h1>
+  <div class="subtitle">Changelog · 從 v1.0.0 到 v1.2.2</div>
+  <div class="badge-line">濃縮自 repo 的 CHANGELOG.md + aihero.dev/skills 版本文章；完整逐條紀錄見 <a href="https://github.com/mattpocock/skills/blob/main/CHANGELOG.md" target="_blank" rel="noopener">上游 CHANGELOG</a></div>
+</header>
+<div class="changelog">
+<div class="cl-entry"><div class="cl-head"><span class="cl-version">v1.2.2</span><span class="cl-date">2026-08</span><span class="cl-tag">Patch</span></div><ul class="cl-items"><li><span class="chg-badge chg-change">變更</span> 讓 <code>writing-for-agents</code> 在 Codex 中再次可被模型觸發，並更新過時的 display_name。</li></ul></div>
+<div class="cl-entry"><div class="cl-head"><span class="cl-version">v1.2.0</span><span class="cl-date">2026-08</span><span class="cl-tag">Minor</span></div><ul class="cl-items"><li><span class="chg-badge chg-new">新技能</span> 新增 <strong><code>wait-what</code></strong>——一個針對模型囉嗦的一個字矯正（user-invoked，只有三行）。</li><li><span class="chg-badge chg-rename">改名</span> <strong><code>writing-great-skills</code> 改名為 <code>writing-for-agents</code></strong>——範圍擴大到所有代理消費的文件，技能專屬機制拆到 <code>SKILL-MECHANICS.md</code>。</li><li><span class="chg-badge chg-new">新技能</span> 以原生 <strong>Claude Code plugin</strong> 發布技能集，列入官方 marketplace。</li><li><span class="chg-badge chg-new">新技能</span> <code>to-questionnaire</code>、<code>wizard</code> 從 in-progress 升級為已推廣技能。</li><li><span class="chg-badge chg-remove">移除</span> 移除六個技能：<code>ubiquitous-language</code>（→domain-modeling）、<code>design-an-interface</code>（→codebase-design）、<code>qa</code>（→triage/to-tickets）、<code>request-refactor-plan</code>（→to-spec/improve-codebase-architecture）、<code>edit-article</code> 與 <code>obsidian-vault</code>（個人技能）。</li><li><span class="chg-badge chg-change">變更</span> <code>prototype</code> 重塑為單一可共享 HTML 檔案 + 主要來源；<code>improve-codebase-architecture</code> 新增 YAGNI 範圍過濾器。</li></ul></div>
+<div class="cl-entry"><div class="cl-head"><span class="cl-version">v1.1.0</span><span class="cl-date">2026-07</span><span class="cl-tag">Minor</span></div><ul class="cl-items"><li><span class="chg-badge chg-rename">改名</span> <strong><code>to-prd</code> 改名為 <code>to-spec</code></strong>——「spec」成為單一貫穿術語。</li><li><span class="chg-badge chg-rename">改名</span> <strong><code>decision-mapping</code> 改名為 <code>wayfinder</code></strong>——穿過迷霧的路線規劃，領頭詞：fog of war / frontier / the map。</li><li><span class="chg-badge chg-new">新技能</span> <code>to-plan</code> 與 <code>to-issues</code> 合併成單一 <strong><code>to-tickets</code></strong> 技能。</li><li><span class="chg-badge chg-new">新技能</span> 新增 <strong><code>research</code></strong> 技能——背景代理以主要來源調查問題。</li><li><span class="chg-badge chg-new">新技能</span> <code>review</code> 從 in-progress 推廣為 <strong><code>code-review</code></strong>，新增 Fowler 壞味道基線。</li><li><span class="chg-badge chg-new">新技能</span> <code>writing-great-skills</code> 新增兩個 Steering 失敗模式：否定（Negation）與負空間（Negative Space）。</li><li><span class="chg-badge chg-change">變更</span> <code>ask-matt</code> 路由器補齊五個缺失技能；<code>grilling</code> 改成一次一輪（round-based）的決策樹；<code>wayfinder</code> 以成熟技能落地。</li></ul></div>
+<div class="cl-entry"><div class="cl-head"><span class="cl-version">v1.0.0</span><span class="cl-date">2026-06</span><span class="cl-tag">Major</span></div><ul class="cl-items"><li><span class="chg-badge chg-milestone">里程碑</span> <strong>63% token 縮減</strong>——把大部分技能關掉自動觸發、改為手動叫，技能描述成本大降。</li><li><span class="chg-badge chg-new">新技能</span> 新增 <strong><code>ask-matt</code></strong> 路由器技能——為你的處境指出正確的技能或流程。</li><li><span class="chg-badge chg-new">新技能</span> 新增共享設計技能 <strong><code>codebase-design</code></strong> 與 <strong><code>domain-modeling</code></strong>，並把既有技能重新接線到它們。</li><li><span class="chg-badge chg-rename">改名</span> <strong><code>write-a-skill</code> 改為 <code>writing-great-skills</code></strong>；<strong><code>diagnose</code> 改名為 <code>diagnosing-bugs</code></strong>。</li><li><span class="chg-badge chg-remove">移除</span> 移除 <code>caveman</code> 與 <code>zoom-out</code> 技能。</li><li><span class="chg-badge chg-new">新技能</span> 新增 <strong><code>resolving-merge-conflicts</code></strong> 技能；分類法改名為 <strong>User-invoked / Model-invoked</strong>。</li></ul></div>
+</div>
+<div class="callout">
+  <strong>為什麼這頁有用？</strong>版本歷史把「技能是會演進的」這件事攤開來——<code>writing-great-skills → writing-for-agents</code>、<code>to-prd → to-spec</code>、<code>decision-mapping → wayfinder</code>，還有整批被吸收的退休技能。當你在別處看到舊名稱，這頁能告訴你它現在叫什麼。
+</div>
+<footer>
+  <div>這是 <a href="https://github.com/mattpocock/skills">mattpocock/skills</a> 的繁體中文翻譯學習站——翻譯只動說明文字，指令、路徑、技能名一律照原樣，安裝照常可用。</div>
+  <div>內容 © <a href="https://github.com/mattpocock">Matt Pocock</a>（MIT License）· 使用 OpenCode 與 deepseek-v4-flash 進行繁中翻譯與網站設計建置</div>
+</footer>
+
+</div>
+</body>
+</html>

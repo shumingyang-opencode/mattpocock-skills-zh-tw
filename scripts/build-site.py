@@ -129,6 +129,62 @@ ATTACHED = {
 
 LEVEL_META = {lvl[0]: lvl for lvl in LEVELS}
 
+# Six-zone organization, mirroring the official aihero.dev/skills taxonomy.
+# Each zone: (id, zh-name, en-name, subtitle, color-class, [skills])
+# Skills may appear in multiple zones where the taxonomy overlaps.
+ZONES = [
+    ("getting-started", "入門", "Getting Started", "設定一次，然後找到路", "lv-cyan",
+     ["setup-matt-pocock-skills", "ask-matt"]),
+    ("main-flow", "主流程", "Main Flow", "從點子到上線的主幹，照順序走", "lv-fuchsia",
+     ["grill-with-docs", "grill-me", "to-spec", "to-tickets", "implement", "tdd", "code-review"]),
+    ("shaping", "塑形", "Shaping", "探索開放問題，產出餵給主流程的決策", "lv-violet",
+     ["wayfinder", "triage", "prototype", "to-questionnaire", "research"]),
+    ("upkeep", "維護", "Upkeep", "讓程式碼庫與 issue 清單保持健康", "lv-emerald",
+     ["diagnosing-bugs", "improve-codebase-architecture", "resolving-merge-conflicts", "triage"]),
+    ("productivity", "生產力", "Productivity", "非程式碼的人類工作流", "lv-amber",
+     ["grilling", "handoff", "teach", "wait-what", "writing-for-agents"]),
+    ("reference", "參考層", "Reference", "其他技能會呼叫或引用的可重用層", "lv-orange",
+     ["domain-modeling", "codebase-design", "writing-for-agents", "research", "wizard"]),
+]
+
+# 其他 / 實驗室：misc + in-progress 技能，位於 aihero 推廣分類之外
+ZONES_OTHER = ["setup-pre-commit", "scaffold-exercises", "migrate-to-shoehorn", "git-guardrails-claude-code",
+               "claude-handoff", "loop-me", "setup-ts-deep-modules", "writing-beats", "writing-fragments", "writing-shape"]
+
+# Curated version history for the changelog page.
+# Each entry: (version, date, tag, [items]) where item is (kind, text).
+# kind ∈ {new, rename, remove, milestone, change}
+CHANGELOG = [
+    ("v1.2.2", "2026-08", "patch", [
+        ("change", "讓 `writing-for-agents` 在 Codex 中再次可被模型觸發，並更新過時的 display_name。"),
+    ]),
+    ("v1.2.0", "2026-08", "minor", [
+        ("new", "新增 **`wait-what`**——一個針對模型囉嗦的一個字矯正（user-invoked，只有三行）。"),
+        ("rename", "**`writing-great-skills` 改名為 `writing-for-agents`**——範圍擴大到所有代理消費的文件，技能專屬機制拆到 `SKILL-MECHANICS.md`。"),
+        ("new", "以原生 **Claude Code plugin** 發布技能集，列入官方 marketplace。"),
+        ("new", "`to-questionnaire`、`wizard` 從 in-progress 升級為已推廣技能。"),
+        ("remove", "移除六個技能：`ubiquitous-language`（→domain-modeling）、`design-an-interface`（→codebase-design）、`qa`（→triage/to-tickets）、`request-refactor-plan`（→to-spec/improve-codebase-architecture）、`edit-article` 與 `obsidian-vault`（個人技能）。"),
+        ("change", "`prototype` 重塑為單一可共享 HTML 檔案 + 主要來源；`improve-codebase-architecture` 新增 YAGNI 範圍過濾器。"),
+    ]),
+    ("v1.1.0", "2026-07", "minor", [
+        ("rename", "**`to-prd` 改名為 `to-spec`**——「spec」成為單一貫穿術語。"),
+        ("rename", "**`decision-mapping` 改名為 `wayfinder`**——穿過迷霧的路線規劃，領頭詞：fog of war / frontier / the map。"),
+        ("new", "`to-plan` 與 `to-issues` 合併成單一 **`to-tickets`** 技能。"),
+        ("new", "新增 **`research`** 技能——背景代理以主要來源調查問題。"),
+        ("new", "`review` 從 in-progress 推廣為 **`code-review`**，新增 Fowler 壞味道基線。"),
+        ("new", "`writing-great-skills` 新增兩個 Steering 失敗模式：否定（Negation）與負空間（Negative Space）。"),
+        ("change", "`ask-matt` 路由器補齊五個缺失技能；`grilling` 改成一次一輪（round-based）的決策樹；`wayfinder` 以成熟技能落地。"),
+    ]),
+    ("v1.0.0", "2026-06", "major", [
+        ("milestone", "**63% token 縮減**——把大部分技能關掉自動觸發、改為手動叫，技能描述成本大降。"),
+        ("new", "新增 **`ask-matt`** 路由器技能——為你的處境指出正確的技能或流程。"),
+        ("new", "新增共享設計技能 **`codebase-design`** 與 **`domain-modeling`**，並把既有技能重新接線到它們。"),
+        ("rename", "**`write-a-skill` 改為 `writing-great-skills`**；**`diagnose` 改名為 `diagnosing-bugs`**。"),
+        ("remove", "移除 `caveman` 與 `zoom-out` 技能。"),
+        ("new", "新增 **`resolving-merge-conflicts`** 技能；分類法改名為 **User-invoked / Model-invoked**。"),
+    ]),
+]
+
 
 # --------------------------------------------------------------------------
 # Markdown helpers
@@ -196,6 +252,15 @@ def split_blocks(body: str):
 def render_md(md_text: str) -> str:
     import markdown
     return markdown.markdown(md_text, extensions=["fenced_code", "tables", "sane_lists"])
+
+
+def render_inline(md_text: str) -> str:
+    """Render a single markdown line to inline HTML (strip the <p> wrapper)."""
+    import markdown
+    html = markdown.markdown(md_text, extensions=["fenced_code"])
+    if html.startswith("<p>") and html.endswith("</p>"):
+        html = html[3:-4]
+    return html
 
 
 def pair_blocks(en_body, zh_body):
@@ -268,6 +333,8 @@ def breadcrumb(name: str, is_skill: bool, prefix: str) -> str:
   <a href="{prefix}index.html">首頁</a>
   <a href="{prefix}map.html">技能地圖</a>
   <a href="{prefix}learning-path.html">學習路線</a>
+  <a href="{prefix}zones.html">六大區</a>
+  <a href="{prefix}write-great-skills.html">如何寫出好技能</a>
   {parent}
 </div>
 """
@@ -386,7 +453,7 @@ def node_html(skill: str, kind: str = "mainline", small: bool = False) -> str:
 
 def map_page() -> str:
     html = page_open("技能全景圖 · Skill Atlas", "")
-    html += """<div class="back-link"><a href="index.html">← 首頁</a><a href="learning-path.html">學習路線</a></div>
+    html += """<div class="back-link"><a href="index.html">← 首頁</a><a href="learning-path.html">學習路線</a><a href="zones.html">六大區</a><a href="write-great-skills.html">如何寫出好技能</a></div>
 <header>
   <h1>技能全景圖</h1>
   <div class="subtitle">Skill Atlas · 從點子到上線，一條路走到底</div>
@@ -481,7 +548,7 @@ def map_page() -> str:
 
 def learning_path_page() -> str:
     html = page_open("學習路線 · Learning Path", "")
-    html += """<div class="back-link"><a href="index.html">← 首頁</a><a href="map.html">技能全景圖</a></div>
+    html += """<div class="back-link"><a href="index.html">← 首頁</a><a href="map.html">技能全景圖</a><a href="zones.html">六大區</a><a href="write-great-skills.html">如何寫出好技能</a></div>
 <header>
   <h1>學習路線</h1>
   <div class="subtitle">Learning Path · 從 0 練到上線</div>
@@ -500,6 +567,34 @@ def learning_path_page() -> str:
     print("  ✓ learning-path.html")
 
 
+def zones_page() -> str:
+    """Generate the six-zone view (zones.html), mirroring aihero.dev/skills taxonomy."""
+    html = page_open("六大區 · Six Zones", "")
+    html += """<div class="back-link"><a href="index.html">← 首頁</a><a href="map.html">技能全景圖</a><a href="learning-path.html">學習路線</a><a href="write-great-skills.html">如何寫出好技能</a></div>
+<header>
+  <h1>六大區</h1>
+  <div class="subtitle">Six Zones · aihero.dev 官方分類法</div>
+  <div class="badge-line">跟全景圖／學習路線不同的另一把鑰匙：技能可以跨區，別被一格綁死</div>
+</header>
+<div class="guide"><p>這是 <a href="https://www.aihero.dev/skills" target="_blank" rel="noopener">aihero.dev/skills</a> 官方對這套技能的分類法——六個區，從「設定一次」到「墊底的可重用層」。技能可能同時出現在多個區（例如 <code>triage</code> 同時在塑形與維護、<code>writing-for-agents</code> 同時在生產力與參考層）。</p></div>
+"""
+    for zid, zname, zen, sub, color_cls, names in ZONES:
+        html += f'<div class="level {color_cls}"><div class="level-head"><span class="level-badge">{zname}</span><span class="level-title">{zen}</span><span class="level-sub">{sub}</span></div><div class="card-grid">'
+        for s in names:
+            html += card_html(s, SKILLS[s], color_cls)
+        html += '</div></div>\n'
+    # other / lab zone
+    html += f'<div class="level lv-fuchsia"><div class="level-head"><span class="level-badge">其他 · 實驗室</span><span class="level-title">Other / In-progress</span><span class="level-sub">位於 aihero 推廣分類之外的散裝與實驗技能</span></div><div class="card-grid">'
+    for s in ZONES_OTHER:
+        html += card_html(s, SKILLS[s], "lv-fuchsia")
+    html += '</div></div>\n'
+    html += footer()
+    html += page_close()
+    out = ROOT / "zones.html"
+    out.write_text(html, encoding="utf-8")
+    print("  ✓ zones.html")
+
+
 def card_html(skill: str, meta: dict, color_cls: str = "lv-cyan") -> str:
     tags = f'<span class="c-tag">{meta["cat"]}</span><span class="c-tag">{meta["inv"]}-invoked</span>'
     return (f'<a class="card" href="{skill}/SKILL.html">'
@@ -509,10 +604,48 @@ def card_html(skill: str, meta: dict, color_cls: str = "lv-cyan") -> str:
             f'</a>')
 
 
+def changelog_page() -> str:
+    """Generate the version history page (changelog.html) from the curated CHANGELOG data."""
+    kind_label = {
+        "new": ("新技能", "chg-new"),
+        "rename": ("改名", "chg-rename"),
+        "remove": ("移除", "chg-remove"),
+        "milestone": ("里程碑", "chg-milestone"),
+        "change": ("變更", "chg-change"),
+    }
+    tag_label = {"major": "Major", "minor": "Minor", "patch": "Patch"}
+
+    html = page_open("版本歷史 · Changelog", "")
+    html += """<div class="back-link"><a href="index.html">← 首頁</a><a href="map.html">全景圖</a><a href="learning-path.html">學習路線</a><a href="zones.html">六大區</a><a href="write-great-skills.html">如何寫出好技能</a></div>
+<header>
+  <h1>版本歷史</h1>
+  <div class="subtitle">Changelog · 從 v1.0.0 到 v1.2.2</div>
+  <div class="badge-line">濃縮自 repo 的 CHANGELOG.md + aihero.dev/skills 版本文章；完整逐條紀錄見 <a href="https://github.com/mattpocock/skills/blob/main/CHANGELOG.md" target="_blank" rel="noopener">上游 CHANGELOG</a></div>
+</header>
+<div class="changelog">
+"""
+    for version, date, tag, items in CHANGELOG:
+        html += f'<div class="cl-entry"><div class="cl-head"><span class="cl-version">{version}</span><span class="cl-date">{date}</span><span class="cl-tag">{tag_label.get(tag, tag)}</span></div><ul class="cl-items">'
+        for kind, text in items:
+            label, cls = kind_label.get(kind, ("變更", "chg-change"))
+            html += f'<li><span class="chg-badge {cls}">{label}</span> {render_inline(text)}</li>'
+        html += '</ul></div>\n'
+    html += """</div>
+<div class="callout">
+  <strong>為什麼這頁有用？</strong>版本歷史把「技能是會演進的」這件事攤開來——<code>writing-great-skills → writing-for-agents</code>、<code>to-prd → to-spec</code>、<code>decision-mapping → wayfinder</code>，還有整批被吸收的退休技能。當你在別處看到舊名稱，這頁能告訴你它現在叫什麼。
+</div>
+"""
+    html += footer()
+    html += page_close()
+    out = ROOT / "changelog.html"
+    out.write_text(html, encoding="utf-8")
+    print("  ✓ changelog.html")
+
+
 def install_page() -> str:
     repo = "shumingyang-opencode/mattpocock-skills-zh-tw"
     html = page_open("安裝指南 · Install Guide", "")
-    html += """<div class="back-link"><a href="index.html">← 首頁</a><a href="map.html">全景圖</a><a href="learning-path.html">學習路線</a></div>
+    html += """<div class="back-link"><a href="index.html">← 首頁</a><a href="map.html">全景圖</a><a href="learning-path.html">學習路線</a><a href="zones.html">六大區</a><a href="write-great-skills.html">如何寫出好技能</a></div>
 <header>
   <h1>安裝指南</h1>
   <div class="subtitle">Install Guide · 把這包技能裝進 OpenCode 或 TRAE（IDE / CLI）</div>
@@ -696,6 +829,66 @@ def sync_panel() -> str:
     return html
 
 
+def guide_page() -> str:
+    """Generate the 'How To Write Great Skills' teaching page (write-great-skills.html).
+
+    Reads the bilingual guide markdown (EN/ZH block-pair aligned) from
+    docs/guide/, renders it as a two-column page like skill pages, and prepends
+    a video embed panel with the talk + transcript highlights.
+    """
+    en_full = (ROOT / "docs" / "guide" / "how-to-write-great-skills.en.md").read_text(encoding="utf-8")
+    zh_full = (ROOT / "docs" / "guide" / "how-to-write-great-skills.zh.md").read_text(encoding="utf-8")
+    pairs = pair_blocks(en_full, zh_full)
+
+    html = page_open("如何寫出好技能 · How To Write Great Skills", "")
+    html += """<div class="back-link"><a href="index.html">← 首頁</a><a href="map.html">全景圖</a><a href="learning-path.html">學習路線</a><a href="zones.html">六大區</a></div>
+<header>
+  <h1>如何寫出好技能</h1>
+  <div class="subtitle">How To Write Great Skills · 四關卡檢查清單：Trigger → Structure → Steering → Pruning</div>
+  <div class="badge-line">取材自 Matt Pocock 演講「The Missing Manual」· 同一套框架已編碼在 writing-for-agents</div>
+</header>
+"""
+    # video embed panel
+    html += """<div class="video-panel">
+  <div class="video-head"><span class="video-title">▶ The Missing Manual · How To Write Great Skills</span><span class="video-en">AI Engineer World's Fair · Matt Pocock</span></div>
+  <div class="video-embed">
+    <iframe src="https://www.youtube-nocookie.com/embed/UNzCG3lw6O0" title="Building Great Agent Skills: The Missing Manual" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  </div>
+  <p class="video-note">想聽原音逐字版？這支影片是整套框架的出處；下方重點摘要可以直接當導覽用。</p>
+</div>
+"""
+    # transcript highlights (timestamps from the talk)
+    html += """<div class="callout guide-callout">
+  <strong>演講重點摘錄（含時間戳）</strong>
+  <ul>
+    <li><code>00:00:52</code> <strong>Skill hell 定義</strong>——一堆免費技能，你分不出好壞，也拿不到它們號稱的成果。</li>
+    <li><code>00:02:12</code> <strong>檢查清單登場</strong>——Trigger、Structure、Steering、Pruning 四關卡。</li>
+    <li><code>00:03:37</code> <strong>① Trigger</strong>——user-invoked vs model-invoked；context load 燒 token，cognitive load 壓在你身上。</li>
+    <li><code>00:06:07</code> <strong>Matt 為什麼偏好 user-invoked</strong>——移除一整類「技能有沒有被正確觸發」的問題。</li>
+    <li><code>00:07:30</code> <strong>② Structure</strong>——steps + reference 兩大單元，SKILL.md 越小越好。</li>
+    <li><code>00:10:51</code> <strong>context pointer</strong>——把分支用的參考藏到主檔外，需要時才拉。</li>
+    <li><code>00:11:54</code> <strong>③ Steering</strong>——leading words（引導詞）讓 agent 自己複述你的詞。</li>
+    <li><code>00:13:00</code> <strong>vertical slice 範例</strong>——用一個詞取代「不要一層一層寫」的整段懇求。</li>
+    <li><code>00:14:55</code> <strong>legwork</strong>——把後續步驟藏起來，逼 agent 把當下這一步做深。</li>
+    <li><code>00:16:50</code> <strong>④ Pruning</strong>——DRY / single source of truth、sediment、no-ops。</li>
+    <li><code>00:18:38</code> <strong>deletion test</strong>——刪掉一段，行為沒變，那段就是該死。</li>
+  </ul>
+</div>
+"""
+    for en, zh in pairs:
+        if not en and not zh:
+            continue
+        en_html = render_md(en)
+        zh_html = render_md(zh)
+        html += f'<div class="pair"><div class="col-en" lang="en">{en_html}</div><div class="col-zh" lang="zh-Hant">{zh_html}</div></div>\n'
+    html += footer()
+    html += page_close()
+    out = ROOT / "write-great-skills.html"
+    out.write_text(html, encoding="utf-8")
+    print("  ✓ write-great-skills.html")
+    return html
+
+
 def about_page() -> str:
     html = page_open("About Matt Pocock · 作者介紹", "")
     html += about_page_html()
@@ -732,10 +925,23 @@ def index_page() -> str:
     <span class="ec-en">Install Guide</span>
     <span class="ec-desc">把這包技能裝進 OpenCode 或 TRAE（IDE / CLI），一步步照著做就會用。內嵌 GitHub repo 可直接瀏覽。</span>
   </a>
+  <a class="entry-card" href="write-great-skills.html">
+    <span class="ec-icon">📝</span>
+    <span class="ec-title">如何寫出好技能</span>
+    <span class="ec-en">How To Write Great Skills</span>
+    <span class="ec-desc">四關卡檢查清單：Trigger → Structure → Steering → Pruning。取材自 Matt 的演講「The Missing Manual」，含影片與逐字稿重點。</span>
+  </a>
+  <a class="entry-card" href="zones.html">
+    <span class="ec-icon">🧭</span>
+    <span class="ec-title">六大區</span>
+    <span class="ec-en">Six Zones</span>
+    <span class="ec-desc">aihero.dev 官方分類法——入門、主流程、塑形、維護、生產力、參考層，另一把看懂技能集的鑰匙。</span>
+  </a>
 </div>
 """
     html += sync_panel()
     html += about_card_html()
+    html += '<div class="changelog-link"><a href="changelog.html">版本歷史 · Changelog（v1.0.0 → v1.2.2）</a></div>\n'
     html += footer()
     html += page_close()
     out = ROOT / "index.html"
@@ -781,7 +987,10 @@ def main():
     print("[views]")
     map_page()
     learning_path_page()
+    zones_page()
     install_page()
+    guide_page()
+    changelog_page()
     about_page()
     index_page()
     write_data()

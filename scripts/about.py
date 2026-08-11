@@ -15,7 +15,7 @@ def about_card_html() -> str:
 
 
 def about_page_html() -> str:
-    return """<div class="back-link"><a href="index.html">← 首頁</a><a href="map.html">全景圖</a><a href="learning-path.html">學習路線</a></div>
+    return """<div class="back-link"><a href="index.html">← 首頁</a><a href="map.html">全景圖</a><a href="learning-path.html">學習路線</a><a href="zones.html">六大區</a><a href="write-great-skills.html">如何寫出好技能</a></div>
 <header>
   <h1>About Matt Pocock</h1>
   <div class="subtitle">作者介紹 · 軟體工程師 · 教育者 · 內容創作者 · 開源推手</div>

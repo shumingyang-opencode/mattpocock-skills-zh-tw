@@ -18,6 +18,23 @@
 
 這是我每天用來做真正工程、而非 vibe coding 的代理技能。
 
+## 教學網站（GitHub Pages）
+
+本 repo 內建一個**中英對照閱讀站**（[shumingyang-opencode.github.io/mattpocock-skills-zh-tw](https://shumingyang-opencode.github.io/mattpocock-skills-zh-tw/)）：
+
+| 頁面 | 說明 |
+|------|------|
+| 首頁 `index.html` | 入口卡片總覽 + 上游同步面板 + 作者卡 |
+| 全景圖 `map.html` | 從點子到上線的技能關係圖 |
+| 學習路線 `learning-path.html` | 分層分級（L0–L4）照著學 |
+| 六大區 `zones.html` | aihero.dev 官方分類法（入門／主流程／塑形／維護／生產力／參考層） |
+| 如何寫出好技能 `write-great-skills.html` | 四關卡檢查清單（Trigger／Structure／Steering／Pruning），含演講影片與逐字稿重點 |
+| 版本歷史 `changelog.html` | v1.0.0 → v1.2.2 技能演進與改名史 |
+| 安裝指南 `install.html` | OpenCode / TRAE 安裝步驟 |
+| About `about.html` | 作者介紹 |
+
+網站由 `scripts/build-site.py` 從翻譯好的 Markdown 生成；教學頁內容源在 `docs/guide/`。
+
 開發真正的應用程式很難。GSD、BMAD、Spec-Kit 等做法試圖藉由接管流程來幫忙，但這麼一做的同時，它們拿走了你的掌控權，並讓流程中的 bug 難以解決。
 
 這些技能被設計成小而容易改、且可組合。它們適用於任何模型，建立在數十年的工程經驗之上。隨意動手改改看，把它們變成你自己的。盡情享用。
