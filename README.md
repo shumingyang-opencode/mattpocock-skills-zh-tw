@@ -250,3 +250,7 @@ npx skills@latest add mattpocock/skills
 
 - **[grilling](./skills/productivity/grilling/SKILL.md)** — 針對計畫、決策或想法不斷訪談使用者，直到設計樹的每個分支都解決。`grill-me`、`grill-with-docs`、`triage`、`wayfinder` 與 `improve-codebase-architecture` 背後可重用的訪談原語。
 - **[writing-for-agents](./skills/productivity/writing-for-agents/SKILL.md)** — 為代理撰寫文件：技能、AGENTS.md/CLAUDE.md，以及任何代理能透過指標取得的文件。
+
+## 相關連結
+
+- 學習路徑建議服務：[learning-path-advisor](https://shuming-yang.github.io/learning-path-advisor/) — 依角色推薦教學網站學習路徑
