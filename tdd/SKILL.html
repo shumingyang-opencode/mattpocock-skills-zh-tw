@@ -58,6 +58,43 @@
 <li><strong>一次一個切片。</strong> 每個循環一個接縫、一個測試、一個最小實作。</li>
 <li><strong>重構不是迴圈的一部分。</strong> 它屬於審查階段（見 <code>code-review</code> 技能），不屬於紅 → 綠的實作循環。</li>
 </ul></div></div>
+<div class="tutorial-block">
+  <h3><span class="tb-icon">📖</span> 教學解說</h3>
+  <p>TDD 的核心不是「先寫測試」——而是<strong>用測試驅動設計</strong>。紅-綠循環的每一輪都在問一個問題：「這個介面該長什麼樣子？」測試是問題，程式碼是答案。如果你發現自己在寫一大堆測試才開始寫實作，你可能掉進了「水平切片」的陷阱。</p>
+  <p>「接縫」是 TDD 最被低估的概念。接縫不是「你想測什麼」，而是「你能從外面觀察到什麼」。好接縫的特徵：從外部可觀察、不暴露內部結構、重構時不會斷。壞接縫的特徵：需要 mock 內部狀態、測試私有方法、依賴特定實作。</p>
+</div>
+<div class="tutorial-block tb-example">
+  <h3><span class="tb-icon">💡</span> Worked Example</h3>
+  <p><strong>垂直切片的 TDD 循環</strong>：</p>
+  <ol>
+    <li><strong>紅</strong>：<code>describe('Cart') → it('calculates total with tax') → expect(cart.totalWithTax()).toBe(110)</code> → 失敗（Cart 不存在）</li>
+    <li><strong>綠</strong>：建立 <code>class Cart</code>，加 <code>totalWithTax()</code> 方法回傳 <code>this.subtotal * 1.1</code> → 通過</li>
+    <li><strong>紅</strong>：<code>it('applies discount before tax')</code> → <code>expect(cart.withDiscount(0.1).totalWithTax()).toBe(99)</code> → 失敗</li>
+    <li><strong>綠</strong>：加 <code>withDiscount()</code> 方法 → 通過</li>
+    <li>重複：每次只加一個行為，確保測試先紅再綠</li>
+  </ol>
+  <p>注意：每個循環都在<strong>同一個接縫</strong>（Cart 類別的公開介面）上操作，從不需要改測試結構。</p>
+</div>
+<div class="tutorial-block tb-mistake">
+  <h3><span class="tb-icon">⚠️</span> 常見錯誤</h3>
+  <ul>
+    <li><strong>水平切片</strong>——先寫全部測試再寫全部實作。這會讓你測試「想像中的行為」而非真實行為，測試對真實變動變得不敏感。</li>
+    <li><strong>同義反覆</strong>——<code>expect(add(a, b)).toBe(a + b)</code>。期望值必須來自獨立的真實來源：常數、規格、手動算過的範例。</li>
+    <li><strong>在迴圈中重構</strong>——重構屬於 review 階段（code-review），不屬於紅-綠循環。迴圈的規則是先紅後綠、一次一個切片。</li>
+    <li><strong>沒有確認接縫就開始寫測試</strong>——接縫必須事先與使用者確認。否則你可能在錯誤的抽象層級上測試。</li>
+    <li><strong>忽略 CONTEXT.md 的詞彙</strong>——探索程式碼時先讀 CONTEXT.md（如果存在），讓測試名稱符合專案的領域語言。</li>
+  </ul>
+</div>
+<div class="tutorial-block tb-checklist">
+  <h3><span class="tb-icon">✅</span> 練習 / 驗收清單</h3>
+  <ul>
+    <li>□ 能說明 TDD 迴圈的三條規則（先紅後綠、一次一個切片、重構不在迴圈中）</li>
+    <li>□ 能區分三種反模式（耦合實作、同義反覆、水平切片）</li>
+    <li>□ 每個循環都在事前約定的接縫上操作</li>
+    <li>□ 期望值來自獨立的真實來源</li>
+    <li>□ 測試名稱反映了公開介面的行為，不是內部實作</li>
+  </ul>
+</div>
 
 </div>
 </body>

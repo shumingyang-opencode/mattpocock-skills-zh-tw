@@ -151,6 +151,45 @@
 <div class="pair"><div class="col-en" lang="en"><p>Glossaries, in particular, are an essential reference. Once one is created, it should be adhered to in every lesson.</p></div><div class="col-zh" lang="zh-Hant"><p>特別是詞彙表，是必不可少的參考。一旦建立，每個課程都應該遵守它。</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><h2><code>NOTES.md</code></h2></div><div class="col-zh" lang="zh-Hant"><h2><code>NOTES.md</code></h2></div></div>
 <div class="pair"><div class="col-en" lang="en"><p>The user will sometimes express preferences of how they want to be taught, or things you should keep in mind. This is the place to record those preferences, so you can refer back to them when designing lessons or working with the user.</p></div><div class="col-zh" lang="zh-Hant"><p>使用者有時會表達希望如何被教導的偏好，或您應該記住的事情。這是記錄這些偏好的地方，以便您在設計課程或與使用者合作時可以回頭參考。</p></div></div>
+<div class="tutorial-block">
+  <h3><span class="tb-icon">📖</span> 教學解說</h3>
+  <p><code>teach</code> 是一個<strong>有狀態的教學系統</strong>。它不是一次性回答問題，而是把目前目錄當成教室，建立一套完整的學習工作區——MISSION.md（學習動機）、reference/（參考資料）、learning-records/（學習紀錄）、lessons/（課程）。每次 session 都從上次停下的地方繼續。</p>
+  <p>核心哲學是<strong>流暢度 vs 儲存強度</strong>：流暢度讓你覺得「我懂了」，但儲存強度才是真正的目標。要建立儲存強度，需要「適度難度」——提取練習、間隔練習、交錯練習。太簡單 = 沒有學到東西；太難 = 超出近側發展區。</p>
+</div>
+<div class="tutorial-block tb-example">
+  <h3><span class="tb-icon">💡</span> Worked Example</h3>
+  <p><strong>情境</strong>：你要教使用者 TypeScript 的泛型。</p>
+  <ol>
+    <li>先建立 MISSION.md：「使用者想用泛型写出可重用的 API client」</li>
+    <li>從 RESOURCES.md 找高品質來源：TypeScript 官方文件 Generics 章節</li>
+    <li>設計一個落在近側發展區的課程：「用泛型重構一個 any-heavy 的 fetch wrapper」</li>
+    <li>課程包含：(a) 知識教學（泛型的基本語法）→ (b) 互動練習（改寫一個具體的函数）→ (c) 測驗（確認理解）</li>
+    <li>建立 learning record：記錄使用者學到了什麼、哪些還需要複習</li>
+    <li>建立 reference/0001-generics-cheatsheet.html：泛型速查表</li>
+  </ol>
+</div>
+<div class="tutorial-block tb-mistake">
+  <h3><span class="tb-icon">⚠️</span> 常見錯誤</h3>
+  <ul>
+    <li><strong>沒有先建立 MISSION.md</strong>——不知道使用者為什麼想學，教學就沒有根基。课程會太抽象。</li>
+    <li><strong>课程太長</strong>——學習者的工作記憶很小。每個课程應該能在幾分鐘內完成。</li>
+    <li><strong>只教知識不練習</strong>——知識 = 獲取，技能 = 持久性。沒有互動練習 = 學了就忘。</li>
+    <li><strong>不建立參考資料</strong>——课程很少被回顧，參考資料會。每個主题都該有速查表。</li>
+    <li><strong>忽略學習紀錄</strong>——學習紀錄是判斷近側發展區的依據。沒有它 = 不知道下一步該教什麼。</li>
+  </ul>
+</div>
+<div class="tutorial-block tb-checklist">
+  <h3><span class="tb-icon">✅</span> 練習 / 驗收清單</h3>
+  <ul>
+    <li>□ MISSION.md 已建立，明確記錄學習動機</li>
+    <li>□ 課程落在近側發展區（不太簡單也不太難）</li>
+    <li>□ 課程包含知識教學 + 互動練習 + 測驗</li>
+    <li>□ 每個课程能在幾分鐘內完成</li>
+    <li>□ 有建立參考資料（速查表、詞彙表等）</li>
+    <li>□ 有建立學習紀錄</li>
+    <li>□ 課程有引用高品質的主要來源</li>
+  </ul>
+</div>
 
 </div>
 </body>

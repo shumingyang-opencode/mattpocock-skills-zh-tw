@@ -128,6 +128,41 @@
 <li>確切做了 issue 要求但破壞專案慣例的程式碼 → <strong>規格過、規範掛。</strong></li>
 </ul></div></div>
 <div class="pair"><div class="col-en" lang="en"><p>Reporting them separately stops one axis from masking the other.</p></div><div class="col-zh" lang="zh-Hant"><p>分開回報能阻止一個軸掩蓋另一個。</p></div></div>
+<div class="tutorial-block">
+  <h3><span class="tb-icon">📖</span> 教學解說</h3>
+  <p><code>code-review</code> 的核心設計是<strong>雙軸分離</strong>：規範（Standards）和規格（Spec）由平行子代理分別審查，避免一個軸的發現掩蓋另一個。為什麼要分開？因為一個變更可以過規範但錯方向（寫得很好但做錯事），也可以做對事但破壞慣例（做對了但寫得很醜）。</p>
+  <p>規範軸永遠攜帶 <strong>smell baseline</strong>——一組 Fowler 壞味道，即使 repo 什麼都沒記錄也適用。這是一個「不管有沒有文件都該檢查」的最低標準。規格軸的關鍵問題是「規格從哪來」——它按優先順序搜尋：commit message 裡的 issue 引用 → 使用者提供的路徑 → docs/specs 裡的規格檔 → 問使用者。</p>
+</div>
+<div class="tutorial-block tb-example">
+  <h3><span class="tb-icon">💡</span> Worked Example</h3>
+  <p><strong>情境</strong>：你完成了一個功能分支，要 review <code>git diff main...HEAD</code>。</p>
+  <ol>
+    <li>釘住固定點：<code>git diff main...HEAD</code>（三點，比對合併基點）。確認 diff 非空。</li>
+    <li>找規格來源：commit message 裡有 <code>Closes #42</code>，從 issue tracker 拉 #42 的內容。</li>
+    <li>規範子代理檢查：是否有 god function？是否有 magic number？是否遵循專案的 naming convention？</li>
+    <li>規格子代理檢查：#42 要求的功能是否完整實現？有沒有遺漏 edge case？</li>
+    <li>兩軸結果並排呈現。如果規範過但規格掛，你知道方向錯了；如果規格過但規範掛，你知道需要重構。</li>
+  </ol>
+</div>
+<div class="tutorial-block tb-mistake">
+  <h3><span class="tb-icon">⚠️</span> 常見錯誤</h3>
+  <ul>
+    <li><strong>跨軸選「最嚴重」問題</strong>——code-review 明確禁止跨軸比較。兩軸分開回報，因為它們衡量的是不同東西。</li>
+    <li><strong>忘記固定點</strong>——「review 一下」但沒指定從哪裡開始。固定點必須明確：commit SHA、branch name、tag。</li>
+    <li><strong>在空 diff 上啟動子代理</strong>——先確認 diff 非空。空 diff 應該在啟動平行子代理之前就失敗。</li>
+    <li><strong>忽略 smell baseline</strong>——即使 repo 沒有 CODING_STANDARDS.md，規範軸仍會檢查 Fowler 壞味道。這是最低標準。</li>
+  </ul>
+</div>
+<div class="tutorial-block tb-checklist">
+  <h3><span class="tb-icon">✅</span> 練習 / 驗收清單</h3>
+  <ul>
+    <li>□ 能說明雙軸分離的設計理由（避免掩蓋效應）</li>
+    <li>□ 知道規格來源的搜尋優先順序</li>
+    <li>□ 知道 smell baseline 是什麼（Fowler 壞味道，repo 無文件也適用）</li>
+    <li>□ 每次 review 都有明確的固定點</li>
+    <li>□ 兩軸結果是分開回報，沒有跨軸比較</li>
+  </ul>
+</div>
 
 </div>
 </body>

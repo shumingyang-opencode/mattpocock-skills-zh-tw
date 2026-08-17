@@ -83,6 +83,41 @@
 <h2>Anything else?</h2>
 <p>一個收尾的包羅萬象：任何我們沒問但您認為我們應該知道的事？</p>
 <p></questionnaire-template></p></div></div>
+<div class="tutorial-block">
+  <h3><span class="tb-icon">📖</span> 教學解說</h3>
+  <p><code>to-questionnaire</code> 解決的是<strong>知識在別人的腦子裡</strong>的情境。你做了一個功能的 grill，但某些關鍵決策取決於一個你聯絡不上的人（PM、設計師、法務）。這個技能幫你寫一份問卷，寄給那個人填，然後把答案帶回 grill 或 to-spec。</p>
+  <p>關鍵設計：<strong>質詢的是寄送，不是主題</strong>。Agent 只訪問你「寄給誰、需要什麼回覆」——因為這些你總是能回答。問卷的問題針對「收件人知道但你不知道」的缺口。</p>
+</div>
+<div class="tutorial-block tb-example">
+  <h3><span class="tb-icon">💡</span> Worked Example</h3>
+  <p><strong>情境</strong>：你要做 CSV 匯出，但匯出的欄位隱私規範由法務決定。</p>
+  <ol>
+    <li>呼叫 <code>/to-questionnaire "CSV 匯出的欄位隱私規範"</code></li>
+    <li>Agent 問：「寄給誰？」→ 你：「法務的王小明」</li>
+    <li>Agent 問：「你需要他回答什麼？」→ 你：「哪些欄位可以匯出、哪些需要脫敏」</li>
+    <li>Agent 產出問卷：`to-questionnaire-privacy.md`，包含：Context（專案背景）、問題（按主題分組）、Anything else</li>
+    <li>你把問卷寄給王小明 → 他填完回覆 → 你把答案帶回 grill</li>
+  </ol>
+</div>
+<div class="tutorial-block tb-mistake">
+  <h3><span class="tb-icon">⚠️</span> 常見錯誤</h3>
+  <ul>
+    <li><strong>問卷問題太廣</strong>——「你覺得隱私方面有什麼問題？」太模糊。要具體：「以下哪些欄位需要脫敏？」</li>
+    <li><strong>訪問 agent 關於主題</strong>——Agent 應該訪問你關於「寄送」，不是關於「CSV 隱私規範」。你可能不懂隱私規範，但你知道誰懂。</li>
+    <li><strong>問卷沒有 Context</strong>——收件人不在你的腦子裡。問卷需要一段背景說明，讓他們能好好回答。</li>
+    <li><strong>問卷沒有截止時間</strong>——非同步問卷很容易被拖延。加一個 deadline。</li>
+  </ul>
+</div>
+<div class="tutorial-block tb-checklist">
+  <h3><span class="tb-icon">✅</span> 練習 / 驗收清單</h3>
+  <ul>
+    <li>□ 問卷有 Context 區段（讓收件人能好好回答）</li>
+    <li>□ 問題具體且按主題分組</li>
+    <li>□ 有截止時間和粗略 effort 說明</li>
+    <li>□ 每個問題都對應到「收件人知道但你不知道」的缺口</li>
+    <li>□ 有「Anything else」收尾的包羅萬象問題</li>
+  </ul>
+</div>
 
 </div>
 </body>

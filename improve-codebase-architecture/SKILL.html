@@ -102,6 +102,42 @@
 <li><strong>使用者以承重的理由拒絕候選？</strong> 提供 ADR，措辭如下：「<em>要我把它記錄成 ADR，讓未來的架構審查不會再建議它嗎？</em>」只有當該理由真的會被未來的探索者需要以避免再建議同樣東西時才提供——跳過一時性的理由（「現在不值得」）與顯而易見的理由。</li>
 <li><strong>想為深化後的模組探索替代介面？</strong> 執行 <code>/codebase-design</code> 技能，用它的 design-it-twice 平行子代理模式。</li>
 </ul></div></div>
+<div class="tutorial-block">
+  <h3><span class="tb-icon">📖</span> 教學解說</h3>
+  <p><code>improve-codebase-architecture</code> 是一個<strong>掃描 + 報告 + 討論</strong>的流程。它不做重構——而是找出值得重構的候選，用 HTML 報告呈現，然後跟使用者討論要探索哪一個。真正的重構由後續的 implement 來做。</p>
+  <p>核心工具是<strong>刪除測試</strong>：對任何你懷疑是淺的模組，問「刪掉它後，複雜度是消失還是重現？」如果重現 = 它在賺住宿費；如果消失 = 它是轉送層。候選清單就是那些「刪除後複雜度重現」的模組。</p>
+</div>
+<div class="tutorial-block tb-example">
+  <h3><span class="tb-icon">💡</span> Worked Example</h3>
+  <p><strong>情境</strong>：你的專案有一個 <code>utils/</code> 目錄，裡面有 20 個小函式。</p>
+  <ol>
+    <li>探索階段：發現 <code>utils/formatDate</code> 被 12 個檔案引用，但每個引用處都有不同的 format 參數</li>
+    <li>刪除測試：刪掉 <code>formatDate</code> → 12 個檔案各自實作格式化邏輯 → 複雜度重現 → 候選</li>
+    <li>HTML 報告呈現：卡片包含「檔案、問題、解決方案、好處、前後圖」</li>
+    <li>建議強度：Strong（因為刪除測試明確通過）</li>
+    <li>問使用者：「你想探索這個嗎？」→ 使用者選是 → 進入 grilling 迴圈討論具體方案</li>
+  </ol>
+</div>
+<div class="tutorial-block tb-mistake">
+  <h3><span class="tb-icon">⚠️</span> 常見錯誤</h3>
+  <ul>
+    <li><strong>直接提出介面方案</strong>——技能明確要求「還不要提出介面」。先呈現候選，讓使用者選擇要探索哪一個。</li>
+    <li><strong>列出所有理論性重構</strong>——如果 ADR 禁止某個重構，只有當摩擦真實到值得重開 ADR 時才浮現。</li>
+    <li><strong>不跑刪除測試</strong>——刪除測試是判斷候選的關鍵機制。不跑 = 在猜。</li>
+    <li><strong>忽略 CONTEXT.md 詞彙</strong>——報告要用 CONTEXT.md 的領域詞彙，不是自己編的名字。</li>
+  </ul>
+</div>
+<div class="tutorial-block tb-checklist">
+  <h3><span class="tb-icon">✅</span> 練習 / 驗收清單</h3>
+  <ul>
+    <li>□ 每個候選都有跑刪除測試</li>
+    <li>□ 報告用 CONTEXT.md 的領域詞彙</li>
+    <li>□ 報告用 /codebase-design 的架構詞彙</li>
+    <li>□ 沒有直接提出介面方案（先讓使用者選）</li>
+    <li>□ ADR 衝突有清楚標記</li>
+    <li>□ 每個候選都有前後視覺化</li>
+  </ul>
+</div>
 
 </div>
 </body>

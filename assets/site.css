@@ -605,6 +605,77 @@ footer a { color: var(--text-soft); }
 }
 .callout strong { color: #c8f5df; }
 
+/* ---------- Tutorial callouts (site enrichment) ---------- */
+.tutorial-block {
+  border: 1px solid rgba(34, 211, 238, 0.3);
+  border-left: 3px solid var(--cyan);
+  background: rgba(34, 211, 238, 0.05);
+  border-radius: 10px;
+  padding: 1rem 1.2rem;
+  margin: 1.4rem 0;
+  font-size: 0.84rem;
+  color: var(--text-soft);
+  line-height: 1.75;
+}
+.tutorial-block h3 {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  color: #e6f7fb;
+  margin: 0 0 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.tutorial-block h3 .tb-icon { font-size: 1.1rem; }
+.tutorial-block strong { color: #c8f5df; }
+.tutorial-block code {
+  background: rgba(34, 211, 238, 0.12);
+  color: #7dd3e0;
+  padding: 0.05rem 0.3rem;
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+}
+.tutorial-block pre {
+  background: #0b0b11;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 0.7rem 0.9rem;
+  margin: 0.5rem 0;
+  overflow-x: auto;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  line-height: 1.55;
+  color: #e2e8f0;
+}
+.tutorial-block pre code { background: none; color: #e2e8f0; padding: 0; }
+.tutorial-block ul, .tutorial-block ol { margin: 0.3rem 0 0.3rem 1.2rem; }
+.tutorial-block li { margin: 0.2rem 0; }
+.tutorial-block p { margin: 0.35rem 0; }
+
+.tutorial-block.tb-example {
+  border-left-color: var(--amber);
+  border-color: rgba(251, 191, 36, 0.3);
+  background: rgba(251, 191, 36, 0.05);
+}
+.tutorial-block.tb-example h3 { color: #fdeab9; }
+
+.tutorial-block.tb-mistake {
+  border-left-color: #f87171;
+  border-color: rgba(248, 113, 113, 0.3);
+  background: rgba(248, 113, 113, 0.05);
+}
+.tutorial-block.tb-mistake h3 { color: #fca5a5; }
+.tutorial-block.tb-mistake strong { color: #fecaca; }
+
+.tutorial-block.tb-checklist {
+  border-left-color: var(--emerald);
+  border-color: rgba(52, 211, 153, 0.3);
+  background: rgba(52, 211, 153, 0.05);
+}
+.tutorial-block.tb-checklist h3 { color: #c8f5df; }
+.tutorial-block.tb-checklist strong { color: #c8f5df; }
+
 /* ---------- Upstream sync / TODO panel (homepage) ---------- */
 .sync-panel {
   border: 1px solid var(--line-strong);

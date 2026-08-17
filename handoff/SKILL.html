@@ -33,6 +33,47 @@
 <div class="pair"><div class="col-en" lang="en"><p>Do not duplicate content already captured in other artifacts (specs, plans, ADRs, issues, commits, diffs). Reference them by path or URL instead.</p></div><div class="col-zh" lang="zh-Hant"><p>不要重複其他產物（規格說明、計畫、ADR、issue、commit、diff）中已捕捉的內容。改以路徑或 URL 引用它們。</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><p>Redact any sensitive information, such as API keys, passwords, or personally identifiable information.</p></div><div class="col-zh" lang="zh-Hant"><p>塗掉任何敏感資訊，例如 API key、密碼或可識別個人身分的資訊。</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><p>If the user passed arguments, treat them as a description of what the next session will focus on and tailor the doc accordingly.</p></div><div class="col-zh" lang="zh-Hant"><p>如果使用者傳入參數，將它們視為下一個 session 將專注於什麼的描述，並據此調整文件內容。</p></div></div>
+<div class="tutorial-block">
+  <h3><span class="tb-icon">📖</span> 教學解說</h3>
+  <p><code>handoff</code> 解決的是多 session 工作的核心問題：<strong>下一個 session 怎麼從上次停下的地方繼續</strong>。它不是摘要——而是包含足夠上下文的交接文件，讓一個全新的 agent 能接手工作。</p>
+  <p>關鍵設計：交接文件<strong>不要重複其他產物已捕捉的內容</strong>。規格在 to-spec 裡、ticket 在 to-tickets 裡、ADR 在 docs/adr/ 裡。交接文件用路徑或 URL 引用它們，而不是把內容抄進來。這就是 write-great-skills 裡的 single source of truth 原則。</p>
+</div>
+<div class="tutorial-block tb-example">
+  <h3><span class="tb-icon">💡</span> Worked Example</h3>
+  <p><strong>情境</strong>：你在 session A 裡 grill 了「CSV 匯出」功能，現在要換到 session B 去做 prototype。</p>
+  <ol>
+    <li>呼叫 <code>/handoff "我要用 prototype 驗證 CSV 串流的效能"</code></li>
+    <li>Agent 會產生一個交接文件，包含：
+      <ul>
+        <li>目前進度：已完成 grill，CONTEXT.md 裡有所有決策</li>
+        <li>建議技能：<code>/prototype</code>（因為要驗證效能）</li>
+        <li>引用：CONTEXT.md 路徑、相關 ADR 路徑</li>
+        <li>不重複：不會把 CONTEXT.md 的內容再抄一遍</li>
+      </ul>
+    </li>
+    <li>交接文件存到暫存目錄（<code>/tmp</code>），不落進 repo</li>
+    <li>在 session B 裡，agent 讀取交接文件，從上次停下的地方繼續</li>
+  </ol>
+</div>
+<div class="tutorial-block tb-mistake">
+  <h3><span class="tb-icon">⚠️</span> 常見錯誤</h3>
+  <ul>
+    <li><strong>交接文件太長</strong>——把所有對話內容都抄進來。交接文件是摘要+引用，不是逐字稿。</li>
+    <li><strong>重複其他產物的內容</strong>——規格、ticket、ADR 都有各自的家。交接文件只放引用。</li>
+    <li><strong>沒有建議技能</strong>——交接文件應該包含「下一個 session 該呼叫什麼技能」的建議。</li>
+    <li><strong>把交接文件放進 repo</strong>——它應該在暫存目錄。交接是暫時的，不是永久文件。</li>
+  </ul>
+</div>
+<div class="tutorial-block tb-checklist">
+  <h3><span class="tb-icon">✅</span> 練習 / 驗收清單</h3>
+  <ul>
+    <li>□ 交接文件包含：目前進度、建議技能、引用（路徑/URL）</li>
+    <li>□ 沒有重複其他產物已捕捉的內容</li>
+    <li>□ 有塗掉敏感資訊（API key、密碼等）</li>
+    <li>□ 文件存在暫存目錄，不在 repo 裡</li>
+    <li>□ 下一個 session 能從交接文件順利接手</li>
+  </ul>
+</div>
 
 </div>
 </body>

@@ -123,6 +123,45 @@
 <h2>補充說明</h2>
 <p>關於此功能的任何補充說明。</p>
 <p></spec-template></p></div></div>
+<div class="tutorial-block">
+  <h3><span class="tb-icon">📖</span> 教學解說</h3>
+  <p><code>to-spec</code> 的工作是把 grill 產出的散裝決策，<strong>收斂成一份結構化的規格說明</strong>。規格的目的是讓 implement 有明確的方向——它不需要包含所有實作細節，但必須回答「要建什麼、為什麼、怎麼驗收」。</p>
+  <p>規格模板有四個核心區塊：問題陳述（從使用者視角）、解決方案（從使用者視角）、使用者故事（極其詳盡）、實作決策（不包含具體檔案路徑）。最後一個是關鍵——具體路徑很快就過時，規格應該描述<strong>決策</strong>而不是實作。</p>
+</div>
+<div class="tutorial-block tb-example">
+  <h3><span class="tb-icon">💡</span> Worked Example</h3>
+  <p><strong>從 grill 到 spec 的轉換</strong>：</p>
+  <ol>
+    <li>Grill 的 CONTEXT.md 裡有：「支援日期範圍篩選」「先只做 CSV」「匯出到下載串流」</li>
+    <li>to-spec 把這些決策重新組織成規格模板：
+      <ul>
+        <li>問題陳述：「管理員需要匯出用戶資料到 CSV，但目前沒有匯出功能」</li>
+        <li>使用者故事：「作為管理員，我想要匯出指定日期範圍的用戶資料，以便做離線分析」</li>
+        <li>實作決策：「使用 CSV 串流（不一次載入全部資料到記憶體）」「篩選條件從 query string 讀取」</li>
+      </ul>
+    </li>
+    <li>規格不會寫「在 <code>src/export.ts</code> 裡建 <code>exportCSV</code> 函數」——那是 implement 的事</li>
+  </ol>
+</div>
+<div class="tutorial-block tb-mistake">
+  <h3><span class="tb-icon">⚠️</span> 常見錯誤</h3>
+  <ul>
+    <li><strong>規格包含具體檔案路徑或程式碼片段</strong>——它們很快就過時。例外：如果 prototype 產出的片段比散文更能精確編碼決策（狀態機、reducer、schema），可以內嵌但要註明來源。</li>
+    <li><strong>使用者故事不夠詳盡</strong>——規格模板要求「極其詳盡」。每一個 edge case 都該在使用者故事中被覆蓋。</li>
+    <li><strong>把規格當成實作指南</strong>——規格描述「要做什麼」，不是「怎麼做」。具體的實作方式由 implement 決定。</li>
+    <li><strong>沒有包含 Out of Scope</strong>——明確列出什麼不在範圍內，能防止 implement 做多做少。</li>
+  </ul>
+</div>
+<div class="tutorial-block tb-checklist">
+  <h3><span class="tb-icon">✅</span> 練習 / 驗收清單</h3>
+  <ul>
+    <li>□ 規格包含四個核心區塊（問題陳述、解決方案、使用者故事、實作決策）</li>
+    <li>□ 使用者故事極其詳盡，覆蓋所有 edge case</li>
+    <li>□ 沒有具體檔案路徑或程式碼片段（除非來自 prototype 且有標註）</li>
+    <li>□ 有明確的 Out of Scope 區塊</li>
+    <li>□ 有 Testing Decisions 區塊（描述什麼是好測試、哪些模組要測）</li>
+  </ul>
+</div>
 
 </div>
 </body>

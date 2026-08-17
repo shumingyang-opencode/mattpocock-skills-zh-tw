@@ -55,6 +55,42 @@
 <li><strong>呈現狀態。</strong> 每次動作之後（邏輯）或每次切換變體時（UI），印出或渲染完整的相關狀態，讓使用者看到改變了什麼。</li>
 <li><strong>完成時留存。</strong> 把任何經驗證的決策折疊回正式程式碼，然後把原型本身當成<strong>主要來源</strong>留存：提交到一條一次性分支、不放進 main，並在實作 issue 上留下指向該分支的上下文指標。答案也要留存——結論以及它定案的問題——寫進 issue 或一次 commit。main 分支只保留經過驗證的決策。</li>
 </ol></div></div>
+<div class="tutorial-block">
+  <h3><span class="tb-icon">📖</span> 教學解說</h3>
+  <p><code>prototype</code> 的核心原則是：<strong>原型是用來回答問題的，不是用來交付功能的</strong>。它是一次性的——從第一天就設計為要被丟棄。它的價值在於快速驗證設計決策，而不是產出可上線的程式碼。</p>
+  <p>關鍵設計：原型分為 <strong>UI</strong> 和 <strong>Logic</strong> 兩種分支。選錯分支會浪費整個原型。判斷標準：如果問題是「它該長什麼樣」→ UI；如果是「狀態模型對不對」→ Logic。如果分不出，看周邊程式碼——後端模組 → Logic，頁面或元件 → UI。</p>
+</div>
+<div class="tutorial-block tb-example">
+  <h3><span class="tb-icon">💡</span> Worked Example</h3>
+  <p><strong>情境</strong>：你要設計一個拖曳排序的 UI，不確定用 DnD Kit 還是自己寫。</p>
+  <ol>
+    <li>呼叫 <code>/prototype</code>，問題：「用 DnD Kit 實作拖曳排序，效果如何？」</li>
+    <li>選 UI 分支，建一個 <code>prototype/dnd-test/</code> 目錄</li>
+    <li>寫一個單頁 HTML + React：能拖曳、能排序、能看到狀態變化</li>
+    <li>執行：<code>pnpm dev</code>（一行指令就能跑）</li>
+    <li>觀察：拖曳手感如何？效能如何？</li>
+    <li>結論：「DnD Kit 手感好但 API 複雜，不如自己寫」→ 決策折疊回 main，原型留在一次性分支</li>
+  </ol>
+</div>
+<div class="tutorial-block tb-mistake">
+  <h3><span class="tb-icon">⚠️</span> 常見錯誤</h3>
+  <ul>
+    <li><strong>原型寫得太精緻</strong>——加了 error handling、加了 loading state、加了測試。原型是用來回答問題的，不是用來交付的。跳過打磨。</li>
+    <li><strong>原型留進 main</strong>——原型應該在一次性分支上。Main 只保留經驗證的決策。</li>
+    <li><strong>沒有清楚標示「這是原型」</strong>——讓隨意瀏覽的人一看就知道這是原型，不是正式程式。</li>
+    <li><strong>把原型當成 deliverable</strong>——原型的價值是回答問題，不是產出功能。問題回答完，原型就完成使命了。</li>
+  </ul>
+</div>
+<div class="tutorial-block tb-checklist">
+  <h3><span class="tb-icon">✅</span> 練習 / 驗收清單</h3>
+  <ul>
+    <li>□ 能區分 UI 和 Logic 兩種原型分支</li>
+    <li>□ 原型能一行指令啟動</li>
+    <li>□ 沒有 error handling、測試、抽象化</li>
+    <li>□ 每次動作後有呈現狀態</li>
+    <li>□ 完成後原型留在一次性分支，決策折疊回 main</li>
+  </ul>
+</div>
 
 </div>
 </body>

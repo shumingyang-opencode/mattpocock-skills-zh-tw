@@ -163,6 +163,47 @@
 <div class="pair"><div class="col-en" lang="en"><p>For "other" issue trackers, write <code>docs/agents/issue-tracker.md</code> from scratch using the user's description.</p></div><div class="col-zh" lang="zh-Hant"><p>對「其他」issue 追蹤器，從零用使用者的描述寫 <code>docs/agents/issue-tracker.md</code>。</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><h3>5. Done</h3></div><div class="col-zh" lang="zh-Hant"><h3>5. 完成</h3></div></div>
 <div class="pair"><div class="col-en" lang="en"><p>Tell the user the setup is complete and which engineering skills will now read from these files. Mention they can edit <code>docs/agents/*.md</code> directly later — re-running this skill is only necessary if they want to switch issue trackers or restart from scratch.</p></div><div class="col-zh" lang="zh-Hant"><p>告訴使用者設定完成，以及哪些工程技能現在會讀取這些檔案。提到他們之後可以直接編輯 <code>docs/agents/*.md</code>——只有在他們想切換 issue 追蹤器或從頭重來時，才需要重跑這個技能。</p></div></div>
+<div class="tutorial-block">
+  <h3><span class="tb-icon">📖</span> 教學解說</h3>
+  <p><code>setup-matt-pocock-skills</code> 是所有工程技能的<strong>前置條件</strong>。它設定三件事：(1) Issue 追蹤器（GitHub/GitLab/本機 markdown）(2) 分診標籤詞彙 (3) 領域文件佈局。其他技能（to-tickets、triage、to-spec）都依賴這些設定。</p>
+  <p>關鍵設計：它不是確定性腳本，而是<strong>提示驅動</strong>的。它會探索 repo、呈現發現、問你問題、確認後才寫入。這確保設定符合你的實際環境，而不是套一個預設值。</p>
+</div>
+<div class="tutorial-block tb-example">
+  <h3><span class="tb-icon">💡</span> Worked Example</h3>
+  <p><strong>情境</strong>：你有一個 GitHub repo，第一次使用這套技能。</p>
+  <ol>
+    <li>執行 <code>/setup-matt-pocock-skills</code></li>
+    <li>Agent 探索：<code>git remote -v</code> → 指向 GitHub。沒有 <code>AGENTS.md</code>。沒有 <code>docs/agents/</code></li>
+    <li>呈現發現，問你三個問題：
+      <ul>
+        <li>A. Issue tracker：「用 GitHub Issues 嗎？」→ 你說是</li>
+        <li>B. Triage labels：「用預設標籤嗎？」→ 你說是</li>
+        <li>C. Domain docs：「單一上下文？」→ 你說是</li>
+      </ul>
+    </li>
+    <li>Agent 寫入：<code>AGENTS.md</code>（加 Agent skills 區塊）、<code>docs/agents/issue-tracker.md</code>、<code>docs/agents/domain.md</code></li>
+    <li>完成。to-tickets、triage 等技能現在可以正常運作</li>
+  </ol>
+</div>
+<div class="tutorial-block tb-mistake">
+  <h3><span class="tb-icon">⚠️</span> 常見錯誤</h3>
+  <ul>
+    <li><strong>不跑就用其他技能</strong>——to-tickets、triage、to-spec 都依賴 setup 產出的設定檔。不跑 = 這些技能會失敗或用錯追蹤器。</li>
+    <li><strong>重複建立 AGENTS.md 和 CLAUDE.md</strong>——如果 CLAUDE.md 已存在，就編輯它，不建 AGENTS.md。反之亦然。</li>
+    <li><strong>不確認就寫入</strong>——Agent 會先給你看草稿。跳過確認 = 可能寫入錯誤的設定。</li>
+    <li><strong>重跑來切換設定</strong>——不需要重跑。直接編輯 <code>docs/agents/*.md</code> 就行。</li>
+  </ul>
+</div>
+<div class="tutorial-block tb-checklist">
+  <h3><span class="tb-icon">✅</span> 練習 / 驗收清單</h3>
+  <ul>
+    <li>□ 已執行 /setup-matt-pocock-skills</li>
+    <li>□ Issue tracker 設定正確（GitHub/GitLab/本機）</li>
+    <li>□ AGENTS.md 或 CLAUDE.md 有 Agent skills 區塊</li>
+    <li>□ docs/agents/ 目錄已建立</li>
+    <li>□ 知道如何手動編輯 docs/agents/*.md</li>
+  </ul>
+</div>
 
 </div>
 </body>

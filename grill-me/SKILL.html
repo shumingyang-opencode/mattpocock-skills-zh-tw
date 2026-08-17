@@ -28,6 +28,39 @@
 <h1>grill-me</h1>
 <div class="subtitle">只有你跟它，它追問到你把自己的計畫想清楚為止。</div>
 <div class="pair"><div class="col-en" lang="en"><p>Run a <code>/grilling</code> session.</p></div><div class="col-zh" lang="zh-Hant"><p>執行一場 <code>/grilling</code> session。</p></div></div>
+<div class="tutorial-block">
+  <h3><span class="tb-icon">📖</span> 教學解說</h3>
+  <p><code>grill-me</code> 是 <code>/grilling</code> 原語的<strong>無狀態包裝</strong>。跟 grill-with-docs 的差別是：grill-me 不寫任何東西到磁碟。它適合在<strong>沒有 repo 的地方</strong>使用——磨利一個計畫、一個設計、一篇寫作。如果你在工作目錄中，永遠選 grill-with-docs。</p>
+  <p>Grill 的核心機制：agent 問問題、你做決策。Agent 會鍥而不捨地追問，直到你沒得閃。這是刻意的——模糊的回答只會讓計畫失敗。</p>
+</div>
+<div class="tutorial-block tb-example">
+  <h3><span class="tb-icon">💡</span> Worked Example</h3>
+  <p><strong>情境</strong>：你在咖啡店，想磨利一個產品想法，但筆電上沒有 repo。</p>
+  <ol>
+    <li>呼叫 <code>/grill-me "我想做一個幫工程師寫文件的 CLI 工具"</code></li>
+    <li>Agent 問：「目標使用者是誰？個人工程師還是團隊？」→ 你：「個人工程師」</li>
+    <li>Agent 問：「它跟現有的 docs generator 有什麼不同？」→ 你：「它根據程式碼自動產生文件，不需要手寫」</li>
+    <li>Agent 問：「支援哪些語言？」→ 你：「先做 TypeScript」</li>
+    <li>Grill 完後，你有了清晰的想法。回到 repo 後，可以用 grill-with-docs 把這些決策寫進 CONTEXT.md</li>
+  </ol>
+</div>
+<div class="tutorial-block tb-mistake">
+  <h3><span class="tb-icon">⚠️</span> 常見錯誤</h3>
+  <ul>
+    <li><strong>在工作目錄中用 grill-me</strong>——如果你在有 repo 的地方，永遠選 grill-with-docs。它會留下紙本痕跡。</li>
+    <li><strong>回答太模糊</strong>——Agent 問「你要什麼？」，你回答「你覺得呢？」。Grill 的設計是你做決策。</li>
+    <li><strong>以為 grill-me 會存檔</strong>——grill-me 是無狀態的。session 結束後，對話內容就消失了。</li>
+  </ul>
+</div>
+<div class="tutorial-block tb-checklist">
+  <h3><span class="tb-icon">✅</span> 練習 / 驗收清單</h3>
+  <ul>
+    <li>□ 知道 grill-me 和 grill-with-docs 的差別</li>
+    <li>□ 只在沒有 repo 的地方使用 grill-me</li>
+    <li>□ 每個問題都有給出具體答案</li>
+    <li>□ Grill 完後有清晰的想法可以帶回 repo</li>
+  </ul>
+</div>
 
 </div>
 </body>

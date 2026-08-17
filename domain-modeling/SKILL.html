@@ -95,6 +95,43 @@
 <li><strong>真實取捨的結果</strong>——存在真正的替代方案，你基於特定理由選了其中一個</li>
 </ol></div></div>
 <div class="pair"><div class="col-en" lang="en"><p>If any of the three is missing, skip the ADR. Use the format in <a href="ADR-FORMAT.html">ADR-FORMAT.md</a>.</p></div><div class="col-zh" lang="zh-Hant"><p>如果三個條件缺一，就跳過 ADR。使用 <a href="ADR-FORMAT.html">ADR-FORMAT.md</a> 中的格式。</p></div></div>
+<div class="tutorial-block">
+  <h3><span class="tb-icon">📖</span> 教學解說</h3>
+  <p><code>domain-modeling</code> 的目標是建立<strong>共同語言</strong>。當團隊對「order」「user」「payment」這些詞的定義不一致時，所有溝通都會出問題。CONTEXT.md 就是這份共同語言的權威來源——它是一個詞彙表，僅此而已，不含實作細節。</p>
+  <p>關鍵機制：(1) <strong>對照詞彙表挑戰</strong>——當使用者用的術語與 CONTEXT.md 衝突時，立刻點出來。(2) <strong>磨利模糊語言</strong>——「account」到底是 Customer 還是 User？(3) <strong>與程式碼交叉比對</strong>——如果程式碼的行為與詞彙表矛盾，浮現它。</p>
+</div>
+<div class="tutorial-block tb-example">
+  <h3><span class="tb-icon">💡</span> Worked Example</h3>
+  <p><strong>情境</strong>：團隊對「cancel order」的理解不一致。</p>
+  <ol>
+    <li>Agent 問：「你說 cancel order，是指取消整個訂單還是部分商品？」</li>
+    <li>你回答：「取消整個訂單」</li>
+    <li>Agent 檢查程式碼：發現 cancel 函數只把 status 設成 cancelled，但沒有處理已出庫的商品</li>
+    <li>Agent 點出矛盾：「你的程式碼只改了 status，但你說要取消整個訂單——已出庫的商品怎麼辦？」</li>
+    <li>你決定：「要加一個 inventory rollback 的步驟」</li>
+    <li>Agent 更新 CONTEXT.md：「cancel order = 把 status 設為 cancelled + rollback 已出庫商品」</li>
+  </ol>
+</div>
+<div class="tutorial-block tb-mistake">
+  <h3><span class="tb-icon">⚠️</span> 常見錯誤</h3>
+  <ul>
+    <li><strong>CONTEXT.md 實作細節</strong>——CONTEXT.md 是詞彙表，不是規格。不該有「在 src/cancel.ts 裡……」這種內容。</li>
+    <li><strong>ADR 太多</strong>——只有三個條件都成立（難以逆轉、沒有上下文會令人驚訝、真實取捨）才建 ADR。不然只會堆出一堆沒人讀的文件。</li>
+    <li><strong>不與程式碼交叉比對</strong>——詞彙表說「cancel = 完整取消」，但程式碼只改 status。這種矛盾不浮現 = 詞彙表不可信。</li>
+    <li><strong>術語衝突不立刻點出來</strong>——等衝突累積才處理 = 團隊會在錯誤的基礎上繼續建構。</li>
+  </ul>
+</div>
+<div class="tutorial-block tb-checklist">
+  <h3><span class="tb-icon">✅</span> 練習 / 驗收清單</h3>
+  <ul>
+    <li>□ CONTEXT.md 只含詞彙表，不含實作細節</li>
+    <li>□ 術語衝突有立刻被點出來並解決</li>
+    <li>□ 模糊語言有被磨利（「account」→ Customer 或 User？）</li>
+    <li>□ 詞彙表有與程式碼交叉比對</li>
+    <li>□ ADR 只在三個條件都成立時才建立</li>
+    <li>□ 術語定案後有就地更新 CONTEXT.md</li>
+  </ul>
+</div>
 
 </div>
 </body>

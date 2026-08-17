@@ -37,6 +37,45 @@
 <li>把發現寫成單一 Markdown 檔案，引用每項主張的來源。</li>
 <li>存在 repo 已經存放此類筆記的地方；遵循既有慣例，如果沒有，就放在一個合理的位置並說在哪裡。</li>
 </ol></div></div>
+<div class="tutorial-block">
+  <h3><span class="tb-icon">📖</span> 教學解說</h3>
+  <p><code>research</code> 是<strong>委派閱讀苦工</strong>的技能。它的設計是：你問一個問題，agent 在背景調查主要來源（官方文件、原始碼、規格、第一方 API），產出一份有引用的 Markdown 報告。你不用等它——它在背景跑，你可以繼續做其他事。</p>
+  <p>關鍵約束：<strong>只信主要來源</strong>。不要信二手轉述、部落格文章、Stack Overflow 回答。每一項主張都要追回到擁有它的來源。這是為了確保研究報告的可信度。</p>
+</div>
+<div class="tutorial-block tb-example">
+  <h3><span class="tb-icon">💡</span> Worked Example</h3>
+  <p><strong>情境</strong>：你要決定 CSV 匯出該用 streaming 還是 batch，需要了解 Node.js 的 Stream API。</p>
+  <ol>
+    <li>呼叫 <code>/research "Node.js Readable Stream 在大資料量下的記憶體行為"</code></li>
+    <li>Agent 在背景調查：
+      <ul>
+        <li>Node.js 官方文件的 Stream 章節（主要來源）</li>
+        <li>Node.js 原始碼中 highWaterMark 的實作（主要來源）</li>
+      </ul>
+    </li>
+    <li>產出報告：`research/nodejs-stream-memory.md`，引用了官方文件和原始碼</li>
+    <li>你拿到報告後，決策有根有據</li>
+  </ol>
+</div>
+<div class="tutorial-block tb-mistake">
+  <h3><span class="tb-icon">⚠️</span> 常見錯誤</h3>
+  <ul>
+    <li><strong>信二手來源</strong>——部落格文章、Medium、Stack Overflow 都是二手轉述。Research 只信主要來源。</li>
+    <li><strong>沒有引用</strong>——報告裡的每個主張都該有來源連結。沒有引用 = 沒有可信度。</li>
+    <li><strong>把 research 當成取代思考</strong>——Research 餵養思考，不是取代思考。拿到報告後，你還是要做決策。</li>
+    <li><strong>問題太廣</strong>——「研究 Node.js」太廣。要精準：「Node.js Readable Stream 在大資料量下的記憶體行為」。</li>
+  </ul>
+</div>
+<div class="tutorial-block tb-checklist">
+  <h3><span class="tb-icon">✅</span> 練習 / 驗收清單</h3>
+  <ul>
+    <li>□ 問題精準、範圍明確</li>
+    <li>□ 報告只引用主要來源（官方文件、原始碼、規格）</li>
+    <li>□ 每個主張都有來源連結</li>
+    <li>□ 報告存在 repo 的合理位置</li>
+    <li>□ 拿到報告後有做後續決策</li>
+  </ul>
+</div>
 
 </div>
 </body>

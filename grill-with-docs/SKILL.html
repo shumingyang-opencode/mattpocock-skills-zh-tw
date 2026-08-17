@@ -28,6 +28,41 @@
 <h1>grill-with-docs</h1>
 <div class="subtitle">跟它一輪輪對談，把你要的東西想清楚，順手讓它把結論寫成文件。</div>
 <div class="pair"><div class="col-en" lang="en"><p>Run a <code>/grilling</code> session, using the <code>/domain-modeling</code> skill.</p></div><div class="col-zh" lang="zh-Hant"><p>使用 <code>/domain-modeling</code> 技能，執行一場 <code>/grilling</code> session。</p></div></div>
+<div class="tutorial-block">
+  <h3><span class="tb-icon">📖</span> 教學解說</h3>
+  <p><code>grill-with-docs</code> 是主流程的<strong>第一站</strong>。它的核心是 <code>/grilling</code> 原語——一個回合制的訪談，agent 問問題、你做決策。關鍵區別是它<strong>有狀態</strong>：會把學到的東西寫進 <code>CONTEXT.md</code> 和 ADR（Architecture Decision Records），讓後續 session 可以從上次停下的地方繼續。</p>
+  <p>與 <code>/grill-me</code> 的差別：grill-me 是無狀態的，不寫任何東西到磁碟。如果你在工作目錄（有 repo 的地方），<strong>永遠選 grill-with-docs</strong>，因為它留下的紙本痕跡是後續 to-spec、to-tickets、implement 的素材。</p>
+</div>
+<div class="tutorial-block tb-example">
+  <h3><span class="tb-icon">💡</span> Worked Example</h3>
+  <p><strong>情境</strong>：你要為一個 Node.js 專案設計「用戶匯出 CSV」功能。</p>
+  <ol>
+    <li>呼叫 <code>/grill-with-docs</code>，描述你的點子</li>
+    <li>Agent 會問：「匯出的資料範圍是什麼？全部用戶還是有篩選條件？」→ 你決定「支援日期範圍篩選」</li>
+    <li>Agent 會問：「匯出格式除了 CSV 還需要 JSON 嗎？」→ 你決定「先只做 CSV」</li>
+    <li>這些決策會被寫進 <code>CONTEXT.md</code>，標記為 ADR</li>
+    <li>如果 grill 發現需要實際跑一下才能確認某些問題（例如 CSV 串流的效能），建議你繞道 <code>/prototype</code></li>
+  </ol>
+</div>
+<div class="tutorial-block tb-mistake">
+  <h3><span class="tb-icon">⚠️</span> 常見錯誤</h3>
+  <ul>
+    <li><strong>在 grill 之前就 compact context</strong>——grill-with-docs 的價值在於它能在同一個 context window 中保持連續性。Compact 會切斷這個連續性。</li>
+    <li><strong>回答得太模糊</strong>——Agent 問「你要什麼？」，你回答「你覺得呢？」。Grill 的設計是<strong>你做決策</strong>，agent 負責問到你沒得閃。模糊的回答只會讓 grill 拖更久。</li>
+    <li><strong>跳過 grill 直接 implement</strong>—— grill 的目的是把需求想清楚。跳過它 = 在不清楚要做什麼的情況下寫程式碼。</li>
+    <li><strong>把 grill-me 當成 grill-with-docs 的替代</strong>——如果你在工作目錄中，永遠選 grill-with-docs。grill-me 沒有留下任何文件。</li>
+  </ul>
+</div>
+<div class="tutorial-block tb-checklist">
+  <h3><span class="tb-icon">✅</span> 練習 / 驗收清單</h3>
+  <ul>
+    <li>□ 能說明 grill-with-docs 和 grill-me 的差別（有狀態 vs 無狀態）</li>
+    <li>□ 知道 grill 的核心機制（agent 問、你答、決策寫進 CONTEXT.md）</li>
+    <li>□ 每個問題都有給出具體答案，而不是模糊回應</li>
+    <li>□ 如果 grill 發現需要實際跑，會建議繞道 prototype</li>
+    <li>□ Grill 完後有 CONTEXT.md 和 ADR 作為後續素材</li>
+  </ul>
+</div>
 
 </div>
 </body>

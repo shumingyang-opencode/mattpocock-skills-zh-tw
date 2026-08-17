@@ -159,6 +159,43 @@
 <li>加入新浮現的 tickets（先建立再接線）；把答案使之明確化的任何迷霧轉化，並把每片已轉化的迷霧從 <strong>Not yet specified</strong> 清除，讓它只以新 ticket 的形式存在。如果答案揭露某張 ticket——這張或其他張——位於目的地之外，<strong>裁定它超出範圍</strong>，而不是在路線上解決它。如果這個決策使地圖的其他部分失效，更新或刪除那些 tickets。</li>
 </ol></div></div>
 <div class="pair"><div class="col-en" lang="en"><p>The user may run unblocked tickets in parallel, so expect other sessions to be editing the tracker concurrently.</p></div><div class="col-zh" lang="zh-Hant"><p>使用者可能平行處理未阻塞的 tickets，所以要預期其他 sessions 會同時編輯追蹤器。</p></div></div>
+<div class="tutorial-block">
+  <h3><span class="tb-icon">📖</span> 教學解說</h3>
+  <p><code>wayfinder</code> 是認知負擔最重的流程——用於<strong>大到連地圖都還沒畫</strong>的超大工程。它的核心概念是<strong>戰爭迷霧</strong>：你不知道從這裡到目的地的路徑，wayfinder 會逐步清除迷霧，一次決策一張 ticket，直到路徑清晰。</p>
+  <p>關鍵設計決策：wayfinder <strong>交接，不建置</strong>。它解決決策，但不寫程式碼。當地圖清晰後，你要手動 merge 到主流程（走 to-spec → to-tickets → implement）。把地圖直接繞進 implement 會跳過收斂，丟掉關聯的細節。</p>
+</div>
+<div class="tutorial-block tb-example">
+  <h3><span class="tb-icon">💡</span> Worked Example</h3>
+  <p><strong>情境</strong>：你要把一個單體應用拆成微服務，但不確定從哪裡開始。</p>
+  <ol>
+    <li><strong>繪製地圖</strong>：grill 確定目的地（「將單體拆成 3 個微服務」），廣度優先掃描找出所有需要決策的問題</li>
+    <li>建立地圖 ticket（<code>wayfinder:map</code>），把模糊的問題寫進 Not yet specified</li>
+    <li>建立可明確化的 tickets：「哪些 API 需要跨服務通訊？」「服務間怎麼保持資料一致性？」</li>
+    <li><strong>走完地圖</strong>：逐一解決 tickets。解決「跨服務通訊」後，發現新的問題——怎麼處理 saga pattern？→ 新增 ticket</li>
+    <li>迷霧逐漸清除，直到所有 tickets 都解決 → 路徑清晰</li>
+    <li>把決策合併到 to-spec，開始正式建置</li>
+  </ol>
+</div>
+<div class="tutorial-block tb-mistake">
+  <h3><span class="tb-icon">⚠️</span> 常見錯誤</h3>
+  <ul>
+    <li><strong>把 wayfinder 用在範圍明確的功能上</strong>——wayfinder 是給「大到裝不進單一 session」的工程。範圍明確的功能用 grill-with-docs → to-spec → to-tickets 就夠了。</li>
+    <li><strong>在繪製地圖時就開始寫程式碼</strong>——wayfinder 的規則是「一個 session 絕不解決超過一張 ticket」（research tickets 除外）。繪圖階段不做任何實作。</li>
+    <li><strong>把地圖直接繞進 implement</strong>——wayfinder 完成後要手動 merge 到主流程（to-spec），不能跳過收斂。</li>
+    <li><strong>在 Not yet specified 裡放入已決定的東西</strong>——「Not yet specified」只放尚未能明確化的迷霧。已經決定的東西放 Decisions so far。</li>
+  </ul>
+</div>
+<div class="tutorial-block tb-checklist">
+  <h3><span class="tb-icon">✅</span> 練習 / 驗收清單</h3>
+  <ul>
+    <li>□ 知道 wayfinder 適用的情境（大到裝不進單一 session 的工程）</li>
+    <li>□ 知道 wayfinder 交接不建置（完後走 to-spec）</li>
+    <li>□ 繪圖階段不寫程式碼</li>
+    <li>□ 每個 session 只解決一張 ticket</li>
+    <li>□ Not yet specified 只放迷霧，不放已決定的東西</li>
+    <li>□ 知道 out of scope 的處理方式（關閉 ticket + 記錄原因）</li>
+  </ul>
+</div>
 
 </div>
 </body>

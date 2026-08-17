@@ -110,6 +110,40 @@
 <li>檢查每一行的<strong>相關性</strong>：它仍然關乎文件在做什麼嗎？一行可能因為從不關乎任務（純粹的敘述，或一個應該被揭露的分支）或因為它所描述的行為或世界改變而過時，來失去相關性。更短的文件更容易保持相關。沒有修剪紀律，預設的命運是<strong>沉積（sediment）</strong>：過時層沉澱下來，因為新增感覺安全而移除感覺冒險，直到您必須往下鑽穿它們，才能找到仍然活著的東西。</li>
 <li>逐句尋找<strong>無效運算（no-ops）</strong>：一個模型預設已經服從的指示，付出負載卻什麼也沒說。測試方式 — 它相對於預設改變行為嗎？— 是模型相對的，不是讀者相對的：兩個人對一個無效運算意見分歧，是對預設意見分歧，並靠執行文件來解決，而不是靠辯論。當一個句子失敗時，刪掉整個句子，而不是從它身上修剪單詞。這個測試也為領頭詞打分：一個太弱以致無法擊敗預設的詞（當代理已經有點徹底時說 <em>be thorough</em>）是一個無效運算，解方是更強的詞（<em>relentless</em>），而不是不同的技巧。</li>
 </ul></div></div>
+<div class="tutorial-block">
+  <h3><span class="tb-icon">📖</span> 教學解說</h3>
+  <p><code>writing-for-agents</code> 是「怎麼寫好技能」這套方法論的<strong>機器可讀版</strong>。write-great-skills.html 是給人看的教學；這個技能是給 agent 看的參考。它的核心概念是：<strong>所有 agent-facing 文件的寫法本質相同</strong>——無論是技能、AGENTS.md、規格、ticket，都用同樣的槓桿（context pointer、leading words、pruning）來控制行為。</p>
+  <p>最重要的設計概念是<strong>資訊階層</strong>：步驟（agent 執行的有序動作）→ 檔內參考（按需查閱）→ 揭露參考（用 context pointer 拉的外部檔）。每一層的選擇都在平衡 context load 和 cognitive load。</p>
+</div>
+<div class="tutorial-block tb-example">
+  <h3><span class="tb-icon">💡</span> Worked Example</h3>
+  <p><strong>情境</strong>：你要寫一個「幫專案加 prettier」的 AGENTS.md 規則。</p>
+  <ol>
+    <li><strong>Context pointer</strong>：在 AGENTS.md 裡寫一行——「Prettier: 見 <code>docs/prettier.md</code>」。這就是一個 context pointer。Agent 每次都看到這行，但只在需要時才拉那個檔案。</li>
+    <li><strong>Leading word</strong>：在 prettier.md 裡寫「run <code>npx prettier --check .</code> before every commit」而不是「確保程式碼格式正確」。Leading word 是 <code>prettier --check</code>，它會觸發 agent 對 prettier CLI 的先驗。</li>
+    <li><strong>Pruning</strong>：不要在 prettier.md 裡解釋 prettier 是什麼——agent 已經知道了。只寫「在這個專案裡怎麼用」。跑 deletion test：把「prettier 是什麼」那段砍掉，agent 行為不變，就是 no-op。</li>
+    <li><strong>資訊階層</strong>：步驟 = 在 commit 前跑 prettier --check；參考 = .prettierrc 的設定說明。步驟放前面，參考放後面。</li>
+  </ol>
+</div>
+<div class="tutorial-block tb-mistake">
+  <h3><span class="tb-icon">⚠️</span> 常見錯誤</h3>
+  <ul>
+    <li><strong>把 AGENTS.md 寫成說明書</strong>——解釋 prettier 是什麼、為什麼要用它。Agent 不需要這些；它需要的是「在這個專案裡怎麼用」。</li>
+    <li><strong>Context pointer 措辭太弱</strong>——「相關文件見 docs/」太模糊。要精準：「Prettier 設定見 <code>docs/prettier.md</code>」。</li>
+    <li><strong>否定句引導</strong>——「不要用 semicolons」→ agent 反而會想 semicolons。改用正向：「使用 no-semi 風格」。</li>
+    <li><strong>把參考資料全部塞進主檔</strong>——AGENTS.md 或 SKILL.md 越大，每次 request 的成本越高。拆出去用 pointer。</li>
+  </ul>
+</div>
+<div class="tutorial-block tb-checklist">
+  <h3><span class="tb-icon">✅</span> 練習 / 驗收清單</h3>
+  <ul>
+    <li>□ 能說明資訊階層的三層（步驟 → 檔內參考 → 揭露參考）</li>
+    <li>□ Context pointer 的措辭精準（有 leading word、有明確檔案路徑）</li>
+    <li>□ 沒有否定句引導（都用正向行為描述）</li>
+    <li>□ 沒有 agent 已知的背景知識（跑了 deletion test）</li>
+    <li>□ SKILL.md / AGENTS.md 每一行都對行為有實際影響</li>
+  </ul>
+</div>
 
 </div>
 </body>

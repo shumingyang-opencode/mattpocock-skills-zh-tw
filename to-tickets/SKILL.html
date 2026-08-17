@@ -137,6 +137,45 @@
 </ul>
 <p></issue-template></p></div></div>
 <div class="pair"><div class="col-en" lang="en"><p>In either form, avoid specific file paths or code snippets — they go stale fast. Exception: if a prototype produced a snippet that encodes a decision more precisely than prose can (state machine, reducer, schema, type shape), inline it and note briefly that it came from a prototype. Trim to the decision-rich parts — not a working demo, just the important bits.</p></div><div class="col-zh" lang="zh-Hant"><p>無論哪種形式，都避免具體的檔案路徑或程式碼片段——它們很快就會過時。例外：如果原型產出了一個比散文更能精確編碼決策的片段（狀態機、reducer、schema、型別形狀），就把它內嵌進去，並簡短註明它來自原型。只保留富含決策的部分——不是可運作的示範，只是重要的片段。</p></div></div>
+<div class="tutorial-block">
+  <h3><span class="tb-icon">📖</span> 教學解說</h3>
+  <p><code>to-tickets</code> 把一份規格拆成<strong>曳光彈大小的工單</strong>。每個 ticket 是一個端對端的行為——從使用者的視角出發，不是逐層的實作清單。關鍵概念是 <strong>blocking edges（阻塞邊）</strong>：每張 ticket 都宣告「我依賴哪些 ticket 先完成」，這讓 implement 知道可以平行處理哪些、必須按順序做哪些。</p>
+  <p>Ticket 的粒度很關鍵：太粗 = 一個 session 做不完；太細 = ticket 之間的依賴關係太複雜。好的 ticket 大小大約是一個 100K token agent session 能完成的工作量。</p>
+</div>
+<div class="tutorial-block tb-example">
+  <h3><span class="tb-icon">💡</span> Worked Example</h3>
+  <p><strong>從規格到 tickets 的拆解</strong>：</p>
+  <ol>
+    <li>規格說：「匯出 CSV 端點，支援日期範圍篩選，串流回傳」</li>
+    <li>拆成三張 tickets：
+      <ul>
+        <li><strong>Ticket 1</strong>：「建立 CSV 匯出端點」（阻塞於：無）→ 最小可用版本，能回傳 CSV</li>
+        <li><strong>Ticket 2</strong>：「加入日期範圍篩選」（阻塞於：Ticket 1）→ 在端點上加 query string 篩選</li>
+        <li><strong>Ticket 3</strong>：「優化為串流回傳」（阻塞於：Ticket 1）→ 大資料量時不會 OOM</li>
+      </ul>
+    </li>
+    <li>Ticket 2 和 3 可以平行處理（都只阻塞於 Ticket 1）</li>
+  </ol>
+</div>
+<div class="tutorial-block tb-mistake">
+  <h3><span class="tb-icon">⚠️</span> 常見錯誤</h3>
+  <ul>
+    <li><strong>Ticket 描述的是逐層實作</strong>——「Ticket 1：建資料庫 schema。Ticket 2：建 API。Ticket 3：建前端。」這是水平切片，不是曳光彈。每個 ticket 應該是一個端對端的行為。</li>
+    <li><strong>阻塞邊過多</strong>——如果一張 ticket 依賴五張其他 ticket，粒度可能太細了。合併它們。</li>
+    <li><strong>沒有問使用者確認</strong>——to-tickets 會問「粒度對嗎？阻塞邊正確嗎？」。跳過確認 = 可能在錯誤的方向上浪費時間。</li>
+    <li><strong>關閉或修改父 issue</strong>——to-tickets 明確禁止關閉父 issue。父 issue 是整個功能的追蹤點。</li>
+  </ul>
+</div>
+<div class="tutorial-block tb-checklist">
+  <h3><span class="tb-icon">✅</span> 練習 / 驗收清單</h3>
+  <ul>
+    <li>□ 每張 ticket 描述的是一個端對端的行為（不是逐層實作）</li>
+    <li>□ 每張 ticket 都有「阻塞於」欄位</li>
+    <li>□ 粒度適合一個 100K token session 完成</li>
+    <li>□ 使用者確認了粒度和阻塞邊</li>
+    <li>□ 沒有關閉或修改父 issue</li>
+  </ul>
+</div>
 
 </div>
 </body>

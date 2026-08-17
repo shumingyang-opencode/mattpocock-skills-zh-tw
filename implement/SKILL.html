@@ -32,6 +32,44 @@
 <div class="pair"><div class="col-en" lang="en"><p>Run typechecking regularly, single test files regularly, and the full test suite once at the end.</p></div><div class="col-zh" lang="zh-Hant"><p>定期執行型別檢查，定期執行單一測試檔案，並在最後執行一次完整的測試套件。</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><p>Once done, use /code-review to review the work.</p></div><div class="col-zh" lang="zh-Hant"><p>完成後，用 /code-review 審查這份工作。</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><p>Commit your work to the current branch.</p></div><div class="col-zh" lang="zh-Hant"><p>把你的工作 commit 到目前的分支。</p></div></div>
+<div class="tutorial-block">
+  <h3><span class="tb-icon">📖</span> 教學解說</h3>
+  <p><code>implement</code> 是主流程的<strong>執行引擎</strong>。它本身很薄——只有五條規則——因為真正的重活交給了它內部驅動的 <code>/tdd</code> 和收尾的 <code>/code-review</code>。這種「薄外包裝 + 原語組合」的設計，正是 write-great-skills 提倡的 pattern：SKILL.md 保持小，把行為委派給已經存在的原語。</p>
+  <p>關鍵設計決策：implement <strong>先跑 typecheck，再跑單一測試，最後跑完整套件</strong>。這是為了保持快速回饋迴圈——紅-綠循環不該被完整的測試套件拖慢。commit 發生在 code-review 通過之後，確保進版的都是審查過的。</p>
+</div>
+<div class="tutorial-block tb-example">
+  <h3><span class="tb-icon">💡</span> Worked Example</h3>
+  <p><strong>情境</strong>：你有一張 ticket：「實作 /api/export CSV 端點」，已經有了 to-spec 產出的規格。</p>
+  <ol>
+    <li>讀取規格，確認接縫：公開介面是 <code>POST /api/export</code>，回傳 CSV 檔案串流</li>
+    <li>呼叫 <code>/tdd</code>：先寫一支測試——「給定有效的 JSON body，回傳 Content-Type: text/csv」→ 紅</li>
+    <li>寫最小實作讓測試變綠：只實作 CSV 串流，不做 authentication、不做 rate limiting</li>
+    <li>確認型別檢查通過（<code>npx tsc --noEmit</code>）</li>
+    <li>重複步驟 2–4，逐步加入邊緣案例（空 body、欄位名包含逗號等）</li>
+    <li>最後跑完整測試套件確認沒有回歸</li>
+    <li>呼叫 <code>/code-review</code>，確認通過後 commit</li>
+  </ol>
+</div>
+<div class="tutorial-block tb-mistake">
+  <h3><span class="tb-icon">⚠️</span> 常見錯誤</h3>
+  <ul>
+    <li><strong>在 implement 裡自己寫所有實作</strong>——implement 的本質是「驅動 tdd」，不是自己寫一大坨程式碼。每一個切片都該走紅-綠循環。</li>
+    <li><strong>跳過 typecheck 直接跑測試</strong>——typecheck 是最快能抓到介面錯誤的檢查。先跑它能避免在紅-綠循環中浪費時間在型別錯誤上。</li>
+    <li><strong>在最後才跑完整測試套件</strong>——每個切片完成後都該跑一次，確保沒有回歸。等到最後才跑，回歸範圍已經很大了。</li>
+    <li><strong>commit 前不跑 code-review</strong>——implement 的收尾條件就是 code-review 通過。沒有審查就 commit = 把品質保障從流程中移除。</li>
+  </ul>
+</div>
+<div class="tutorial-block tb-checklist">
+  <h3><span class="tb-icon">✅</span> 練習 / 驗收清單</h3>
+  <ul>
+    <li>□ 能說明 implement 的內部流程（tdd → typecheck → code-review → commit）</li>
+    <li>□ 知道 pre-agreed seams 的意思（事先與使用者確認要測哪些接縫）</li>
+    <li>□ 每個實作切片都走了紅-綠循環</li>
+    <li>□ typecheck 在每個切片後都有跑</li>
+    <li>□ 完整測試套件在最後有跑</li>
+    <li>□ code-review 在 commit 前有跑</li>
+  </ul>
+</div>
 
 </div>
 </body>

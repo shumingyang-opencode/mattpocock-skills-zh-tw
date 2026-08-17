@@ -134,6 +134,41 @@
 </ul></div></div>
 <div class="pair"><div class="col-en" lang="en"><h2>Precondition</h2></div><div class="col-zh" lang="zh-Hant"><h2>前置條件</h2></div></div>
 <div class="pair"><div class="col-en" lang="en"><p><strong><code>/setup-matt-pocock-skills</code></strong> — run before your first engineering flow to configure the issue tracker, triage labels, and doc layout the other skills assume. Custom issue trackers also work.</p></div><div class="col-zh" lang="zh-Hant"><p><strong><code>/setup-matt-pocock-skills</code></strong> ——在你的第一個工程流程之前執行，以設定其他技能所預設的 Issue 追蹤器、分診標籤與文件布局。自訂的 Issue 追蹤器也行。</p></div></div>
+<div class="tutorial-block">
+  <h3><span class="tb-icon">📖</span> 教學解說</h3>
+  <p><code>ask-matt</code> 是整個技能集的<strong>路由器</strong>。當你不知道下一步該做什麼，或不確定該用哪個技能時，把你的狀況描述給它聽，它會幫你挑對的入口。關鍵概念是 <strong>flow（流程）</strong>——穿越技能的一條路徑。多數工作走主流程（點子 → 交付），但也有進入匝道（從 bug 或大工程匯入）和獨立技能。</p>
+  <p>路由技能的設計要點：<strong>description 要精準</strong>。因為它是 model-invoked，它的 description 常駐在 agent context 裡。如果 description 太模糊，agent 會在不該觸發時觸發；太具體，則會漏掉該觸發的情境。這就是 write-great-skills 裡提到的「trigger precision」。</p>
+</div>
+<div class="tutorial-block tb-example">
+  <h3><span class="tb-icon">💡</span> Worked Example</h3>
+  <p><strong>情境</strong>：你有一個 Django 專案，想加一個「用戶匯出 CSV」功能。你不太確定從哪裡開始。</p>
+  <ol>
+    <li>呼叫 <code>/ask-matt</code>：「我想在 Django 專案加一個 CSV 匯出功能，不確定要先 grill 還是直接 implement」</li>
+    <li>它會判斷這是<strong>主流程</strong>的起點，建議你從 <code>/grill-with-docs</code> 開始，先把需求想清楚</li>
+    <li>Grill 完後，它會問「這要跨越多個 session 嗎？」如果答案是是，它會引導你走 <code>/to-spec</code> → <code>/to-tickets</code> → <code>/implement</code></li>
+    <li>如果 grill 發現需要實際跑一下才能確認某些設計決策，它會建議你繞道 <code>/prototype</code>，用 handoff 來回搭橋</li>
+  </ol>
+</div>
+<div class="tutorial-block tb-mistake">
+  <h3><span class="tb-icon">⚠️</span> 常見錯誤</h3>
+  <ul>
+    <li><strong>跳過 grill 直接 implement</strong>——這是主流程最常見的錯誤。沒有先想清楚需求就動手，最後會花更多時間重做。</li>
+    <li><strong>在 grill 之前就 compact context</strong>——主流程的步驟 1–3 應該在同一個不間斷的 context window 裡，因為 grilling、規格、ticket 都要建立在同一份思考上。</li>
+    <li><strong>把 triage 用在自己建立的 ticket 上</strong>——triage 只用於外來的 issues。<code>/to-tickets</code> 產出的 ticket 已經是 agent-ready，不需要再分診。</li>
+    <li><strong>把 wayfinder 用在範圍明確的功能上</strong>——wayfinder 是給「大到連地圖都還沒畫」的超大工程。範圍明確的功能，用 grill-with-docs → to-spec → to-tickets 就夠了。</li>
+  </ul>
+</div>
+<div class="tutorial-block tb-checklist">
+  <h3><span class="tb-icon">✅</span> 練習 / 驗收清單</h3>
+  <ul>
+    <li>□ 能畫出主流程的步驟順序（grill → branch → spec → tickets → implement）</li>
+    <li>□ 知道三種進入匝道各自的觸發情境（bug、大工程、broken）</li>
+    <li>□ 知道 prototype 什麼時候該用（需要實際跑才能回答的問題）</li>
+    <li>□ 知道 context hygiene 的規則（步驟 1–3 不間斷，逼近 smart zone 時 compact）</li>
+    <li>□ 知道 triage 只用於外來 issues，不用於自己產出的 ticket</li>
+    <li>□ 知道 wayfinder 完成後要手動 merge 到主流程（to-spec），不能直接 implement</li>
+  </ul>
+</div>
 
 </div>
 </body>

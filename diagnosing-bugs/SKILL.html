@@ -162,6 +162,44 @@
 <li>[ ] 正確的假設寫進 commit / PR 訊息——讓下一位除錯者學到</li>
 </ul></div></div>
 <div class="pair"><div class="col-en" lang="en"><p><strong>Then ask: what would have prevented this bug?</strong> If the answer involves architectural change (no good test seam, tangled callers, hidden coupling) hand off to the <code>/improve-codebase-architecture</code> skill with the specifics. Make the recommendation <strong>after</strong> the fix is in, not before — you have more information now than when you started.</p></div><div class="col-zh" lang="zh-Hant"><p><strong>然後問：什麼能防止這個 bug？</strong> 如果答案涉及架構變更（沒有好的測試接縫、呼叫者糾纏不清、隱藏的耦合），把具體內容交接給 <code>/improve-codebase-architecture</code> 技能。在修復完成<strong>之後</strong>再提出建議，不要提前——你現在比開始時擁有更多資訊。</p></div></div>
+<div class="tutorial-block">
+  <h3><span class="tb-icon">📖</span> 教學解說</h3>
+  <p><code>diagnosing-bugs</code> 的核心哲學是：<strong>先有迴圈，再談假設</strong>。大多數除錯的失敗來自「直接跳到假設」——你猜了一個原因，花時間追下去，結果猜錯了。這個技能強制你先建立一個<strong>會變紅的緊密迴圈</strong>（一個指令能重現 bug），然後才開始猜。</p>
+  <p>六個階段的順序很關鍵：(1) 建迴圈 → (2) 重現+最小化 → (3) 假設 → (4) 插樁 → (5) 修復+回歸測試 → (6) 清理+事後檢討。每個階段都有明確的完成標準——沒有通過就不能往下走。</p>
+</div>
+<div class="tutorial-block tb-example">
+  <h3><span class="tb-icon">💡</span> Worked Example</h3>
+  <p><strong>情境</strong>：用戶回報「偶爾會收到空的 CSV 匯出」，但你無法重現。</p>
+  <ol>
+    <li><strong>Phase 1</strong>：建立迴圈。寫一個腳本 <code>test-export.sh</code>：<code>curl -s /api/export?start=2024-01-01 | head -5</code>。跑 100 次，發現有 3 次回傳空結果。迴圈建立了——重現率 3%。</li>
+    <li><strong>Phase 2</strong>：最小化。砍掉日期篩選參數 → 仍然 3%。砍掉 header → 仍然 3%。發現跟並發有關——兩個同時請求時更容易觸發。最小重現：<code>for i in {1..10}; do curl -s /api/export &amp; done; wait</code>。</li>
+    <li><strong>Phase 3</strong>：提出 3 個假設：(a) 共用 cursor 沒有 thread safety (b) 記憶體不足 (c) 超時。展示給使用者看——使用者說「我們上週改了 cursor pooling」→ 假設 (a) 排第一。</li>
+    <li><strong>Phase 4</strong>：插樁。加 <code>[DEBUG-cursor]</code> 日誌在 cursor 初始化處，確認是否有 race condition。</li>
+    <li><strong>Phase 5</strong>：修復。加 mutex 保護 cursor 初始化。回歸測試通過。</li>
+  </ol>
+</div>
+<div class="tutorial-block tb-mistake">
+  <h3><span class="tb-icon">⚠️</span> 常見錯誤</h3>
+  <ul>
+    <li><strong>直接跳到假設</strong>——「我覺得是 race condition」→ 花兩小時追，結果不是。技能要求先有迴圈再猜。</li>
+    <li><strong>迴圈太慢</strong>——一個要跑 30 秒的迴圈只比沒有好一點。目標是幾秒內完成。</li>
+    <li><strong>沒有最小化就開始假設</strong>——最小化能縮小假設空間。未最小化 = 更多活動部件 = 更多可能原因。</li>
+    <li><strong>一個假設就開始測</strong>——單一假設容易錨定。先列出 3–5 個排序的假設，展示給使用者看。</li>
+  </ul>
+</div>
+<div class="tutorial-block tb-checklist">
+  <h3><span class="tb-icon">✅</span> 練習 / 驗收清單</h3>
+  <ul>
+    <li>□ 迴圈能在幾秒內完成</li>
+    <li>□ 迴圈是確定性的（或有高重現率）</li>
+    <li>□ 迴圈能變紅（不是「跑起來沒有報錯」）</li>
+    <li>□ 最小化後每個剩餘元素都承重</li>
+    <li>□ 有 3–5 個排序的假設，且每個都可否證</li>
+    <li>□ 測試前把假設清單展示給使用者看</li>
+    <li>□ 修復後有回歸測試</li>
+    <li>□ 清理了所有插樁（grep 確認）</li>
+  </ul>
+</div>
 
 </div>
 </body>

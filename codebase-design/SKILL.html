@@ -169,6 +169,41 @@
 <li><strong>考量其相依而深化一個叢集</strong>——見 <a href="DEEPENING.html">DEEPENING.md</a>：相依分類、接縫紀律，以及「取代而不分層」的測試。</li>
 <li><strong>探索替代介面</strong>——見 <a href="DESIGN-IT-TWICE.html">DESIGN-IT-TWICE.md</a>：並行啟動子代理，用幾種截然不同的方式設計介面，然後在深度、局部性與接縫位置之間比較。</li>
 </ul></div></div>
+<div class="tutorial-block">
+  <h3><span class="tb-icon">📖</span> 教學解說</h3>
+  <p><code>codebase-design</code> 的核心概念是<strong>深度（Depth）</strong>：深模組 = 小介面 + 大量實作。淺模組 = 大介面 + 少許實作。深度的價值是<strong>槓桿收益</strong>（每單位介面給更多能力）和<strong>局部性</strong>（變更集中在一個地方）。</p>
+  <p>四個原則：(1) 深度是介面的屬性，不是實作的屬性。(2) 刪除測試：刪掉模組後，複雜度是消失（=轉送層）還是重現（=在賺住宿費）？(3) 介面就是測試表面——呼叫者和測試跨越同一個接縫。(4) 一個轉接器 = 假設性接縫；兩個 = 真實接縫。</p>
+</div>
+<div class="tutorial-block tb-example">
+  <h3><span class="tb-icon">💡</span> Worked Example</h3>
+  <p><strong>情境</strong>：你的 <code>OrderService</code> 有 15 個公開方法，每個都只做一件小事。</p>
+  <ol>
+    <li>套用深度測試：<code>OrderService</code> 是淺模組——15 個方法的介面幾乎跟實作一樣複雜</li>
+    <li>刪除測試：刪掉 <code>OrderService</code> → 複雜度散落在 8 個呼叫者之間 → 它在賺住宿費</li>
+    <li>深化方向：把 15 個方法收斂成 3 個——<code>createOrder</code>、<code>fulfillOrder</code>、<code>cancelOrder</code></li>
+    <li>結果：介面從 15 方法縮到 3 方法（小介面），實作把 15 個步驟藏在裡面（大量實作）→ 深模組</li>
+    <li>槓桿收益：8 個呼叫者都從 3 個簡單方法受益；局部性：order 邏輯集中在一個地方</li>
+  </ol>
+</div>
+<div class="tutorial-block tb-mistake">
+  <h3><span class="tb-icon">⚠️</span> 常見錯誤</h3>
+  <ul>
+    <li><strong>把介面當成 TypeScript interface</strong>——這裡的介面是「呼叫者必須知道的每一件事」，不只是型別簽章。</li>
+    <li><strong>為了測試而抽純函式</strong>——如果真正的 bug 藏在「函式如何被呼叫」，抽出來只是轉移問題。</li>
+    <li><strong>一個轉接器就引入接縫</strong>——一個轉接器是假設性的。要有兩個才能確認真的有變異。</li>
+    <li><strong>把深度當成行數比率</strong>——不是「實作行數 / 介面行數」，而是「每單位介面給多少能力」。</li>
+  </ul>
+</div>
+<div class="tutorial-block tb-checklist">
+  <h3><span class="tb-icon">✅</span> 練習 / 驗收清單</h3>
+  <ul>
+    <li>□ 能區分深模組和淺模組</li>
+    <li>□ 能套用刪除測試判斷模組是否在賺住宿費</li>
+    <li>□ 知道介面 = 呼叫者必須知道的每一件事（不只是型別簽章）</li>
+    <li>□ 知道轉接器的數量決定接縫的真實性</li>
+    <li>□ 能用深度、局部性、槓桿收益來解釋設計決策</li>
+  </ul>
+</div>
 
 </div>
 </body>

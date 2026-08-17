@@ -51,6 +51,43 @@
 </ol></div><div class="col-zh" lang="zh-Hant"><ol start="5">
 <li><strong>完成 merge/rebase。</strong> 把所有東西加入並 commit。如果是在 rebase，繼續 rebase 流程直到所有 commit 都 rebase 完。</li>
 </ol></div></div>
+<div class="tutorial-block">
+  <h3><span class="tb-icon">📖</span> 教學解說</h3>
+  <p><code>resolving-merge-conflicts</code> 的核心原則是：<strong>追溯到意圖，而不是挑選行</strong>。每個衝突都有兩邊的意圖——A 要做 X、B 要做 Y。解決方式不是「選 A 還是選 B」，而是「理解兩邊的意圖，然後找到能保留兩邊意圖的方案」。</p>
+  <p>關鍵規則：<strong>永遠解決，絕不 --abort</strong>。Abort 只是把問題推到以後。每一個 hunk 都要解決——如果兩邊不相容，選擇符合 merge 目標的一方，並記下取捨。</p>
+</div>
+<div class="tutorial-block tb-example">
+  <h3><span class="tb-icon">💡</span> Worked Example</h3>
+  <p><strong>情境</strong>：你在 rebase main 到你的功能分支，<code>src/export.ts</code> 有衝突。</p>
+  <ol>
+    <li>看衝突：A 在 export 函數加了 header 驗證、B 改了 CSV 格式</li>
+    <li>追溯意圖：A 的 commit 說「fix: prevent empty CSV export」→ 意圖是防止空匯出；B 的 commit 說「feat: support custom CSV delimiter」→ 意圖是加 delimiter 支援</li>
+    <li>兩個意圖不衝突——保留 header 驗證 + 保留 delimiter 支援</li>
+    <li>手動合併：在 header 驗證之後、CSV 格式化之前加 delimiter 邏輯</li>
+    <li>跑自動化檢查：typecheck → tests → format</li>
+    <li>完成 rebase</li>
+  </ol>
+</div>
+<div class="tutorial-block tb-mistake">
+  <h3><span class="tb-icon">⚠️</span> 常見錯誤</h3>
+  <ul>
+    <li><strong>直接 --abort</strong>——把問題推到以後，不是解決它。</li>
+    <li><strong>隨便選一邊</strong>——不追溯意圖就選 A 或 B，可能丟掉另一邊的重要功能。</li>
+    <li><strong>沒有跑自動化檢查</strong>——merge 可能破壞了 typecheck、tests 或 format。衝突解決後一定要跑。</li>
+    <li><strong>發明新行為</strong>——merge 是保留兩邊的意圖，不是趁機加新功能。</li>
+  </ul>
+</div>
+<div class="tutorial-block tb-checklist">
+  <h3><span class="tb-icon">✅</span> 練習 / 驗收清單</h3>
+  <ul>
+    <li>□ 每個衝突都有追溯到兩邊的意圖（讀 commit 訊息、PR、issue）</li>
+    <li>□ 盡可能保留兩邊的意圖</li>
+    <li>□ 不相容時選擇符合 merge 目標的一方，並記下取捨</li>
+    <li>□ 沒有發明新行為</li>
+    <li>□ 衝突解決後跑過 typecheck → tests → format</li>
+    <li>□ 沒有使用 --abort</li>
+  </ul>
+</div>
 
 </div>
 </body>
