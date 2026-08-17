@@ -163,6 +163,43 @@
     <li>□ 兩軸結果是分開回報，沒有跨軸比較</li>
   </ul>
 </div>
+<div class="tutorial-block tb-example">
+  <h3><span class="tb-icon">🚀</span> 進階真實情境 Worked Example</h3>
+  <p><strong>情境</strong>：你接手一個團隊的 PR，內容是把驗證邏輯從 controller 移到一個新的 <code>validateOrder</code> 模組。你已經知道固定點是 <code>main</code>，規格來源是 ticket #204。</p>
+  <ol>
+    <li>釘住固定點：<code>git diff main...HEAD</code>（三點）。<code>git rev-parse main</code> 解析成功、diff 非空。</li>
+    <li>找規格：commit message 寫 <code>Closes #204</code>，從 issue tracker 拉出 #204——「把驗證邏輯集中到單一模組，讓訂單 API 只處理路由」。</li>
+    <li>規範子代理：檢查 diff 是否符合 <code>CODING_STANDARDS.md</code>。發現 <code>validateOrder</code> 用 <code>any</code> 收參數，違反 repo 的「禁止隱式 any」規則（硬性違規）。</li>
+    <li>規格子代理：對照 #204——規格要求「驗證邏輯集中」，但 diff 仍把 email 格式驗證留在 controller（範圍不足），同時新增了 #204 沒要求的 <code>validateDiscount</code>（範圍蔓延）。</li>
+    <li>並排呈現兩軸結果：規範軸抓到隱式 any；規格軸抓到範圍不足與蔓延。開發者依序修正，再次 review 直到兩軸都過。</li>
+  </ol>
+  <p><strong>設計決策</strong>：這次審查最關鍵的決定是<strong>不要把「移驗證」與「順手加 validateDiscount」混為一談</strong>。規格軸的設計就是為了攔這種「沒被要求的行為」——如果只跑規範軸，範圍蔓延會完全通過。雙軸分離在此刻證明價值。</p>
+</div>
+<div class="tutorial-block tb-theory">
+  <h3><span class="tb-icon">🔬</span> 深入原理擴充</h3>
+  <p>雙軸審查在認知上對應到<strong>兩個獨立的評估維度</strong>：規範軸回答「這寫得好不好」，規格軸回答「這做對不對」。心理學上兩者會互相污染——一個「做對了但寫得醜」的 diff，若合併評估，審查者常因整體觀感好而放過規格瑕疵。分離子代理正是<strong>阻斷這種錨定效應</strong>的工程手法。</p>
+  <p>對 AI coding assistant 而言，<code>git diff</code> 是它理解變更的<strong>唯一窗口</strong>。因此審查品質上限取決於 diff 是否包含足夠上下文。實務上常見問題是 diff 太大（整包 2000 行）或太小（忽略已改未加的檔案），讓子代理在殘缺輸入上做判斷。</p>
+  <p><strong>陷阱案例</strong>：很多人以為「三點 diff 一定比兩點好」——其實兩者語義不同。`git diff main...HEAD` 比對的是 merge-base 與 HEAD（只看你的分支真正引入的變更），`git diff main..HEAD` 比對的是 main 目前狀態與 HEAD（會混入 main 上新增的內容）。若誤用兩點，review 會把同事的變更當成你的範圍，兩個軸都會誤報。審查前務必確認固定點語義。</p>
+</div>
+<div class="tutorial-block tb-diagnosis">
+  <h3><span class="tb-icon">🩺</span> 診斷式疑難排解表</h3>
+  <table>
+    <tr><th>症狀</th><th>可能原因</th><th>解決方案</th></tr>
+    <tr><td>固定點解析失敗（bad ref）</td><td>使用者給了不存在的 commit / 分支名，或打錯字</td><td>用 <code>git rev-parse</code> 驗證；失敗就回問使用者正確的 ref，不要在子代理內才爆錯</td></tr>
+    <tr><td>diff 是空的但使用者說有變更</td><td>固定點設在 HEAD 自己，或分支還沒 commit</td><td>確認固定點早於目前 HEAD；未 commit 的變更改用 <code>git diff</code>（無參數）</td></tr>
+    <tr><td>規格軸找不到任何規格</td><td>commit 沒有 issue 引用、docs/ 下也沒有規格檔</td><td>依優先序搜尋後問使用者；真的沒有就讓規格軸回報「no spec available」並註記</td></tr>
+    <tr><td>兩軸發現互相矛盾（一過一掛）</td><td>這正是雙軸設計要捕捉的正常情況</td><td>不要跨軸排序，並排呈現即可；由開發者決定先修哪一軸</td></tr>
+    <tr><td>子代理報告裡出現「無法確認」</td><td>子代理沒拿到完整 diff 或規範來源清單</td><td>規範軸必須把 smell baseline 完整貼入提示，規格軸必須附規格全文——子代理沒有其他存取路徑</td></tr>
+  </table>
+</div>
+<div class="tutorial-block tb-challenge">
+  <h3><span class="tb-icon">🏆</span> 進階挑戰題</h3>
+  <ol>
+    <li><strong>固定點語義</strong>：解釋 <code>git diff main...HEAD</code> 與 <code>git diff main..HEAD</code> 的差異，並說明在「review 我的分支」與「review 合併後的結果」兩種意圖下各該用哪個。</li>
+    <li><strong>壞味道分類</strong>：給你三個 diff 片段（a）同名邏輯在兩個檔案重複（b）方法大量讀取別物件的欄位（c）一個 300 行的 switch 在多處出現。分別對應哪個 Fowler 壞味道、該怎麼修？</li>
+    <li><strong>範圍蔓延偵測</strong>：規格只要「加一個欄位」，但 PR 同時重構了 serializer。規格軸該如何回報？規範軸又該如何回報？兩軸各自獨立，不互相代答。</li>
+  </ol>
+</div>
 
 </div>
 </body>

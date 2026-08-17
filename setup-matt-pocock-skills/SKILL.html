@@ -204,6 +204,43 @@
     <li>□ 知道如何手動編輯 docs/agents/*.md</li>
   </ul>
 </div>
+<div class="tutorial-block tb-example">
+  <h3><span class="tb-icon">🚀</span> 進階真實情境 Worked Example</h3>
+  <p><strong>情境</strong>：你的公司自架 GitLab，repo 已經有 <code>CLAUDE.md</code> 與大量既有 issue，且既有 label 用 <code>bug:triage</code> 這種帶前綴的命名。</p>
+  <ol>
+    <li>探索：<code>git remote -v</code> 指向自架 GitLab host → 提議 GitLab 追蹤器。發現 <code>CLAUDE.md</code> 存在（編輯它，不建 AGENTS.md）、無 <code>CONTEXT.md</code>、無 <code>docs/agents/</code>。triage 技能有安裝。</li>
+    <li>呈現發現：A 章節推薦 GitLab（附一行說明）；B 章節問「保留預設標籤嗎？」——你答否，因為既有 label 已用 <code>bug:triage</code> 等名稱，技能應覆寫而非建立重複。</li>
+    <li>收集覆寫：把 <code>needs-triage → bug:triage</code>、<code>needs-info → bug:info</code> 等五個對應記入 <code>docs/agents/triage-labels.md</code>。</li>
+    <li>C 章節：沒有 monorepo 訊號 → 預設單一上下文，不用問直接寫。</li>
+    <li>給使用者看草稿（Agent skills 區塊＋三個 docs 檔案內容），確認後寫入：<code>CLAUDE.md</code> 加 <code>## Agent skills</code> 區塊、建立 <code>docs/agents/issue-tracker.md</code>、<code>domain.md</code>、<code>triage-labels.md</code>。</li>
+  </ol>
+  <p><strong>設計決策</strong>：本情境的核心是<strong>「探索定案」與「讓使用者一個字接受建議」</strong>。GitLab 由 remote 探索定案，不用問；標籤因為既有慣例要覆寫，所以只問「保留預設嗎」這一個問題。setup 是提示驅動的技能，它的品質取決於探索多準、問題問得少而準。</p>
+</div>
+<div class="tutorial-block tb-theory">
+  <h3><span class="tb-icon">🔬</span> 深入原理擴充</h3>
+  <p>setup 產出的三份設定檔本質上是<strong>技能與環境之間的介面契約</strong>。to-tickets、triage、to-spec 不直接猜測「這個 repo 用什麼追蹤器」，而是讀 <code>docs/agents/issue-tracker.md</code>——這讓技能與 repo 解耦：換追蹤器時只需改一份設定檔，不必改任何技能。這是「環境是真相來源」原則的應用：文件描述<strong>如何在這個環境中操作</strong>，而不是複製操作本身。</p>
+  <p>「只編輯既有檔案（CLAUDE.md 或 AGENTS.md），絕不並存」的規則是<strong>single source of truth</strong> 的強制執行：若兩者都存在且內容分叉，agent 讀哪個？技能用「永遠編輯已經在那裡的」消除這個歧義。同理，<code>docs/agents/*.md</code> 由技能寫入、也允許使用者手動編輯，但重跑 setup 時是「就地更新」而非「覆蓋使用者編輯」。</p>
+  <p><strong>陷阱案例</strong>：很多人以為「setup 是跑一次就永遠不用再碰的腳本」，於是在換 issue 追蹤器（GitHub → Linear）時重跑 setup，結果 skill 重新探索、重新問問題、甚至覆寫掉使用者手動改過的 <code>docs/agents/*.md</code>。真相是：<strong>設定檔是活的文件，重跑 setup 是「重構」，不是「重灌」</strong>。除非要從頭來過或換追蹤器，否則直接編輯 <code>docs/agents/*.md</code> 就好——重跑只會增加覆寫使用者編輯的風險。</p>
+</div>
+<div class="tutorial-block tb-diagnosis">
+  <h3><span class="tb-icon">🩺</span> 診斷式疑難排解表</h3>
+  <table>
+    <tr><th>症狀</th><th>可能原因</th><th>解決方案</th></tr>
+    <tr><td>to-tickets 用了錯誤的追蹤器（寫到 GitHub 但應該寫 GitLab）</td><td>setup 沒跑，或 <code>docs/agents/issue-tracker.md</code> 不存在</td><td>先跑 /setup-matt-pocock-skills 設定追蹤器，技能才會讀對設定</td></tr>
+    <tr><td>triage 建立了一堆重複 label</td><td>B 章節沒被問，或沒套用既有 label 覆寫</td><td>在 <code>docs/agents/triage-labels.md</code> 記下既有 label 對應，讓 triage 套用而非新建</td></tr>
+    <tr><td>AGENTS.md 和 CLAUDE.md 同時出現、內容分叉</td><td>setup 違反「只編輯既有的」規則，或使用者手動建了另一個</td><td>合併內容到既有的那份，刪除另一份；確認 setup 不再並存</td></tr>
+    <tr><td>使用者手動改的設定被 setup 覆寫</td><td>重跑 setup 時覆蓋了 docs/agents/*.md</td><td>改設定直接編輯該檔；真要重跑先備份，確認「就地更新」而非整檔覆寫</td></tr>
+    <tr><td>setup 問了一堆答案已明顯的問題</td><td>探索不夠，該定案的問題用問的</td><td>強化探索（remote、既有檔案、monorepo 訊號），能定案就不問</td></tr>
+  </table>
+</div>
+<div class="tutorial-block tb-challenge">
+  <h3><span class="tb-icon">🏆</span> 進階挑戰題</h3>
+  <ol>
+    <li><strong>探索定案</strong>：給你四種 repo 狀態（有 GitHub remote、有 GitLab remote、無 remote 的個人專案、有 pnpm-workspace.yaml 的 monorepo），各推斷 setup 的 A/C 章節會被如何處理。</li>
+    <li><strong>標籤覆寫</strong>：既有 label 是 <code>waiting-on-reporter</code>、<code>dev-ready</code>、<code>won't-fix</code>。寫出五個 canonical 角色對應到這些 label 的映射表，並標出「沒有對應」的角色該怎麼處理。</li>
+    <li><strong>改設定不重跑</strong>：你從 GitHub 換到 Linear。列出你該手動編輯哪些 docs/agents/*.md、各改什麼，並解釋為什麼不該重跑 setup。</li>
+  </ol>
+</div>
 
 </div>
 </body>

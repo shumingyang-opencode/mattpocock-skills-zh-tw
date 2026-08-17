@@ -61,6 +61,43 @@
     <li>□ Grill 完後有清晰的想法可以帶回 repo</li>
   </ul>
 </div>
+<div class="tutorial-block tb-example">
+  <h3><span class="tb-icon">🚀</span> 進階真實情境 Worked Example</h3>
+  <p><strong>情境</strong>：你在通勤路上，沒有 repo，想磨利「用 AI 幫同事寫 daily standup 摘要」的工具點子，準備明天跟老闆提案。</p>
+  <ol>
+    <li>呼叫 <code>/grill-me "我想做一個自動產生 standup 摘要的 CLI 工具"</code>。</li>
+    <li>Agent 第一輪追問：「它讀什麼來源？」→ 你：「公司 git 的 commit + 我的行事曆」。</li>
+    <li>Agent 鍥而不捨：「誰是消費者？你自己，還是你老闆？」→ 你：「自己先，老闆後」。</li>
+    <li>Agent 磨利邊界：「standup 摘要與『commit log 翻譯成人話』的差別是什麼？」→ 你：「摘要要串連成一段敘事，不是條列」——這個回答讓工具的定位瞬間清楚。</li>
+    <li>Agent 收斂：「先用手動 export 的 JSON 當輸入，不要直接接公司 API，對嗎？」→ 你：「對，第一版避免授權地雷」。</li>
+    <li>Grill 結束。你帶著「輸入＝commit+行事曆 JSON、輸出＝敘事性摘要、第一版不接 API」三個明確決策去提案。</li>
+  </ol>
+  <p><strong>設計決策</strong>：無狀態不代表沒有結構。grill-me 的回合制設計強制你在每個轉折點表態——「誰是消費者」「邊界在哪」「第一版避開什麼」。這些決策若在寫 code 時才想，你已經把第一個錯版交出去了。</p>
+</div>
+<div class="tutorial-block tb-theory">
+  <h3><span class="tb-icon">🔬</span> 深入原理擴充</h3>
+  <p>grill-me 與 grill-with-docs 共用同一個 <code>/grilling</code> 原語，差別只在「有沒有留下紙本痕跡」。這個設計傳達一個重要原則：<strong>思考的過程與思考的產物可以分離</strong>。grill-me 優化「把想法想清楚」這一個目標，所以它刻意不寫檔——不寫檔讓 session 更輕、可以在地鐵上開，也不必在乎 repo 是否乾淨。</p>
+  <p>對 AI coding assistant 而言，grilling 對抗的是模型的<strong>順從性偏誤</strong>：模型傾向同意使用者、把模糊的目標當成已確定的需求一路做下去。回合制訪談＋「事實是代理的責任、決策是你的責任」的劃分，逼使用者每一次都為決策表態——這就是「減少 agent 自由度」的又一應用。</p>
+  <p><strong>陷阱案例</strong>：很多人把 grill 當成「跟 AI 聊天確認一下」，於是用「你覺得呢？」把問題丟回去。這是 grill 的頭號反模式——<strong>把決策推回給代理</strong>。代理不懂你的業務、你的限制、你的老闆。如果代理問「第一版支援哪些平台」，你回「你覺得呢？」，得到的答案只是代理的猜測，而且猜完你還會隱隱把它當成自己的承諾。真相是：<strong>grill 的輸出品質等於你表態的品質</strong>。每一個「你覺得呢」都是一個未做的決策，會在 implement 時以「想當然爾」的姿態復活。</p>
+</div>
+<div class="tutorial-block tb-diagnosis">
+  <h3><span class="tb-icon">🩺</span> 診斷式疑難排解表</h3>
+  <table>
+    <tr><th>症狀</th><th>可能原因</th><th>解決方案</th></tr>
+    <tr><td>Grill 結束後還是不知道要做什麼</td><td>多個問題用「你覺得呢」丟回代理，決策沒被做出</td><td>每個問題都先給出具體答案再往下；回答「我不知道」比回答「你覺得呢」好</td></tr>
+    <tr><td>Agent 問的問題跟主題無關</td><td>一開始的目標陳述太模糊，agent 只能亂槍打鳥</td><td>重開 session，先用一句話說清楚「我想做 X，卡在 Y」</td></tr>
+    <tr><td>Grill 完發現有些決策互相矛盾</td><td>決策散在對話中，沒有被收斂複述</td><td>請 agent 在最後複述全部決策；發現在 repo 時用 grill-with-docs 寫進 CONTEXT.md</td></tr>
+    <tr><td>明明有 repo 卻用了 grill-me</td><td>誤把 grill-me 當成 grill-with-docs 的替代品</td><td>工作目錄中一律用 grill-with-docs，它會留下紙本痕跡供後續 skill 使用</td></tr>
+  </table>
+</div>
+<div class="tutorial-block tb-challenge">
+  <h3><span class="tb-icon">🏆</span> 進階挑戰題</h3>
+  <ol>
+    <li><strong>決策提取</strong>：模擬一場三分鐘的 grill 對話，主題「是否該把公司部落格改成 Next.js」。至少提取出五個你必須自己做的決策，並說明為什麼每個決策代理不該替你回答。</li>
+    <li><strong>反模式辨識</strong>：下列回覆哪些是 grill 的反模式？（a）「你覺得呢」（b）「我沒想過這個，我需要想想」（c）「這不重要吧」（d）「都可以」。逐項說明後果。</li>
+    <li><strong>無狀態→有狀態</strong>：你在咖啡廳用 grill-me 磨利完點子，回到公司。描述把這些決策「帶進」 grill-with-docs 的完整流程，以及它會寫進哪些檔案。</li>
+  </ol>
+</div>
 
 </div>
 </body>

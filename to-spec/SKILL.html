@@ -162,6 +162,44 @@
     <li>□ 有 Testing Decisions 區塊（描述什麼是好測試、哪些模組要測）</li>
   </ul>
 </div>
+<div class="tutorial-block tb-example">
+  <h3><span class="tb-icon">🚀</span> 進階真實情境 Worked Example</h3>
+  <p><strong>情境</strong>：你跟設計師 grill 完了「購物車結帳流程改版」，CONTEXT.md 裡有十幾個決策，包括「結帳改單頁」「支援 guest checkout」「付款失敗留在原頁」。現在要收斂成 spec。</p>
+  <ol>
+    <li>探索 repo：確認既有結帳模組的狀態，用 CONTEXT.md 詞彙（checkout、guest checkout、payment failure）貫穿整份 spec。</li>
+    <li>勾勒測試接縫：既有最高接縫是 <code>POST /api/checkout</code> endpoint。spec 決定沿用（既有接縫優先、用最高的接縫、全 repo 接縫數量維持最少）。與使用者確認。</li>
+    <li>寫 spec：問題陳述（從使用者的視角）、解決方案、使用者故事（逐條覆蓋：訪客結帳、會員結帳、付款失敗重試、單頁轉場）、實作決策（結帳改單頁、guest checkout 引入、付款失敗留在原頁）、測試決策（只測外部行為、測 /api/checkout、prior art 是既有 checkout 測試）。</li>
+    <li>實作決策不寫檔案路徑或程式碼——只寫「引入 guest checkout 身分」這種決策層級描述。</li>
+    <li>Out of Scope：寫明「不包含新付款方式（如 line pay）、不包含結帳頁重新設計（設計師之後單獨開）」。</li>
+    <li>發佈到 issue tracker，套 <code>ready-for-agent</code> 標籤——不需要再分診。</li>
+  </ol>
+  <p><strong>設計決策</strong>：本例的關鍵是<strong>「付款失敗留在原頁」這種從使用者視角描述的決策</strong>——spec 不該寫「把 error 物件 return 給前端」，而該寫使用者會經歷的行為。這樣 implement 才能自己決定技術做法，而驗收時能用使用者行為判斷是否完成。</p>
+</div>
+<div class="tutorial-block tb-theory">
+  <h3><span class="tb-icon">🔬</span> 深入原理擴充</h3>
+  <p>to-spec 的「不訪談、只綜合」是刻意與 grill 對立的設計。grill 是發散（問很多問題、產出很多決策），spec 是收斂（把決策組織成可交付的結構）。若 to-spec 也開始訪談，就會把「已討論過的事」再問一遍，浪費 context 且打斷流程。這背後是「<strong>決策只做一次</strong>」原則：grill 已做的決策，spec 直接採用，不再重開。</p>
+  <p>「實作決策不寫具體路徑／程式碼」是<strong>對過時風險的管理</strong>：檔案路徑與程式碼片段的生命週期以天計，spec 的生命週期以週計。寫進去，規格發佈三天後就開始撒謊。例外只有一種——prototype 產出「比散文更能精確編碼決策」的片段（狀態機、schema、型別形狀），這種片段內嵌的是決策本身而非實作細節，可以留下。</p>
+  <p><strong>陷阱案例</strong>：很多人以為「規格越詳細越好」，於是在 Implementation Decisions 裡寫下「在 src/checkout.ts 建立 CheckoutService，用 repository pattern，注入 PaymentGateway」。真相是：<strong>規格描述「要做什麼」，不是「怎麼做」</strong>。repo pattern 或 service 結構是實作選擇，寫進規格等於在還沒看見程式碼前就承諾了架構——這正是 to-tickets 的「把規格當成實作指南」反模式，也是 codebase-design 警告的「過早收斂」。</p>
+</div>
+<div class="tutorial-block tb-diagnosis">
+  <h3><span class="tb-icon">🩺</span> 診斷式疑難排解表</h3>
+  <table>
+    <tr><th>症狀</th><th>可能原因</th><th>解決方案</th></tr>
+    <tr><td>規格寫了檔案路徑或程式碼片段</td><td>把實作細節混進決策層級</td><td>刪除路徑與片段；只有 prototype 產出的決策型片段（狀態機等）可內嵌並註明</td></tr>
+    <tr><td>implement 讀完規格還問「到底要建什麼」</td><td>使用者故事不夠詳盡，或解決方案太抽象</td><td>把每個 edge case 都寫成使用者故事；問題陳述從使用者視角具體描述</td></tr>
+    <tr><td>implement 做超範圍的功能</td><td>spec 沒有 Out of Scope 區塊</td><td>明確列出「不包含什麼」，讓 implement 有拒絕範圍蔓延的依據</td></tr>
+    <tr><td>測試不知道該測什麼、測在哪</td><td>缺 Testing Decisions 區塊</td><td>寫明接縫、什麼構成好測試、prior art 在哪</td></tr>
+    <tr><td>spec 發佈後又要重問使用者</td><td>to-spec 沒有「只綜合」而是重新訪談</td><td>確認不訪談；已討論的決策直接採用，缺的資訊由 CONTEXT.md／prototype 補齊</td></tr>
+  </table>
+</div>
+<div class="tutorial-block tb-challenge">
+  <h3><span class="tb-icon">🏆</span> 進階挑戰題</h3>
+  <ol>
+    <li><strong>決策分級</strong>：把以下十個句子分成「該進規格」與「該留給 implement」兩組：（a）用 Postgres（b）在 src/checkout.ts 建檔（c）結帳改單頁（d）用 repository pattern（e）付款失敗留在原頁（f）支援 guest checkout（g）注入 PaymentGateway（h）引入 guest 身分模型（i）前端用 React Query（j）不包含新付款方式。並說明分組依據。</li>
+    <li><strong>接縫數量</strong>：spec 指出測試接縫該「越少越好，理想是一個」。若你的功能跨 API＋背景任務，設計一個單一最高接縫能涵蓋的情境，並說明為什麼這比兩個接縫好。</li>
+    <li><strong>prototype 片段內嵌</strong>：prototype 產出一個 15 行的狀態機定義，精確編碼「付款失敗→留在原頁→重試」的行為。寫出該怎麼把它內嵌進 spec 的實作決策（含註明來源與修剪原則）。</li>
+  </ol>
+</div>
 
 </div>
 </body>

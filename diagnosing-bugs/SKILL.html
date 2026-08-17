@@ -200,6 +200,44 @@
     <li>□ 清理了所有插樁（grep 確認）</li>
   </ul>
 </div>
+<div class="tutorial-block tb-example">
+  <h3><span class="tb-icon">🚀</span> 進階真實情境 Worked Example</h3>
+  <p><strong>情境</strong>：用戶回報「匯出功能在某個時段特別慢，有時直接 504」，但開發環境完全無法重現。</p>
+  <ol>
+    <li><strong>Phase 1 建迴圈</strong>：開發環境無法重現 → 抓不到真實症狀。改為重播追蹤：把正式環境的一筆慢請求的 HAR / trace 存到磁碟，寫一個 harness 重播同一筆 payload 進隔離的匯出程式碼路徑 → 它在本地穩定地慢了 40 秒，迴圈建立。</li>
+    <li><strong>收緊迴圈</strong>：把時間窗縮小到只量測「CSV 序列化」而非整個 HTTP 層，速度從 40 秒降到 3 秒。</li>
+    <li><strong>Phase 2 最小化</strong>：逐一砍掉欄位，發現只要包含某個多層 JSON 欄位就慢——最小重現是「含嵌套 JSON 的單筆紀錄」。每個剩餘元素都承重。</li>
+    <li><strong>Phase 3 假設</strong>：(a) 序列化用遞迴展平造成指數爆炸（b) 欄位值被重複解析多次（c) 資料庫查詢 N+1。展示給使用者——他們說「我們這週把 JSON 欄位從 SELECT 改成邊讀邊 parse」→ 假設 (b) 升到第一。</li>
+    <li><strong>Phase 4 插樁</strong>：在 parse 處加 <code>[DEBUG-json]</code> 計數，確認同一個欄位被 parse 了 5 次（一次一次地 parse，而非讀一次用多次）。</li>
+    <li><strong>Phase 5–6</strong>：回歸測試鎖定「同欄位只 parse 一次」，修復後重播原始 trace 確認從 40 秒回到 2 秒；移除全部插樁。</li>
+  </ol>
+  <p><strong>設計決策</strong>：本例與初階範例（空 CSV）最大的不同是<strong>開發環境無法重現</strong>。重點不是執著於「在本地重現」，而是「拿到能觸發 bug 的輸入」——用重播真實 trace 的方式把正式環境的輸入帶進本地，迴圈照樣建立。這是 Phase 1 的「重播擷取追蹤」技巧在真實世界的典型用法。</p>
+</div>
+<div class="tutorial-block tb-theory">
+  <h3><span class="tb-icon">🔬</span> 深入原理擴充</h3>
+  <p>「先建迴圈再談假設」背後是科學方法論裡的<strong>可證偽性</strong>原則。假設本身沒有價值，<strong>假設的預測</strong>才有——而預測必須能被一次實驗判死。本技能把它形式化為「迴圈能變紅」：一個不能變紅的迴圈，代表你連「bug 的具體定義」都還沒抓到，任何假設都是空想。這也是為什麼 Phase 2 要求確認「是使用者描述的那個失敗模式」，而不是碰巧在附近的其他失敗——抓錯 bug 的假設再多也白搭。</p>
+  <p>對 AI coding assistant 而言，這個紀律對抗的是模型最容易犯的錯誤：<strong>模式匹配式的猜測</strong>。模型看到「效能慢」就聯想到「N+1 查詢」，然後開始翻程式碼找證據——這是把結論當前提。技能強制你先找到「一條保證會紅的指令」，從根上斷絕這種倒果為因。</p>
+  <p><strong>陷阱案例</strong>：很多人以為「加了一堆 <code>console.log</code> 就叫插樁」。但「log everything and grep」正是 Phase 4 明令禁止的——無差別日誌產生的資料太多，反而稀釋掉能區分假設的那一條線索。更糟的是未標記的日誌會在修復後殘留在正式環境。真相是：<strong>插樁的數量要最少、位置要精準</strong>——每個探針對應 Phase 3 的一個具體預測，且必須帶 <code>[DEBUG-xxx]</code> 前綴讓清理變成單次 grep。</p>
+</div>
+<div class="tutorial-block tb-diagnosis">
+  <h3><span class="tb-icon">🩺</span> 診斷式疑難排解表</h3>
+  <table>
+    <tr><th>症狀</th><th>可能原因</th><th>解決方案</th></tr>
+    <tr><td>開發環境無法重現正式環境的 bug</td><td>觸發條件藏在正式環境的特定輸入或流量模式裡</td><td>重播擷取的 trace（HAR / log dump / 事件日誌），把輸入帶進本地隔離環境</td></tr>
+    <tr><td>迴圈每次結果不同（flaky）</td><td>時間窗、並發或隨機性沒被釘住</td><td>釘時間、播種 RNG、隔離檔案系統與網路；對非確定 bug 用高重現率代替 100%</td></tr>
+    <tr><td>測試「跑起來沒報錯」但 bug 還在</td><td>訊號太鈍，斷言的是「沒崩潰」而非具體症狀</td><td>把斷言改成針對使用者確切症狀（特定輸出 / 特定錯誤碼），確保它能真的變紅</td></tr>
+    <tr><td>除錯日誌殘留在正式環境</td><td>日誌沒帶唯一前綴，清理時無從 grep</td><td>每個日誌帶 <code>[DEBUG-xxx]</code> 前綴，Phase 6 用單次 grep 確認全部移除</td></tr>
+    <tr><td>修完後原始情境仍復發</td><td>只用最小重現驗證，沒回到原始（未最小化）情境</td><td>修復後重跑 Phase 1 的原始迴圈，確認原始 repro 不再重現</td></tr>
+  </table>
+</div>
+<div class="tutorial-block tb-challenge">
+  <h3><span class="tb-icon">🏆</span> 進階挑戰題</h3>
+  <ol>
+    <li><strong>迴圈設計</strong>：一個「偶爾（約 3%）訂單金額計算錯誤」的 bug。設計一個能提高到可除錯重現率的迴圈（提示：平行化、固定種子、收窄時間窗）。寫出具體指令。</li>
+    <li><strong>假設可否證</strong>：假設「是 cache 未失效造成的」。把這句話改寫成可否證的形式：「如果 X 是原因，那麼改變 Y 會讓 bug 消失／改變 Z 會讓它更糟。」並說明該插哪個樁。</li>
+    <li><strong>接縫判斷</strong>：bug 需要多個呼叫者同時觸發，但唯一可測的接縫只有單一呼叫者。根據 Phase 5，這說明什麼？你該在回歸測試上做什麼、該交接給誰？</li>
+  </ol>
+</div>
 
 </div>
 </body>

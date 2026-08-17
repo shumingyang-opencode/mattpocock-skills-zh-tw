@@ -204,6 +204,43 @@
     <li>□ 能用深度、局部性、槓桿收益來解釋設計決策</li>
   </ul>
 </div>
+<div class="tutorial-block tb-example">
+  <h3><span class="tb-icon">🚀</span> 進階真實情境 Worked Example</h3>
+  <p><strong>情境</strong>：你接手一個計費系統，發現 <code>BillingClient</code> 有 22 個公開方法，其中 19 個只是把參數轉給底層 HTTP client。你決定用 codebase-design 詞彙做一次深化。</p>
+  <ol>
+    <li>診斷：22 個方法的介面幾乎跟實作一樣複雜 → 淺模組。套用刪除測試——刪掉 <code>BillingClient</code>，複雜度會散回 9 個呼叫者 → 它在賺住宿費，值得深化。</li>
+    <li>分群：22 個方法其實服務三種意圖——訂閱管理、發票、付款事件。三個「想出生的型別」被壓在一個類別裡（Data Clumps 的一種）。</li>
+    <li>設計接縫：真正的變化點是底層 API 的供應商（Stripe → Adyen）。現在只有 StripeGateway 一個轉接器 → 假設性接縫，先不拆；等第二家供應商出現再拆。</li>
+    <li>深化後介面：<code>subscribe()</code>、<code>bill()</code>、<code>handlePaymentEvent()</code> 三個方法，內部各藏一個小狀態機。介面從 22 → 3，行為藏在裡面。</li>
+    <li>驗證：介面就是測試表面——新測試透過三個方法驗證整條計費路徑，不再需要 mock 19 個 HTTP 轉手方法。</li>
+  </ol>
+  <p><strong>設計決策</strong>：最容易被忽略的是「先不拆接縫」。工程師常直覺地想「多包一層 adapter 以便未來替換」，但規則是<strong>一個轉接器＝假設性接縫</strong>——沒有第二個實作出現前，那條接縫只會增加介面面積、降低深度。此例正確的次序是先把行為收進深模組，供應商切換等真實需求出現再拆。</p>
+</div>
+<div class="tutorial-block tb-theory">
+  <h3><span class="tb-icon">🔬</span> 深入原理擴充</h3>
+  <p>「深度」這個詞取自 John Ousterhout 的 <em>A Philosophy of Software Design</em>，但本技能<strong>刻意棄用他的原始定義</strong>（實作行數對介面行數的比率），改用「每學習一單位介面所能行使的行為量」。原因：行數比率會被「灌水實作」欺騙——你把 20 行冗餘程式碼塞進模組，比率變深了，但呼叫者沒有獲得任何新能力。深度即槓桿收益，衡量的是<strong>介面對呼叫者的價值密度</strong>。</p>
+  <p>對 AI coding assistant 而言，深模組還有第三個好處：<strong>可導覽性</strong>。agent 讀程式碼時依賴「在對的地方找到對的行為」。淺模組把行為散落在 N 個薄薄的方法裡，agent 必須跳讀全部 N 個才知道整個流程；深模組讓 agent 讀一個介面就能對行為建立模型。improve-codebase-architecture 的「AI-navigability」目標指的就是這個。</p>
+  <p><strong>陷阱案例</strong>：大家常以為「抽成小函式＝好設計」，於是拼命把每個方法拆到 3–5 行、每個小函式一個職責。結果是 200 個彼此呼叫的極小函式，介面面積爆炸，理解一個概念要在 200 個檔案間彈跳。真相是：<strong>小而好拆的函式不是目標，深而集中的介面才是</strong>。內部可以是任何形狀——甚至一個 60 行的私有函式——只要它不暴露在介面上。用刪除測試判斷，不用「行數多寡」判斷。</p>
+</div>
+<div class="tutorial-block tb-diagnosis">
+  <h3><span class="tb-icon">🩺</span> 診斷式疑難排解表</h3>
+  <table>
+    <tr><th>症狀</th><th>可能原因</th><th>解決方案</th></tr>
+    <tr><td>介面方法很多但每個都一行轉手</td><td>淺模組：介面面積接近實作複雜度</td><td>把轉手行為收攏成少數深方法，讓行為待在介面後方</td></tr>
+    <tr><td>刪除模組後複雜度散回呼叫者</td><td>模組在賺住宿費，值得深化</td><td>這不是 bug——是深化候選。把散落的邏輯收進一個介面</td></tr>
+    <tr><td>測試要穿透介面去 mock 內部</td><td>介面不是測試表面，模組形狀錯了</td><td>把測試需要的行為搬到介面上，或把該隱藏的零件真正隱藏</td></tr>
+    <tr><td>為「未來可能替換」先包了一層 adapter</td><td>單一轉接器的假設性接縫</td><td>移除接縫；等第二個實作真正出現時再拆</td></tr>
+    <tr><td>用「實作行數／介面行數」判斷深度</td><td>誤用 Ousterhout 的原始比率定義</td><td>改用「每單位介面獲得的能力」判斷，並跑刪除測試驗證</td></tr>
+  </table>
+</div>
+<div class="tutorial-block tb-challenge">
+  <h3><span class="tb-icon">🏆</span> 進階挑戰題</h3>
+  <ol>
+    <li><strong>刪除測試實作</strong>：你的 <code>FileStore</code> 有 9 個方法（read/write/append/list/delete/rename/copy/move/exists）。跑刪除測試——刪掉後複雜度會在哪裡重現？這告訴你什麼？</li>
+    <li><strong>接縫判讀</strong>：你的專案用 Postgres，你正考慮抽象一個 <code>Database</code> 介面「以備未來換成 MySQL」。用「一個轉接器 vs 兩個轉接器」原則分析這個決策該不該做。</li>
+    <li><strong>介面收斂設計</strong>：一個 <code>PaymentProcessor</code> 有 15 個方法，服務三種意圖。把它收斂成 3 個深方法，並說明每個方法隱藏了哪些行為、呼叫者與測試各自獲得什麼。</li>
+  </ol>
+</div>
 
 </div>
 </body>

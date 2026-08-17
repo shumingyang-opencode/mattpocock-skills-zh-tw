@@ -144,6 +144,43 @@
     <li>□ SKILL.md / AGENTS.md 每一行都對行為有實際影響</li>
   </ul>
 </div>
+<div class="tutorial-block tb-example">
+  <h3><span class="tb-icon">🚀</span> 進階真實情境 Worked Example</h3>
+  <p><strong>情境</strong>：你要為專案寫一份 <code>AGENTS.md</code>，內容涵蓋「測試怎麼跑」「commits 規範」「領域詞彙指向」。你只有 15 行預算，得用 writing-for-agents 的槓桿設計它。</p>
+  <ol>
+    <li>資訊階層：15 行全塞得下「步驟＋參考」嗎？不——把測試與 commits 當 in-file steps（agent 每輪都需要），把領域詞彙細節放進 <code>CONTEXT.md</code>，用一行 context pointer 指向。</li>
+    <li>Context pointer 措辭：不寫「領域詞彙見相關文件」，改寫「領域詞彙（如 order、charge）定義見 <code>CONTEXT.md</code>」——前載領域詞、給明確路徑、列出觸發分支。</li>
+    <li>Leading word：測試指令寫「跑 <code>pnpm test</code>，遵循 <strong>red-green</strong> 循環」而不是「寫測試時要小心，確保測試合理」——red-green 召喚 TDD 先驗，比一段懇求有效。</li>
+    <li>Pruning：跑 deletion test——「確保測試合理」這行刪掉行為沒變 → no-op 砍掉；「commits 用 conventional 格式」保留（agent 預設不會用）。</li>
+    <li>完成：AGENTS.md 15 行，每行都承載行為；CONTEXT.md 與其他 docs 用 pointer 揭露，不塞進主檔。</li>
+  </ol>
+  <p><strong>設計決策</strong>：15 行預算的強制力來自「context load 意識」——AGENTS.md 每一行每輪都在燒 token。所以每行都必須回答「它每輪被看到時，值得那筆成本嗎？」。這就是 writing-for-agents 與「把文件寫完整」最大的分歧點。</p>
+</div>
+<div class="tutorial-block tb-theory">
+  <h3><span class="tb-icon">🔬</span> 深入原理擴充</h3>
+  <p>「資訊階層」的梯子（in-file step → in-file reference → disclosed reference）實質是<strong>按「被需要的頻率」排序的載入策略</strong>。每往下一階，材料離 agent 的即時注意力越遠、代價越小——但代價是「到達它的條件」必須由指標精確描述。階梯設計的張力在「推太少頂層臃腫」與「推太多藏起必需品」之間，而「分支」是決定該推多深的測試：<strong>每個分支都需要的放上面，只有某些分支需要的推下去</strong>。</p>
+  <p>「co-location（共置）」是文件內的配套：它處理「在同一層，哪些東西該擺在一起」——把概念的定義、規則、注意事項放同一標題下，讓閱讀一部分帶出鄰居。它的反面是「scattering（散落）」：把一個意義拆散到多處。兩者別混淆：重複是「一個意義兩處重說」，散落是「一個意義被拆碎」。</p>
+  <p><strong>陷阱案例</strong>：很多人以為「文件詳細＝agent 執行得越準」，於是在 AGENTS.md 裡把 commit 格式、branch 命名、code review 流程、環境變數、部署指令、歷史背景全寫上——結果 200 行的 AGENTS.md 讓 agent 每輪讀 200 行，還常常在真正要執行時「選擇性忽略」其中 190 行。真相是：<strong>多不是好，精才是好</strong>。文件的每一行都在跟其他行競爭 agent 的注意力；最該被看到的那一行，若埋在 200 行裡，效果跟不存在一樣。這正是「sprawl（蔓延）」的定義——即使每行都活著，文件太長本身就讓注意力變薄。</p>
+</div>
+<div class="tutorial-block tb-diagnosis">
+  <h3><span class="tb-icon">🩺</span> 診斷式疑難排解表</h3>
+  <table>
+    <tr><th>症狀</th><th>可能原因</th><th>解決方案</th></tr>
+    <tr><td>AGENTS.md 破百行，agent 執行常漏步驟</td><td>sprawl——文件太長稀釋注意力，該揭露的沒揭露</td><td>把分支與背景推到獨立檔（pointer），主檔只留每輪都要的步驟</td></tr>
+    <tr><td>agent 該拉參考檔時沒拉</td><td>context pointer 措辭太弱或沒列觸發條件</td><td>前載 leading word、指名目標內容、列明確分支條件、給明確路徑</td></tr>
+    <tr><td>文件描述與 package.json / config 衝突</td><td>把環境當成真相來源的內容複述進文件（cache 沒價值）</td><td>刪掉複述，讓 agent 直接查環境；文件只記「環境看不到的慣例與理由」</td></tr>
+    <tr><td>同一個意義出現在兩份文件</td><td>duplication——兩處改動要同步，早晚分叉</td><td>合併到單一真相來源，另一處改用 pointer 引用</td></tr>
+    <tr><td>刪掉一段文字後 agent 行為不變</td><td>該段是 no-op，或 leading word 太弱</td><td>刪整段；若是引導詞太弱，換更強的先驗詞（如 relentless）</td></tr>
+  </table>
+</div>
+<div class="tutorial-block tb-challenge">
+  <h3><span class="tb-icon">🏆</span> 進階挑戰題</h3>
+  <ol>
+    <li><strong>資訊階梯決策</strong>：專案有「測試指令」「commit 規範」「部署流程」「領域詞彙」「歷史決策 ADR」。把五者各放到階梯的哪一層（in-file step / in-file ref / disclosed ref），並說明依據。</li>
+    <li><strong>Pointer 措辭比較</strong>：比較「文件見 docs/」與「測試規範見 <code>docs/testing.md</code>（跑測試前必讀）」兩個 pointer 的觸發可靠度，並用「指針的措辭決定觸達可靠性」原則解釋差距。</li>
+    <li><strong>No-op 獵殺</strong>：給一段 60 行的 AGENTS.md，逐行標出「in-file step」「in-file ref」「該揭露的」「該刪的 no-op」「與環境重複的 cache」五類，並重寫成 20 行。</li>
+  </ol>
+</div>
 
 </div>
 </body>

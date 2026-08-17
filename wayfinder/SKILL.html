@@ -196,6 +196,44 @@
     <li>□ 知道 out of scope 的處理方式（關閉 ticket + 記錄原因）</li>
   </ul>
 </div>
+<div class="tutorial-block tb-example">
+  <h3><span class="tb-icon">🚀</span> 進階真實情境 Worked Example</h3>
+  <p><strong>情境</strong>：公司決定把「單體訂單系統」翻新成事件驅動架構，但「事件格式」「舊資料遷移」「服務邊界」三個主題都還在霧裡。你被指派用 wayfinder 繪製地圖。</p>
+  <ol>
+    <li>命名目的地：grill + domain-modeling 定案目的地＝「一份可交接的『事件驅動翻新規格』，讓接手的團隊能直接走 to-spec」。</li>
+    <li>繪製前沿：廣度優先 grill 整個空間——浮現的開放決策有「事件用哪種格式（CloudEvents vs 自訂）」「遷移採 event sourcing 還是寫後同步」「Order 服務與 Payment 服務的邊界切在哪」。同時把還看不清的「背壓機制」「重放策略」寫進 Not yet specified。</li>
+    <li>建立地圖：<code>wayfinder:map</code> 標籤，Destination 與 Notes 填好，Decisions so far 留空。</li>
+    <li>建立可明確化的 tickets：CloudEvents vs 自訂（research）、遷移策略（grilling）、服務邊界（grilling）——第二輪再接阻塞邊。啟動 <code>/research</code> 子代理平行解決 research 票。</li>
+    <li>走完地圖：一次 session 一張 ticket。解決「事件格式」後，迷霧中的「重放策略」變清晰了 → 從 Not yet specified 轉化成一張新 ticket。若有人把「改 UI 框架」塞進地圖 → 裁定 out of scope，關閉並記錄。</li>
+    <li>當所有 ticket 解決、迷霧清空 → 地圖完成。把決策帶進 to-spec 收斂成可建置計畫。</li>
+  </ol>
+  <p><strong>設計決策</strong>：本例的關鍵是<strong>目的地是一份「規格」而非「程式碼」</strong>——wayfinder 產出決策，不產出交付物。若你把目的地設成「翻新完成」而不是「規格定案」，地圖會永遠畫不完，因為建置本身需要另一個完整的 to-spec / to-tickets / implement 流程。</p>
+</div>
+<div class="tutorial-block tb-theory">
+  <h3><span class="tb-icon">🔬</span> 深入原理擴充</h3>
+  <p>wayfinder 借用的是<strong>戰爭迷霧（fog of war）</strong>的隱喻：地圖上你只能標註「看得見的」區域，看不見的就留白。這不是偷懶——而是<strong>避免對未知區域做出假設性承諾</strong>。技能給出明確判準：能不能<strong>現在</strong>精確陳述這個問題？能→ticket；不能→Not yet specified。注意判準是「能否陳述」，不是「能否回答」——一張被阻塞的 ticket 依然是 ticket，因為它的問題已經銳利，只是暫時無法動手。</p>
+  <p>「認領（claim）」機制解決多 session 平行作業的<strong>競態條件</strong>：兩台 agent 同時看到前沿同一張 ticket，若不先指派，兩邊都會去做、做出兩份互相矛盾的答案。指派先於任何工作，讓「誰在做這張票」的狀態本身可被追蹤。</p>
+  <p><strong>陷阱案例</strong>：很多人把 wayfinder 的「決策 ticket」誤當成「任務 ticket」，於是在地圖上寫「遷移 1000 筆訂單資料」這種可直接執行的工作。真相是：<strong>wayfinder 的 ticket 是「解決一個決策」，不是「做完一件事」</strong>。「遷移資料」若只是動手做，屬於 to-tickets 的曳光彈；wayfinder 的 ticket 應該是「遷移採 event sourcing 還是寫後同步」這種「需要先決定才能動手」的問題。把執行工作混進決策地圖，會讓地圖無限期拉長、且混淆「地圖已完成」的判準。</p>
+</div>
+<div class="tutorial-block tb-diagnosis">
+  <h3><span class="tb-icon">🩺</span> 診斷式疑難排解表</h3>
+  <table>
+    <tr><th>症狀</th><th>可能原因</th><th>解決方案</th></tr>
+    <tr><td>地圖畫完但路徑還是糊的</td><td>迷霧被預先切成 ticket 大小的碎片，或 Not yet specified 沒寫</td><td>把說不清的寫進 Not yet specified；只把「能精確陳述問題」的做成 ticket</td></tr>
+    <tr><td>兩個 session 解同一張 ticket、答案衝突</td><td>認領機制沒執行（指派發生在工作之後）</td><td>任何工作前先把 ticket 指派給自己，並行的 session 看到指派就跳過</td></tr>
+    <tr><td>地圖上有「遷移資料」這種執行型工作</td><td>把任務 ticket 混進決策地圖</td><td>改寫成決策問題（「遷移策略用哪種」）；執行工作交給 to-tickets</td></tr>
+    <tr><td>ticket 解決後沒記錄答案</td><td>只關閉 issue，沒貼結論評論、沒更新 Decisions so far</td><td>貼結論評論→關閉→在地圖 Decisions so far 附加一行上下文指標</td></tr>
+    <tr><td>有人把範圍外的東西塞進地圖</td><td>Out of scope 區段沒建立或不夠明確</td><td>裁定 out of scope：關閉 ticket、在 Out of scope 記一行原因、連結該 ticket</td></tr>
+  </table>
+</div>
+<div class="tutorial-block tb-challenge">
+  <h3><span class="tb-icon">🏆</span> 進階挑戰題</h3>
+  <ol>
+    <li><strong>迷霧 vs ticket</strong>：下列四句哪些能做成 ticket、哪些寫進 Not yet specified？（a）「事件用 CloudEvents 還是自訂格式？」（b）「訂單流程好像需要背壓，但還不確定怎麼處理」（c）「Payment 服務該不該拆出去？」（d）「UI 未來可能要改框架」。</li>
+    <li><strong>目的地設計</strong>：一個「把單體拆成微服務」的努力，目的地有三種候選——「一份規格」「一份決策清單」「翻新完成的系統」。逐一分析三者的適用情境，並說明為什麼「規格」常是最佳選擇。</li>
+    <li><strong>認領與並行</strong>：三台 agent 平行走地圖，前沿有三張未阻塞 ticket。描述認領的完整流程，以及「指派先於工作」如何避免兩台 agent 撞同一張票。</li>
+  </ol>
+</div>
 
 </div>
 </body>

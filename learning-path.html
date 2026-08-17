@@ -44,6 +44,44 @@
     <li>□ 知道 L0（setup）是所有工程流程的前置條件</li>
   </ul>
 </div>
+<div class="tutorial-block tb-example">
+  <h3><span class="tb-icon">🚀</span> 進階真實情境 Worked Example</h3>
+  <p><strong>情境</strong>：一位剛加入的工程師要獨立處理「把舊匯出功能升級成串流版本」的需求，這是他第一次走完整個學習路線。</p>
+  <ol>
+    <li><strong>L0</strong>：先跑 <code>/setup-matt-pocock-skills</code> 佈好場地——追蹤器用 GitHub、標籤用預設五個、領域文件單一上下文。</li>
+    <li><strong>L1</strong>：從 <code>/ask-matt</code> 開始，被導向 <code>/grill-with-docs</code>。在 repo 中 grill「串流版本的保留行為有哪些」，決策寫進 CONTEXT.md。</li>
+    <li><strong>L2</strong>：grill 後發現這是多 session 工程 → <code>/to-spec</code> 收斂成規格，<code>/to-tickets</code> 拆成「串流骨架」「錯誤處理」「取消機制」三張曳光彈 ticket。</li>
+    <li><strong>L3</strong>：逐 ticket <code>/implement</code>（內部驅動 <code>/tdd</code>），中途用 <code>/prototype</code> 驗證串流在百萬筆資料下的記憶體行為，<code>/handoff</code> 來回搭橋。</li>
+    <li><strong>L4</strong>：全部實作完後 <code>/code-review</code> 雙軸審查，最後用 <code>/resolving-merge-conflicts</code> 把功能分支合回 main。</li>
+    <li>整個過程隨時翻詞彙層（<code>/domain-modeling</code>、<code>/codebase-design</code>）與支援層（<code>/research</code>）——前者提供語言，後者補知識。</li>
+  </ol>
+  <p><strong>設計決策</strong>：學習路線不是教科書流程，而是<strong>風險分層</strong>——L1 的 grill 把「做什麼」的風險在 L3 之前消掉；L2 的 tickets 把「範圍」的風險在寫 code 前消掉；L3 的 TDD 把「行為正確」的風險在交付前消掉。每一層的產物都是下一層的輸入，缺一層，風險就會累積到最後一次爆開。</p>
+</div>
+<div class="tutorial-block tb-theory">
+  <h3><span class="tb-icon">🔬</span> 深入原理擴充</h3>
+  <p>學習路線的分層邏輯對應到<strong>不確定性的類型</strong>，而不是任務的難度。L1–L2 處理的是「需求不確定」（要做什麼、範圍多大），L3 處理「執行不確定」（行為是否正確），L4 處理「整合不確定」（合回主線是否破壞）。每個階段的技能剛好是消滅該階段不確定性的工具——這解釋了為什麼「跳過 grill 直接 implement」會失敗：不是因為工程師不努力，而是因為他把「需求不確定」帶進了「執行階段」，而執行工具（TDD）消不掉需求不確定。</p>
+  <p>對 AI coding assistant 而言，學習路線其實是<strong>上下文管理策略</strong>：L1–L2 的決策（CONTEXT.md、spec、tickets）都是「可序列化的狀態」，讓 L3 的每個 implement 能從乾淨的 context 開始。這就是 ask-matt 強調「步驟 1–3 保持同一個 context window」、之後每個 implement 重新開始的原因。</p>
+  <p><strong>陷阱案例</strong>：很多人以為「學習路線是死板的順序，必須嚴格照走」，於是把「雜項」或「進行中」的技能也塞進主流程。真相是：<strong>L0–L4 是主流程的軸，支援層與詞彙層是隨時可翻的備選</strong>——遇到「需要查第三方 API 規格」就翻 <code>/research</code>，遇到「詞彙打架」就翻 <code>/domain-modeling</code>，它們不必也照 L1→L4 的順序。把備選技能硬塞進主流程順序，就像在高速公路的每一段路都要求換一次輪胎。</p>
+</div>
+<div class="tutorial-block tb-diagnosis">
+  <h3><span class="tb-icon">🩺</span> 診斷式疑難排解表</h3>
+  <table>
+    <tr><th>症狀</th><th>可能原因</th><th>解決方案</th></tr>
+    <tr><td>工程師直接從 implement 開始，最後大改</td><td>跳過 L1–L2，把需求不確定帶進執行階段</td><td>強制回 L1 用 grill-with-docs 想清楚，再走 to-spec / to-tickets</td></tr>
+    <tr><td>功能寫完合不回去、衝突一堆</td><td>L3 沒先做 code-review，或 L4 的合併沒處理</td><td>implement 收尾先跑 code-review；合併用 resolving-merge-conflicts 依意圖解</td></tr>
+    <tr><td>多 session 工程擠在單一 session 硬做</td><td>沒判斷「是否跨 session」，跳過 to-tickets</td><td>用 ask-matt 判斷「Yes → to-spec → to-tickets」路徑，逐 ticket 新 session</td></tr>
+    <tr><td>詞彙層／支援層技能被硬塞進主流程順序</td><td>誤把備選工具當成主流程步驟</td><td>需要時才翻：查資料用 research、詞彙衝突用 domain-modeling，不必照順序</td></tr>
+    <tr><td>第一次跑就缺 L0 設定</td><td>沒先跑 setup-matt-pocock-skills</td><td>回頭補跑 L0，讓 to-tickets / triage / to-spec 有追蹤器與標籤可用</td></tr>
+  </table>
+</div>
+<div class="tutorial-block tb-challenge">
+  <h3><span class="tb-icon">🏆</span> 進階挑戰題</h3>
+  <ol>
+    <li><strong>風險分層</strong>：說明「需求不確定、執行不確定、整合不確定」各由哪一層的哪些技能消滅，並舉一個「不確定性被帶錯階段」的真實失敗案例。</li>
+    <li><strong>情境路由</strong>：五個情境（接手既有功能做小改、從零做一個新 SaaS 的付款系統、線上 P1 事故、想學一個新語言、外部 PR 湧入）各自從學習路線的哪一層／哪個工具切入？</li>
+    <li><strong>上下文策略</strong>：為什麼 L1–L3 前半段要「同一 context window」、L3 的每個 implement 卻要「從乾淨 context 開始」？用上下文管理的角度解釋這個對比。</li>
+  </ol>
+</div>
 
 </div>
 </body>

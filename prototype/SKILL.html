@@ -91,6 +91,44 @@
     <li>□ 完成後原型留在一次性分支，決策折疊回 main</li>
   </ul>
 </div>
+<div class="tutorial-block tb-example">
+  <h3><span class="tb-icon">🚀</span> 進階真實情境 Worked Example</h3>
+  <p><strong>情境</strong>：你在設計一個「購物車優惠疊加」的狀態模型——滿額折、折扣碼、會員價三者同時存在時如何計算。你無法用紙上推演確定規則，決定用 LOGIC 分支原型。</p>
+  <ol>
+    <li>判斷分支：問題是「狀態模型對不對」→ LOGIC（不是 UI）。建一個可雙擊開啟的單一 HTML 檔。</li>
+    <li>把狀態機器推向紙上難推的案例：先滿額折再折扣碼 vs 先折扣碼再滿額折，金額差多少？滿額折的門檻以「折扣後」還是「折扣前」計算？</li>
+    <li>原型內建自由遊玩按鈕 + 分頁引導：讓非開發者（PM）也能操作，把不同疊加順序的結果並排顯示。</li>
+    <li>每次動作後把完整狀態印在畫面上——PM 看見「折扣碼把金額降到門檻以下，滿額折就消失了」的怪異行為。</li>
+    <li>結論：疊加順序必須固定為「會員價→滿額折→折扣碼」，且滿額折以折扣後金額計算。決策折疊回正式程式碼。</li>
+    <li>留存：原型 commit 到 <code>prototype/discount-stack</code> 一次性分支（不在 main），實作 issue 上留上下文指標；答案（判定與問題）寫進 issue。</li>
+  </ol>
+  <p><strong>設計決策</strong>：本例最大的陷阱是「優惠疊加順序」這種規則在紙上永遠討論不出結果——每個人都有直覺，但直覺互相衝突。LOGIC 原型的價值是讓 PM 親自「看到」一個順序下的具體金額，把「我覺得」變成「我看到」。這就是「原型的價值是回答問題，不是交付功能」的實例。</p>
+</div>
+<div class="tutorial-block tb-theory">
+  <h3><span class="tb-icon">🔬</span> 深入原理擴充</h3>
+  <p>「throwaway（一次性）」在原型技能裡是<strong>對程式碼撰寫方式的約束，不是銷毀的承諾</strong>。這組設計有三層含義：(1) 不寫測試、不做抽象——因為測試與抽象是「要長期維護」的訊號，會拖慢「快速學到東西」的目標；(2) 狀態不持久化——因為持久化是原型要<em>檢驗</em>的事，不是它該依賴的事；(3) 完成後留存到一次性分支——因為原型是<strong>主要來源</strong>，未來要回溯「當時為什麼這樣設計」時，原型是證據。</p>
+  <p>對 AI coding assistant 而言，「prototype 分支 + issue 指標」的留存機制解決了<strong>決策的追溯性</strong>。正式程式碼裡的判斷（如「疊加順序固定」）背後的理由不在 code 裡，而在原型互動裡——若不留存原型與答案，後人看到程式碼只知道「這樣寫」，不知道「為什麼這樣寫」。</p>
+  <p><strong>陷阱案例</strong>：很多人以為「prototype 的程式碼可以亂寫，反正丟掉」，於是把實驗寫在正式目錄、命名成 <code>test-discount.ts</code>，甚至直接在 main 上 commit。真相是：<strong>「一次性」約束的是品質，不是位置</strong>。技能要求把原型放在「實際使用處附近」但命名清楚標示、且在一次性分支上——這是為了讓「這是原型」的訊號對未來的讀者（人與 agent）一望即知。命名不清的 prototype 混進 main，就會變成下一輪 code-review 的「範圍蔓延」。</p>
+</div>
+<div class="tutorial-block tb-diagnosis">
+  <h3><span class="tb-icon">🩺</span> 診斷式疑難排解表</h3>
+  <table>
+    <tr><th>症狀</th><th>可能原因</th><th>解決方案</th></tr>
+    <tr><td>原型越寫越精緻，開始加 error handling 與測試</td><td>把原型當成要交付的產品</td><td>回到「原型回答問題」的目標，砍掉所有非 runnable 需要的程式碼</td></tr>
+    <tr><td>UI 問題用了 LOGIC 分支（或反之）</td><td>分支判斷錯誤，產物形狀不對</td><td>「長什麼樣」→ UI；「狀態模型對不對」→ LOGIC；模糊時看周邊程式碼（後端→Logic、頁面→UI）</td></tr>
+    <tr><td>原型 commit 進 main</td><td>沒走一次性分支流程</td><td>移到 <code>prototype/&lt;name&gt;</code> 分支，main 只留驗證後的決策</td></tr>
+    <tr><td>原型無法一行指令啟動</td><td>執行成本太高，違反「trivial to run」</td><td>UI 用任務執行器單指令（pnpm &lt;name&gt;）、LOGIC 用雙擊即開的單一 HTML</td></tr>
+    <tr><td>使用者在原型裡看不到狀態變化</td><td>沒做「surface the state」</td><td>每次動作後印出／渲染完整相關狀態，讓決策看得見</td></tr>
+  </table>
+</div>
+<div class="tutorial-block tb-challenge">
+  <h3><span class="tb-icon">🏆</span> 進階挑戰題</h3>
+  <ol>
+    <li><strong>分支選擇</strong>：三個問題（a）拖曳排序手感如何（b）並發下購物車計數是否一致（c）訂單狀態機的邊界案例。各選 LOGIC 或 UI，並說明判斷依據。</li>
+    <li><strong>留存設計</strong>：原型驗證了「疊加順序固定」的決策。描述「決策折疊回正式程式碼、原型留分支、issue 記答案」三個動作的完整做法與彼此如何連結。</li>
+    <li><strong>時間盒思考</strong>：你的 LOGIC 原型跑了兩小時還在加功能。用「原型是回答問題的」原則設計一個停止規則，並說明你該怎麼判斷「答案已經拿到」。 </li>
+  </ol>
+</div>
 
 </div>
 </body>

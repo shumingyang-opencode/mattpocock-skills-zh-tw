@@ -70,6 +70,44 @@
     <li>□ code-review 在 commit 前有跑</li>
   </ul>
 </div>
+<div class="tutorial-block tb-example">
+  <h3><span class="tb-icon">🚀</span> 進階真實情境 Worked Example</h3>
+  <p><strong>情境</strong>：你拿到一張 ticket：「在結帳流程中整合第三方折扣碼服務」，spec 指定的接縫是 <code>applyDiscount(code, cart)</code>，回傳打折後的 cart 與驗證訊息。</p>
+  <ol>
+    <li>確認接縫：spec 說測試接縫是公開函式 <code>applyDiscount</code>，且既有測試已存在同一個檔案（prior art）。與使用者確認後開始。</li>
+    <li>垂直切片 1：<code>it('對有效折扣碼回傳打折 cart')</code> → 紅。建立最小實作：呼叫折扣服務的 <code>validate(code)</code>，通過則套用折扣 → 綠。</li>
+    <li>每個切片後跑 typecheck（<code>npx tsc --noEmit</code>），再跑該測試檔，不跑全量。</li>
+    <li>垂直切片 2：<code>it('對過期折扣碼回傳錯誤訊息')</code> → 紅。在 <code>validate</code> 失敗分支回傳錯誤物件 → 綠。</li>
+    <li>垂直切片 3：<code>it('折扣碼同時適用多商品')</code> → 紅。修複製邏輯讓折扣按比例分配到各商品 → 綠。</li>
+    <li>最後跑完整測試套件確認無回歸 → <code>/code-review</code> 雙軸審查 → 通過後 commit。</li>
+  </ol>
+  <p><strong>設計決策</strong>：本例刻意讓折扣服務是<strong>外部相依</strong>。實作時先確認測試接縫接受相依注入（<code>applyDiscount(code, cart, discountService)</code>），而不是在函式內部 <code>new DiscountClient()</code>——這是 codebase-design「接受相依，不要製造相依」在 TDD 接縫上的落地。型別與測試都寫在公開接縫上，重構內部時測試不會壞。</p>
+</div>
+<div class="tutorial-block tb-theory">
+  <h3><span class="tb-icon">🔬</span> 深入原理擴充</h3>
+  <p>implement 的「薄」是刻意的：五條規則裡沒有「怎麼寫程式碼」，因為那是 <code>/tdd</code> 的工作。這是一個<strong>委派型技能</strong>——它不重複造輪子，而是以正確的次序呼叫既有原語（tdd → typecheck → 全量測試 → code-review → commit）。這種設計讓每個 skill 只保有一個真相來源，也讓「implement 該怎麼做」不會與「tdd 該怎麼做」分叉。</p>
+  <p>規則的次序本身傳達了成本結構：typecheck 每切片都跑、單一測試檔每切片都跑、完整套件只在最後跑一次。這是把<strong>回饋迴圈調到最緊</strong>的工程決策——紅-綠循環的核心是「快」，全量套件會拖慢它，所以只在收尾時跑，此時它的角色從「指引」變成「驗證」。</p>
+  <p><strong>陷阱案例</strong>：很多人以為「implement = 把整個功能一口氣寫完，最後再跑測試」。這正是 tdd 明令禁止的<strong>水平切片</strong>——先寫全部實作，再寫全部測試，測試驗證的是「想像中的行為」而非「逐步長出的行為」。更糟的是，一口氣寫完後若有 40 個測試失敗，你無從分辨「哪個失敗對應哪個決策錯誤」。真相是：<strong>implement 的品質是「逐步可見」的</strong>——每個切片從紅到綠的過程本身就是證據，證明這段實作是被測試逼出來的，而不是事後補測驗證的。</p>
+</div>
+<div class="tutorial-block tb-diagnosis">
+  <h3><span class="tb-icon">🩺</span> 診斷式疑難排解表</h3>
+  <table>
+    <tr><th>症狀</th><th>可能原因</th><th>解決方案</th></tr>
+    <tr><td>測試一寫就一大包、幾十個 case</td><td>水平切片：先寫全部測試再寫實作</td><td>砍到一個測試→一個實作→跑綠，逐切片累積</td></tr>
+    <tr><td>typecheck 在切片結束才跑，錯誤一次爆一堆</td><td>把型別檢查拖延到最後</td><td>每個切片完成後立刻 <code>tsc --noEmit</code>，型別錯誤當場修</td></tr>
+    <tr><td>最後全量測試爆出回歸</td><td>每個切片完成後沒跑過該測試檔，或沒跑全量</td><td>切片間跑單一測試檔；最後收尾跑一次全量，回歸當場定位</td></tr>
+    <tr><td>測試在未確認的接縫上被寫出</td><td>implement 沒先確認 pre-agreed seams</td><td>動手前先寫下接縫清單與使用者確認，不測未確認的接縫</td></tr>
+    <tr><td>commit 後才發現沒做 code-review</td><td>把 review 當成可選項</td><td>把 code-review 當 implement 的完成條件，審查通過才 commit</td></tr>
+  </table>
+</div>
+<div class="tutorial-block tb-challenge">
+  <h3><span class="tb-icon">🏆</span> 進階挑戰題</h3>
+  <ol>
+    <li><strong>接縫確認</strong>：spec 給的測試接縫是「公開函式」，但你發現真正複雜的邏輯藏在內部。用 codebase-design 詞彙說明你該怎麼做，以及為什麼不該為了測試方便把內部函式公開。</li>
+    <li><strong>切片次序</strong>：一個「匯出 CSV 並寄 email」的功能。排出三個垂直切片的次序（每片要端對端可用），並標出每片的紅-綠測試長什麼樣。</li>
+    <li><strong>回饋調校</strong>：你的完整測試套件要 8 分鐘。說明在紅-綠循環中、切片結束時、收尾時三個時點各該跑什麼，以及這樣安排的依據。</li>
+  </ol>
+</div>
 
 </div>
 </body>

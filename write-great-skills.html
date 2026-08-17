@@ -146,6 +146,43 @@
     <li>□ Pruning：SKILL.md 每多一個字都值得嗎？</li>
   </ul>
 </div>
+<div class="tutorial-block tb-example">
+  <h3><span class="tb-icon">🚀</span> 進階真實情境 Worked Example</h3>
+  <p><strong>情境</strong>：你的團隊要寫一個「新專案初始化」的技能（/project-init），但你擔心它變成又一個「下載了卻沒人用」的壞技能。你決定拿四關卡逐關檢查。</p>
+  <ol>
+    <li><strong>Trigger</strong>：初始化是使用者「主動想做」的動作，AI 無法判斷「該不該開新專案」→ 選 user-invoked（<code>disable-model-invocation: true</code>）。description 只有一句：給使用者看的精準說明，不進 agent context。</li>
+    <li><strong>Structure</strong>：SKILL.md 只留步驟——「問三件事（專案名稱、用途、技術棧）→ 產生骨架 → 初始化 git → 提示下一步」。TypeScript 模板、Python 模板是分支，拆成 <code>templates/</code> 目錄，用 context pointer 指向。</li>
+    <li><strong>Steering</strong>：步驟文字放 leading word「<strong>tracer bullet</strong>」——讓 agent 產生「一個能跑的垂直切片」而不是「全套檔案」。把「先別做完整目錄結構」這段否定句刪掉，改用正面引導詞。</li>
+    <li><strong>Pruning</strong>：跑 deletion test——把「確保 git 已初始化」這行刪掉，agent 行為會變嗎？會（它真的可能跳過）→ 留下。把「記得要禮貌」刪掉，行為沒變 → no-op，砍。</li>
+    <li>把檢查結果回饋進技能本體，重跑一次確認四關都過。最後交付的 SKILL.md 只有 40 行。</li>
+  </ol>
+  <p><strong>設計決策</strong>：本情境的關鍵是<strong>把檢查清單當成「審查閘門」而不是「寫作後記」</strong>——四關不是寫完再驗證，而是在寫的過程中逐步套用。Trigger 在動手前就定（否則結構會跟著錯），Pruning 放在最後（因為要先有內容才能刪）。</p>
+</div>
+<div class="tutorial-block tb-theory">
+  <h3><span class="tb-icon">🔬</span> 深入原理擴充</h3>
+  <p>「leading word（引導詞）」之所以有效，是因為 LLM 的<strong>先驗（prior）</strong>。像「vertical slice」「tracer bullet」「fog of war」這些詞在預訓練語料中出現過成千上萬次，模型對它們已有紮實的行為關聯——把詞放進技能文字，等於<strong>用一個 token 召喚整片行為模式</strong>，而不用寫一整段長文描述。這也解釋了「否定句無效」：<strong>「不要想大象」會啟動大象的概念</strong>，讓被禁止的行為反而更活躍——負面指令是軟修飾符，正面引導詞才是硬掛鉤。</p>
+  <p>「deletion test（刪除測試）」是判斷技能內容是否為 no-op 的實證方法。它與 codebase-design 的刪除測試同名但不同用途：前者測「這段文字是否影響 agent 行為」，後者測「這個模組是否承載行為」。兩者共享的哲學是<strong>用「刪除後的差異」判斷「存在的價值」</strong>——存在但刪了沒差的部分，就是在燒 token。</p>
+  <p><strong>陷阱案例</strong>：很多人以為「技能寫長一點比較保險」，於是把所有情境、所有例外、所有背景知識全塞進 SKILL.md。真相是：<strong>長技能不是保險，是負債</strong>——它燒每一次 request 的 token，還讓 agent 在執行時被無關段落稀釋注意力。而且「長」往往是「內容沒被分支」的症狀：真正該做的是 progressive disclosure——把只對某個分支重要的內容移到獨立檔，主檔只留每個分支都需要的部分。長技能與好技能呈反相關，不是正相關。</p>
+</div>
+<div class="tutorial-block tb-diagnosis">
+  <h3><span class="tb-icon">🩺</span> 診斷式疑難排解表</h3>
+  <table>
+    <tr><th>症狀</th><th>可能原因</th><th>解決方案</th></tr>
+    <tr><td>技能明明該被呼叫卻沒被觸發</td><td>description 太模糊，或觸發詞與使用者用語不符</td><td>前載 leading word、一分支一觸發詞；用實際對話測試觸發率</td></tr>
+    <tr><td>技能在不相關的情境被誤觸發</td><td>description 塞了過多同義詞，分支語意重疊</td><td>合併同義詞、只留真正不同的分支，讓觸發條件互斥</td></tr>
+    <tr><td>SKILL.md 超過百行且 agent 執行時「選擇性忽略」</td><td>內容沒分層，主檔塞滿分支專用參考</td><td>progressive disclosure——把分支內容移到獨立檔，主檔只留共同步驟</td></tr>
+    <tr><td>agent 一直「一層層寫」不聽勸</td><td>用了否定句（「不要一層層」），沒用正面引導詞</td><td>改用「vertical slice」等 leading word，讓先驗接管行為</td></tr>
+    <tr><td>刪掉一大段文字後行為毫無變化</td><td>那段是 no-op，純燒 token</td><td>刪掉整段（不是修剪字詞）；有爭議用「實際跑」裁決</td></tr>
+  </table>
+</div>
+<div class="tutorial-block tb-challenge">
+  <h3><span class="tb-icon">🏆</span> 進階挑戰題</h3>
+  <ol>
+    <li><strong>Trigger 抉擇</strong>：三個技能候選（a）整理 commit message（b）把測試補齊（c）幫我寫詩。各選 user-invoked 或 model-invoked，並用「context load vs cognitive load」說明理由。</li>
+    <li><strong>Leading word 重構</strong>：把「請在動手前先確認需求，不要直接開始寫程式，也不要自己假設功能」改寫成一行含 leading word 的正面指令，並解釋你選的詞為什麼能召喚先驗。</li>
+    <li><strong>Deletion test 實作</strong>：你的技能有一段「確保程式碼可讀性，命名要清楚，結構要一致，維護性很重要」。設計一個實驗流程，判斷這整段是不是 no-op，並寫下你會怎麼執行它。</li>
+  </ol>
+</div>
 <footer>
   <div>這是 <a href="https://github.com/mattpocock/skills">mattpocock/skills</a> 的繁體中文翻譯學習站——翻譯只動說明文字，指令、路徑、技能名一律照原樣，安裝照常可用。</div>
   <div>內容 © <a href="https://github.com/mattpocock">Matt Pocock</a>（MIT License）· 使用 OpenCode 與 deepseek-v4-flash 進行繁中翻譯與網站設計建置</div>

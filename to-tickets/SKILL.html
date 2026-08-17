@@ -176,6 +176,44 @@
     <li>□ 沒有關閉或修改父 issue</li>
   </ul>
 </div>
+<div class="tutorial-block tb-example">
+  <h3><span class="tb-icon">🚀</span> 進階真實情境 Worked Example</h3>
+  <p><strong>情境</strong>：規格是「把欄位 <code>status</code> 從 string 改成 union type <code>OrderStatus</code>」。這個改動的影響半徑橫跨整個 codebase——數十個檔案都直接 assign string 到 status。這是一個「大範圍重構」。</p>
+  <ol>
+    <li>判斷：單一機械式變更、blast radius 橫跨全 codebase → 不硬塞進曳光彈，改用<strong>擴展–收縮</strong>。</li>
+    <li>擴展（Ticket 1）：新增 <code>OrderStatus</code> union type 與轉換函式，舊 string 形式保留，什麼都不破壞 → CI 仍綠。阻塞於：無。</li>
+    <li>遷移（Ticket 2–4）：依目錄分批遷移呼叫點（每批一張 ticket，被 Ticket 1 阻塞）。因為舊形式還在，每批合併後 CI 都保持綠。</li>
+    <li>收縮（Ticket 5）：確認沒有呼叫者用舊形式後，刪除舊 string 形式。被 Ticket 2–4 全部阻塞。</li>
+    <li>若單批無法獨立綠：讓遷移批次共享一條集成分支，全部阻塞一張「整合與驗證」ticket——綠燈只在那裡保證。</li>
+    <li>發佈：本機追蹤器則每張 ticket 一個檔案，依賴順序編號 01–05；真實追蹤器用原生 blocking 連結。全部套 <code>ready-for-agent</code>。</li>
+  </ol>
+  <p><strong>設計決策</strong>：本例最關鍵的判斷是<strong>「這個改動不是曳光彈」</strong>——垂直切片假設「每張 ticket 能獨立落地綠燈」，而大範圍重構破壞了這個前提（一次編輯爆數千個呼叫點）。擴展–收縮把「原子改動」拆成三個階段，讓 CI 每批都綠——這就是 to-tickets「垂直切片的例外」章的實作。</p>
+</div>
+<div class="tutorial-block tb-theory">
+  <h3><span class="tb-icon">🔬</span> 深入原理擴充</h3>
+  <p>to-tickets 的核心是<strong>曳光彈（tracer bullet）</strong>概念（源自 <em>The Pragmatic Programmer</em>）：一條貫穿所有層的狹窄但完整路徑，能獨立展示、能讓團隊「看到系統在運作」。它與「水平切片」（先做完所有 DB、再所有 API、再所有 UI）對立——水平切片在最後一刻之前都無法被驗證，曳光彈則每一步都可演示。</p>
+  <p>「阻塞邊（blocking edges）」把 ticket 群組織成一個<strong>偏序集</strong>——它決定哪些 ticket 可平行、哪些必須依序。這讓「一個 session 一個 ticket」的 implement 策略（ask-matt 的 main flow）能安全平行：只要遵守阻塞邊，平行 session 不會撞車。同時阻塞邊也是「前沿（frontier）」的定義來源：任何阻塞者都完成的 ticket 就是可認領的。</p>
+  <p><strong>陷阱案例</strong>：很多人以為「阻塞邊越多越謹慎」，於是讓每張 ticket 依賴一大堆其他 ticket，結果整張圖接近線性——平行化被扼殺，且一旦某張 ticket 卡住，後續全部塞車。真相是：<strong>阻塞邊該反映「真實的依賴」，不是「方便的順序」</strong>。如果 ticket B 其實可以跟 A 平行做，卻被標成「阻塞於 A」，你就是把自己能省的時間白白排掉了。判斷標準：B 真的需要 A 的產出才能開始嗎？不是「比較順」就該標阻塞。</p>
+</div>
+<div class="tutorial-block tb-diagnosis">
+  <h3><span class="tb-icon">🩺</span> 診斷式疑難排解表</h3>
+  <table>
+    <tr><th>症狀</th><th>可能原因</th><th>解決方案</th></tr>
+    <tr><td>每張 ticket 依賴四五張其他 ticket</td><td>粒度太細，或阻塞邊標了「方便順序」而非真實依賴</td><td>合併 ticket；重新檢查每條阻塞邊是否為真實依賴</td></tr>
+    <tr><td>ticket 描述是「建 DB schema」「建 API」</td><td>水平切片，不是曳光彈</td><td>改寫成端對端行為（「使用者能建立訂單」），每片貫穿所有層</td></tr>
+    <tr><td>單一機械式改動爆掉數千個呼叫點</td><td>大範圍重構被硬塞進曳光彈</td><td>改用擴展–收縮三階段（expand→migrate 分批→contract）</td></tr>
+    <tr><td>使用者說「粒度不對」</td><td>ticket 太粗（一 session 做不完）或太細（依賴爆炸）</td><td>重拆；以「單一乾淨 context window 能完成」為基準調整</td></tr>
+    <tr><td>父 issue 被誤關或誤改</td><td>to-tickets 或 implement 動了父 issue</td><td>父 issue 是功能追蹤點，保持原樣；子 ticket 各自獨立</td></tr>
+  </table>
+</div>
+<div class="tutorial-block tb-challenge">
+  <h3><span class="tb-icon">🏆</span> 進階挑戰題</h3>
+  <ol>
+    <li><strong>垂直切片設計</strong>：規格是「用戶可以匯出 CSV 並收到 email」。拆成三張曳光彈 ticket，每張都要「端對端可用」，並標出阻塞邊。</li>
+    <li><strong>擴展–收縮排程</strong>：把「rename 資料庫欄位 <code>user_name</code> → <code>display_name</code>」排成擴展–收縮序列。寫出每張 ticket 的內容、阻塞邊、以及「何時 CI 保證綠」。</li>
+    <li><strong>阻塞邊審查</strong>：下列依賴哪些是真實依賴、哪些只是「比較順」？（a）B 需要 A 的 API contract 才能設計（b）B 需要 A 完成才能測端到端（c）B 在 A 之後做「比較符合邏輯」。逐項判斷。</li>
+  </ol>
+</div>
 
 </div>
 </body>

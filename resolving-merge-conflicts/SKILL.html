@@ -88,6 +88,43 @@
     <li>□ 沒有使用 --abort</li>
   </ul>
 </div>
+<div class="tutorial-block tb-example">
+  <h3><span class="tb-icon">🚀</span> 進階真實情境 Worked Example</h3>
+  <p><strong>情境</strong>：你在 rebase 功能分支到 main，<code>src/orders.ts</code> 出現衝突。A 邊（你的分支）把「訂單驗證」拆成了獨立模組並改了呼叫點，B 邊（main）把「訂單狀態」從 string 改成 union type。</p>
+  <ol>
+    <li>看狀態：<code>git status</code> 確認是 rebase 中、衝突集中在 <code>src/orders.ts</code> 與 <code>src/validate.ts</code>。</li>
+    <li>找主要來源：A 的 commit 寫「refactor: split order validation」——意圖是驗證邏輯獨立、可重用；B 的 commit 寫「feat: typed order status」——意圖是消滅 magic string。</li>
+    <li>逐 hunk 解：驗證模組的型別簽名衝突——A 傳 <code>status: string</code>，B 改成 <code>OrderStatus</code>。兩邊意圖相容：把驗證函式的參數改成 <code>OrderStatus</code>，同時保留 A 的模組拆分。不發明新行為（不順手加驗證規則）。</li>
+    <li>跑自動化檢查：typecheck 先爆（幾個呼叫點還用舊 string）→ 依 typecheck 指出的位置逐一修正 → 再跑測試 → 最後跑格式。</li>
+    <li>完成 rebase，確認所有 commit 都重放完畢。衝突解決的取捨寫進 commit message（「型別改 union 後，驗證函式同步改用 OrderStatus」）。</li>
+  </ol>
+  <p><strong>設計決策</strong>：本例的關鍵是<strong>先讀 commit 訊息建立「意圖模型」再動手</strong>。若只看 diff 的兩行字面差異，你可能會「選 A 的 string 版本」——那會悄悄把 B 的型別安全改回去，等於在 rebase 中逆向做了一次不該做的 revert。typecheck 在這裡不是「可選的品質檢查」，而是「意圖衝突的偵測器」。</p>
+</div>
+<div class="tutorial-block tb-theory">
+  <h3><span class="tb-icon">🔬</span> 深入原理擴充</h3>
+  <p>git 的衝突標記（<code>&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code> / <code>=======</code> / <code>&gt;&gt;&gt;&gt;&gt;&gt;&gt;</code>）呈現的是<strong>字面差異</strong>，而衝突的真正本質是<strong>意圖差異</strong>。技能的核心主張是：字面差異只是表面，真正的問題是「兩邊各自的意圖是什麼、它們相容嗎」。這把解決衝突從「挑選行」升級為「設計決策」——先建立兩邊的意圖模型，再合成一個保留雙方意圖的方案。</p>
+  <p>為什麼「絕不 <code>--abort</code>」？因為 abort 只是把「現在必須解決的衝突」變成「以後某個不知道的時刻的衝突」——同一個檔案、同一對意圖，只是換個時間再撞一次。而且 abort 同時丟掉你已經建立的理解（讀過的 commit、想好的合成方案）。對 AI coding assistant 而言，abort 等於放棄它唯一有價值的資產——上下文。</p>
+  <p><strong>陷阱案例</strong>：很多人以為「衝突越少越好，所以看到衝突就選『看起來比較新』的一邊」。真相是：<strong>「新」不代表「正確」</strong>——B 邊可能是 hotfix 補丁，A 邊才是長期設計。而且「選一邊」常常悄悄丟掉另一邊的意圖，製造隱形回歸。例如此案例若直接選 A 的 string 版本，main 的型別安全就被靜默撤銷，之後的測試可能全部照跑（因為 string 是 runtime 泛型）——這正是「發明新行為」之外的第二種隱形錯誤：<strong>悄悄撤銷意圖</strong>。</p>
+</div>
+<div class="tutorial-block tb-diagnosis">
+  <h3><span class="tb-icon">🩺</span> 診斷式疑難排解表</h3>
+  <table>
+    <tr><th>症狀</th><th>可能原因</th><th>解決方案</th></tr>
+    <tr><td>想直接 <code>--abort</code> 重來</td><td>衝突太大，覺得重做比較快</td><td>不要 abort——建立意圖模型逐 hunk 解；abort 只把衝突推到未來且丟掉理解</td></tr>
+    <tr><td>看不出兩邊各改什麼</td><td>只看了衝突標記，沒讀 commit 訊息</td><td>先 <code>git log</code> 讀兩邊 commit、查 PR／issue，建立意圖模型再動手</td></tr>
+    <tr><td>合併後 typecheck 或測試爆掉</td><td>合併時只解決了字面衝突，型別或行為層的意圖衝突沒解</td><td>跑自動化檢查（typecheck→tests→format），把型別／測試錯誤當「意圖衝突偵測器」逐一修</td></tr>
+    <tr><td>合併後多出沒人要求的新行為</td><td>解決衝突時「順手」加了新功能</td><td>回到「不發明新行為」；只保留兩邊原有意圖，新增需求另開 ticket</td></tr>
+    <tr><td>解決後不知道選了哪邊、為何</td><td>沒記錄取捨</td><td>把取捨寫進 commit message，讓下一位（或 code-review 的規格軸）能追溯</td></tr>
+  </table>
+</div>
+<div class="tutorial-block tb-challenge">
+  <h3><span class="tb-icon">🏆</span> 進階挑戰題</h3>
+  <ol>
+    <li><strong>意圖合成</strong>：A 邊把 <code>getUser(id)</code> 改成回傳 promise，B 邊在同一檔案新增了 <code>getUser` 的快取包裝。寫出兩個意圖各自的內容，以及一個同時保留兩者的合成方案。</li>
+    <li><strong>隱形回歸偵測</strong>：rebase 後所有測試都綠了，但你懷疑型別安全被靜默撤銷。列出至少三種「測試全綠但意圖被破壞」的可能，並說明各該用哪個檢查抓到。</li>
+    <li><strong>abort 代價分析</strong>：比較「abort 後重做」與「逐 hunk 解決」在（a）時間（b）上下文資產（c）意圖完整性三方面的代價，並說明技能為何把「絕不 abort」寫成硬規則。</li>
+  </ol>
+</div>
 
 </div>
 </body>

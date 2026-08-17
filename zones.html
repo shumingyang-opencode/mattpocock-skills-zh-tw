@@ -43,6 +43,42 @@
     <li>□ 能根據「我現在在做什麼」選對的區</li>
   </ul>
 </div>
+<div class="tutorial-block tb-example">
+  <h3><span class="tb-icon">🚀</span> 進階真實情境 Worked Example</h3>
+  <p><strong>情境</strong>：你的一天從三件事開始——線上回報「付款失敗」、產品經理丟來一個「會員忠誠度計畫」的點子、你自己想趁空檔整理一直出問題的訂單模組。你用六大區快速定位每件事。</p>
+  <ol>
+    <li>付款失敗：是「有東西壞了」→ <strong>維護區</strong>，走 <code>/diagnosing-bugs</code>（先建一條會變紅的迴圈再談假設）。</li>
+    <li>忠誠度計畫：是「點子→交付」→ <strong>主流程</strong>，走 <code>/grill-with-docs</code> 起手；若大到裝不下單一 session，會切到 <strong>塑形區</strong> 的 <code>/wayfinder</code>。</li>
+    <li>整理訂單模組：是「讓程式碼庫對 agent 更好作業」→ <strong>維護區</strong>，走 <code>/improve-codebase-architecture</code> 掃描深化機會。</li>
+    <li>三件事各有歸位，不需要互相等：維護區的 bug 與重構可以並行，主流程的點子走自己的節奏。你也能在任一點隨時翻 <strong>參考層</strong>（<code>/codebase-design</code> 的詞彙）來把維護區的討論講精準。</li>
+  </ol>
+  <p><strong>設計決策</strong>：六大區的核心洞察是<strong>同一套技能可以服務多種情境</strong>——<code>triage</code> 同時在塑形（決定做什麼）與維護（消化湧入的請求）；<code>writing-for-agents</code> 同時在生產力與參考層。分區是「看你現在在做什麼」的分類工具，不是技能的分類歸檔——這跟學習路線「按順序走」的視角互補。</p>
+</div>
+<div class="tutorial-block tb-theory">
+  <h3><span class="tb-icon">🔬</span> 深入原理擴充</h3>
+  <p>六大區本質上是對「技能使用情境」的<strong>使用者視角分類法</strong>。學習路線（L0–L4）是「流程視角」——它假設你正沿著主流程前進；六大區是「情境視角」——它假設你手上有一堆不同性質的任務，需要快速把每個任務歸位。兩者不是競爭關係：<strong>主流程中的某一步，在六大區裡也正好落在對應的區</strong>（implement 在主流程也在執行區），差別只在切入問題的方式。</p>
+  <p>「技能可以跨區」不是分類的缺陷，而是<strong>技能設計的「多面性」特徵</strong>——一個好的技能往往能服務不只一種情境。以 <code>research</code> 為例：在主流程中它是支援（查資料餵給 grill），在塑形區它是探索工具（查決策等待的事實）。這提醒使用者：<strong>別被分類綁死</strong>——分類是幫助你找技能的地圖，不是技能的邊界。</p>
+  <p><strong>陷阱案例</strong>：很多人把六大區當成「技能的永久歸屬」，於是認定「research 是支援層技能，所以主流程不該用它」——結果在 grill 卡在「第三方 API 到底支援什麼」時，寧可自己慢慢讀文檔，也不肯翻 <code>/research</code>。真相是：<strong>分類是「什麼情境該想到什麼技能」的索引，不是「什麼技能屬於哪裡」的標籤</strong>。需要查資料就翻 research、需要詞彙就翻 codebase-design，不管它出現在哪一區。被分類綁死，等於把地圖誤當成領土。</p>
+</div>
+<div class="tutorial-block tb-diagnosis">
+  <h3><span class="tb-icon">🩺</span> 診斷式疑難排解表</h3>
+  <table>
+    <tr><th>症狀</th><th>可能原因</th><th>解決方案</th></tr>
+    <tr><td>想找技能時在錯誤的區翻找</td><td>把分類當成技能的永久歸屬，而非情境索引</td><td>用「我現在在做什麼」反推區；跨區技能（如 triage、research）允許出現在多區</td></tr>
+    <tr><td>把學習路線與六大區混用、順序錯亂</td><td>兩種視角（流程 vs 情境）被當成同一套</td><td>主流程推進用學習路線；手上雜務定位用六大區；兩者互補不互斥</td></tr>
+    <tr><td>遇到線上 bug 卻先去主流程安排</td><td>沒把「有東西壞了」歸到維護區</td><td>事故走維護區的 diagnosing-bugs（先建迴圈），不排進點子→交付的主流程</td></tr>
+    <tr><td>大型綠地工程誤走主流程的 grill-with-docs</td><td>沒認出「大到裝不下單一 session」該切塑形區</td><td>判斷「單一 session 裝得下嗎」；裝不下就切 wayfinder（塑形區）</td></tr>
+    <tr><td>詞彙／參考技能沒被「隨時可翻」地使用</td><td>把參考層當成「最後才學」的內容</td><td>需要時就翻：詞彙衝突用 domain-modeling、查事實用 research，不必等某個階段</td></tr>
+  </table>
+</div>
+<div class="tutorial-block tb-challenge">
+  <h3><span class="tb-icon">🏆</span> 進階挑戰題</h3>
+  <ol>
+    <li><strong>情境歸位</strong>：五個情境（新功能點子、P1 事故、外部 PR 湧入、想整理架構、學習新語言）各自落在六大區的哪一區，可能跨哪幾區？</li>
+    <li><strong>雙視角對照</strong>：以 <code>triage</code> 為例，說明它在學習路線與六大區各自的位置與角色，並解釋「同一個技能兩種分類」為何不是矛盾。</li>
+    <li><strong>分類批判</strong>：有人主張「把六大區併入學習路線，只留一套」。從「流程視角 vs 情境視角」的差異論證為什麼兩套並存比併成一套好。</li>
+  </ol>
+</div>
 
 </div>
 </body>

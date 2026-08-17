@@ -95,6 +95,43 @@
     <li>□ 測試名稱反映了公開介面的行為，不是內部實作</li>
   </ul>
 </div>
+<div class="tutorial-block tb-example">
+  <h3><span class="tb-icon">🚀</span> 進階真實情境 Worked Example</h3>
+  <p><strong>情境</strong>：你要在既有購物車系統加「優惠券可疊加會員折扣」的功能，接縫是 <code>calculateTotal(cart, coupons)</code>。</p>
+  <ol>
+    <li>確認接縫：spec 指定公開函式 <code>calculateTotal(cart, coupons): Price</code>，既有測試檔已有 <code>calculateTotal</code> 的 prior art。與使用者確認後開始。</li>
+    <li>垂直切片 1：<code>it('合併多張優惠券的折扣')</code> → 紅。建立最小實作：<code>coupons.reduce((acc, c) =&gt; acc - c.discount, subtotal)</code> → 綠。</li>
+    <li>垂直切片 2：<code>it('折扣不低於零')</code> → 紅。加 <code>Math.max(0, ...)</code> → 綠。</li>
+    <li>垂直切片 3：<code>it('會員折扣與優惠券順序不影響結果')</code> → 紅。把折扣計算改成「先套百分比再套固定額」，確保交換律成立 → 綠。</li>
+    <li>重構留到 review 階段：切片完的程式碼可能有重複的 <code>Math.max</code> 段落，但迴圈的規則就是「先紅後綠、一次一個切片」——重構不屬於紅綠循環。</li>
+  </ol>
+  <p><strong>設計決策</strong>：第三個切片（交換律）是最容易被跳過的一步——初學者常先寫「折扣順序敏感」的實作，測試全綠就以為完成。但「順序敏感」正是這類功能的隱形 bug 來源。TDD 的價值不是「有測試」，而是<strong>每一片測試都在用公開介面逼你定義行為契約</strong>。</p>
+</div>
+<div class="tutorial-block tb-theory">
+  <h3><span class="tb-icon">🔬</span> 深入原理擴充</h3>
+  <p>「紅綠循環」是 Kent Beck 經典 TDD 的形式化，但本技能做了兩個關鍵延伸：<strong>接縫（seam）</strong>與<strong>反模式</strong>。接縫概念來自 Michael Feathers——它是「你可以改變行為而不修改那行的地方」。在 TDD 中，接縫決定「測試貼在哪一層」：接縫越高，測試越接近使用者行為、越耐重構；接縫越低，測試越快但越容易耦合實作。</p>
+  <p>三種反模式（耦合實作、同義反覆、水平切片）對應三個不同的失敗時刻：耦合實作讓測試<strong>在重構時斷</strong>（脆），同義反覆讓測試<strong>永遠不會斷</strong>（無用），水平切片讓測試<strong>在動手前就承諾錯誤結構</strong>（誤導）。三者都不是「測試寫錯」這種小事——它們是「測試的設計」層次的錯誤，無法靠改測試內容修好，只能重寫測試的意圖。</p>
+  <p><strong>陷阱案例</strong>：很多人以為「期望值從『函式自己』拿就夠了」，於是用 <code>expect(add(a,b)).toBe(a + b)</code> 或「先實作、再讓測試引用實作結果」的方式寫測試。這就是同義反覆——期望值來自實作本身，測試與程式碼永遠不會意見不合，測試形同虛設。真相是：<strong>期望值必須來自獨立的真實來源</strong>——手算的範例（<code>toBe(110)</code> 的 110 是你自己算的）、規格裡的數字、已知良好的常數。若你發現測試「必然通過」，不是測試成功了，是測試失效了。</p>
+</div>
+<div class="tutorial-block tb-diagnosis">
+  <h3><span class="tb-icon">🩺</span> 診斷式疑難排解表</h3>
+  <table>
+    <tr><th>症狀</th><th>可能原因</th><th>解決方案</th></tr>
+    <tr><td>重構時測試壞掉，但行為沒變</td><td>測試耦合了實作細節（mock 內部協作者、測私有方法）</td><td>把測試移到公開介面；測試只透過接縫觀察行為</td></tr>
+    <tr><td>測試永遠不會失敗（改了實作還照過）</td><td>同義反覆——期望值來自實作自己</td><td>改用獨立真實來源的期望值：手算範例、規格數字、已知常數</td></tr>
+    <tr><td>一次寫 30 個測試才開始實作</td><td>水平切片——測試想像中的行為</td><td>砍到一個測試→一個實作→跑綠，垂直切片逐片前進</td></tr>
+    <tr><td>測試檔跟內層實作放在同一層</td><td>接縫選太低，測試耦合內部結構</td><td>回到「事前約定接縫」，用最高且可觀察的公開介面</td></tr>
+    <tr><td>測試名稱描述實作細節（如「it('調用 repository.save')」）</td><td>測試描述實作而非行為</td><td>改名成行為敘述（「it('持久化使用者')」）；名稱不該含內部呼叫</td></tr>
+  </table>
+</div>
+<div class="tutorial-block tb-challenge">
+  <h3><span class="tb-icon">🏆</span> 進階挑戰題</h3>
+  <ol>
+    <li><strong>接縫分級</strong>：一個「訂單結帳」功能，接縫可以是「計算函式」「service 方法」「HTTP endpoint」。分析三者各自的優缺點，並說明你會在什麼情境下選哪個。</li>
+    <li><strong>反模式辨識</strong>：判斷下列測試各犯了哪種反模式：（a）<code>expect(service.calculate(x)).toBe(x * 2)</code>（b）mock 了 <code>repository</code> 並斷言「被呼叫過」而不是結果（c）先寫 40 個測試再寫實作。並提出修正。</li>
+    <li><strong>獨立來源設計</strong>：一個「依匯率轉換貨幣」的功能，匯率來自外部 API。設計一個測試，它的期望值不來自實作、不依賴網路，仍能驗證「轉換正確」。</li>
+  </ol>
+</div>
 
 </div>
 </body>

@@ -169,6 +169,43 @@
     <li>□ 知道 wayfinder 完成後要手動 merge 到主流程（to-spec），不能直接 implement</li>
   </ul>
 </div>
+<div class="tutorial-block tb-example">
+  <h3><span class="tb-icon">🚀</span> 進階真實情境 Worked Example</h3>
+  <p><strong>情境</strong>：你在一個 monorepo 中工作，今天收到兩件事：產品經理丟來「下個月要上線 AI 摘要功能」的鬆散點子，同時線上有一個 P1 事故在排隊。</p>
+  <ol>
+    <li>先問 <code>/ask-matt</code>：「線上 P1 事故 + 一個大功能點子，怎麼排？」</li>
+    <li>路由判斷：P1 事故是「有東西壞了」→ 走 <code>/diagnosing-bugs</code>（進入匝道）；AI 摘要點子「大到單一 session 裝不下」→ 走 <code>/wayfinder</code>（另一條進入匝道）。兩條匝道並行，不衝突。</li>
+    <li>事故處理：<code>/diagnosing-bugs</code> 先建立一條會變紅的迴圈（curl 指令），確認是快取失效而非資料損壞 → 修復 + 回歸測試。</li>
+    <li>點子處理：<code>/wayfinder</code> 繪製地圖，先命名目的地「一份可交付的 AI 摘要規格」，再把迷霧切成 research / grilling / prototype 三種 ticket。</li>
+    <li>當 wayfinder 地圖清晰、事故也修完，兩條路在 <code>/to-spec</code> 匯入主流程 → <code>/to-tickets</code> → 逐 ticket <code>/implement</code>。</li>
+  </ol>
+  <p><strong>設計決策</strong>：ask-matt 的價值在於它把「該走哪條路」的判斷集中在一處。這裡的關鍵是兩件事<strong>不同時進主流程</strong>——事故是緊急維修（獨立技能），點子是長期規劃（wayfinder）。若誤把事故當成功能 ticket 丟進主流程，會讓 implement 被一個「無法復現的 bug」卡住整個流程。</p>
+</div>
+<div class="tutorial-block tb-theory">
+  <h3><span class="tb-icon">🔬</span> 深入原理擴充</h3>
+  <p>Router（路由器）技能的本質是<strong>把路由決策做成一個可測試的入口</strong>。它跟普通技能的差別：router 的「輸出」不是產物，而是<strong>一個技能的選擇</strong>。這表示它的品質衡量方式不同——好 router 的指標是「選擇的正確率」，不是「產出的品質」。</p>
+  <p>實務上 router 的行為幾乎全由 <strong>description 的分支結構</strong>決定。每個分支對應一種使用者情境，而描述裡每多一組同義詞，就多一份 context load。最佳化方向是把描述寫成「一組互斥的 if 條件」：每個觸發詞對應唯一一個技能，字與字之間不重疊。</p>
+  <p><strong>陷阱案例</strong>：很多人以為 router 描述寫得越「詳細周全」越好，於是把「面試、訪談、interview、問問題、腦力激盪」全部塞進 <code>/grilling</code> 的觸發詞。結果 <code>/grilling</code> 在「客戶訪談需求蒐集」這種<a href="writing-for-agents/SKILL.html">非編程任務</a>上頻繁誤觸發，燒掉 token 又打斷主流程。真相是：<strong>同義詞是同一分支寫了兩次</strong>，每組同義詞只該保留一個最精準的詞（「interview」），其餘全部刪掉。多寫不會讓 router 更聰明，只會讓它更常在不該出現時出現。</p>
+</div>
+<div class="tutorial-block tb-diagnosis">
+  <h3><span class="tb-icon">🩺</span> 診斷式疑難排解表</h3>
+  <table>
+    <tr><th>症狀</th><th>可能原因</th><th>解決方案</th></tr>
+    <tr><td>ask-matt 推薦的技能明顯不對</td><td>某個技能的 description 有語意重疊或模糊分支，router 誤判</td><td>用 <code>/writing-for-agents</code> 的指針準則重寫該技能 description：一分支一觸發詞，刪同義詞</td></tr>
+    <tr><td>每次開新 session 都要重頭解釋一遍</td><td>主流程步驟 1–3 的 context 被 <code>/clear</code> 或 compact 切斷</td><td>只在階段邊界 compact；用 <code>/handoff</code> 產生交接文件跨 session 保持狀態</td></tr>
+    <tr><td>明明該 grill 卻直接 implement 了</td><td>點子還模糊就衝進執行，跳過 router 的主流程判斷</td><td>強制從 <code>/grill-with-docs</code> 起手，直到能清楚說出「要做什麼」才往下走</td></tr>
+    <tr><td>P1 事故與大功能同時到，卡住不知先做哪個</td><td>誤把事故當功能 ticket 排入主流程</td><td>事故走 <code>/diagnosing-bugs</code> 匝道、大工程走 <code>/wayfinder</code> 匝道，兩者並行不互斥</td></tr>
+    <tr><td>wayfinder 地圖畫完卻不知道下一步</td><td>想直接把地圖繞進 implement，跳過 to-spec 收斂</td><td>地圖清晰後先 merge 到 <code>/to-spec</code>，讓關聯決策收斂成可建置計畫</td></tr>
+  </table>
+</div>
+<div class="tutorial-block tb-challenge">
+  <h3><span class="tb-icon">🏆</span> 進階挑戰題</h3>
+  <ol>
+    <li><strong>路由壓力測試</strong>：你收到「現有 API 偶爾回傳 500」的 bug 報告。寫出 ask-matt 應該走的三條可能路徑，並說明為什麼「直接呼叫 /implement」是錯的。</li>
+    <li><strong>同義詞審查</strong>：假設 <code>/research</code> 的 description 同時含「調查、查資料、調研、研究、research、investigate」。用一分支一觸發詞原則重寫它，並解釋每刪掉一個詞對 context load 的影響。</li>
+    <li><strong>匝道判讀</strong>：給出五個情境（新功能點子、P1 事故、外部 PR 湧入、超大工程、需要實際跑才能確認的設計決策），一一對應到正確的進入匝道或獨立技能。</li>
+  </ol>
+</div>
 
 </div>
 </body>

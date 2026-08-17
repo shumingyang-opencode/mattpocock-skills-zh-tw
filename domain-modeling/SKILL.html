@@ -132,6 +132,43 @@
     <li>□ 術語定案後有就地更新 CONTEXT.md</li>
   </ul>
 </div>
+<div class="tutorial-block tb-example">
+  <h3><span class="tb-icon">🚀</span> 進階真實情境 Worked Example</h3>
+  <p><strong>情境</strong>：你的電子商務專案要新增「訂閱付款」，產品經理開口就說「訂閱就是一個會重複扣款的黑卡」。你發現 <code>CONTEXT.md</code> 已有「subscription」「billing cycle」「charge」三個詞。</p>
+  <ol>
+    <li>挑戰模糊語言：PM 說的「黑卡」其實是「儲值卡」，與既有的 <code>charge</code>（向已建立的付款方式扣款）衝突。提出精確詞彙：「subscription 的 charge 是自動扣款；黑卡應正名為 wallet，是另一種付款方式」。</li>
+    <li>對照詞彙表挑戰：CONTEXT.md 定義 <code>charge</code> 為「一次性扣款，需使用者授權」。但訂閱的 charge 是排程自動執行、不需每次授權——定義衝突。點出來：「你要的是被授權過的 recurring charge，詞彙表需要加一筆」。</li>
+    <li>具體情境壓力測試：問 PM「訂閱到期但付款失敗時，訂閱狀態是什麼？是 cancelled 還是 pending？」PM 答「pending」。於是把 <code>pending</code> 加入詞彙表並定義清楚。</li>
+    <li>與程式碼交叉比對：程式碼的 <code>Subscription</code> 模型只有 <code>active | cancelled</code> 兩態，沒有 pending——矛盾浮現，這成為改 schema 的前置決策。</li>
+    <li>就地更新：在 CONTEXT.md 新增 <code>recurring charge</code>、<code>wallet</code>、<code>pending</code> 三筆；確認 <code>cancelled</code> 定義不變。以 ADR 記錄「訂閱狀態機加入 pending」這個難以逆轉的決策。</li>
+  </ol>
+  <p><strong>設計決策</strong>：本情境的關鍵是<strong>新功能帶進的術語會衝擊既有詞彙表</strong>。常見錯誤是「順著使用者的新詞彙建新功能」，導致同一個 <code>charge</code> 在系統裡有兩種意思。domain-modeling 的做法是先挑戰、再定義、最後才寫程式——詞彙衝突不解決，schema 與 API 的命名就會互相打架。</p>
+</div>
+<div class="tutorial-block tb-theory">
+  <h3><span class="tb-icon">🔬</span> 深入原理擴充</h3>
+  <p>domain-modeling 的理論根基是 Eric Evans 的 <em>Domain-Driven Design</em> 裡的 <strong>Ubiquitous Language（通用語言）</strong>。核心主張：軟體裡最貴的溝通成本不是「寫程式」，而是「團隊對同一個詞的共識漂移」。當 <code>cancel</code> 在 PM 嘴裡、工程師 code 裡、客服系統裡指三種不同的東西，任何跨角色的溝通都要先翻譯——而翻譯正是 bug 的溫床。</p>
+  <p>CONTEXT.md 設計成「詞彙表，僅此而已」不是保守，而是<strong>刻意維持單一事實來源</strong>：如果它同時當規格、便條紙、實作決策倉庫，就會像 codebase-design 講的「sediment」一樣長出過時層，最後沒人敢信它。ADR 則負責「難以逆轉的決策」，兩者分工明確。</p>
+  <p><strong>陷阱案例</strong>：很多人以為「把術語定義清楚」就是把字典抄進 CONTEXT.md——於是用一整段散文定義 <code>order</code>，甚至抄了「order 有 status 欄位」這種實作細節。真相是：<strong>詞彙表要定義「詞的意思」，不是「詞的實作」</strong>。`order 是顧客購買商品的請求` 是好的定義；`order 的 status 欄位存於 orders 表、值為 PENDING/PAID/CANCELLED` 是污染的定義——後者會隨 schema 改變而過時，讓整份詞彙表失信。</p>
+</div>
+<div class="tutorial-block tb-diagnosis">
+  <h3><span class="tb-icon">🩺</span> 診斷式疑難排解表</h3>
+  <table>
+    <tr><th>症狀</th><th>可能原因</th><th>解決方案</th></tr>
+    <tr><td>使用者新詞彙與 CONTEXT.md 既有定義衝突</td><td>術語被重複使用但意義不同</td><td>立刻點出衝突，問「哪個才對」；定案後就地更新詞彙表</td></tr>
+    <tr><td>同一個詞做多種工作（如 account）</td><td>過載術語，概念未被區分</td><td>拆出精確規範術語（Customer vs User），各給一筆定義</td></tr>
+    <tr><td>CONTEXT.md 裡出現「status 欄位」「src/xxx.ts」</td><td>詞彙表被當成規格或便條紙</td><td>刪除實作細節；只保留概念定義。實作決策改放 ADR 或 spec</td></tr>
+    <tr><td>詞彙表定義與程式碼行為矛盾</td><td>程式碼先行、詞彙沒跟上</td><td>交叉比對浮現矛盾，決定「改詞彙」還是「改程式碼」</td></tr>
+    <tr><td>ADR 堆了一堆「理所當然」的決策</td><td>三個條件缺一就建了 ADR</td><td>只在「難以逆轉＋無上下文會驚訝＋真實取捨」同時成立時才建</td></tr>
+  </table>
+</div>
+<div class="tutorial-block tb-challenge">
+  <h3><span class="tb-icon">🏆</span> 進階挑戰題</h3>
+  <ol>
+    <li><strong>過載術語解析</strong>：團隊整天講「order」，但你發現它同時指「購物車結帳的請求」「已建立的訂單記錄」「電子郵件裡要出貨的包裹」。設計三筆詞彙表定義把它們拆開，並各舉一個使用情境。</li>
+    <li><strong>ADR 三條件</strong>：下列哪些該建 ADR、哪些該跳過？（a）選用 Postgres 當寫入模型（b）表單欄位用 camelCase 命名（c）訂單狀態機加入 pending 態。逐項用三條件判斷。</li>
+    <li><strong>矛盾浮現</strong>：詞彙表定義「cancellation 是完整取消訂單」，但程式碼的 <code>cancelOrder</code> 只把 status 設成 CANCELLED、不處理已出貨商品。寫出你作為 agent 會對使用者說的一句話。</li>
+  </ol>
+</div>
 
 </div>
 </body>

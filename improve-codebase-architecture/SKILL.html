@@ -138,6 +138,44 @@
     <li>□ 每個候選都有前後視覺化</li>
   </ul>
 </div>
+<div class="tutorial-block tb-example">
+  <h3><span class="tb-icon">🚀</span> 進階真實情境 Worked Example</h3>
+  <p><strong>情境</strong>：你的團隊最近三個月密集改動了 <code>search/</code> 目錄，因為關鍵字搜尋一直出問題。你想知道搜尋模組是不是值得深化。</p>
+  <ol>
+    <li>定範圍：<code>git log --oneline</code> 往回看，確認 <code>search/</code> 是熱點——三個月內 40 個 commit 集中在這裡，符合「最近密集變更」的加權原則。</li>
+    <li>讀文件：先讀 <code>CONTEXT.md</code>（搜尋在詞彙表裡叫「SearchRequest」與「SearchResult」），再讀 <code>docs/adr/</code> 確認有沒有 ADR 限制重構方向。</li>
+    <li>探索子代理：發現 <code>SearchService</code> 有 14 個公開方法，其中 9 個只是把參數轉給底層 ES client。對疑似淺模組套刪除測試——刪掉後複雜度會散回 6 個呼叫者 → 候選成立。</li>
+    <li>HTML 報告：寫到 <code>$TMPDIR/architecture-review-&lt;timestamp&gt;.html</code>。候選卡片含「檔案、問題、解決方案、好處（用局部性／槓桿收益說明）、前後圖、建議強度」。搜尋候選標記為 <code>Strong</code>。</li>
+    <li>報告結尾放 Top recommendation：先深化 SearchService，因為它的變更頻率最高、回報最大。用 CONTEXT.md 詞彙描述：「把 SearchRequest 的組裝邏輯收進一個深介面」。</li>
+    <li>問使用者：「你想探索哪一個？」——不直接提出介面方案。</li>
+  </ol>
+  <p><strong>設計決策</strong>：本例的關鍵是<strong>用 commit 歷史決定掃描範圍</strong>。技能明說「深化模組的回報來自讓未來對它的變更更容易」，所以熱點優先。若是無差別掃描整棵樹，會產出一份 20 個候選的報告，其中 15 個是「這週可能改也可能不改」的冷區——那只是把注意力分散。</p>
+</div>
+<div class="tutorial-block tb-theory">
+  <h3><span class="tb-icon">🔬</span> 深入原理擴充</h3>
+  <p>本技能的兩大支柱是 codebase-design 的詞彙（深度、接縫、局部性）與 grilling 的互動。為什麼 HTML 報告是「暫存檔」而非 repo 內文件？因為<strong>報告是快照，不是真相來源</strong>——它的生命週期只到「使用者選定候選」那一刻，之後的真相是 grilling 產出的決策與 ADR。把它放進 repo 只會沉積成過時文件。</p>
+  <p>「先呈現候選、不提出介面」是刻意的引導設計：<strong>提出介面是設計決策，應該發生在與使用者對齊之後</strong>。若掃描階段就急著給出介面方案，等於在尚未確認問題之前就承諾解法——這正是 grilling 要防止的「過早收斂」。HTML 報告的角色是把問題浮上檯面，讓使用者做「探索哪一個」的決策。</p>
+  <p><strong>陷阱案例</strong>：很多人以為「候選越多越好」，於是把掃描擴成全 codebase、列出 20 個候選，每個都「值得探索」。真相是：<strong>報告的價值在於排序與聚焦，不在於數量</strong>。20 個候選 = 使用者無法決定先做哪個 = 報告沒有產出任何行動。技能靠「刪除測試」＋「熱點加權」＋「建議強度徽章」＋「Top recommendation」四層收斂，強迫報告回答「先做哪個、為什麼」。</p>
+</div>
+<div class="tutorial-block tb-diagnosis">
+  <h3><span class="tb-icon">🩺</span> 診斷式疑難排解表</h3>
+  <table>
+    <tr><th>症狀</th><th>可能原因</th><th>解決方案</th></tr>
+    <tr><td>候選清單又長又不分輕重</td><td>無差別掃描、沒用熱點加權</td><td>用 <code>git log</code> 找出密集變更區，只掃那些路徑；冷區跳過</td></tr>
+    <tr><td>報告直接附了介面設計</td><td>掃描階段就開始做設計決策</td><td>停住；報告只描述問題與方向，介面留到 grilling 階段與使用者對齊</td></tr>
+    <tr><td>候選與既有 ADR 衝突</td><td>重構方向被 ADR 禁止</td><td>只在摩擦真實時重開 ADR，並在卡片上標警告；不列理論性重構</td></tr>
+    <tr><td>HTML 報告被 commit 進 repo</td><td>誤把快照當永久文件</td><td>寫到 <code>$TMPDIR</code>，給絕對路徑即可；結果進 ADR 或 CONTEXT.md</td></tr>
+    <tr><td>使用者對候選無感、無法選擇</td><td>候選沒有 Top recommendation 排序</td><td>報告結尾必須給 Top recommendation（先做哪個、為什麼）</td></tr>
+  </table>
+</div>
+<div class="tutorial-block tb-challenge">
+  <h3><span class="tb-icon">🏆</span> 進階挑戰題</h3>
+  <ol>
+    <li><strong>熱點定位</strong>：用 <code>git log --oneline</code> 從一個 repo 抓出熱點的三個步驟，並說明為什麼「最近密集變更」比「最舊最大的模組」更值得優先深化。</li>
+    <li><strong>刪除測試判定</strong>：你懷疑 <code>EmailSender</code> 是淺模組。套用刪除測試——刪掉它後，發信邏輯散回 8 個呼叫者。寫出結論與建議強度，並解釋判斷依據。</li>
+    <li><strong>ADR 衝突處理</strong>：你發現候選「把 SearchService 深化」與 ADR-0012「搜尋邏輯保持扁平」矛盾。寫出該卡片上的警告 callout 內容（要點＋為什麼值得重開）。</li>
+  </ol>
+</div>
 
 </div>
 </body>

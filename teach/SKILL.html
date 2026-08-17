@@ -190,6 +190,44 @@
     <li>□ 課程有引用高品質的主要來源</li>
   </ul>
 </div>
+<div class="tutorial-block tb-example">
+  <h3><span class="tb-icon">🚀</span> 進階真實情境 Worked Example</h3>
+  <p><strong>情境</strong>：使用者想學「用 React 畫資料視覺化」，但他已經會 React 基礎（JSX、state、props），他真正的目標是「畫出能互動的圖表」。</p>
+  <ol>
+    <li>讀學習紀錄：既有 <code>learning-records/</code> 顯示他已掌握 JSX 與 useState，且先前踩過「把整個圖表塞進 useEffect」的坑 → 近側發展區是「宣告式圖表」而不是「React 入門」。</li>
+    <li>MISSION.md 已存在：「做一個公司內部的流量儀表板」。所有課程都綁這個目標。</li>
+    <li>設計課程 0004：一個自包含 HTML，「用 declarative 的方式畫一個即時更新長條圖」。知識部分只教「資料→圖表的映射」，不重講 React 基礎（那是舊課程的範圍）。</li>
+    <li>互動練習：給一串假資料與一個空元件，讓使用者用 <code>svg</code> 畫出長條圖；測驗的每個選項字數相等，不洩漏答案。</li>
+    <li>回饋迴圈：練習後立即顯示「你的長條圖與預期輸出」的對照，錯誤當場指出。</li>
+    <li>建立 reference/0004-charting-cheatsheet.html（SVG 座標、scale 轉換速查），並新增 learning record 記錄「已掌握 declarative chart」。</li>
+  </ol>
+  <p><strong>設計決策</strong>：本例的關鍵是<strong>從 learning-records 判斷近側發展區</strong>——「他會 React 基礎」是知識，「用宣告式方式畫圖」才是剛好落在他能力邊緣的技能。若忽略 learning-records 而重教 JSX，使用者會覺得無聊；若直接教 D3 高階動畫，會超出他的發展區。</p>
+</div>
+<div class="tutorial-block tb-theory">
+  <h3><span class="tb-icon">🔬</span> 深入原理擴充</h3>
+  <p>teach 的學習科學根基是<strong>提取練習（retrieval practice）＋間隔（spacing）＋交錯（interleaving）</strong>三件套，以及它們背後的<strong>流暢度 vs 儲存強度</strong>區分。流暢度是「現在讀得順不順」，儲存強度是「一個月後還記不記得」。訓練流暢度的方法（反覆閱讀）幾乎不增加儲存強度；訓練儲存強度的方法（費力回想）反而會暫時降低流暢度——這就是「適度難度（desirable difficulty）」：讓學習「感覺更難」其實是在建立長期記憶。</p>
+  <p>對 AI coding assistant 而言，teach 是「用工作區檔案代替對話記憶」的典範：MISSION.md、learning-records、NOTES.md 都是<strong>序列化的學習狀態</strong>，讓跨 session 教學不依賴模型記得上次講到哪。這與 handoff、CONTEXT.md 是同一套「狀態外置」哲學。</p>
+  <p><strong>陷阱案例</strong>：很多人以為「課程做得多、講得細＝教得好」，於是把一個主題拆成 20 分鐘的長文，塞滿術語與完整歷史背景。真相是：<strong>知識的難度是敵人，技能的難度是工具</strong>——知識階段要降低難度（少術語、少背景、只給技能所需），技能階段才拉高難度（費力提取、互動練習）。把兩者混在一起，等於在教技能時同時增加知識負擔，工作記憶一次爆掉。</p>
+</div>
+<div class="tutorial-block tb-diagnosis">
+  <h3><span class="tb-icon">🩺</span> 診斷式疑難排解表</h3>
+  <table>
+    <tr><th>症狀</th><th>可能原因</th><th>解決方案</th></tr>
+    <tr><td>使用者覺得課程太簡單／太難</td><td>沒讀 learning-records，課程超出或低於近側發展區</td><td>先讀 learning-records 判斷能力邊緣，把課程落在「剛好被挑戰」的位置</td></tr>
+    <tr><td>學完一週後全忘了</td><td>課程只練了流暢度（反覆閱讀），沒練儲存強度</td><td>加入提取練習（從記憶回想）、間隔複習、技能類用交錯練習</td></tr>
+    <tr><td>課程與使命無關，使用者失去動機</td><td>MISSION.md 沒建立或課程脫離使命</td><td>確認 MISSION.md；每個課程都直接綁定使用者的真實目標</td></tr>
+    <tr><td>測驗選項長短不一，洩漏答案</td><td>違反「每個答案字數相同」規則</td><td>讓選項字數（最好字元數）相等，不讓格式給線索</td></tr>
+    <tr><td>課程內嵌了大量背景知識與術語</td><td>知識與技能混在一起，工作記憶爆掉</td><td>知識只留技能所需，背景資訊移去 reference；技能用互動練習建立</td></tr>
+  </table>
+</div>
+<div class="tutorial-block tb-challenge">
+  <h3><span class="tb-icon">🏆</span> 進階挑戰題</h3>
+  <ol>
+    <li><strong>發展區定位</strong>：使用者「會 JS 但沒寫過 React」。為他設計第一堂課的內容邊界（教什麼、不教什麼），並解釋它為何恰好在近側發展區內。</li>
+    <li><strong>儲存強度練習設計</strong>：主題「React 的 key prop」。設計三個練習，分別對應提取練習、間隔、交錯，並說明各自的機制。</li>
+    <li><strong>測驗公平性</strong>：設計一個四選一的測驗，主題「useEffect 的依賴陣列」，四個選項字數相同且正確答案不因格式洩漏。寫出選項與講解。</li>
+  </ol>
+</div>
 
 </div>
 </body>

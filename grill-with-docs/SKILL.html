@@ -63,6 +63,43 @@
     <li>□ Grill 完後有 CONTEXT.md 和 ADR 作為後續素材</li>
   </ul>
 </div>
+<div class="tutorial-block tb-example">
+  <h3><span class="tb-icon">🚀</span> 進階真實情境 Worked Example</h3>
+  <p><strong>情境</strong>：你把舊版「會員制」改造成「訂閱制 + 用量計費」的混合模型。這牽涉計費、授權、資料遷移，你在 repo 中開始 grill-with-docs。</p>
+  <ol>
+    <li>第一輪：Agent 問「舊會員的權益在訂閱制下如何保留？」→ 你：「舊權益對齊為 Legacy 方案，不再銷售但保留」。</li>
+    <li>Agent 追問邊界：「用量計費的『用量』以什麼為單位？」→ 你：「以 API call 次數」。Agent 把它寫進 CONTEXT.md 並標記 ADR（計費單位定義，難以逆轉）。</li>
+    <li>Agent 質疑詞彙：「你剛才說『過期』和『停用』，是同一個狀態嗎？」→ 你意識到兩者不同——過期是時間到、停用是管理員凍結。新增兩筆詞彙表定義。</li>
+    <li>Grill 進入需要實際跑的決策：「用量計費的即時扣減還是月底結算？」→ 這需要跑 prototype 驗證效能，agent 建議繞道 <code>/prototype</code>，用 <code>/handoff</code> 來回搭橋。</li>
+    <li>回來後，agent 把 prototype 驗證的結論（月底結算、非同步計數）寫進 CONTEXT.md，並在 to-spec 時當作既有決策引用。</li>
+  </ol>
+  <p><strong>設計決策</strong>：混合計費最關鍵的決策是<strong>區分「過期」與「停用」這兩個看似同義的詞</strong>。若沒被 agent 挑戰，schema 可能只用一個 status 欄位吞掉兩種語義，未來客服與工程溝通時就開始翻譯。grill-with-docs 的價值正是在決策定案的那一刻就地寫入，讓詞彙衝突在寫程式之前就被解決。</p>
+</div>
+<div class="tutorial-block tb-theory">
+  <h3><span class="tb-icon">🔬</span> 深入原理擴充</h3>
+  <p>grill-with-docs 是主流程「有狀態」的關鍵，因為它把 <code>/grilling</code>（訪談原語）與 <code>/domain-modeling</code>（詞彙紀律）縫在一起。兩者的分工是：<strong>grilling 決定「要回答哪些問題」，domain-modeling 決定「用什麼詞回答並把它記下來」</strong>。少了 domain-modeling，grill 的結論只活在對話裡；少了 grilling，domain-modeling 沒有問題可挑戰。它們的組合就是「想清楚」＋「留證據」。</p>
+  <p>對 AI coding assistant 而言，CONTEXT.md 扮演<strong>跨 session 的長期記憶</strong>——它讓一個全新 agent 進到 repo 就能用對的詞彙工作，而不必重新猜「cancel 到底是什麼」。這正是 handoff、to-spec、implement、code-review 一連串技能能無縫接力同一份工作的原因。</p>
+  <p><strong>陷阱案例</strong>：很多人以為 grill 得「越久越好」，於是在同一個 session 裡無止境地追問，直到 context 逼近 smart zone。真相是：<strong>grill 的目的不是窮盡所有問題，而是讓「該決策的」都決策完</strong>。超過某個點後，新問題開始重複舊問題的變體，邊際收益遞減。技能明說「逼近 smart zone 時在最近的階段邊界 compact」——不要硬撐到品質劣化才收手，那只是把「想清楚」變成「想太多」。</p>
+</div>
+<div class="tutorial-block tb-diagnosis">
+  <h3><span class="tb-icon">🩺</span> 診斷式疑難排解表</h3>
+  <table>
+    <tr><th>症狀</th><th>可能原因</th><th>解決方案</th></tr>
+    <tr><td>Grill 完 CONTEXT.md 是空的</td><td>agent 沒把決策就地寫入，只想靠對話</td><td>確認 agent 啟用 <code>/domain-modeling</code>；術語定案就更新 CONTEXT.md，不累積</td></tr>
+    <tr><td>同一個問題被問第二遍</td><td>前一個決策沒被記錄，agent 失去上下文</td><td>確認決策已寫入 CONTEXT.md；這正是「有狀態」的用途</td></tr>
+    <tr><td>CONTEXT.md 長出實作細節</td><td>agent 把實作決策（schema、檔案路徑）寫進詞彙表</td><td>清掉；實作決策放 ADR 或之後的 spec，詞彙表只留概念</td></tr>
+    <tr><td>Grill 到一半 context 逼近上限</td><td>同一視窗撐太久，品質開始劣化</td><td>在最近的階段邊界 <code>/compact</code> 後繼續，不要硬撐</td></tr>
+    <tr><td>需要實際跑才能回答的決策卡住 grill</td><td>紙上推演無法解決（狀態、效能、UI）</td><td>繞道 <code>/prototype</code>，用 <code>/handoff</code> 來回搭橋後回到 grill</td></tr>
+  </table>
+</div>
+<div class="tutorial-block tb-challenge">
+  <h3><span class="tb-icon">🏆</span> 進階挑戰題</h3>
+  <ol>
+    <li><strong>詞彙挑戰</strong>：使用者在 grill 中說「訂單被退貨後就 refund」。CONTEXT.md 定義 refund 為「使用者要求退款」、無 return 定義。寫出你作為 agent 會挑戰的一句話，以及你會提議的詞彙表更新。</li>
+    <li><strong>階段邊界決策</strong>：grill 進行到一半，context 用了 80%，還有三個主題沒談。列出 <code>Continue / clear / handoff / subagent / compact</code> 五個選項，並說明此刻你該選哪個、為什麼。</li>
+    <li><strong>決定繞道</strong>：grill 卡在「即時扣款 vs 月底結算」的效能問題上。說明你建議繞道 prototype 的完整流程（handoff 出去→prototype→handoff 回來→更新 CONTEXT.md）。</li>
+  </ol>
+</div>
 
 </div>
 </body>

@@ -74,6 +74,43 @@
     <li>□ 下一個 session 能從交接文件順利接手</li>
   </ul>
 </div>
+<div class="tutorial-block tb-example">
+  <h3><span class="tb-icon">🚀</span> 進階真實情境 Worked Example</h3>
+  <p><strong>情境</strong>：你在 session A 裡完成了 wayfinder 的地圖繪製，現在要把「接下來該解決哪張決策 ticket」的工作交出去，由另一個 agent 在平行 session 中處理 research 類的 ticket。</p>
+  <ol>
+    <li>呼叫 <code>/handoff "在平行 session 解決地圖上『確認第三方支付 API 的費率結構』這張 research ticket"</code>。</li>
+    <li>Agent 產生交接文件：目前進度（地圖已繪製，目的地「付款整合規格」已定案）、建議技能（<code>/research</code>、<code>/domain-modeling</code>）、關鍵引用（地圖 issue URL、payment 相關 ADR、<code>docs/agents/issue-tracker.md</code> 的工作流程）。</li>
+    <li>不重複：不會把地圖內文、ticket 全文抄進交接文件——那些是 single source of truth，引用就好。</li>
+    <li>塗敏：文件不含任何 payment API 金鑰或客戶資料，只留「如何取得」的指引。</li>
+    <li>交接文件存到暫存目錄。平行 session 的 agent 讀取後，依 <code>/research</code> 的流程啟動子代理，把發現寫到一次性 <code>research/payment-fees</code> 分支，並從 ticket 帶上下文指標。</li>
+  </ol>
+  <p><strong>設計決策</strong>：wayfinder 情境下的 handoff 要特別注意「claim」規則——交接文件必須寫明該認領哪張 ticket、認領後其他 session 要跳過它，否則兩個平行 session 會撞同一張票。這份文件同時也是 wayfinder「一個 session 只解決一張 ticket」的執行載體。</p>
+</div>
+<div class="tutorial-block tb-theory">
+  <h3><span class="tb-icon">🔬</span> 深入原理擴充</h3>
+  <p>handoff 解決的是 AI coding 的核心成本結構：<strong>context window 是有限的、對話是無法延續的</strong>。一份好的交接文件本質上是「壓縮狀態的序列化」——把一個 session 的思考狀態編碼成另一個 session 可以反序列化的文字。它的品質決定下一個 session 是「接續工作」還是「重新開始」。</p>
+  <p>為什麼檔案要放<strong>暫存目錄</strong>而不是 repo？因為交接文件是<strong>過程產物</strong>，不是<strong>事實來源</strong>。事實來源是 CONTEXT.md、ADR、ticket——它們該進 repo。交接文件描述「現在到哪了、下一步做什麼」，這個資訊的生命週期很短，放進 repo 反而會沉積成過時文件。暫存目錄＋引用路徑的設計，強制交接文件保持「薄」：只載狀態差，不載全部事實。</p>
+  <p><strong>陷阱案例</strong>：很多人以為「交接文件越完整越好」，於是把整個對話歷史壓縮成一份 3000 字的文件。真相是：<strong>交接文件不是逐字稿，是索引＋狀態差</strong>。完整內容已存在於 spec / ADR / ticket / commit，交接文件把它們複述一遍只是製造第二份真相來源——下一個 agent 讀到衝突時（文件 vs 原始檔），它該信哪個？正確做法是把「已捕捉的內容」用路徑引用掉，交接文件只保留「尚未落地的狀態」與「建議技能」。</p>
+</div>
+<div class="tutorial-block tb-diagnosis">
+  <h3><span class="tb-icon">🩺</span> 診斷式疑難排解表</h3>
+  <table>
+    <tr><th>症狀</th><th>可能原因</th><th>解決方案</th></tr>
+    <tr><td>下一個 agent 接手後要重新問使用者問題</td><td>交接文件太薄，關鍵決策沒有記錄或引用</td><td>補上決策引用（CONTEXT.md / ADR 路徑），並明確寫出「已確認的事實」</td></tr>
+    <tr><td>交接文件跟 spec 內容互相矛盾</td><td>把已捕捉的內容複述進文件，產生第二真相來源</td><td>刪掉複述，改為路徑引用；文件只留狀態差</td></tr>
+    <tr><td>交接文件洩漏了 API key / 客戶資料</td><td>直接複製對話中的敏感內容</td><td>塗掉敏感資訊，只寫「如何取得」的指引（如 secret 管理位置）</td></tr>
+    <tr><td>文件存在 repo 裡被 commit 了</td><td>誤把交接文件當成永久文件</td><td>移到暫存目錄；交接文件是過程產物，不是 repo 的一部分</td></tr>
+    <tr><td>沒有「建議技能」段落</td><td>只寫了現況，沒寫下一步該呼叫什麼技能</td><td>補上建議技能，讓下一個 agent 知道該用 <code>/prototype</code> 還是 <code>/research</code></td></tr>
+  </table>
+</div>
+<div class="tutorial-block tb-challenge">
+  <h3><span class="tb-icon">🏆</span> 進階挑戰題</h3>
+  <ol>
+    <li><strong>寫一份交接文件</strong>：假設你剛完成一場 grill-with-docs（已有 CONTEXT.md 與兩份 ADR），要交給平行 session 做 prototype。列出交接文件的五個段落結構，並標出哪些內容「引用」、哪些「內文」。</li>
+    <li><strong>敏感資訊處理</strong>：對話中包含一個資料庫連線字串、一位同事的全名與手機號、一段 API 回應。逐一說明該如何處理（保留／塗掉／改成指引）。</li>
+    <li><strong>防撞車設計</strong>：wayfinder 情境下兩個平行 session 可能認領同一張 ticket。說明交接文件該寫進哪一條規則來避免這個問題，並解釋 wayfinder 的「claim」機制。</li>
+  </ol>
+</div>
 
 </div>
 </body>
