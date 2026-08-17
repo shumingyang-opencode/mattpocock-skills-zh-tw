@@ -101,6 +101,46 @@
   </ol>
 </div>
 
+<div class="tutorial-block tb-project">
+  <h3><span class="tb-icon">🏗️</span> ① 專案級端到端 Worked Example</h3>
+  <p><strong>專案情境</strong>：團隊要決定「是否從 REST 遷移到 GraphQL」，需要正式的決策記錄。</p>
+<ol>
+  <li>先跑 <code>/grill-with-docs</code>，提交提案：「遷移到 GraphQL，用 Apollo Server，覆蓋 3 個主要 API」。</li>
+  <li>grill-with-docs 會問：「你怎麼處理 N+1 query？」「Apollo Server 的 caching 策略跟 REST 不同，你的 client 有做 cache 嗎？」「遷移期間兩套 API 並行，怎麼確保一致性？」</li>
+  <li>每輪質詢後，自動建立 ADR：ADR-001「使用 GraphQL 取代 REST」、ADR-002「Apollo Server 作為執行環境」、ADR-003「N+1 的 DataLoader 策略」。</li>
+  <li>質詢結束後，產出完整的決策文件：3 個 ADR + 1 份詞彙表（GraphQL Schema、Resolver、DataLoader 的定義）。</li>
+</ol>
+<p><strong>關鍵</strong>：grill-with-docs 的獨特價值在「邊問邊記」——每個被挑戰過的決策都有書面記錄，不會因為「當時討論過但沒記下來」而遺失。</p>
+</div>
+<div class="tutorial-block tb-theory">
+  <h3><span class="tb-icon">⚡</span> ② 效能 / 品質 / 安全深度</h3>
+  <table>
+  <tr><th>面向</th><th>實務考量</th></tr>
+  <tr><td>效能</td><td>每次質詢會產生 ADR + 詞彙表，token 成本比 grill-me 高約 2-3 倍。在預算有限時，先用 grill-me 快速篩選，只對重要決策用 grill-with-docs。</td></tr>
+  <tr><td>品質</td><td>ADR 的品質取決於「問題是否夠尖銳」。grill-with-docs 的質詢會自動聚焦在「你沒考慮到的」——這比自己寫 ADR 容易遺漏的場景好很多。</td></tr>
+  <tr><td>安全</td><td>ADR 是安全審計的良好來源——它記錄了「為什麼選這個方案」和「考慮過哪些替代方案」。確保 ADR 中包含安全性相關的考量。</td></tr>
+</table>
+</div>
+<div class="tutorial-block tb-comparison">
+  <h3><span class="tb-icon">📊</span> ③ 技能間比較對照表</h3>
+  <table>
+  <tr><th>面向</th><th>grill-with-docs</th><th>grill-me</th><th>to-spec</th><th>差異說明</th></tr>
+  <tr><td>輸出</td><td>質詢 + ADR + 詞彙表</td><td>純口頭質詢</td><td>規格說明</td><td>grill-with-docs 建決策文件，to-spec 建實作規格</td></tr>
+  <tr><td>焦點</td><td>「為什麼這樣決定」</td><td>「你考慮過嗎」</td><td>「要做什麼」</td><td>grill-with-docs 是過去式（記錄已做的決定），to-spec 是未來式（規劃要做的事）</td></tr>
+  <tr><td>時機</td><td>正式決策時</td><td>快速淬煉時</td><td>準備實作時</td><td>grill-with-docs 適合需要永久記錄的決策，to-spec 適合需要執行的任務</td></tr>
+</table>
+</div>
+<div class="tutorial-block tb-checklist">
+  <h3><span class="tb-icon">✅</span> ④ 互動式進階檢核清單</h3>
+  <ul>
+    <li>□ 能區分 grill-me（快速）和 grill-with-docs（正式）的使用時機</li>
+    <li>□ 知道 ADR 記錄的是「為什麼」而不是「做什麼」</li>
+    <li>□ 能在質詢中要求建立安全相關的 ADR</li>
+    <li>□ 知道 grill-with-docs 的 token 成本比 grill-me 高 2-3 倍</li>
+    <li>□ 能把 grill 產出的 ADR 連結到相關的 issue 或 PR</li>
+  </ul>
+</div>
+
 </div>
 </body>
 </html>

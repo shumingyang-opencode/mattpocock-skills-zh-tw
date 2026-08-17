@@ -112,6 +112,46 @@
   </ol>
 </div>
 
+<div class="tutorial-block tb-project">
+  <h3><span class="tb-icon">🏗️</span> ① 專案級端到端 Worked Example</h3>
+  <p><strong>專案情境</strong>：你在 session A 完成了 bug 診斷和修復方案，但時間到了，需要交接給 session B 繼續實作。</p>
+<ol>
+  <li>在 session A 結束前跑 <code>/handoff</code>，它會壓縮對話成交接文件：包含「已確認的根因」「修復方案的選項」「未完成的步驟」。</li>
+  <li>交接文件自動包含「阻塞項」：session B 需要哪些上下文才能繼續？（例如：「需要讀 <code>src/payment/gateway.ts</code> 的第 150-200 行」）。</li>
+  <li>在 session B 開始時，載入交接文件：新代理可以直接從「修復方案 A 的實作」開始，不需要重新診斷。</li>
+  <li>如果交接文件有遺漏，session B 可以跑 <code>/research</code> 補充——交接文件會標註「此處需要補充」。</li>
+</ol>
+<p><strong>關鍵</strong>：交接文件的價值不在「記錄所有事」，而在「記錄下一個代理需要知道的事」。太多上下文反而會淹沒重點。</p>
+</div>
+<div class="tutorial-block tb-theory">
+  <h3><span class="tb-icon">⚡</span> ② 效能 / 品質 / 安全深度</h3>
+  <table>
+  <tr><th>面向</th><th>實務考量</th></tr>
+  <tr><td>效能</td><td>交接文件的大小直接影響下一個代理的 token 成本。理想大小：1-2 頁 A4，包含「已確認的事」「未確認的事」「下一步」三個區塊。</td></tr>
+  <tr><td>品質</td><td>交接文件最常見的遺漏：「未完成的步驟」只列了「做了一半的 PR」，沒列「為什麼做一半」。下一個代理需要知道「卡在哪裡」，不只是「做到哪裡」。</td></tr>
+  <tr><td>安全</td><td>交接文件可能包含敏感的 API key 或 token——確保在交接前清除或替換為 placeholder。交接文件不應該是 secret 的載體。</td></tr>
+</table>
+</div>
+<div class="tutorial-block tb-comparison">
+  <h3><span class="tb-icon">📊</span> ③ 技能間比較對照表</h3>
+  <table>
+  <tr><th>面向</th><th>handoff</th><th>to-spec</th><th>research</th><th>差異說明</th></tr>
+  <tr><td>目的</td><td>交接對話</td><td>產出規格</td><td>蒐集資料</td><td>handoff 是「換人做」，to-spec 是「決定做什麼」，research 是「搞清楚」</td></tr>
+  <tr><td>輸出</td><td>交接文件</td><td>規格說明</td><td>研究報告</td><td>handoff 輸出「下一步需要的上下文」，to-spec 輸出「要做的事」，research 輸出「已知的事」</td></tr>
+  <tr><td>時機</td><td>換人/換 session 時</td><td>實作前</td><td>開始前</td><td>handoff 是被動的（被迫交接），to-spec 和 research 是主動的（選擇規劃）</td></tr>
+</table>
+</div>
+<div class="tutorial-block tb-checklist">
+  <h3><span class="tb-icon">✅</span> ④ 互動式進階檢核清單</h3>
+  <ul>
+    <li>□ 交接文件包含「已確認的事」「未確認的事」「下一步」三個區塊</li>
+    <li>□ 交接文件在 1-2 頁以內——太多上下文會淹沒重點</li>
+    <li>□ 交接前清除敏感資訊（API key、token）</li>
+    <li>□ 交接文件標註「卡在哪裡」而不只是「做到哪裡」</li>
+    <li>□ 下一個代理能直接從交接文件繼續，不需要重新診斷</li>
+  </ul>
+</div>
+
 </div>
 </body>
 </html>

@@ -126,6 +126,46 @@
   </ol>
 </div>
 
+<div class="tutorial-block tb-project">
+  <h3><span class="tb-icon">🏗️</span> ① 專案級端到端 Worked Example</h3>
+  <p><strong>專案情境</strong>：你和同事同時改了 <code>src/payment/processor.ts</code>，產生了 merge conflict。</p>
+<ol>
+  <li>先跑 <code>/resolving-merge-conflicts</code>，它會分析衝突：你改了 <code>processPayment()</code> 的參數型別，同事改了 <code>processPayment()</code> 的 error handling。</li>
+  <li>決定取捨策略：型別變更和 error handling 都需要保留——不是「選一邊」，而是「合併兩邊」。</li>
+  <li>手動解決衝突：保留你的型別變更 + 同事的 error handling，確保兩者不衝突。</li>
+  <li>解決後跑 <code>/tdd</code> 確認 <code>processPayment()</code> 的測試仍然通過——merge conflict 解決後的第一件事是確認「沒有壞掉」。</li>
+</ol>
+<p><strong>關鍵</strong>：merge conflict 不是「誰贏了」——它是「兩邊的意圖怎麼共存」。解決衝突的目標不是「選一邊」，而是「讓兩邊的意圖都實現」。</p>
+</div>
+<div class="tutorial-block tb-theory">
+  <h3><span class="tb-icon">⚡</span> ② 效能 / 品質 / 安全深度</h3>
+  <table>
+  <tr><th>面向</th><th>實務考量</th></tr>
+  <tr><td>效能</td><td>大檔案的 merge conflict（200+ 行衝突）解決時間隨衝突行數線性成長。建議先用 <code>git diff --name-only</code> 篩出衝突檔案，逐一解決。</td></tr>
+  <tr><td>品質</td><td>解決衝突後的第一件事是跑測試——衝突解決可能引入邏輯錯誤（例如合併時丟失了某個 <code>if</code> 分支）。確保 <code>/tdd</code> 是解決衝突後的必跑步驟。</td></tr>
+  <tr><td>安全</td><td>合併時可能意外引入對方的 credential 或 API key——確保 <code>git diff</code> 中沒有不該出現的 secret。用 <code>git diff --check</code> 可以自動偵測。</td></tr>
+</table>
+</div>
+<div class="tutorial-block tb-comparison">
+  <h3><span class="tb-icon">📊</span> ③ 技能間比較對照表</h3>
+  <table>
+  <tr><th>面向</th><th>resolving-merge-conflicts</th><th>tdd</th><th>code-review</th><th>差異說明</th></tr>
+  <tr><td>時機</td><td>merge/rebase 衝突時</td><td>寫新功能時</td><td>PR 完成後</td><td>resolving 是「被迫處理」，tdd 是「主動預防」，code-review 是「事後驗收」</td></tr>
+  <tr><td>方法</td><td>分析→取捨→合併</td><td>紅→綠→重構</td><td>規範+規格</td><td>resolving 是協調流程，tdd 是工程循環，code-review 是審查流程</td></tr>
+  <tr><td>風險</td><td>合併時引入邏輯錯誤</td><td>測試設計錯誤</td><td>審查遺漏</td><td>resolving 的風險是「合併後壞了」，tdd 的風險是「測試設計錯了」，code-review 的風險是「沒發現問題」</td></tr>
+</table>
+</div>
+<div class="tutorial-block tb-checklist">
+  <h3><span class="tb-icon">✅</span> ④ 互動式進階檢核清單</h3>
+  <ul>
+    <li>□ 知道 merge conflict 是「兩邊意圖怎麼共存」不是「誰贏了」</li>
+    <li>□ 解決衝突後的第一件事是跑測試</li>
+    <li>□ 知道合併時可能意外引入對方的 credential</li>
+    <li>□ 能區分「選一邊」和「合併兩邊」的場景</li>
+    <li>□ 知道大檔案衝突（200+ 行）需要先篩選再逐一解決</li>
+  </ul>
+</div>
+
 </div>
 </body>
 </html>

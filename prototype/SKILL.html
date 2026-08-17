@@ -130,6 +130,46 @@
   </ol>
 </div>
 
+<div class="tutorial-block tb-project">
+  <h3><span class="tb-icon">🏗️</span> ① 專案級端到端 Worked Example</h3>
+  <p><strong>專案情境</strong>：你設計了一個「拖曳排序」的狀態模型，不確定是否正確，想先做個原型確認。</p>
+<ol>
+  <li>先跑 <code>/prototype</code>，描述你的狀態模型：<code>{ items: Item[], dragging: Item | null, over: Item | null }</code>。</li>
+  <li>prototype 會問：「dragging 和 over 可以同時存在嗎？如果使用者在 drag 中按 Escape 會怎樣？」——這些是你沒想到的 edge case。</p>
+  <li>回答後，prototype 建立一個最小的 HTML 原型：可拖曳的清單，狀態模型在 console 中即時顯示。</li>
+  <li>測試 edge case：拖曳中按 Escape → <code>dragging: null</code>、拖到無效區域 → 回到原位。確認狀態模型是否完整。</li>
+</ol>
+<p><strong>關鍵</strong>：原型不是「做一個 demo」，而是「回答一個設計問題」。問題越具體（「狀態模型是否涵蓋所有 edge case」），原型越有價值。</p>
+</div>
+<div class="tutorial-block tb-theory">
+  <h3><span class="tb-icon">⚡</span> ② 效能 / 品質 / 安全深度</h3>
+  <table>
+  <tr><th>面向</th><th>實務考量</th></tr>
+  <tr><td>效能</td><td>原型是「一次性」的——不要在原型上寫 production-ready 的程式碼。原型的價值在回答問題，不在可維護性。</td></tr>
+  <tr><td>品質</td><td>原型的品質指標：是否能回答你提出的設計問題。如果原型做了 10 個功能但回答不了問題，那是失敗的原型。</td></tr>
+  <tr><td>安全</td><td>原型可能包含 mock 的 API 呼叫——確保原型中的 API key 或 token 是 placeholder，不是真實值。原型不該被 deploy。</td></tr>
+</table>
+</div>
+<div class="tutorial-block tb-comparison">
+  <h3><span class="tb-icon">📊</span> ③ 技能間比較對照表</h3>
+  <table>
+  <tr><th>面向</th><th>prototype</th><th>tdd</th><th>grill-me</th><th>差異說明</th></tr>
+  <tr><td>目的</td><td>回答設計問題</td><td>驗證行為</td><td>壓力測試想法</td><td>prototype 是「做看看」，tdd 是「測看看」，grill-me 是「問看看」</td></tr>
+  <tr><td>壽命</td><td>一次性</td><td>永久</td><td>一次性</td><td>prototype 和 grill-me 的產出都是 disposable，tdd 的測試是 permanent</td></tr>
+  <tr><td>時機</td><td>不確定時</td><td>確定時</td><td>有想法時</td><td>prototype 用於「不知道對不對」，tdd 用於「知道對但要驗證」，grill-me 用於「覺得對但要被挑戰」</td></tr>
+</table>
+</div>
+<div class="tutorial-block tb-checklist">
+  <h3><span class="tb-icon">✅</span> ④ 互動式進階檢核清單</h3>
+  <ul>
+    <li>□ 原型是為了回答一個具體的設計問題</li>
+    <li>□ 知道原型是「一次性」的——不要在上面寫 production-ready 程式碼</li>
+    <li>□ 原型回答了問題就算成功，做了 10 個功能但回答不了問題是失敗</li>
+    <li>□ 原型中的 API key 或 token 是 placeholder</li>
+    <li>□ 知道原型的價值在「確認設計」不在「做 demo」</li>
+  </ul>
+</div>
+
 </div>
 </body>
 </html>

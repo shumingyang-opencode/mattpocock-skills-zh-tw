@@ -246,6 +246,46 @@
   </ol>
 </div>
 
+<div class="tutorial-block tb-project">
+  <h3><span class="tb-icon">🏗️</span> ① 專案級端到端 Worked Example</h3>
+  <p><strong>專案情境</strong>：你有 20 張未分類的 issues，需要分流到正確的處理流程。</p>
+<ol>
+  <li>先跑 <code>/triage</code>，它會逐一分析每張 issue：分類（bug/feature/infra）、優先級（P0-P3）、負責技能（implement/tdd/research）。</li>
+  <li>例如：Issue #42「登入時 500 error」→ 分類：bug，優先級：P0，負責技能：<code>/diagnosing-bugs</code>。</li>
+  <li>Issue #43「希望支援 SSO」→ 分類：feature，優先級：P2，負責技能：<code>/to-spec</code> → <code>/to-tickets</code> → <code>/implement</code>。</li>
+  <li>把分診結果寫進 issue 的 label 和 comment，讓後續的 <code>/implement</code> 可以直接使用。</li>
+</ol>
+<p><strong>關鍵</strong>：triage 不是「關 issue」——它是「把 issue 送到正確的處理流程」。分診的品質取決於「你對每個技能的理解深度」。</p>
+</div>
+<div class="tutorial-block tb-theory">
+  <h3><span class="tb-icon">⚡</span> ② 效能 / 品質 / 安全深度</h3>
+  <table>
+  <tr><th>面向</th><th>實務考量</th></tr>
+  <tr><td>效能</td><td>triage 的 token 成本與 issue 數量成正比。20 張 issues 大約需要 5-10K tokens。如果有 100+ 張 issues，建議先用 <code>git guardrails</code> 篩出需要 triage 的（不是所有 issues 都需要 triage）。</td></tr>
+  <tr><td>品質</td><td>triage 的品質指標：分類是否準確（bug 不被分到 feature）、優先級是否合理（P0 真的是 P0）、負責技能是否正確（bug 不被送到 implement）。</td></tr>
+  <tr><td>安全</td><td>triage 時可能遇到安全相關的 issues（如 CVE 報告）——確保這類 issues 被標為 P0 並立即轉交安全團隊，不走一般的 triage 流程。</td></tr>
+</table>
+</div>
+<div class="tutorial-block tb-comparison">
+  <h3><span class="tb-icon">📊</span> ③ 技能間比較對照表</h3>
+  <table>
+  <tr><th>面向</th><th>triage</th><th>to-tickets</th><th>diagnosing-bugs</th><th>差異說明</th></tr>
+  <tr><td>目標</td><td>分流 issue</td><td>拆分 spec</td><td>診斷 bug</td><td>triage 是「誰來做」，to-tickets 是「拆成什麼」，diagnosing-bugs 是「為什麼壞了」</td></tr>
+  <tr><td>時機</td><td>issue 進來時</td><td>spec 完成後</td><td>Bug 發生時</td><td>triage 是第一道關卡，to-tickets 是第二道，diagnosing-bugs 是第三道</td></tr>
+  <tr><td>輸出</td><td>分類 + 優先級</td><td>ticket 清單</td><td>根因 + 修復方案</td><td>triage 輸出「這歸誰管」，to-tickets 輸出「拆成什麼」，diagnosing-bugs 輸出「為什麼壞了」</td></tr>
+</table>
+</div>
+<div class="tutorial-block tb-checklist">
+  <h3><span class="tb-icon">✅</span> ④ 互動式進階檢核清單</h3>
+  <ul>
+    <li>□ 分類準確——bug 不被分到 feature</li>
+    <li>□ 優先級合理——P0 真的是 P0</li>
+    <li>□ 安全相關的 issues 被立即轉交，不走一般 triage</li>
+    <li>□ 知道 triage 是「送到正確流程」不是「關 issue」</li>
+    <li>□ 知道 triage 的品質取決於對每個技能的理解深度</li>
+  </ul>
+</div>
+
 </div>
 </body>
 </html>

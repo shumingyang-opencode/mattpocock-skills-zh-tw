@@ -133,6 +133,47 @@
   </ol>
 </div>
 
+<div class="tutorial-block tb-project">
+  <h3><span class="tb-icon">🏗️</span> ① 專案級端到端 Worked Example</h3>
+  <p><strong>專案情境</strong>：你要為一個「購物車結帳」功能建立完整的 TDD 測試套件。</p>
+<ol>
+  <li>先跑 <code>/codebase-design</code> 定義接縫：公開函式 <code>checkout(cart, paymentMethod): Order</code>，這是唯一的測試入口。</li>
+  <li>垂直切片 1：<code>it(' calculates total')</code> → 紅。建立 Cart class，加 <code>total()</code> → 綠。</li>
+  <li>垂直切片 2：<code>it('applies discount')</code> → 紅。加 <code>withDiscount()</code> → 綠。注意：期望值（<code>toBe(90)</code>）是你手算的，不是從實作拿的。</li>
+  <li>垂直切片 3：<code>it('rejects invalid payment')</code> → 紅。加 error handling → 綠。</li>
+  <li>全部切片完成後，跑 <code>/code-review</code> 確認沒有反模式（耦合實作、同義反覆、水平切片）。</li>
+</ol>
+<p><strong>關鍵</strong>：TDD 的價值不在「有測試」，而在「每一片測試都在用公開介面逼你定義行為契約」。期望值來自手算，不來自實作。</p>
+</div>
+<div class="tutorial-block tb-theory">
+  <h3><span class="tb-icon">⚡</span> ② 效能 / 品質 / 安全深度</h3>
+  <table>
+  <tr><th>面向</th><th>實務考量</th></tr>
+  <tr><td>效能</td><td>TDD 的測試執行時間會隨著測試數量成長。紅-綠循環中，只跑當前切片的測試（<code>it.only</code>），不是全部——這讓循環保持快速。</td></tr>
+  <tr><td>品質</td><td>測試的品質指標：是否能在重構時存活（不耦合實作）、是否在 bug 時斷（不同義反覆）、是否反映使用者行為（不描述內部實作）。</td></tr>
+  <tr><td>安全</td><td>TDD 的測試是防禦 regression 的第一道關卡——但測試本身也可能有安全漏洞（例如 mock 了錯誤的依賴、測試中 hardcode 了 password）。確保測試本身是安全的。</td></tr>
+</table>
+</div>
+<div class="tutorial-block tb-comparison">
+  <h3><span class="tb-icon">📊</span> ③ 技能間比較對照表</h3>
+  <table>
+  <tr><th>面向</th><th>tdd</th><th>code-review</th><th>diagnosing-bugs</th><th>差異說明</th></tr>
+  <tr><td>時機</td><td>寫程式碼時</td><td>寫完後</td><td>Bug 發生時</td><td>tdd 是「預防」，code-review 是「驗收」，diagnosing-bugs 是「事後排查」</td></tr>
+  <tr><td>方法</td><td>紅→綠→重構</td><td>規範+規格</td><td>假說→實驗</td><td>tdd 是工程循環，code-review 是審查流程，diagnosing-bugs 是科學方法</td></tr>
+  <tr><td>風險</td><td>測試設計錯誤</td><td>審查遺漏</td><td>根因判斷錯誤</td><td>tdd 的風險是「測試本身有問題」，code-review 的風險是「沒發現問題」，diagnosing-bugs 的風險是「找錯原因」</td></tr>
+</table>
+</div>
+<div class="tutorial-block tb-checklist">
+  <h3><span class="tb-icon">✅</span> ④ 互動式進階檢核清單</h3>
+  <ul>
+    <li>□ 知道紅-綠循環的三條規則（先紅後綠、一次一個切片、重構不在迴圈中）</li>
+    <li>□ 能區分三種反模式（耦合實作、同義反覆、水平切片）</li>
+    <li>□ 期望值來自手算，不來自實作</li>
+    <li>□ 每個循環都在事前約定的接縫上操作</li>
+    <li>□ 測試名稱反映使用者行為，不描述內部實作</li>
+  </ul>
+</div>
+
 </div>
 </body>
 </html>

@@ -182,6 +182,46 @@
   </ol>
 </div>
 
+<div class="tutorial-block tb-project">
+  <h3><span class="tb-icon">🏗️</span> ① 專案級端到端 Worked Example</h3>
+  <p><strong>專案情境</strong>：你要為一個新技能撰寫 AGENTS.md 和 SKILL.md。</p>
+<ol>
+  <li>先跑 <code>/writing-for-agents</code>，它會問：「這個技能的觸發詞是什麼？它的輸入是什麼？它的輸出是什麼？」</li>
+  <li>撰寫 SKILL.md：name（技能名稱）、description（觸發條件 + 用途）、content（詳細指引）。確保 description 包含足夠的觸發詞讓 agent 能正確路由。</li>
+  <li>撰寫 AGENTS.md 的對應區塊：說明這個技能和其他技能的關係（例如「implement 依賴 to-tickets 的輸出」）。</li>
+  <li>用 <code>/skill-validate</code> 驗證 SKILL.md 的格式是否正確（frontmatter、naming conventions、description limits）。</li>
+</ol>
+<p><strong>關鍵</strong>：writing-for-agents 的核心問題是「agent 怎麼知道要用這個技能？」——答案在 description 的觸發詞。如果觸發詞不夠，agent 永遠不會選中你寫的技能。</p>
+</div>
+<div class="tutorial-block tb-theory">
+  <h3><span class="tb-icon">⚡</span> ② 效能 / 品質 / 安全深度</h3>
+  <table>
+  <tr><th>面向</th><th>實務考量</th></tr>
+  <tr><td>效能</td><td>description 的長度直接影響 agent 的 token 成本——每個 session 都會讀 description。限制在 2-3 句話，包含觸發詞和核心用途。</td></tr>
+  <tr><td>品質</td><td>SKILL.md 的品質指標：agent 能否從 description 正確路由到這個技能。測試方法：給 agent 10 個不同的觸發詞，看它是否能選中正確的技能。</td></tr>
+  <tr><td>安全</td><td>SKILL.md 中不應該包含 API key 或 token——技能的參數透過 agent 的環境變數傳遞，不是寫在文件裡。</td></tr>
+</table>
+</div>
+<div class="tutorial-block tb-comparison">
+  <h3><span class="tb-icon">📊</span> ③ 技能間比較對照表</h3>
+  <table>
+  <tr><th>面向</th><th>writing-for-agents</th><th>to-spec</th><th>teach</th><th>差異說明</th></tr>
+  <tr><td>目的</td><td>寫給 agent 讀的文件</td><td>寫給人讀的規格</td><td>教會人一個技能</td><td>writing-for-agents 是「讓 agent 能用」，to-spec 是「讓人能做」，teach 是「讓人能學會」</td></tr>
+  <tr><td>格式</td><td>SKILL.md / AGENTS.md</td><td>規格文件</td><td>教學文件</td><td>writing-for-agents 有嚴格的格式要求（frontmatter、naming），to-spec 和 teach 較自由</td></tr>
+  <tr><td>時機</td><td>建立/編輯技能時</td><td>討論完後</td><td>團隊需要新技能時</td><td>writing-for-agents 是「建工具」，to-spec 是「建計畫」，teach 是「建能力」</td></tr>
+</table>
+</div>
+<div class="tutorial-block tb-checklist">
+  <h3><span class="tb-icon">✅</span> ④ 互動式進階檢核清單</h3>
+  <ul>
+    <li>□ SKILL.md 的 description 包含足夠的觸發詞</li>
+    <li>□ description 在 2-3 句話以內——太長會增加 token 成本</li>
+    <li>□ SKILL.md 中沒有 API key 或 token</li>
+    <li>□ 知道 writing-for-agents 的核心問題是「agent 怎麼知道要用這個技能」</li>
+    <li>□ 用 /skill-validate 驗證格式是否正確</li>
+  </ul>
+</div>
+
 </div>
 </body>
 </html>

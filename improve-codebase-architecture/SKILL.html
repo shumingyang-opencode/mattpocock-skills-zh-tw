@@ -177,6 +177,46 @@
   </ol>
 </div>
 
+<div class="tutorial-block tb-project">
+  <h3><span class="tb-icon">🏗️</span> ① 專案級端到端 Worked Example</h3>
+  <p><strong>專案情境</strong>：你有一個 10 萬行的 TypeScript 專案，想知道哪裡可以「深化」。</p>
+<ol>
+  <li>先跑 <code>/improve-codebase-architecture</code>，它會掃描整個 codebase 並產生 HTML 報告：列出所有「淺模組」（public surface 太大的模組）。</li>
+  <li>報告會標出 Top 5 改善機會，例如：<code>UserService</code>（15 個 public method，只該有 3 個）、<code>OrderCalculator</code>（暴露了內部的 tax 計算邏輯）。</li>
+  <li>你選擇一個改善機會（例如 UserService），跑 <code>/grill-me</code> 深入質詢：「你說的 3 個 method 是哪 3 個？其他 12 個可以藏起來嗎？藏起來後誰會受影響？」</li>
+  <li>質詢後，用 <code>/codebase-design</code> 設計新的介面：只暴露 <code>register()</code>、<code>authenticate()</code>、<code>deactivate()</code>，其他藏進深模組。</li>
+</ol>
+<p><strong>關鍵</strong>：improve-codebase-architecture 不直接修 code——它先「找出問題」，再用 grill-me + codebase-design 來「設計解決方案」。這是三步驟流程，不是一步到位。</p>
+</div>
+<div class="tutorial-block tb-theory">
+  <h3><span class="tb-icon">⚡</span> ② 效能 / 品質 / 安全深度</h3>
+  <table>
+  <tr><th>面向</th><th>實務考量</th></tr>
+  <tr><td>效能</td><td>掃描 10 萬行 codebase 可能需要 2-5 分鐘。報告是靜態 HTML，不需要 server——可以在瀏覽器中打開、篩選、搜尋。</td></tr>
+  <tr><td>品質</td><td>報告的「改善機會」是基於量化指標（public method 數量、耦合度），不是主觀判斷。但最終的改善決策仍需人工判斷——不是所有「淺模組」都值得深化。</td></tr>
+  <tr><td>安全</td><td>報告可能揭露「暴露太多 public surface」的安全風險——例如 <code>UserService</code> 的 <code>rawQuery()</code> 方法被暴露在 public surface 上，這是一個 SQL injection 風險。</td></tr>
+</table>
+</div>
+<div class="tutorial-block tb-comparison">
+  <h3><span class="tb-icon">📊</span> ③ 技能間比較對照表</h3>
+  <table>
+  <tr><th>面向</th><th>improve-codebase-architecture</th><th>codebase-design</th><th>code-review</th><th>差異說明</th></tr>
+  <tr><td>焦點</td><td>找改善機會</td><td>設計模組介面</td><td>審查變更</td><td>improve 是「找問題」，codebase-design 是「設計方案」，code-review 是「驗證結果」</td></tr>
+  <tr><td>方法</td><td>掃描 + 量化指標</td><td>詞彙 + 設計原則</td><td>規範 + 規格</td><td>improve 用數據找問題，codebase-design 用原則設計，code-review 用規則驗證</td></tr>
+  <tr><td>輸出</td><td>HTML 報告</td><td>模組介面規格</td><td>審查報告</td><td>improve 輸出「哪裡有問題」，codebase-design 輸出「怎麼改」，code-review 輸出「改對了沒」</td></tr>
+</table>
+</div>
+<div class="tutorial-block tb-checklist">
+  <h3><span class="tb-icon">✅</span> ④ 互動式進階檢核清單</h3>
+  <ul>
+    <li>□ 知道 improve-codebase-architecture 是「找問題」不是「修 code」</li>
+    <li>□ 能找到報告中的 Top 5 改善機會並選擇一個深入</li>
+    <li>□ 知道改善的完整流程：improve → grill-me → codebase-design</li>
+    <li>□ 能區分「值得深化」和「不需要深化」的模組</li>
+    <li>□ 知道報告的量化指標（public method 數量）只是起點，不是結論</li>
+  </ul>
+</div>
+
 </div>
 </body>
 </html>

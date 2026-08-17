@@ -109,6 +109,46 @@
   </ol>
 </div>
 
+<div class="tutorial-block tb-project">
+  <h3><span class="tb-icon">🏗️</span> ① 專案級端到端 Worked Example</h3>
+  <p><strong>專案情境</strong>：你有一份完整的 spec（來自 <code>/to-spec</code>），要實作一個「使用者註冊 + email 驗證」功能。</p>
+<ol>
+  <li>先跑 <code>/to-tickets</code> 把 spec 拆成 5 張曳光彈 ticket：T1（建立 User model）、T2（註冊 API）、T3（發送驗證 email）、T4（驗證 endpoint）、T5（整合測試）。</li>
+  <li>從 T1 開始 <code>/implement</code>：讀 ticket → 說明實作計畫 → 跑 <code>/tdd</code> 寫測試 → 實作 → 測試通過 → commit。</li>
+  <li>每張 ticket 完成後，跑 <code>/code-review</code> 確認規範和規格。T3 的 email 發送需要 mock（見 <code>/tdd</code> 的 mocking 指引）。</li>
+  <li>5 張 ticket 全部完成後，跑整合測試：從「POST /register」到「GET /verify?token=xxx」的完整流程。</li>
+</ol>
+<p><strong>關鍵</strong>：implement 不是「一次把所有東西寫完」，而是「一張 ticket 一個循環」。每張 ticket 都是可交付的、可測試的、可 review 的。</p>
+</div>
+<div class="tutorial-block tb-theory">
+  <h3><span class="tb-icon">⚡</span> ② 效能 / 品質 / 安全深度</h3>
+  <table>
+  <tr><th>面向</th><th>實務考量</th></tr>
+  <tr><td>效能</td><td>implement 的 token 成本與 ticket 數量成正比。每個 ticket 都要讀 spec + 寫測試 + 實作 + review——5 張 ticket 大約是 5 倍的 token 消耗。</td></tr>
+  <tr><td>品質</td><td>「一張 ticket 一個循環」的品質保證：每張 ticket 都經過 tdd + code-review，不是最後才補測試。這讓品質問題在早期就被發現。</td></tr>
+  <tr><td>安全</td><td>implement 過程中可能需要新增 API endpoint——確保每個 endpoint 都有 input validation 和 auth check，不要「先做功能再補安全」。</td></tr>
+</table>
+</div>
+<div class="tutorial-block tb-comparison">
+  <h3><span class="tb-icon">📊</span> ③ 技能間比較對照表</h3>
+  <table>
+  <tr><th>面向</th><th>implement</th><th>to-tickets</th><th>tdd</th><th>差異說明</th></tr>
+  <tr><td>輸入</td><td>spec / ticket</td><td>spec / plan</td><td>公開介面</td><td>implement 吃 ticket，to-tickets 吃 spec，tdd 吃介面定義</td></tr>
+  <tr><td>輸出</td><td>可運作的程式碼</td><td>ticket 清單</td><td>測試 + 程式碼</td><td>implement 是「做」，to-tickets 是「拆」，tdd 是「驗證」</td></tr>
+  <tr><td>時機</td><td>已有 spec/ticket</td><td>spec 完成後</td><td>實作時</td><td>implement 是最後一哩路，to-tickets 是前一步，tdd 是伴隨實作的過程</td></tr>
+</table>
+</div>
+<div class="tutorial-block tb-checklist">
+  <h3><span class="tb-icon">✅</span> ④ 互動式進階檢核清單</h3>
+  <ul>
+    <li>□ implement 前已有明確的 spec 或 ticket</li>
+    <li>□ 每張 ticket 都經過 tdd + code-review 後才算完成</li>
+    <li>□ 知道 implement 是「一張 ticket 一個循環」不是「一次全寫完」</li>
+    <li>□ 知道 implement 的 token 成本與 ticket 數量成正比</li>
+    <li>□ API endpoint 在 implement 時就加了 input validation 和 auth check</li>
+  </ul>
+</div>
+
 </div>
 </body>
 </html>

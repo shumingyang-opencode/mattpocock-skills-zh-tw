@@ -200,6 +200,87 @@
     <li><strong>範圍蔓延偵測</strong>：規格只要「加一個欄位」，但 PR 同時重構了 serializer。規格軸該如何回報？規範軸又該如何回報？兩軸各自獨立，不互相代答。</li>
   </ol>
 </div>
+<div class="tutorial-block tb-example">
+  <h3><span class="tb-icon">🏗️</span> 專案級端到端 Worked Example</h3>
+  <p><strong>專案情境</strong>：一個完整的「會員帳單重構」專案——把帳單模組從 15 個散落的函式重構成深模組，分三張 ticket 合併回 main。code-review 在每一張 PR 與最終合併時各扮演不同角色。</p>
+  <ol>
+    <li><strong>Ticket 1 PR</strong>：固定點 <code>git diff main...feature/billing-core</code>，規格來源是 <code>.scratch/billing-refactor/issues/01-consolidate-billing.md</code>。規範軸抓到 <code>any</code> 洩漏（違反 CODING_STANDARDS.md）、規格軸確認「集中計費邏輯」已完整。</li>
+    <li><strong>修復往返</strong>：開發者依兩軸報告修正 → 重新 <code>/code-review</code>，直到規範軸與規格軸都乾淨 → 合併。</li>
+    <li><strong>Ticket 2 PR</strong>：固定點 <code>git diff main...feature/billing-rates</code>。這次 commit message 有 <code>Closes #310</code>，規格從 issue 拉取。規範軸抓到「重複 switch」壞味道（新的費率計算在多處重複 if-else）；規格軸抓到大範圍蔓延——PR 順手改了 serializer。</li>
+    <li><strong>Ticket 3 PR</strong>：固定點 <code>git diff main...feature/billing-migration</code>，這是資料遷移 ticket。規範軸對照 <code>docs/adr/</code> 確認遷移方式符合 ADR-0009；規格軸逐條核對遷移清單。</li>
+    <li><strong>最終合併前</strong>：對 <code>git diff merge-base(main, feature) ... main</code> 跑一次全量 review，確認三張 ticket 合併後整體沒有跨 ticket 的互動錯誤（例如 Ticket 2 的費率計算被 Ticket 3 的遷移邏輯誤改）。</li>
+  </ol>
+  <p><strong>預期輸出</strong>：每張 PR 一張雙軸報告（## Standards / ## Spec 並排）＋一行摘要（各軸發現數與最嚴重問題）。三張 PR 都通過後，main 進入可發佈狀態。</p>
+  <p><strong>關鍵設計</strong>：review 的固定點「跟著 ticket 移動」是專案級的關鍵——每張 ticket 的 diff 只含該 ticket 的變更，規格軸才能精準對照。最後的全量 review 是補「垂直切片各自綠、合併後才看到的互動問題」的洞。</p>
+</div>
+<div class="tutorial-block tb-theory">
+  <h3><span class="tb-icon">⚙️</span> 效能 / 品質 / 安全深度</h3>
+  <p><strong>效能</strong>：兩個平行子代理讓審查時間接近「單軸時間」而非「雙軸時間」。效能瓶頸常在 diff 大小——一個 2000 行的 diff 會讓子代理在殘缺輸入上做判斷。實務上用 <code>git diff --stat</code> 先看規模，diff 過大時請開發者拆成多個小 PR，讓 review 品質不因規模稀釋。</p>
+  <p><strong>品質</strong>：品質的核心機制是<strong>雙軸分離</strong>——不跨軸排序、不互相掩蓋。規範軸的 smell baseline 保證「repo 沒文件也有最低標準」；規格軸靠「逐條引用規格原文」把「做對」與「做錯」變成可對照的檢查。報告品質的驗收標準：每一條發現都能被另一個人獨立複核（引用標準/規格原文）。</p>
+  <p><strong>安全</strong>：審查是安全漏洞進 codebase 的最後一道閘門。除了兩個軸，實務上要在規範軸補「安全檢查」子清單：diff 是否新增 secret 或硬編碼金鑰（<code>git diff | grep -i "api[_-]key\|password\|secret"</code>）、是否繞過既有認證/授權路徑、錯誤訊息是否洩漏內部細節（stack trace、SQL）。這些不寫進技能文件，但 review 執行者應在審查時主動檢視——審查者的安全敏感度就是最後防線。</p>
+</div>
+<div class="tutorial-block">
+  <h3><span class="tb-icon">🧭</span> 技能間比較對照表</h3>
+  <table>
+    <tr><th>面向</th><th>本 skill（code-review）</th><th>相關 skill</th><th>差異說明</th></tr>
+    <tr><td>核心職責</td><td>審查「已有變更」是否合規範、合規格</td><td>diagnosing-bugs</td><td>後者診斷「執行中壞掉的東西」；review 檢查「還沒合入的變更」</td></tr>
+    <tr><td>時機</td><td>implement 完成後、commit/合併前</td><td>tdd</td><td>tdd 在寫的過程中逐切片驗證；review 在整批完成後做雙軸總檢</td></tr>
+    <tr><td>判斷標準</td><td>雙軸：Standards（規範）＋Spec（規格）</td><td>resolving-merge-conflicts</td><td>後者依「兩邊意圖」解衝突；review 依「規範與規格」判對錯</td></tr>
+    <tr><td>輸出形式</td><td>並排的雙軸報告（不排序）</td><td>improve-codebase-architecture</td><td>後者輸出 HTML 報告＋Top recommendation（有排序）；review 刻意不跨軸排序</td></tr>
+    <tr><td>流程特性</td><td>平行子代理、固定點、規格搜尋</td><td>triage</td><td>triage 分類「外來請求」；review 評估「自己團隊的產出」</td></tr>
+  </table>
+</div>
+<div class="tutorial-block tb-checklist">
+  <h3><span class="tb-icon">✅</span> 互動式檢核清單</h3>
+  <ul>
+    <li>- [ ] 每次 review 都有明確固定點，且已用 <code>git rev-parse</code> 驗證、diff 非空</li>
+    <li>- [ ] 規格來源依優先序搜尋（commit 引用 → 傳入路徑 → docs/specs → 問使用者）</li>
+    <li>- [ ] 規範子代理拿到了完整 smell baseline，規格子代理拿到了規格全文</li>
+    <li>- [ ] 兩軸報告分開呈現，沒有跨軸挑「總冠軍」</li>
+    <li>- [ ] 有做安全檢查（secret、auth 繞過、資訊洩漏）</li>
+    <li>- [ ] 摘要寫了「每軸的發現數＋每軸最嚴重問題」</li>
+  </ul>
+</div>
+
+<div class="tutorial-block tb-project">
+  <h3><span class="tb-icon">🏗️</span> ① 專案級端到端 Worked Example</h3>
+  <p><strong>專案情境</strong>：你在一個有 50 個檔案變更的 PR 上跑 code-review，需要同時驗證規範和規格。</p>
+<ol>
+  <li>先用 <code>/code-review --base main</code> 跑規範軸（coding standards）：檢查命名、格式、error handling、import 順序。</li>
+  <li>同時跑規格軸（spec compliance）：對照原始 issue 的 acceptance criteria，逐條驗證。</li>
+  <li>兩軸結果並排呈現：規範問題（3 個 warning）和規格問題（1 個遺漏）。</li>
+  <li>規範問題可以自動修（Prettier + ESLint），規格問題需要人工判斷——code-review 會標出「需確認」vs「可自動修」。</li>
+</ol>
+<p><strong>關鍵</strong>：規範軸是「怎麼寫」，規格軸是「寫對了沒」。兩者平行跑、分開報告，才不會混淆「風格問題」和「功能遺漏」。</p>
+</div>
+<div class="tutorial-block tb-theory">
+  <h3><span class="tb-icon">⚡</span> ② 效能 / 品質 / 安全深度</h3>
+  <table>
+  <tr><th>面向</th><th>實務考量</th></tr>
+  <tr><td>效能</td><td>大 PR（200+ 檔案）的 review 時間隨檔案數線性成長。建議先用 <code>git diff --stat</code> 篩出核心變更，再跑 code-review。</td></tr>
+  <tr><td>品質</td><td>規範軸的誤報率（false positive）通常高於規格軸。把 linting 當作規範軸的預處理，可減少人工覆判的負擔。</td></tr>
+  <tr><td>安全</td><td>Code review 是防禦 SQL injection、XSS、secrets leak 的最後一道關卡。在規範軸加入 security checklist（如 <code>no-eval</code>、<code>no-innerHTML</code>）可自動攔截。</td></tr>
+</table>
+</div>
+<div class="tutorial-block tb-comparison">
+  <h3><span class="tb-icon">📊</span> ③ 技能間比較對照表</h3>
+  <table>
+  <tr><th>面向</th><th>code-review</th><th>triage</th><th>diagnosing-bugs</th><th>差異說明</th></tr>
+  <tr><td>時機</td><td>PR 完成後</td><td>Issue 進來時</td><td>Bug 回報時</td><td>code-review 是事後驗收，triage 是事前分流，diagnosing-bugs 是事中排查</td></tr>
+  <tr><td>輸入</td><td>git diff / branch</td><td>issue / PR</td><td>錯誤訊息 / 症狀</td><td>code-review 吃程式碼差異，triage 吃問題描述，diagnosing-bugs 吃錯誤堆疊</td></tr>
+  <tr><td>輸出</td><td>規範 + 規格報告</td><td>分類 + 優先級</td><td>根因 + 修復方案</td><td>三者分別回答「寫對了沒」「這歸誰管」「為什麼壞了」</td></tr>
+</table>
+</div>
+<div class="tutorial-block tb-checklist">
+  <h3><span class="tb-icon">✅</span> ④ 互動式進階檢核清單</h3>
+  <ul>
+    <li>□ 能分開描述「規範問題」和「規格問題」，不混淆兩者</li>
+    <li>□ 知道規範軸的誤報率高於規格軸——先跑 lint 再跑 review</li>
+    <li>□ 能在大 PR 上先篩選核心變更，再跑完整 review</li>
+    <li>□ 知道 code-review 是 security 的最後一道關卡</li>
+    <li>□ 能區分「可自動修」和「需確認」的問題</li>
+  </ul>
+</div>
 
 </div>
 </body>

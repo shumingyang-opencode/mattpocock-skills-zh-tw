@@ -114,6 +114,46 @@
   </ol>
 </div>
 
+<div class="tutorial-block tb-project">
+  <h3><span class="tb-icon">🏗️</span> ① 專案級端到端 Worked Example</h3>
+  <p><strong>專案情境</strong>：你要選擇一個 state management 方案（Redux vs Zustand vs Jotai），需要有根據的比較。</p>
+<ol>
+  <li>先跑 <code>/research</code>，定義研究問題：「在 React 18 + TypeScript 的大型 SPA 中，哪個 state management 方案的效能、DX、維護性最好？」</li>
+  <li>research 會從高可信度來源蒐集資料：官方文件、benchmark、真實專案的案例研究（不是部落格文章）。</li>
+  <li>產出比較報告：表格對比三者的 bundle size、學習曲線、SSR 支援、DevTools 支援、社群活躍度。</li>
+  <li>把報告寫進 repo 的 <code>docs/research-state-management.md</code>，連結到相關的 issue。這份文件可以被 <code>/to-spec</code> 引用。</li>
+</ol>
+<p><strong>關鍵</strong>：research 的價值在「可信度」——它只用主要來源（官方文件、benchmark），不用次要來源（部落格、社群討論）。文件的可信度取決於來源的品質。</p>
+</div>
+<div class="tutorial-block tb-theory">
+  <h3><span class="tb-icon">⚡</span> ② 效能 / 品質 / 安全深度</h3>
+  <table>
+  <tr><th>面向</th><th>實務考量</th></tr>
+  <tr><td>效能</td><td>research 的 token 成本與來源數量成正比。限制在 5-10 個高可信度來源，避免「什麼都看」導致 token 爆炸。</td></tr>
+  <tr><td>品質</td><td>報告的品質取決於「問題是否夠明確」。模糊的問題（「哪個 state management 好」）產出模糊的答案；具體的問題（「在 React 18 的 SSR 場景中，Zustand 和 Redux 的 hydration 策略有什麼不同」）產出有用的比較。</td></tr>
+  <tr><td>安全</td><td>研究報告可能揭露安全相關的資訊（例如某個 library 有 known vulnerabilities）——確保把這些記在報告的安全章節中。</td></tr>
+</table>
+</div>
+<div class="tutorial-block tb-comparison">
+  <h3><span class="tb-icon">📊</span> ③ 技能間比較對照表</h3>
+  <table>
+  <tr><th>面向</th><th>research</th><th>grill-me</th><th>to-spec</th><th>差異說明</th></tr>
+  <tr><td>方法</td><td>蒐集 + 分析</td><td>質詢 + 淬煉</td><td>綜合 + 規劃</td><td>research 是「搞清楚」，grill-me 是「被挑戰」，to-spec 是「決定做什麼」</td></tr>
+  <tr><td>輸出</td><td>研究報告</td><td>口頭質詢</td><td>規格說明</td><td>research 輸出「已知的事」，grill-me 輸出「被挑戰的假設」，to-spec 輸出「要做的事」</td></tr>
+  <tr><td>來源</td><td>主要來源（官方文件）</td><td>你的想法</td><td>對話記錄</td><td>research 用外部來源，grill-me 用你的內部想法，to-spec 用已討論的內容</td></tr>
+</table>
+</div>
+<div class="tutorial-block tb-checklist">
+  <h3><span class="tb-icon">✅</span> ④ 互動式進階檢核清單</h3>
+  <ul>
+    <li>□ 研究問題夠具體——不是「哪個好」而是「在什麼場景下哪個更適合」</li>
+    <li>□ 只用高可信度來源（官方文件、benchmark），不用部落格文章</li>
+    <li>□ 報告在 5-10 個來源以內——避免 token 爆炸</li>
+    <li>□ 報告包含安全相關的發現</li>
+    <li>□ 報告被寫進 repo 的 docs/ 並連結到相關 issue</li>
+  </ul>
+</div>
+
 </div>
 </body>
 </html>

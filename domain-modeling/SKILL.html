@@ -170,6 +170,46 @@
   </ol>
 </div>
 
+<div class="tutorial-block tb-project">
+  <h3><span class="tb-icon">🏗️</span> ① 專案級端到端 Worked Example</h3>
+  <p><strong>專案情境</strong>：你正在建立一個電商系統的領域模型，團隊對「訂單」的定義有歧義。</p>
+<ol>
+  <li>先跑 <code>/domain-modeling</code>，找出通用語言：「訂單」到底是 <code>Order</code>（實體，有 ID、可變）還是 <code>OrderSnapshot</code>（值物件，不可變）？</li>
+  <li>建立聚合邊界：<code>Order</code> 聚合包含 <code>OrderItem</code>（值物件）和 <code>OrderStatus</code>（值物件），但不包含 <code>Customer</code>（另一個聚合）。</li>
+  <li>記錄 ADR：決定「訂單的折扣在 Order 聚合內計算，不傳到外部」。這個決策會影響 <code>/codebase-design</code> 的介面設計。</li>
+  <li>用 <code>/writing-for-agents</code> 把領域模型寫進 CONTEXT.md，讓所有技能共享同一套語言。</li>
+</ol>
+<p><strong>關鍵</strong>：領域模型不是 ER 圖——它是在回答「這個系統裡的東西是什麼、有什麼規則、怎麼互動」。模型的價值不在畫得漂亮，在於團隊對術語的共識。</p>
+</div>
+<div class="tutorial-block tb-theory">
+  <h3><span class="tb-icon">⚡</span> ② 效能 / 品質 / 安全深度</h3>
+  <table>
+  <tr><th>面向</th><th>實務考量</th></tr>
+  <tr><td>效能</td><td>領域模型本身不影響執行效能，但它決定了「邊界在哪」——錯誤的聚合邊界會導致不必要的跨服務呼叫，這才是效能殺手。</td></tr>
+  <tr><td>品質</td><td>領域模型的品質指標：術語是否無歧義（同一個詞在不同 context 意思不同 = 壞模型）、聚合邊界是否穩定（不常跨邊界修改）。</td></tr>
+  <tr><td>安全</td><td>聚合邊界是天然的權限邊界——跨聚合的操作需要明確的授權。確保模型中標註了「誰可以對什麼做什麼」。</td></tr>
+</table>
+</div>
+<div class="tutorial-block tb-comparison">
+  <h3><span class="tb-icon">📊</span> ③ 技能間比較對照表</h3>
+  <table>
+  <tr><th>面向</th><th>domain-modeling</th><th>codebase-design</th><th>triage</th><th>差異說明</th></tr>
+  <tr><td>焦點</td><td>語言與概念</td><td>模組與介面</td><td>Issue 分流</td><td>domain-modeling 管「怎麼說」，codebase-design 管「怎麼拆」，triage 管「誰來做」</td></tr>
+  <tr><td>輸出</td><td>CONTEXT.md / ADR</td><td>模組介面規格</td><td>分類 + 優先級</td><td>domain-modeling 輸出語言共識，codebase-design 輸出結構規格，triage 輸出任務分派</td></tr>
+  <tr><td>時機</td><td>專案初期</td><td>模組設計時</td><td>Issue 進來時</td><td>domain-modeling 是地基，codebase-design 是藍圖，triage 是施工排程</td></tr>
+</table>
+</div>
+<div class="tutorial-block tb-checklist">
+  <h3><span class="tb-icon">✅</span> ④ 互動式進階檢核清單</h3>
+  <ul>
+    <li>□ 能區分「實體」（有 ID、可變）和「值物件」（不可變、無 ID）</li>
+    <li>□ 能定義聚合邊界，說明哪些東西在同一個聚合內</li>
+    <li>□ 知道 ADR 是「記錄決策」而不是「畫圖」</li>
+    <li>□ 能把領域模型寫進 CONTEXT.md 讓所有技能共享</li>
+    <li>□ 能用通用語言讓非技術人員也看得懂模型</li>
+  </ul>
+</div>
+
 </div>
 </body>
 </html>

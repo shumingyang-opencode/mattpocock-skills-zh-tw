@@ -238,6 +238,89 @@
     <li><strong>接縫判斷</strong>：bug 需要多個呼叫者同時觸發，但唯一可測的接縫只有單一呼叫者。根據 Phase 5，這說明什麼？你該在回歸測試上做什麼、該交接給誰？</li>
   </ol>
 </div>
+<div class="tutorial-block tb-example">
+  <h3><span class="tb-icon">🏗️</span> 專案級端到端 Worked Example</h3>
+  <p><strong>專案情境</strong>：一個「訂單匯出服務」的完整事故處理專案——線上偶發 504＋部分訂單遺漏，你負責用 diagnosing-bugs 的六階段從頭到尾修完，並把教訓回饋進專案。</p>
+  <ol>
+    <li><strong>Phase 1 建迴圈</strong>：開發環境重現不了 → 用「重播擷取追蹤」把正式環境的慢請求 trace 存下來，寫 harness 在隔離路徑重播 → 穩定重現「含大 JSON 欄位時序列化慢 40 秒、部分訂單被截斷」。迴圈：<code>node replay.js --trace trace-1042.json</code>，2 秒內給紅。</li>
+    <li><strong>Phase 2 最小化</strong>：逐一砍欄位/呼叫者，最小重現縮到「單筆含嵌套 JSON 的訂單」。每個剩餘元素都承重。</li>
+    <li><strong>Phase 3 假設</strong>：列出 4 個可否證假設並排序（重複解析 JSON、序列化指數爆炸、N+1 查詢、記憶體不足）；展示給使用者，對方說「我們上週把 JSON 欄位改成邊讀邊 parse」→ 重複解析升到第一。</li>
+    <li><strong>Phase 4 插樁</strong>：在 parse 點加 <code>[DEBUG-json]</code> 計數，確認同一欄位被 parse 5 次。</li>
+    <li><strong>Phase 5 修復＋回歸</strong>：先寫回歸測試鎖定「同欄位只 parse 一次」（接縫：序列化函式公開介面）→ 看它紅 → 修 → 綠 → 重播原始 trace 確認 40 秒回到 2 秒、無訂單遺漏。</li>
+    <li><strong>Phase 6 事後檢討</strong>：清理插樁（grep <code>[DEBUG-</code>）、把正確假設寫進 commit。發現「序列化模組沒有好接縫」→ 交接給 <code>/improve-codebase-architecture</code> 深化候選。</li>
+  </ol>
+  <p><strong>預期輸出</strong>：一個回歸測試＋一個修復 commit＋一段寫進 commit 的事後檢討＋一張交給架構改善的深化候選。整起事故從「無法重現」到「被測試鎖住」。</p>
+  <p><strong>關鍵設計</strong>：全案的「迴圈」只有一個（<code>replay.js</code>），但它在每個階段被不同方式消耗——最小化砍輸入、假設驗證看計數、回歸測試當基準。迴圈先於一切，這就是本技能的核心。</p>
+</div>
+<div class="tutorial-block tb-theory">
+  <h3><span class="tb-icon">⚙️</span> 效能 / 品質 / 安全深度</h3>
+  <p><strong>效能</strong>：診斷本身就是效能工作——迴圈的速度決定除錯速度。Phase 4 對效能回歸有專屬分支：「日誌通常是錯的，先建立基線量測再二分」。實務上把量測做成 script（<code>perf-baseline.sh</code>），每次修改後重跑，把「效能」變成「可二分的事實」而非「感覺」。</p>
+  <p><strong>品質</strong>：品質保證來自回歸測試的<strong>接縫正確性</strong>——測試必須在「真實 bug 模式發生的呼叫點」運作，否則給的是錯誤信心。若沒有正確接縫，「那本身就是發現」——這比「貼一個假測試」更誠實，也是交接給架構改善的正確起點。</p>
+  <p><strong>安全</strong>：事故處理常夾帶安全風險：(1) 插樁若打在正式環境，日誌可能記錄敏感 payload——<code>[DEBUG-json]</code> 前綴讓清理變成單次 grep，且插樁內容絕不列印訂單個資；(2) 修復時為了「快速止血」容易繞過既有授權——修完後必須跑 <code>/code-review</code> 的安全檢查確認沒開旁路；(3) 若事故是安全事件（資料洩漏、未授權存取），Phase 6 的事後檢討要額外寫「防範機制」而非只是「修復方法」。</p>
+</div>
+<div class="tutorial-block">
+  <h3><span class="tb-icon">🧭</span> 技能間比較對照表</h3>
+  <table>
+    <tr><th>面向</th><th>本 skill（diagnosing-bugs）</th><th>相關 skill</th><th>差異說明</th></tr>
+    <tr><td>核心問題</td><td>「壞了，為什麼？」——建迴圈、追根因</td><td>code-review</td><td>review 檢查「變更」；本 skill 診斷「執行中的系統」</td></tr>
+    <tr><td>假設管理</td><td>先有迴圈才談假設，3–5 個排序可否證假設</td><td>research</td><td>research 查「外部事實」；本 skill 驗證「內部假設」——research 可作為建迴圈前的背景補給</td></tr>
+    <tr><td>收尾方式</td><td>回歸測試＋事後檢討＋交接架構改善</td><td>tdd</td><td>tdd 從頭就以測試驅動；本 skill 是「事後補回歸」——但兩者共用「紅→綠」紀律</td></tr>
+    <tr><td>副作用控制</td><td>插樁必須帶 <code>[DEBUG-]</code> 前綴、事後清理</td><td>implement</td><td>implement 的乾淨 commit 政策與本 skill 的清理政策是同一原則的兩個應用</td></tr>
+    <tr><td>效能取向</td><td>先量測再二分（效能回歸分支）</td><td>improve-codebase-architecture</td><td>後者改善「結構」讓未來更好除錯；本 skill 解決「眼前」的 bug</td></tr>
+  </table>
+</div>
+<div class="tutorial-block tb-checklist">
+  <h3><span class="tb-icon">✅</span> 互動式檢核清單</h3>
+  <ul>
+    <li>- [ ] 我有一條「已跑過至少一次」、能在 bug 上變紅、幾秒內完成的迴圈</li>
+    <li>- [ ] 我已最小化到「每個剩餘元素都承重」</li>
+    <li>- [ ] 我有 3–5 個可否證的排序假設，且在測試前展示給使用者</li>
+    <li>- [ ] 插樁都有 <code>[DEBUG-]</code> 前綴，且每個探針對應一個具體預測</li>
+    <li>- [ ] 回歸測試在「正確接縫」上（否則已記錄「無正確接縫」並交接）</li>
+    <li>- [ ] Phase 6 完成：插樁清乾淨、假設寫進 commit、交接給該接的 skill</li>
+  </ul>
+</div>
+
+<div class="tutorial-block tb-project">
+  <h3><span class="tb-icon">🏗️</span> ① 專案級端到端 Worked Example</h3>
+  <p><strong>專案情境</strong>：使用者回報「API 回應時間從 200ms 暴增到 3s」，你需要定位根因。</p>
+<ol>
+  <li>先跑 <code>/diagnosing-bugs</code>，收集症狀：哪些 endpoint 變慢？是所有請求還是特定參數？是最近才變慢嗎？</li>
+  <li>建立假說：可能是 N+1 query、可能是 cache miss、可能是新版本的 regression。</li>
+  <li>設計最小實驗：跑 <code>EXPLAIN ANALYZE</code> 確認是否有 N+1、檢查 cache hit rate、比對新舊版本的 query plan。</li>
+  <li>驗證根因：假說被證實後，用 <code>git bisect</code> 定位引入 regression 的 commit。</li>
+  <li>修復並確認：修復後跑 <code>/tdd</code> 加一迴歸測試，確保不會再發生。</li>
+</ol>
+<p><strong>關鍵</strong>：診斷迴圈的核心是「假說→實驗→驗證」，不是「猜→改→試」。每個假說都要有可量化的驗證方式。</p>
+</div>
+<div class="tutorial-block tb-theory">
+  <h3><span class="tb-icon">⚡</span> ② 效能 / 品質 / 安全深度</h3>
+  <table>
+  <tr><th>面向</th><th>實務考量</th></tr>
+  <tr><td>效能</td><td>診斷迴圈本身有「偵測成本」：每次假說驗證都要跑實驗。用 <code>git bisect</code> 可在 O(log n) 內定位 regression，比逐 commit 測試快得多。</td></tr>
+  <tr><td>品質</td><td>「修了但沒加迴歸測試」是 diagnose 最常見的遺漏。確保每個修復都伴隨一個「之前會壞、現在不會」的測試。</td></tr>
+  <tr><td>安全</td><td>診斷過程中可能需要跑 <code>git reset --hard</code> 或 <code>git stash</code>——確保在安全分支上操作，避免丟失未 commit 的變更。</td></tr>
+</table>
+</div>
+<div class="tutorial-block tb-comparison">
+  <h3><span class="tb-icon">📊</span> ③ 技能間比較對照表</h3>
+  <table>
+  <tr><th>面向</th><th>diagnosing-bugs</th><th>tdd</th><th>resolving-merge-conflicts</th><th>差異說明</th></tr>
+  <tr><td>目標</td><td>找到根因</td><td>驗證行為</td><td>解決衝突</td><td>diagnosing-bugs 是「為什麼壞了」，tdd 是「怎麼知道壞了」，resolving 是「兩邊衝突怎麼合」</td></tr>
+  <tr><td>時機</td><td>Bug 發生時</td><td>寫新功能時</td><td>merge 時</td><td>三者分別用於事中排查、事前預防、事後整合</td></tr>
+  <tr><td>方法</td><td>假說→實驗→驗證</td><td>紅→綠→重構</td><td>分析→取捨→合併</td><td>diagnosing-bugs 是科學方法，tdd 是工程循環，resolving 是協調流程</td></tr>
+</table>
+</div>
+<div class="tutorial-block tb-checklist">
+  <h3><span class="tb-icon">✅</span> ④ 互動式進階檢核清單</h3>
+  <ul>
+    <li>□ 能區分「症狀」（API 變慢）和「根因」（N+1 query）</li>
+    <li>□ 知道每個假說都要有可量化的驗證方式</li>
+    <li>□ 能用 git bisect 在 O(log n) 內定位 regression</li>
+    <li>□ 修復後一定加迴歸測試</li>
+    <li>□ 知道診斷迴圈是在安全分支上操作</li>
+  </ul>
+</div>
 
 </div>
 </body>

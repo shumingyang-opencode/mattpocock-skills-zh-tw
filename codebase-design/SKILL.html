@@ -241,6 +241,87 @@
     <li><strong>介面收斂設計</strong>：一個 <code>PaymentProcessor</code> 有 15 個方法，服務三種意圖。把它收斂成 3 個深方法，並說明每個方法隱藏了哪些行為、呼叫者與測試各自獲得什麼。</li>
   </ol>
 </div>
+<div class="tutorial-block tb-example">
+  <h3><span class="tb-icon">🏗️</span> 專案級端到端 Worked Example</h3>
+  <p><strong>專案情境</strong>：一個「訂單處理系統」從頭設計，整合 codebase-design 的詞彙貫穿整個專案生命週期——從介面設計、TDD 接縫、架構掃描到重構驗證。</p>
+  <ol>
+    <li><strong>介面設計</strong>：先用 <code>DESIGN-IT-TWICE</code> 平行子代理設計兩種截然不同的訂單介面：(A) 單一 <code>processOrder(order)</code> 深方法（B) 五個步驟方法 <code>validate → charge → fulfill → notify → log</code>。比較深度、局部性、接縫位置 → 選 A。</li>
+    <li><strong>接縫落地</strong>：把選定的介面放上乾淨接縫，用 <code>/tdd</code> 測試——測試直接跨同一個介面，不 mock 內部。外部相依（付款閘道）用「接受相依」方式注入，不做假設性接縫（目前只有一個 Stripe 轉接器）。</li>
+    <li><strong>專案中期</strong>：<code>/improve-codebase-architecture</code> 掃描發現 <code>fulfillOrder</code> 的倉儲層有 19 個薄方法（淺模組）→ 用刪除測試確認「刪掉後複雜度散回 9 個呼叫者」→ 深化成 3 個深方法。</li>
+    <li><strong>換供應商</strong>：需求出現「支援 Adyen」，第二個轉接器出現 → 此刻才拆「付款介面」接縫（兩個轉接器＝真實接縫）。</li>
+    <li><strong>驗證</strong>：全專案用「介面就是測試表面」原則檢查——所有測試都跨公開介面，沒有任何測試穿透到內部。DOM 與 DB 層的變更不影響測試。</li>
+  </ol>
+  <p><strong>預期輸出</strong>：一個介面（<code>processOrder</code>）＋一條接縫（付款）＋一套全跨公開介面的測試。整個專案的呼叫者只知道「怎麼用」，不需要知道「裡面怎麼運作」。</p>
+  <p><strong>關鍵設計</strong>：整個專案只有一個「先拆接縫的決定」——其他接縫都是需求逼出來才拆。這就是「一個轉接器＝假設性接縫」原則在專案規模的體現：介面深度是設計出來的，接縫是真實需求長出來的。</p>
+</div>
+<div class="tutorial-block tb-theory">
+  <h3><span class="tb-icon">⚙️</span> 效能 / 品質 / 安全深度</h3>
+  <p><strong>效能</strong>：深模組的效能利益在<strong>介面面積</strong>——呼叫者學一個深方法，比學 19 個薄方法省去大量「理解成本」；對 typecheck 而言，小介面也意味著更少的型別組合面。但注意：深模組內部的大實作仍有自己的複雜度，若內部狀態機寫成 O(n²) 的巢狀迴圈，局部性反而讓效能問題集中在一個地方、更容易被 profiling 找到——這是優點。</p>
+  <p><strong>品質</strong>：品質指標是「可測試性與可導覽性」。可測試性 = 測試全部跨公開介面（介面就是測試表面）；可導覽性 = agent 讀一個介面就能對行為建立模型，不用在 200 個小函式間彈跳。刪除測試是品質的判準：模組刪掉後複雜度重現（在賺住宿費）＝品質好；複雜度消失（轉送層）＝品質差。</p>
+  <p><strong>安全</strong>：小介面 = 小攻擊面。深模組把「驗證、授權、狀態轉換」藏在介面後，呼叫者不可能繞過驗證直接碰到內部資料。風險則在「隱藏的安全行為」——深模組內部的錯誤處理若不透漏給介面（error modes 是介面的一部分），呼叫者可能在不知情下忽略安全失敗。所以介面的定義必須包含 error modes——這正是「介面＝呼叫者必須知道的每一件事」的安全意義。</p>
+</div>
+<div class="tutorial-block">
+  <h3><span class="tb-icon">🧭</span> 技能間比較對照表</h3>
+  <table>
+    <tr><th>面向</th><th>本 skill（codebase-design）</th><th>相關 skill</th><th>差異說明</th></tr>
+    <tr><td>核心職責</td><td>設計模組「形狀」的詞彙與原則</td><td>improve-codebase-architecture</td><td>後者「掃描找出候選」，前者「設計被選中的候選」——improve 的 grilling 階段會叫用本 skill</td></tr>
+    <tr><td>產出</td><td>詞彙共識＋介面設計決策</td><td>domain-modeling</td><td>後者管「領域語言」（詞的意思）；前者管「模組形狀」（介面與深度）</td></tr>
+    <tr><td>與測試的關係</td><td>介面就是測試表面</td><td>tdd</td><td>tdd 在接縫上寫測試；本 skill 決定接縫放哪、介面長什麼樣</td></tr>
+    <tr><td>判斷工具</td><td>刪除測試、一/兩轉接器原則</td><td>code-review</td><td>review 檢查「寫好的東西」；本 skill 設計「還沒寫的東西」</td></tr>
+    <tr><td>引用方式</td><td>被 tdd / improve-codebase-architecture 當詞彙來源</td><td>research</td><td>research 查外部事實；本 skill 是內部設計語言，查自己團隊的詞彙</td></tr>
+  </table>
+</div>
+<div class="tutorial-block tb-checklist">
+  <h3><span class="tb-icon">✅</span> 互動式檢核清單</h3>
+  <ul>
+    <li>- [ ] 我能用精確術語（模組/介面/深度/接縫/轉接器）描述一個設計決策</li>
+    <li>- [ ] 我對每個候選模組跑過刪除測試，並記錄「複雜度消失還是重現」</li>
+    <li>- [ ] 我確認「介面就是測試表面」——沒有測試穿透到內部</li>
+    <li>- [ ] 我確認每一條接縫都有兩個以上真實轉接器，沒有假設性接縫</li>
+    <li>- [ ] 介面的定義包含了 error modes、順序約束等非型別事實</li>
+    <li>- [ ] 我知道深模組的內部可以有內部接縫（供自己的測試用）</li>
+  </ul>
+</div>
+
+<div class="tutorial-block tb-project">
+  <h3><span class="tb-icon">🏗️</span> ① 專案級端到端 Worked Example</h3>
+  <p><strong>專案情境</strong>：你有一個 2000 行的 <code>OrderService</code> 類別，要拆成深模組。</p>
+<ol>
+  <li>先跑 <code>/codebase-design</code>，用詞彙表定義：OrderService 目前是「淺模組」（所有 public method 都暴露內部），目標是「深模組」（只暴露一個 <code>placeOrder()</code> 進入點）。</li>
+  <li>用「接縫」概念找出測試點：接縫是 <code>placeOrder()</code> 的公開介面，不是內部的 <code>validate()</code> + <code>calculate()</code> + <code>persist()</code>。</li>
+  <li>用「轉接器」把外部依賴（PaymentGateway、InventoryService）從直接呼叫改成注入，讓 OrderService 可以獨立測試。</li>
+  <li>用「槓桿收益」評估：拆完後，改一個功能只需要改一個檔案，而不是在 2000 行裡找三個散落的方法。</li>
+</ol>
+<p><strong>關鍵</strong>：codebase-design 不是「畫架構圖」，而是「決定什麼該藏起來、什麼該露出來」。深模組的核心原則：實作藏在子資料夾中，只能透過進入點檔案觸達。</p>
+</div>
+<div class="tutorial-block tb-theory">
+  <h3><span class="tb-icon">⚡</span> ② 效能 / 品質 / 安全深度</h3>
+  <table>
+  <tr><th>面向</th><th>實務考量</th></tr>
+  <tr><td>效能</td><td>深模組的包裝層（adapter）會增加一層間接呼叫。在 hot path 上，這可能是 O(1) 的額外開銷；但在 I/O bound 的場景中，這幾乎可忽略。</td></tr>
+  <tr><td>品質</td><td>「深化」的品質指標：模組的 public surface 是否穩定（不常改）、內部實作是否可自由重構（改內部不影響外部）。</td></tr>
+  <tr><td>安全</td><td>深模組的「進入點」是天然的安全邊界——所有輸入都經過進入點驗證。確保進入點有 input validation，而不是把驗證留在內部。</td></tr>
+</table>
+</div>
+<div class="tutorial-block tb-comparison">
+  <h3><span class="tb-icon">📊</span> ③ 技能間比較對照表</h3>
+  <table>
+  <tr><th>面向</th><th>codebase-design</th><th>domain-modeling</th><th>improve-codebase-architecture</th><th>差異說明</th></tr>
+  <tr><td>焦點</td><td>模組介面設計</td><td>領域語言</td><td>架構全景</td><td>codebase-design 管「一個模組長什麼樣」，domain-modeling 管「語言怎麼定義」，improve 管「整體怎麼更好」</td></tr>
+  <tr><td>時機</td><td>設計介面時</td><td>釐清術語時</td><td>找改善機會時</td><td>三者分別回答「介面長什麼樣」「這個詞什麼意思」「哪裡可以更好」</td></tr>
+  <tr><td>詞彙</td><td>模組/深度/接縫/轉接器</td><td>實體/值物件/聚合</td><td>耦合/內聚/抽象</td><td>codebase-design 的詞彙是模組級，domain-modeling 是領域級，improve 是系統級</td></tr>
+</table>
+</div>
+<div class="tutorial-block tb-checklist">
+  <h3><span class="tb-icon">✅</span> ④ 互動式進階檢核清單</h3>
+  <ul>
+    <li>□ 能用「深度」描述一個模組——public surface 有多大、內部藏了多少</li>
+    <li>□ 能區分「接縫」和「內部實作」，並在接縫上寫測試</li>
+    <li>□ 知道轉接器是為了讓依賴可注入、可替換、可測試</li>
+    <li>□ 能用「槓桿收益」判斷一個模組是否值得深化</li>
+    <li>□ 知道 codebase-design 的詞彙是其他技能的共同基礎</li>
+  </ul>
+</div>
 
 </div>
 </body>

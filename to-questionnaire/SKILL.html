@@ -156,6 +156,46 @@
   </ol>
 </div>
 
+<div class="tutorial-block tb-project">
+  <h3><span class="tb-icon">🏗️</span> ① 專案級端到端 Worked Example</h3>
+  <p><strong>專案情境</strong>：你需要團隊決定「是否要從 JavaScript 遷移到 TypeScript」，但你無法自己回答所有問題。</p>
+<ol>
+  <li>先跑 <code>/to-questionnaire</code>，把「遷移到 TypeScript」的決策轉化為問卷：包含技術面（現有 codebase 的 TS 適配度）、團隊面（成員的 TS 經驗）、業務面（遷移對 deliverable 的影響）。</li>
+  <li>問卷會自動產生具體的問題：「你的 codebase 中有多少 % 的檔案有 <code>@ts-check</code>？」「團隊中幾個人有 2 年以上的 TS 經驗？」</li>
+  <li>把問卷發給團隊成員填寫——問卷的格式是可填寫的，不是只能看的。</li>
+  <li>收集回答後，用 <code>/to-spec</code> 把問卷結果轉化為遷移規格。</li>
+</ol>
+<p><strong>關鍵</strong>：to-questionnaire 的價值在「把模糊的決策轉化為可回答的問題」。你不知道答案沒關係——問卷的目的是「讓知道答案的人可以回答」。</p>
+</div>
+<div class="tutorial-block tb-theory">
+  <h3><span class="tb-icon">⚡</span> ② 效能 / 品質 / 安全深度</h3>
+  <table>
+  <tr><th>面向</th><th>實務考量</th></tr>
+  <tr><td>效能</td><td>問卷的問題數量直接影響填寫者的意願。限制在 5-8 個核心問題——超過 10 個問題的問卷回收率會急遽下降。</td></tr>
+  <tr><td>品質</td><td>問卷的品質取決於「問題是否夠具體」。模糊的問題（「你覺得 TypeScript 好不好？」）產出模糊的答案；具體的問題（「在你的 codebase 中，有多少 error 是 TypeScript 能在 compile time 抓到的？」）產出有用的數據。</td></tr>
+  <tr><td>安全</td><td>問卷可能收集到敏感資訊（例如「你覺得現有系統的安全性夠嗎？」）——確保問卷的存取權限正確設定，不是所有人都能看到所有人的回答。</td></tr>
+</table>
+</div>
+<div class="tutorial-block tb-comparison">
+  <h3><span class="tb-icon">📊</span> ③ 技能間比較對照表</h3>
+  <table>
+  <tr><th>面向</th><th>to-questionnaire</th><th>grill-me</th><th>research</th><th>差異說明</th></tr>
+  <tr><td>方法</td><td>問卷收集</td><td>口頭質詢</td><td>外部研究</td><td>to-questionnaire 从人收集，grill-me 從想法挖掘，research 從外部來源蒐集</td></tr>
+  <tr><td>對象</td><td>團隊成員</td><td>你自己</td><td>文件/資料</td><td>to-questionnaire 的答案來自人，grill-me 的答案來自你的思考，research 的答案來自外部</td></tr>
+  <tr><td>輸出</td><td>可填寫問卷</td><td>口頭質詢</td><td>研究報告</td><td>to-questionnaire 輸出「需要人回答的問題」，grill-me 輸出「被挑戰的假設」，research 輸出「已知的事實」</td></tr>
+</table>
+</div>
+<div class="tutorial-block tb-checklist">
+  <h3><span class="tb-icon">✅</span> ④ 互動式進階檢核清單</h3>
+  <ul>
+    <li>□ 問卷問題夠具體——不是「好不好」而是「有多少 %」</li>
+    <li>□ 問卷在 5-8 個核心問題以內</li>
+    <li>□ 問卷收集的敏感資訊有正確的存取權限</li>
+    <li>□ 問卷結果可以用 /to-spec 轉化為規格</li>
+    <li>□ 知道 to-questionnaire 的答案來自人，不來自文件</li>
+  </ul>
+</div>
+
 </div>
 </body>
 </html>

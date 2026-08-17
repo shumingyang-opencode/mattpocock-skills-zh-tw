@@ -206,6 +206,88 @@
     <li><strong>匝道判讀</strong>：給出五個情境（新功能點子、P1 事故、外部 PR 湧入、超大工程、需要實際跑才能確認的設計決策），一一對應到正確的進入匝道或獨立技能。</li>
   </ol>
 </div>
+<div class="tutorial-block tb-example">
+  <h3><span class="tb-icon">🏗️</span> 專案級端到端 Worked Example</h3>
+  <p><strong>專案情境</strong>：一個真實專案「把公司手動的庫存盤點流程，改造成自動化庫存管理系統」。這個專案跨 6 個 session、動用 8 個技能，全程由 ask-matt 做路由——這是 router 在整條主流程上的完整示範。</p>
+  <ol>
+    <li><strong>Session 1（L1）</strong>：呼叫 <code>/ask-matt</code>：「庫存盤點太花人力，想自動化，不知道從哪開始」。路由 → <code>/grill-with-docs</code>。在 repo 中 grill，決策寫進 <code>CONTEXT.md</code>：自動化範圍、盤點頻率、欄位定義。</li>
+    <li><strong>Session 2（L2）</strong>：grill 判斷這是多 session 工程 → 路由到 <code>/to-spec</code>（收斂規格）→ <code>/to-tickets</code>（拆出「同步供應商庫存」「盤點差異報表」「對帳 API」三張曳光彈 ticket，標好阻塞邊）。</li>
+    <li><strong>Session 3（L3 前段）</strong>：第一張 ticket 的 <code>/implement</code> 內部驅動 <code>/tdd</code>；中途遇到「同步效能」需要實際跑 → 路由繞道 <code>/handoff</code> 出去 → <code>/prototype</code> 驗證 → <code>/handoff</code> 回來。</li>
+    <li><strong>Session 4（L3 後段）</strong>：第二、三張 ticket 依序 implement；遇到線上偶發「庫存數對不上」→ 路由到維護匝道 <code>/diagnosing-bugs</code> 建立會變紅的迴圈修掉。</li>
+    <li><strong>Session 5（L4）</strong>：全功能完成 → 路由到 <code>/code-review</code> 雙軸審查 → 修完用 <code>/resolving-merge-conflicts</code> 合回 main。</li>
+    <li><strong>Session 6（維護）</strong>：系統上線後，定期路由到 <code>/improve-codebase-architecture</code> 掃描深化候選，讓系統對未來的 agent 更好作業。</li>
+  </ol>
+  <p><strong>預期輸出</strong>：六個 session 各產出一個可交接的產物（CONTEXT.md → spec → tickets → 可運作功能 → 審查通過的 main → 深化報告）。ask-matt 的輸出不是檔案，而是每一次「下一步該呼叫哪個技能」的判斷——全部串起來就是「點子 → 交付」的完整旅程。</p>
+  <p><strong>關鍵設計</strong>：注意 ask-matt 的判斷有<strong>層次</strong>——同一時刻只能有一個「下一個動作」，所以它一次只建議一個技能，不會把六個 session 的路線圖一次列給你。這樣 session 間的 context 才不會被「其實還沒輪到」的資訊污染。</p>
+</div>
+<div class="tutorial-block tb-theory">
+  <h3><span class="tb-icon">⚙️</span> 效能 / 品質 / 安全深度</h3>
+  <p><strong>效能</strong>：router 的描述是 <code>disable-model-invocation: true</code> 的 user-invoked 技能——它根本不進 agent context，所以每輪 request 的成本是 <strong>0 token</strong>。這是效能上最優的選擇：把「該選哪個技能」的判斷留給人類（cognitive load），完全不佔 agent 的 context load。相對地，<code>/research</code>、<code>/diagnosing-bugs</code> 這類 model-invoked 技能每輪都燒 description 的 token——所以描述越短越省。</p>
+  <p><strong>品質</strong>：router 的品質指標是<strong>路由正確率</strong>——把工作導向正確技能的比例。它不產出檔案，所以「品質」無法從產物看，只能從「後續流程是否順暢」回推：若 grill 之後 spec 難產、implement 頻頻卡住，很可能是一開始就路由錯了入口。</p>
+  <p><strong>安全</strong>：router 是<strong>攻擊面集中點</strong>——如果某個惡意或寫壞的技能 description 宣稱「任何 request 都該走我」，ask-matt 會把它路由過去，讓敏感工作（如修正式環境、處理客戶資料）落入錯誤工具。防禦方式：router 依賴其他技能的 description 做判斷，所以定期用 <code>/writing-for-agents</code> 審查各技能 description 的觸發條件是否互斥、是否過度宣稱範圍，就是對 router 的安全性維護。</p>
+</div>
+<div class="tutorial-block">
+  <h3><span class="tb-icon">🧭</span> 技能間比較對照表</h3>
+  <table>
+    <tr><th>面向</th><th>本 skill（ask-matt）</th><th>相關 skill</th><th>差異說明</th></tr>
+    <tr><td>核心職責</td><td>路由——選出下一個該呼叫的技能</td><td>zones / learning-path</td><td>後兩者是「地圖/路線圖」（靜態分類），ask-matt 是「導航員」（依當下狀況動態給一個下一步）</td></tr>
+    <tr><td>產出物</td><td>一個技能選擇（無檔案產物）</td><td>grilling</td><td>grilling 產出決策與文件；ask-matt 只決定「該用誰」，自己不下場</td></tr>
+    <tr><td>觸發方式</td><td>user-invoked（<code>disable-model-invocation: true</code>）</td><td>writing-for-agents</td><td>後者是 model-invoked 的參考技能；ask-matt 刻意藏起描述，由人類決定何時問路</td></tr>
+    <tr><td>依賴</td><td>依賴所有技能的描述品質</td><td>writing-for-agents</td><td>描述寫得不好，router 一定誤判——所以寫好技能是本 skill 的上游條件</td></tr>
+    <tr><td>使用時機</td><td>卡住、不知道下一步時</td><td>map.html（技能全景圖）</td><td>全景圖是「瀏覽全部技能」的靜態目錄；ask-matt 是「我現在這個狀況該用誰」的動態查詢</td></tr>
+  </table>
+</div>
+<div class="tutorial-block tb-checklist">
+  <h3><span class="tb-icon">✅</span> 互動式檢核清單</h3>
+  <ul>
+    <li>- [ ] 我能在一句話內描述我卡住的點，讓 ask-matt 能判斷入口</li>
+    <li>- [ ] 我知道「卡住時問 router」與「看地圖自選技能」的分界（動態 vs 靜態）</li>
+    <li>- [ ] 我確認過 router 依賴的技能描述彼此觸發條件互斥（沒有語意重疊）</li>
+    <li>- [ ] 我知道 ask-matt 一次只給一個「下一個動作」，不會一次列完整路線</li>
+    <li>- [ ] 我能說出 ask-matt 為何是 user-invoked（省 context、讓判斷留在人手上）</li>
+    <li>- [ ] 我知道 router 判斷錯誤時該往上游查（技能描述品質，用 writing-for-agents 修）</li>
+  </ul>
+</div>
+
+<div class="tutorial-block tb-project">
+  <h3><span class="tb-icon">🏗️</span> ① 專案級端到端 Worked Example</h3>
+  <p><strong>專案情境</strong>：你接手一個有 15 個 skill 的大型 repo，需要快速判斷哪些 skill 適合當前任務。</p>
+<ol>
+  <li>先跑 <code>/ask-matt</code>，描述你的需求：「我要幫一個 React 專案加 i18n，需要改 code、加測試、開 ticket」。</li>
+  <li>ask-matt 會路由到 <code>implement</code>（實作）、<code>tdd</code>（測試）、<code>to-tickets</code>（拆 ticket）三個技能。</li>
+  <li>依序載入每個技能，執行完整流程：先 <code>/to-tickets</code> 拆出 5 張票，再 <code>/implement</code> 逐張完成，最後 <code>/tdd</code> 補測試。</li>
+  <li>若某個技能不適用，ask-matt 會建議替代方案——例如「不需要 code-review，因為是新功能不是改既有 code」。</li>
+</ol>
+<p><strong>關鍵</strong>：ask-matt 的價值不在「告訴你用什麼」，而在「幫你排除不需要的」——減少載入錯誤技能的 token 浪費。</p>
+</div>
+<div class="tutorial-block tb-theory">
+  <h3><span class="tb-icon">⚡</span> ② 效能 / 品質 / 安全深度</h3>
+  <table>
+  <tr><th>面向</th><th>實務考量</th></tr>
+  <tr><td>效能</td><td>ask-matt 的路由判斷是 O(n) 掃描所有技能描述。技能數量超過 30 個時，可考慮用 tag 分群（engineering / productivity / writing）縮小搜尋範圍。</td></tr>
+  <tr><td>品質</td><td>路由錯誤的常見原因：使用者描述太籠統（「幫我寫 code」→ 可能是 implement、tdd、甚至 codebase-design）。要求使用者提供「做什麼」+「怎麼驗證」可提升路由準確度。</td></tr>
+  <tr><td>安全</td><td>ask-matt 本身不執行任何操作，僅做路由推薦。但它可能推薦不適合的技能——始終先讀技能的 description 再決定是否載入。</td></tr>
+</table>
+</div>
+<div class="tutorial-block tb-comparison">
+  <h3><span class="tb-icon">📊</span> ③ 技能間比較對照表</h3>
+  <table>
+  <tr><th>面向</th><th>ask-matt</th><th>to-questionnaire</th><th>handoff</th><th>差異說明</th></tr>
+  <tr><td>用途</td><td>技能路由</td><td>決策問卷</td><td>對話交接</td><td>ask-matt 找技能，to-questionnaire 找答案，handoff 換代理</td></tr>
+  <tr><td>輸出</td><td>技能推薦清單</td><td>可填寫的問卷</td><td>交接文件</td><td>ask-matt 輸出的是「下一步去哪」，不是「做什麼」</td></tr>
+  <tr><td>時機</td><td>任務開始前</td><td>需要他人輸入時</td><td>換人接手時</td><td>三者分別用於選路、徵詢、交接三個不同階段</td></tr>
+</table>
+</div>
+<div class="tutorial-block tb-checklist">
+  <h3><span class="tb-icon">✅</span> ④ 互動式進階檢核清單</h3>
+  <ul>
+    <li>□ 能描述一個複雜任務，讓 ask-matt 正確路由到 2-3 個技能</li>
+    <li>□ 能判斷 ask-matt 推薦的技能是否真的適用（不盲從）</li>
+    <li>□ 知道 ask-matt 不執行操作——它只是路由器</li>
+    <li>□ 能用 tag 或群組縮小 ask-matt 的搜尋範圍</li>
+    <li>□ 遇到路由錯誤時，能調整描述方式讓下次更準確</li>
+  </ul>
+</div>
 
 </div>
 </body>

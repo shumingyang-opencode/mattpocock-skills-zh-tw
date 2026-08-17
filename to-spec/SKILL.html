@@ -201,6 +201,46 @@
   </ol>
 </div>
 
+<div class="tutorial-block tb-project">
+  <h3><span class="tb-icon">🏗️</span> ① 專案級端到端 Worked Example</h3>
+  <p><strong>專案情境</strong>：你和團隊討論了 30 分鐘「使用者驗證流程」，有共識但沒有文件。</p>
+<ol>
+  <li>先跑 <code>/to-spec</code>，它會從對話記錄中提煉出規格：驗證方式（email + password）、token 策略（JWT, 7 天過期）、錯誤處理（401/403/429）。</li>
+  <li>規格會自動包含 acceptance criteria：「使用者可以用 email + password 登入」「token 過期後自動 redirect 到登入頁」「5 次錯誤後鎖定 15 分鐘」。</li>
+  <li>把規格發佈到 issue tracker：每條 acceptance criteria 對應一張 ticket。</li>
+  <li>規格可以被 <code>/implement</code> 直接使用——implement 會逐條讀 acceptance criteria 並實作。</li>
+</ol>
+<p><strong>關鍵</strong>：to-spec 的價值在「把口頭共識變成可執行的規格」。不需要額外訪談——它只綜合你已經討論過的內容。</p>
+</div>
+<div class="tutorial-block tb-theory">
+  <h3><span class="tb-icon">⚡</span> ② 效能 / 品質 / 安全深度</h3>
+  <table>
+  <tr><th>面向</th><th>實務考量</th></tr>
+  <tr><td>效能</td><td>to-spec 的 token 成本與對話長度成正比。30 分鐘的對話大約是 3-5K tokens——在預算內。如果對話超過 1 小時，先用 <code>/handoff</code> 壓縮再跑 to-spec。</td></tr>
+  <tr><td>品質</td><td>規格的品質取決於「對話是否有足夠的細節」。如果對話只說「做一個登入功能」，規格會很粗糙；如果對話說了「用 JWT、7 天過期、5 次鎖定」，規格會很具體。</td></tr>
+  <tr><td>安全</td><td>規格中可能包含安全相關的決策（例如「JWT 的 secret 用 HMAC-SHA256」）——確保這些決策被記錄在 ADR 中，而不只是在規格裡一行帶過。</td></tr>
+</table>
+</div>
+<div class="tutorial-block tb-comparison">
+  <h3><span class="tb-icon">📊</span> ③ 技能間比較對照表</h3>
+  <table>
+  <tr><th>面向</th><th>to-spec</th><th>to-tickets</th><th>to-questionnaire</th><th>差異說明</th></tr>
+  <tr><td>輸入</td><td>對話記錄</td><td>spec / plan</td><td>待決策事項</td><td>to-spec 從對話來，to-tickets 從 spec 來，to-questionnaire 從問題來</td></tr>
+  <tr><td>輸出</td><td>規格說明</td><td>ticket 清單</td><td>問卷</td><td>to-spec 輸出「做什麼」，to-tickets 輸出「拆成什麼」，to-questionnaire 輸出「問什麼」</td></tr>
+  <tr><td>時機</td><td>討論完後</td><td>規格完成後</td><td>需要他人輸入時</td><td>to-spec 是「記錄」，to-tickets 是「拆分」，to-questionnaire 是「徵詢」</td></tr>
+</table>
+</div>
+<div class="tutorial-block tb-checklist">
+  <h3><span class="tb-icon">✅</span> ④ 互動式進階檢核清單</h3>
+  <ul>
+    <li>□ 規格包含明確的 acceptance criteria</li>
+    <li>□ 不需要額外訪談——to-spec 只綜合已討論的內容</li>
+    <li>□ 規格中的安全決策被記錄在 ADR 中</li>
+    <li>□ 每條 acceptance criteria 都可以對應一張 ticket</li>
+    <li>□ 知道 to-spec 輸出的是「做什麼」，不是「怎麼做」</li>
+  </ul>
+</div>
+
 </div>
 </body>
 </html>

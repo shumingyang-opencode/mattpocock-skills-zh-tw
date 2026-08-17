@@ -215,6 +215,46 @@
   </ol>
 </div>
 
+<div class="tutorial-block tb-project">
+  <h3><span class="tb-icon">🏗️</span> ① 專案級端到端 Worked Example</h3>
+  <p><strong>專案情境</strong>：你有一份完整的 spec（來自 <code>/to-spec</code>），要拆成可執行的 tickets。</p>
+<ol>
+  <li>先跑 <code>/to-tickets</code>，把 spec 拆成曳光彈 tickets：每張 ticket 都宣告自己的「阻塞邊」（哪些 ticket 必須先完成）。</li>
+  <li>例如：T1（建立 User model）→ T2（註冊 API，阻塞於 T1）→ T3（發送驗證 email，阻塞於 T2）→ T4（驗證 endpoint，阻塞於 T2）。</li>
+  <li>每張 ticket 的格式：「做什麼」「驗收標準」「阻塞邊」「關聯的接縫」。</li>
+  <li>把 tickets 發佈到 issue tracker，然後用 <code>/implement</code> 逐張完成。</li>
+</ol>
+<p><strong>關鍵</strong>：to-tickets 的價值在「把大任務拆成可並行的小任務」。阻塞邊的設計決定了哪些 ticket 可以平行跑、哪些必須依序。</p>
+</div>
+<div class="tutorial-block tb-theory">
+  <h3><span class="tb-icon">⚡</span> ② 效能 / 品質 / 安全深度</h3>
+  <table>
+  <tr><th>面向</th><th>實務考量</th></tr>
+  <tr><td>效能</td><td>to-tickets 的拆分粒度直接影響 implement 的效率。太粗（一張 ticket 包含 5 個功能）→ 難以測試；太細（每行程式碼一張 ticket）→ 開票成本過高。建議：每張 ticket 對應一個可獨立測試的行為。</td></tr>
+  <tr><td>品質</td><td>ticket 的品質指標：阻塞邊是否正確（沒有循環依賴）、驗收標準是否可量化（不是「做得好」而是「API 回應時間 < 200ms」）。</td></tr>
+  <tr><td>安全</td><td>ticket 的驗收標準中應包含安全相關的檢查（如「每個 endpoint 都有 auth check」），確保安全不是「最後才補」。</td></tr>
+</table>
+</div>
+<div class="tutorial-block tb-comparison">
+  <h3><span class="tb-icon">📊</span> ③ 技能間比較對照表</h3>
+  <table>
+  <tr><th>面向</th><th>to-tickets</th><th>to-spec</th><th>implement</th><th>差異說明</th></tr>
+  <tr><td>輸入</td><td>spec / plan</td><td>對話記錄</td><td>ticket / spec</td><td>to-tickets 從 spec 來，to-spec 從對話來，implement 從 ticket 來</td></tr>
+  <tr><td>輸出</td><td>ticket 清單</td><td>規格說明</td><td>可運作的程式碼</td><td>to-tickets 是「拆」，to-spec 是「記錄」，implement 是「做」</td></tr>
+  <tr><td>時機</td><td>規格完成後</td><td>討論完後</td><td>ticket 就緒後</td><td>to-tickets 是中間步驟——連接「規劃」和「實作」</td></tr>
+</table>
+</div>
+<div class="tutorial-block tb-checklist">
+  <h3><span class="tb-icon">✅</span> ④ 互動式進階檢核清單</h3>
+  <ul>
+    <li>□ 每張 ticket 都有明確的驗收標準（可量化）</li>
+    <li>□ 阻塞邊正確——沒有循環依賴</li>
+    <li>□ 每張 ticket 對應一個可獨立測試的行為</li>
+    <li>□ ticket 的驗收標準包含安全相關的檢查</li>
+    <li>□ 知道 to-tickets 的粒度：太粗難測試，太細成本高</li>
+  </ul>
+</div>
+
 </div>
 </body>
 </html>

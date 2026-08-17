@@ -235,6 +235,46 @@
   </ol>
 </div>
 
+<div class="tutorial-block tb-project">
+  <h3><span class="tb-icon">🏗️</span> ① 專案級端到端 Worked Example</h3>
+  <p><strong>專案情境</strong>：你要把一個「遷移到微服務架構」的大計畫拆成可管理的決策 tickets。</p>
+<ol>
+  <li>先跑 <code>/wayfinder</code>，把大計畫拆成「決策 tickets」：每個 ticket 代表一個需要做的決定（不是一個需要做的功能）。</li>
+  <li>例如：Decision-1「服務邊界怎麼劃？」→ Decision-2「通訊方式選什麼？」→ Decision-3「資料庫怎麼拆？」→ Decision-4「部署策略是什麼？」。</li>
+  <li>每個決策 ticket 都有「前沿」（哪些決策必須先做）和「選項」（至少兩個候選方案）。</li>
+  <li>依序認領並解決每個決策 ticket：先跑 <code>/grill-me</code> 淬煉選項，再跑 <code>/to-spec</code> 記錄決策。</li>
+</ol>
+<p><strong>關鍵</strong>：wayfinder 的價值在「把大到裝不進一個 session 的工作，拆成可以在一個 session 內解決的決策」。每個決策 ticket 都是可交付的、可獨立驗證的。</p>
+</div>
+<div class="tutorial-block tb-theory">
+  <h3><span class="tb-icon">⚡</span> ② 效能 / 品質 / 安全深度</h3>
+  <table>
+  <tr><th>面向</th><th>實務考量</th></tr>
+  <tr><td>效能</td><td>wayfinder 的 token 成本與決策 tickets 數量成正比。10 個決策 tickets 大約需要 10-20K tokens。建議限制在 5-8 個核心決策——其他細節決策可以在實作中補。</td></tr>
+  <tr><td>品質</td><td>決策 tickets 的品質指標：是否有明確的選項（不是只有一個方案）、是否有前沿（哪些要先做）、是否可獨立驗證（做完了可以確認「選了 A」）。</td></tr>
+  <tr><td>安全</td><td>wayfinder 可能涉及架構決策——確保每個決策都考慮了安全影響（例如「微服務通訊用 gRPC，但 gRPC 的 TLS 設定是什麼？」）。</td></tr>
+</table>
+</div>
+<div class="tutorial-block tb-comparison">
+  <h3><span class="tb-icon">📊</span> ③ 技能間比較對照表</h3>
+  <table>
+  <tr><th>面向</th><th>wayfinder</th><th>to-tickets</th><th>to-spec</th><th>差異說明</th></tr>
+  <tr><td>粒度</td><td>大到裝不進一個 session</td><td>可在一個 session 完成</td><td>可在一次對話完成</td><td>wayfinder 拆「大到裝不下」的，to-tickets 拆「spec 級」的，to-spec 是「對話級」的</td></tr>
+  <tr><td>時機</td><td>大計畫開始時</td><td>spec 完成後</td><td>討論完後</td><td>wayfinder 是最上游，to-tickets 是中游，to-spec 是最下游</td></tr>
+  <tr><td>輸出</td><td>決策 tickets</td><td>實作 tickets</td><td>規格說明</td><td>wayfinder 輸出「要決定什麼」，to-tickets 輸出「要做什麼」，to-spec 輸出「做什麼的記錄」</td></tr>
+</table>
+</div>
+<div class="tutorial-block tb-checklist">
+  <h3><span class="tb-icon">✅</span> ④ 互動式進階檢核清單</h3>
+  <ul>
+    <li>□ 每個決策 ticket 都有明確的選項（至少兩個候選方案）</li>
+    <li>□ 每個決策 ticket 都有前沿（哪些要先做）</li>
+    <li>□ 知道 wayfinder 拆的是「決策」不是「功能」</li>
+    <li>□ 知道 wayfinder 的粒度：大到裝不進一個 session 的工作</li>
+    <li>□ 每個決策都考慮了安全影響</li>
+  </ul>
+</div>
+
 </div>
 </body>
 </html>

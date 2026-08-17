@@ -229,6 +229,46 @@
   </ol>
 </div>
 
+<div class="tutorial-block tb-project">
+  <h3><span class="tb-icon">🏗️</span> ① 專案級端到端 Worked Example</h3>
+  <p><strong>專案情境</strong>：你要教新團隊成員使用 TDD，但他們從未接觸過。</p>
+<ol>
+  <li>先跑 <code>/teach</code>，從最簡單的場景開始：「寫一個 add(a, b) 函式的 TDD」。</li>
+  <li>逐步引導：先讓他們體驗「紅」（寫失敗測試）的挫折感，再體驗「綠」（實作通過）的成就感。</li>
+  <li>然後進入「接縫」概念：為什麼測試 <code>add()</code> 而不是測試 <code>Calculator.internalAdd()</code>？</li>
+  <li>最後用真實專案的場景練習：從「購物車總和」到「優惠券計算」，讓他們自己發現反模式。</li>
+</ol>
+<p><strong>關鍵</strong>：teach 不是「把文件讀一遍」——它是「用漸進式場景引導學習」。先體驗、再理解、最後自己發現。</p>
+</div>
+<div class="tutorial-block tb-theory">
+  <h3><span class="tb-icon">⚡</span> ② 效能 / 品質 / 安全深度</h3>
+  <table>
+  <tr><th>面向</th><th>實務考量</th></tr>
+  <tr><td>效能</td><td>teach 的 token 成本與教學輪數成正比。建議限制在 3-5 個場景——每個場景都要有明確的學習目標。</td></tr>
+  <tr><td>品質</td><td>教學品質的指標：學習者是否能在離開 teach 後，自己用 TDD 完成一個新功能。如果不能，教學失敗。</td></tr>
+  <tr><td>安全</td><td>teach 可能會在教學過程中建立測試檔案——確保測試中的 mock 或 fixture 不包含真實的 API key 或 credential。</td></tr>
+</table>
+</div>
+<div class="tutorial-block tb-comparison">
+  <h3><span class="tb-icon">📊</span> ③ 技能間比較對照表</h3>
+  <table>
+  <tr><th>面向</th><th>teach</th><th>grill-me</th><th>prototype</th><th>差異說明</th></tr>
+  <tr><td>目標</td><td>教會一個技能</td><td>淬煉一個想法</td><td>回答一個問題</td><td>teach 是「讓你學會」，grill-me 是「讓你想清楚」，prototype 是「讓你看到」</td></tr>
+  <tr><td>對象</td><td>不熟悉的人</td><td>有想法的人</td><td>不確定的人</td><td>teach 適合新手，grill-me 適合有想法但需要挑戰的人，prototype 適合有假設但需要驗證的人</td></tr>
+  <tr><td>時機</td><td>團隊需要新技能時</td><td>計畫需要淬煉時</td><td>設計需要確認時</td><td>teach 是長期投資（團隊能力），grill-me 是中期投資（計畫品質），prototype 是短期投資（設計確認）</td></tr>
+</table>
+</div>
+<div class="tutorial-block tb-checklist">
+  <h3><span class="tb-icon">✅</span> ④ 互動式進階檢核清單</h3>
+  <ul>
+    <li>□ 教學從最簡單的場景開始，逐步增加複雜度</li>
+    <li>□ 學習者在 teach 結束後能自己用 TDD 完成新功能</li>
+    <li>□ 知道 teach 不是「讀文件」而是「引導體驗」</li>
+    <li>□ 教學過程中的 fixture 不包含真實 credential</li>
+    <li>□ 每個場景都有明確的學習目標</li>
+  </ul>
+</div>
+
 </div>
 </body>
 </html>

@@ -99,6 +99,46 @@
   </ol>
 </div>
 
+<div class="tutorial-block tb-project">
+  <h3><span class="tb-icon">🏗️</span> ① 專案級端到端 Worked Example</h3>
+  <p><strong>專案情境</strong>：你設計了一個「微服務拆分計畫」，想找人壓力測試。</p>
+<ol>
+  <li>先跑 <code>/grill-me</code>，提交你的計畫：「把單體拆成 5 個微服務，用 gRPC 通訊」。</li>
+  <li>grill-me 會問：「你怎麼決定 5 個服務的邊界？」「gRPC 比 REST 好在哪裡？有什麼代價？」「如果其中一個服務掛了，其他服務怎麼辦？」</li>
+  <li>回答後，grill-me 會追问：「你說的『邊界』是用什麼標準定的？DDD 聚合邊界？團隊組織邊界？部署邊界？這三者不一定一樣。」</li>
+  <li>經過 3-5 輪質詢，你的計畫會從「我覺得應該拆」變成「我有 3 個具體理由要拆，有 2 個風險要處理，有 1 個替代方案要考虑」。</li>
+</ol>
+<p><strong>關鍵</strong>：grill-me 的價值不在「打敗你的計畫」，而在「幫你發現你沒想到的假設」。每個「為什麼」都在挖你沒說出口的前提。</p>
+</div>
+<div class="tutorial-block tb-theory">
+  <h3><span class="tb-icon">⚡</span> ② 效能 / 品質 / 安全深度</h3>
+  <table>
+  <tr><th>面向</th><th>實務考量</th></tr>
+  <tr><td>效能</td><td>grill-me 的 token 成本與問答輪數成正比。3-5 輪通常是甜蜜點——超過 7 輪通常開始重複。</td></tr>
+  <tr><td>品質</td><td>高品質的 grill 需要「具體的假設」。模糊的計畫（「我覺得拆了會比較好」）產出的 grill 也模糊；具體的計畫（「拆分後延遲從 500ms 降到 100ms」）產出的 grill 有深度。</td></tr>
+  <tr><td>安全</td><td>Grill-me 不執行任何操作，但它的質詢可能揭露安全假設——例如「你說的認證是用 JWT，但 JWT 的 secret 怎麼管？」。把這些記下來當作安全 checklist。</td></tr>
+</table>
+</div>
+<div class="tutorial-block tb-comparison">
+  <h3><span class="tb-icon">📊</span> ③ 技能間比較對照表</h3>
+  <table>
+  <tr><th>面向</th><th>grill-me</th><th>grilling</th><th>grill-with-docs</th><th>差異說明</th></tr>
+  <tr><td>輸出</td><td>純口頭質詢</td><td>純口頭質詢</td><td>質詢 + ADR + 詞彙表</td><td>grill-me 只問不寫，grill-with-docs 問完還建文件</td></tr>
+  <tr><td>深度</td><td>中等</td><td>中等</td><td>最深（會建 ADR）</td><td>需要永久記錄決策時用 grill-with-docs</td></tr>
+  <tr><td>時機</td><td>快速淬煉</td><td>壓力測試</td><td>需要文件化的正式決策</td><td>grill-me 是輕量版，grill-with-docs 是重量版</td></tr>
+</table>
+</div>
+<div class="tutorial-block tb-checklist">
+  <h3><span class="tb-icon">✅</span> ④ 互動式進階檢核清單</h3>
+  <ul>
+    <li>□ 能提出具體的計畫讓 grill-me 有意義地質詢</li>
+    <li>□ 知道 grill-me 的價值在「挖出隱藏假設」，不在「打敗計畫」</li>
+    <li>□ 能判斷 3-5 輪是否足夠——超過 7 輪通常開始重複</li>
+    <li>□ 知道 grill-me 不執行任何操作——只做口頭質詢</li>
+    <li>□ 能把 grill 產出的「隱藏假設」記成安全或品質 checklist</li>
+  </ul>
+</div>
+
 </div>
 </body>
 </html>

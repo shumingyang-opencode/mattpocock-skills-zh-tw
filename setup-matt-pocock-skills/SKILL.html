@@ -242,6 +242,46 @@
   </ol>
 </div>
 
+<div class="tutorial-block tb-project">
+  <h3><span class="tb-icon">🏗️</span> ① 專案級端到端 Worked Example</h3>
+  <p><strong>專案情境</strong>：你要把 mattpocock-skills 設定到一個新的 TypeScript repo 中。</p>
+<ol>
+  <li>先跑 <code>/setup-matt-pocock-skills</code>，它會設定 issue tracker（GitHub/GitLab/local）、triage 標籤詞彙、domain 文件佈局。</li>
+  <li>選擇 issue tracker：如果是 GitHub，設定 label vocabulary（bug / feature / docs / infra）和 issue template。</li>
+  <li>設定 domain 文件：<code>CONTEXT.md</code>（領域語言）、<code>docs/decisions/</code>（ADR）。</li>
+  <li>設定完成後，其他技能（triage、implement、to-tickets）才能正常運作——它們依賴 issue tracker 的設定。</li>
+</ol>
+<p><strong>關鍵</strong>：setup-matt-pocock-skills 是「地基」——其他所有工程技能都依賴它。設定不完整會導致後續技能找不到 issue tracker 或 triage 標籤。</p>
+</div>
+<div class="tutorial-block tb-theory">
+  <h3><span class="tb-icon">⚡</span> ② 效能 / 品質 / 安全深度</h3>
+  <table>
+  <tr><th>面向</th><th>實務考量</th></tr>
+  <tr><td>效能</td><td>setup 只需要跑一次——設定完的 config 會被其他技能直接讀取，不需要每次重新設定。</td></tr>
+  <tr><td>品質</td><td>triage 標籤詞彙的品質直接影響 triage 技能的準確度。如果標籤太籠統（只有 bug/feature），triage 的分流會很粗糙。</td></tr>
+  <tr><td>安全</td><td>issue tracker 的 API token 不應該被 commit 到 repo——確保 token 存在環境變數或 .env 中。</td></tr>
+</table>
+</div>
+<div class="tutorial-block tb-comparison">
+  <h3><span class="tb-icon">📊</span> ③ 技能間比較對照表</h3>
+  <table>
+  <tr><th>面向</th><th>setup-matt-pocock-skills</th><th>setup-pre-commit</th><th>setup-ts-deep-modules</th><th>差異說明</th></tr>
+  <tr><td>目的</td><td>設定 issue tracker + triage</td><td>設定 git hooks</td><td>設定 dependency-cruiser</td><td>三者都是「基礎建設」，但管的範圍不同</td></tr>
+  <tr><td>影響</td><td>triage / implement / to-tickets</td><td>所有 git commit</td><td>所有 TypeScript import</td><td>setup-matt-pocock-skills 影響技能間的協作，其他兩個影響開發流程</td></tr>
+  <tr><td>時機</td><td>首次使用工程技能前</td><td>任何 repo</td><td>TypeScript repo</td><td>setup-matt-pocock-skills 只在 mattpocock-skills 生態系中需要</td></tr>
+</table>
+</div>
+<div class="tutorial-block tb-checklist">
+  <h3><span class="tb-icon">✅</span> ④ 互動式進階檢核清單</h3>
+  <ul>
+    <li>□ 知道 setup-matt-pocock-skills 是其他工程技能的地基</li>
+    <li>□ 設定完成後，issue tracker / triage 標籤 / domain 文件都可運作</li>
+    <li>□ triage 標籤詞彙夠細緻——不是只有 bug/feature</li>
+    <li>□ issue tracker 的 API token 沒被 commit 到 repo</li>
+    <li>□ 知道 triage / implement / to-tickets 都依賴此設定</li>
+  </ul>
+</div>
+
 </div>
 </body>
 </html>
