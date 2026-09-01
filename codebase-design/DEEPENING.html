@@ -22,11 +22,11 @@
 <h1>DEEPENING</h1>
 <div class="subtitle">codebase-design · 附屬文件</div>
 <div class="pair"><div class="col-en" lang="en"><h1>Deepening</h1></div><div class="col-zh" lang="zh-Hant"><h1>深化</h1></div></div>
-<div class="pair"><div class="col-en" lang="en"><p>How to deepen a cluster of shallow modules safely, given its dependencies. Assumes the vocabulary in <a href="SKILL.html">SKILL.md</a> — <strong>module</strong>, <strong>interface</strong>, <strong>seam</strong>, <strong>adapter</strong>.</p></div><div class="col-zh" lang="zh-Hant"><p>如何考量其相依，安全地把一群淺模組深化。假定使用 <a href="SKILL.html">SKILL.md</a> 中的詞彙——<strong>模組</strong>、<strong>介面</strong>、<strong>接縫</strong>、<strong>轉接器</strong>。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>How to deepen a cluster of shallow modules safely, given its dependencies. Assumes the vocabulary in <a href="SKILL.html">SKILL.md</a>: <strong>module</strong>, <strong>interface</strong>, <strong>seam</strong>, <strong>adapter</strong>.</p></div><div class="col-zh" lang="zh-Hant"><p>如何考量其相依，安全地把一群淺模組深化。假定使用 <a href="SKILL.html">SKILL.md</a> 中的詞彙——<strong>模組</strong>、<strong>介面</strong>、<strong>接縫</strong>、<strong>轉接器</strong>。</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><h2>Dependency categories</h2></div><div class="col-zh" lang="zh-Hant"><h2>相依分類</h2></div></div>
 <div class="pair"><div class="col-en" lang="en"><p>When assessing a candidate for deepening, classify its dependencies. The category determines how the deepened module is tested across its seam.</p></div><div class="col-zh" lang="zh-Hant"><p>評估一個深化候選時，分類它的相依。分類決定深化後的模組要如何跨接縫測試。</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><h3>1. In-process</h3></div><div class="col-zh" lang="zh-Hant"><h3>1. 進程內</h3></div></div>
-<div class="pair"><div class="col-en" lang="en"><p>Pure computation, in-memory state, no I/O. Always deepenable — merge the modules and test through the new interface directly. No adapter needed.</p></div><div class="col-zh" lang="zh-Hant"><p>純計算、記憶體狀態、沒有 I/O。永遠可以深化——把模組合併，直接透過新介面測試。不需要轉接器。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Pure computation, in-memory state, no I/O. Always deepenable: merge the modules and test through the new interface directly. No adapter needed.</p></div><div class="col-zh" lang="zh-Hant"><p>純計算、記憶體狀態、沒有 I/O。永遠可以深化——把模組合併，直接透過新介面測試。不需要轉接器。</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><h3>2. Local-substitutable</h3></div><div class="col-zh" lang="zh-Hant"><h3>2. 本機可替代</h3></div></div>
 <div class="pair"><div class="col-en" lang="en"><p>Dependencies that have local test stand-ins (PGLite for Postgres, in-memory filesystem). Deepenable if the stand-in exists. The deepened module is tested with the stand-in running in the test suite. The seam is internal; no port at the module's external interface.</p></div><div class="col-zh" lang="zh-Hant"><p>有本機測試替身的相依（Postgres 用 PGLite、記憶體檔案系統）。如果替身存在就可深化。深化後的模組在測試套件中用跑著的替身測試。接縫是內部的；模組的外部介面上沒有連接埠。</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><h3>3. Remote but owned (Ports &amp; Adapters)</h3></div><div class="col-zh" lang="zh-Hant"><h3>3. 遠端但自有（Ports &amp; Adapters）</h3></div></div>
@@ -44,10 +44,10 @@
 </ul></div></div>
 <div class="pair"><div class="col-en" lang="en"><h2>Testing strategy: replace, don't layer</h2></div><div class="col-zh" lang="zh-Hant"><h2>測試策略：取代，不要分層</h2></div></div>
 <div class="pair"><div class="col-en" lang="en"><ul>
-<li>Old unit tests on shallow modules become waste once tests at the deepened module's interface exist — delete them.</li>
+<li>Old unit tests on shallow modules become waste once tests at the deepened module's interface exist; delete them.</li>
 <li>Write new tests at the deepened module's interface. The <strong>interface is the test surface</strong>.</li>
 <li>Tests assert on observable outcomes through the interface, not internal state.</li>
-<li>Tests should survive internal refactors — they describe behaviour, not implementation. If a test has to change when the implementation changes, it's testing past the interface.</li>
+<li>Tests should survive internal refactors, since they describe behaviour, not implementation. If a test has to change when the implementation changes, it's testing past the interface.</li>
 </ul></div><div class="col-zh" lang="zh-Hant"><ul>
 <li>一旦深化模組的介面上有測試，舊的淺模組單元測試就變成浪費——刪掉它們。</li>
 <li>在深化模組的介面上寫新測試。<strong>介面就是測試表面</strong>。</li>

@@ -21,14 +21,14 @@
 </div>
 <table class="fm-table">
 <tr><td>name</td><td><code>domain-modeling</code></td></tr>
-<tr><td>description (EN)</td><td>Build and sharpen a project's domain model. Use when the user wants to pin down domain terminology or a ubiquitous language, record an architectural decision, or when another skill needs to maintain the domain model.</td></tr>
+<tr><td>description (EN)</td><td>Build and sharpen a project's domain model. Use when discussing codebase terminology, writing or editing a CONTEXT.md, or recording or editing an ADR.</td></tr>
 <tr><td>說明 (繁中)</td><td>建立並磨利專案的領域模型。當使用者想釐清領域術語或通用語言、記錄架構決策，或另一個技能需要維護領域模型時使用。</td></tr>
 </table>
 <h1>domain-modeling</h1>
 <div class="subtitle">讓全隊對同一個詞，講的是同一種意思。</div>
 <div class="back-link" style="margin-top:-0.6rem">附屬文件：<a href="ADR-FORMAT.html">ADR-FORMAT</a>　·　<a href="CONTEXT-FORMAT.html">CONTEXT-FORMAT</a></div>
 <div class="pair"><div class="col-en" lang="en"><h1>Domain Modeling</h1></div><div class="col-zh" lang="zh-Hant"><h1>領域模型</h1></div></div>
-<div class="pair"><div class="col-en" lang="en"><p>Actively build and sharpen the project's domain model as you design. This is the <em>active</em> discipline — challenging terms, inventing edge-case scenarios, and writing the glossary and decisions down the moment they crystallise. (Merely <em>reading</em> <code>CONTEXT.md</code> for vocabulary is not this skill — that's a one-line habit any skill can do. This skill is for when you're changing the model, not just consuming it.)</p></div><div class="col-zh" lang="zh-Hant"><p>在設計過程中主動建立並磨利專案的領域模型。這是<em>主動</em>的紀律——挑戰術語、發明邊緣案例情境，並在術語定案的那一刻把詞彙表和決策寫下來。（光是<em>讀</em> <code>CONTEXT.md</code> 來取得詞彙不是本技能——那是一行程式碼習慣，任何技能都能做。本技能是用於當你在改變模型，而不只是消費它。）</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Actively build and sharpen the project's domain model as you design. This is the <em>active</em> discipline: challenging terms, inventing edge-case scenarios, and writing the glossary and decisions down the moment they crystallise. (Merely <em>reading</em> <code>CONTEXT.md</code> for vocabulary is not this skill: that's a one-line habit any skill can do. This skill is for when you're changing the model, not just consuming it.)</p></div><div class="col-zh" lang="zh-Hant"><p>在設計過程中主動建立並磨利專案的領域模型。這是<em>主動</em>的紀律——挑戰術語、發明邊緣案例情境，並在術語定案的那一刻把詞彙表和決策寫下來。（光是<em>讀</em> <code>CONTEXT.md</code> 來取得詞彙不是本技能——那是一行程式碼習慣，任何技能都能做。本技能是用於當你在改變模型，而不只是消費它。）</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><h2>File structure</h2></div><div class="col-zh" lang="zh-Hant"><h2>檔案結構</h2></div></div>
 <div class="pair"><div class="col-en" lang="en"><p>Most repos have a single context:</p></div><div class="col-zh" lang="zh-Hant"><p>多數 repo 只有單一上下文：</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><pre><code>/
@@ -70,145 +70,31 @@
 │       ├── CONTEXT.md
 │       └── docs/adr/
 </code></pre></div></div>
-<div class="pair"><div class="col-en" lang="en"><p>Create files lazily — only when you have something to write. If no <code>CONTEXT.md</code> exists, create one when the first term is resolved. If no <code>docs/adr/</code> exists, create it when the first ADR is needed.</p></div><div class="col-zh" lang="zh-Hant"><p>惰性地建立檔案——只在有東西要寫時才建。如果沒有 <code>CONTEXT.md</code>，第一個術語定案時建立一個。如果沒有 <code>docs/adr/</code>，需要第一個 ADR 時建立。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Create files lazily: only when you have something to write. If no <code>CONTEXT.md</code> exists, create one when the first term is resolved. If no <code>docs/adr/</code> exists, create it when the first ADR is needed.</p></div><div class="col-zh" lang="zh-Hant"><p>惰性地建立檔案——只在有東西要寫時才建。如果沒有 <code>CONTEXT.md</code>，第一個術語定案時建立一個。如果沒有 <code>docs/adr/</code>，需要第一個 ADR 時建立。</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><h2>During the session</h2></div><div class="col-zh" lang="zh-Hant"><h2>會話期間</h2></div></div>
 <div class="pair"><div class="col-en" lang="en"><h3>Challenge against the glossary</h3></div><div class="col-zh" lang="zh-Hant"><h3>對照詞彙表挑戰</h3></div></div>
-<div class="pair"><div class="col-en" lang="en"><p>When the user uses a term that conflicts with the existing language in <code>CONTEXT.md</code>, call it out immediately. "Your glossary defines 'cancellation' as X, but you seem to mean Y — which is it?"</p></div><div class="col-zh" lang="zh-Hant"><p>當使用者使用的術語與 <code>CONTEXT.md</code> 中既有的語言衝突時，立刻點出來。「你的詞彙表把 'cancellation' 定義為 X，但你似乎指的是 Y——哪個才對？」</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>When the user uses a term that conflicts with the existing language in <code>CONTEXT.md</code>, call it out immediately. "Your glossary defines 'cancellation' as X, but you seem to mean Y. Which is it?"</p></div><div class="col-zh" lang="zh-Hant"><p>當使用者使用的術語與 <code>CONTEXT.md</code> 中既有的語言衝突時，立刻點出來。「你的詞彙表把 'cancellation' 定義為 X，但你似乎指的是 Y——哪個才對？」</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><h3>Sharpen fuzzy language</h3></div><div class="col-zh" lang="zh-Hant"><h3>磨利模糊的語言</h3></div></div>
-<div class="pair"><div class="col-en" lang="en"><p>When the user uses vague or overloaded terms, propose a precise canonical term. "You're saying 'account' — do you mean the Customer or the User? Those are different things."</p></div><div class="col-zh" lang="zh-Hant"><p>當使用者使用含糊或過載的術語時，提出精確的規範術語。「你說 'account'——你指的是 Customer 還是 User？那是不同的東西。」</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>When the user uses vague or overloaded terms, propose a precise canonical term. "You're saying 'account': do you mean the Customer or the User? Those are different things."</p></div><div class="col-zh" lang="zh-Hant"><p>當使用者使用含糊或過載的術語時，提出精確的規範術語。「你說 'account'——你指的是 Customer 還是 User？那是不同的東西。」</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><h3>Discuss concrete scenarios</h3></div><div class="col-zh" lang="zh-Hant"><h3>討論具體情境</h3></div></div>
 <div class="pair"><div class="col-en" lang="en"><p>When domain relationships are being discussed, stress-test them with specific scenarios. Invent scenarios that probe edge cases and force the user to be precise about the boundaries between concepts.</p></div><div class="col-zh" lang="zh-Hant"><p>當領域關係正在被討論時，用具體情境壓力測試它們。發明探索邊緣案例、迫使使用者對概念之間的邊界精確起來的情境。</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><h3>Cross-reference with code</h3></div><div class="col-zh" lang="zh-Hant"><h3>與程式碼交叉比對</h3></div></div>
-<div class="pair"><div class="col-en" lang="en"><p>When the user states how something works, check whether the code agrees. If you find a contradiction, surface it: "Your code cancels entire Orders, but you just said partial cancellation is possible — which is right?"</p></div><div class="col-zh" lang="zh-Hant"><p>當使用者陳述某個東西如何運作時，檢查程式碼是否同意。如果發現矛盾，把它浮上檯面：「你的程式碼取消整個 Order，但你剛才說可以部分取消——哪個才對？」</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>When the user states how something works, check whether the code agrees. If you find a contradiction, surface it: "Your code cancels entire Orders, but you just said partial cancellation is possible. Which is right?"</p></div><div class="col-zh" lang="zh-Hant"><p>當使用者陳述某個東西如何運作時，檢查程式碼是否同意。如果發現矛盾，把它浮上檯面：「你的程式碼取消整個 Order，但你剛才說可以部分取消——哪個才對？」</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><h3>Update CONTEXT.md inline</h3></div><div class="col-zh" lang="zh-Hant"><h3>內嵌更新 CONTEXT.md</h3></div></div>
-<div class="pair"><div class="col-en" lang="en"><p>When a term is resolved, update <code>CONTEXT.md</code> right there. Don't batch these up — capture them as they happen. Use the format in <a href="CONTEXT-FORMAT.html">CONTEXT-FORMAT.md</a>.</p></div><div class="col-zh" lang="zh-Hant"><p>當一個術語定案時，就地更新 <code>CONTEXT.md</code>。不要累積再一次處理——邊發生邊捕捉。使用 <a href="CONTEXT-FORMAT.html">CONTEXT-FORMAT.md</a> 中的格式。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>When a term is resolved, update <code>CONTEXT.md</code> right there. Don't batch these up: capture them as they happen. Use the format in <a href="CONTEXT-FORMAT.html">CONTEXT-FORMAT.md</a>.</p></div><div class="col-zh" lang="zh-Hant"><p>當一個術語定案時，就地更新 <code>CONTEXT.md</code>。不要累積再一次處理——邊發生邊捕捉。使用 <a href="CONTEXT-FORMAT.html">CONTEXT-FORMAT.md</a> 中的格式。</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><p><code>CONTEXT.md</code> should be totally devoid of implementation details. Do not treat <code>CONTEXT.md</code> as a spec, a scratch pad, or a repository for implementation decisions. It is a glossary and nothing else.</p></div><div class="col-zh" lang="zh-Hant"><p><code>CONTEXT.md</code> 應該完全不含實作細節。不要把 <code>CONTEXT.md</code> 當成規格、便條紙，或實作決策的倉庫。它是詞彙表，而且僅此而已。</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><h3>Offer ADRs sparingly</h3></div><div class="col-zh" lang="zh-Hant"><h3>斟酌提供 ADR</h3></div></div>
 <div class="pair"><div class="col-en" lang="en"><p>Only offer to create an ADR when all three are true:</p></div><div class="col-zh" lang="zh-Hant"><p>只有三個條件都成立時，才主動提出建立 ADR：</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><ol>
-<li><strong>Hard to reverse</strong> — the cost of changing your mind later is meaningful</li>
-<li><strong>Surprising without context</strong> — a future reader will wonder "why did they do it this way?"</li>
-<li><strong>The result of a real trade-off</strong> — there were genuine alternatives and you picked one for specific reasons</li>
+<li><strong>Hard to reverse</strong>: the cost of changing your mind later is meaningful</li>
+<li><strong>Surprising without context</strong>: a future reader will wonder "why did they do it this way?"</li>
+<li><strong>The result of a real trade-off</strong>: there were genuine alternatives and you picked one for specific reasons</li>
 </ol></div><div class="col-zh" lang="zh-Hant"><ol>
 <li><strong>難以逆轉</strong>——之後改變心意的成本是實際的</li>
 <li><strong>沒有上下文會令人驚訝</strong>——未來的讀者會想「為什麼他們要這樣做？」</li>
 <li><strong>真實取捨的結果</strong>——存在真正的替代方案，你基於特定理由選了其中一個</li>
 </ol></div></div>
 <div class="pair"><div class="col-en" lang="en"><p>If any of the three is missing, skip the ADR. Use the format in <a href="ADR-FORMAT.html">ADR-FORMAT.md</a>.</p></div><div class="col-zh" lang="zh-Hant"><p>如果三個條件缺一，就跳過 ADR。使用 <a href="ADR-FORMAT.html">ADR-FORMAT.md</a> 中的格式。</p></div></div>
-<div class="tutorial-block">
-  <h3><span class="tb-icon">📖</span> 教學解說</h3>
-  <p><code>domain-modeling</code> 的目標是建立<strong>共同語言</strong>。當團隊對「order」「user」「payment」這些詞的定義不一致時，所有溝通都會出問題。CONTEXT.md 就是這份共同語言的權威來源——它是一個詞彙表，僅此而已，不含實作細節。</p>
-  <p>關鍵機制：(1) <strong>對照詞彙表挑戰</strong>——當使用者用的術語與 CONTEXT.md 衝突時，立刻點出來。(2) <strong>磨利模糊語言</strong>——「account」到底是 Customer 還是 User？(3) <strong>與程式碼交叉比對</strong>——如果程式碼的行為與詞彙表矛盾，浮現它。</p>
-</div>
-<div class="tutorial-block tb-example">
-  <h3><span class="tb-icon">💡</span> Worked Example</h3>
-  <p><strong>情境</strong>：團隊對「cancel order」的理解不一致。</p>
-  <ol>
-    <li>Agent 問：「你說 cancel order，是指取消整個訂單還是部分商品？」</li>
-    <li>你回答：「取消整個訂單」</li>
-    <li>Agent 檢查程式碼：發現 cancel 函數只把 status 設成 cancelled，但沒有處理已出庫的商品</li>
-    <li>Agent 點出矛盾：「你的程式碼只改了 status，但你說要取消整個訂單——已出庫的商品怎麼辦？」</li>
-    <li>你決定：「要加一個 inventory rollback 的步驟」</li>
-    <li>Agent 更新 CONTEXT.md：「cancel order = 把 status 設為 cancelled + rollback 已出庫商品」</li>
-  </ol>
-</div>
-<div class="tutorial-block tb-mistake">
-  <h3><span class="tb-icon">⚠️</span> 常見錯誤</h3>
-  <ul>
-    <li><strong>CONTEXT.md 實作細節</strong>——CONTEXT.md 是詞彙表，不是規格。不該有「在 src/cancel.ts 裡……」這種內容。</li>
-    <li><strong>ADR 太多</strong>——只有三個條件都成立（難以逆轉、沒有上下文會令人驚訝、真實取捨）才建 ADR。不然只會堆出一堆沒人讀的文件。</li>
-    <li><strong>不與程式碼交叉比對</strong>——詞彙表說「cancel = 完整取消」，但程式碼只改 status。這種矛盾不浮現 = 詞彙表不可信。</li>
-    <li><strong>術語衝突不立刻點出來</strong>——等衝突累積才處理 = 團隊會在錯誤的基礎上繼續建構。</li>
-  </ul>
-</div>
-<div class="tutorial-block tb-checklist">
-  <h3><span class="tb-icon">✅</span> 練習 / 驗收清單</h3>
-  <ul>
-    <li>□ CONTEXT.md 只含詞彙表，不含實作細節</li>
-    <li>□ 術語衝突有立刻被點出來並解決</li>
-    <li>□ 模糊語言有被磨利（「account」→ Customer 或 User？）</li>
-    <li>□ 詞彙表有與程式碼交叉比對</li>
-    <li>□ ADR 只在三個條件都成立時才建立</li>
-    <li>□ 術語定案後有就地更新 CONTEXT.md</li>
-  </ul>
-</div>
-<div class="tutorial-block tb-example">
-  <h3><span class="tb-icon">🚀</span> 進階真實情境 Worked Example</h3>
-  <p><strong>情境</strong>：你的電子商務專案要新增「訂閱付款」，產品經理開口就說「訂閱就是一個會重複扣款的黑卡」。你發現 <code>CONTEXT.md</code> 已有「subscription」「billing cycle」「charge」三個詞。</p>
-  <ol>
-    <li>挑戰模糊語言：PM 說的「黑卡」其實是「儲值卡」，與既有的 <code>charge</code>（向已建立的付款方式扣款）衝突。提出精確詞彙：「subscription 的 charge 是自動扣款；黑卡應正名為 wallet，是另一種付款方式」。</li>
-    <li>對照詞彙表挑戰：CONTEXT.md 定義 <code>charge</code> 為「一次性扣款，需使用者授權」。但訂閱的 charge 是排程自動執行、不需每次授權——定義衝突。點出來：「你要的是被授權過的 recurring charge，詞彙表需要加一筆」。</li>
-    <li>具體情境壓力測試：問 PM「訂閱到期但付款失敗時，訂閱狀態是什麼？是 cancelled 還是 pending？」PM 答「pending」。於是把 <code>pending</code> 加入詞彙表並定義清楚。</li>
-    <li>與程式碼交叉比對：程式碼的 <code>Subscription</code> 模型只有 <code>active | cancelled</code> 兩態，沒有 pending——矛盾浮現，這成為改 schema 的前置決策。</li>
-    <li>就地更新：在 CONTEXT.md 新增 <code>recurring charge</code>、<code>wallet</code>、<code>pending</code> 三筆；確認 <code>cancelled</code> 定義不變。以 ADR 記錄「訂閱狀態機加入 pending」這個難以逆轉的決策。</li>
-  </ol>
-  <p><strong>設計決策</strong>：本情境的關鍵是<strong>新功能帶進的術語會衝擊既有詞彙表</strong>。常見錯誤是「順著使用者的新詞彙建新功能」，導致同一個 <code>charge</code> 在系統裡有兩種意思。domain-modeling 的做法是先挑戰、再定義、最後才寫程式——詞彙衝突不解決，schema 與 API 的命名就會互相打架。</p>
-</div>
-<div class="tutorial-block tb-theory">
-  <h3><span class="tb-icon">🔬</span> 深入原理擴充</h3>
-  <p>domain-modeling 的理論根基是 Eric Evans 的 <em>Domain-Driven Design</em> 裡的 <strong>Ubiquitous Language（通用語言）</strong>。核心主張：軟體裡最貴的溝通成本不是「寫程式」，而是「團隊對同一個詞的共識漂移」。當 <code>cancel</code> 在 PM 嘴裡、工程師 code 裡、客服系統裡指三種不同的東西，任何跨角色的溝通都要先翻譯——而翻譯正是 bug 的溫床。</p>
-  <p>CONTEXT.md 設計成「詞彙表，僅此而已」不是保守，而是<strong>刻意維持單一事實來源</strong>：如果它同時當規格、便條紙、實作決策倉庫，就會像 codebase-design 講的「sediment」一樣長出過時層，最後沒人敢信它。ADR 則負責「難以逆轉的決策」，兩者分工明確。</p>
-  <p><strong>陷阱案例</strong>：很多人以為「把術語定義清楚」就是把字典抄進 CONTEXT.md——於是用一整段散文定義 <code>order</code>，甚至抄了「order 有 status 欄位」這種實作細節。真相是：<strong>詞彙表要定義「詞的意思」，不是「詞的實作」</strong>。`order 是顧客購買商品的請求` 是好的定義；`order 的 status 欄位存於 orders 表、值為 PENDING/PAID/CANCELLED` 是污染的定義——後者會隨 schema 改變而過時，讓整份詞彙表失信。</p>
-</div>
-<div class="tutorial-block tb-diagnosis">
-  <h3><span class="tb-icon">🩺</span> 診斷式疑難排解表</h3>
-  <table>
-    <tr><th>症狀</th><th>可能原因</th><th>解決方案</th></tr>
-    <tr><td>使用者新詞彙與 CONTEXT.md 既有定義衝突</td><td>術語被重複使用但意義不同</td><td>立刻點出衝突，問「哪個才對」；定案後就地更新詞彙表</td></tr>
-    <tr><td>同一個詞做多種工作（如 account）</td><td>過載術語，概念未被區分</td><td>拆出精確規範術語（Customer vs User），各給一筆定義</td></tr>
-    <tr><td>CONTEXT.md 裡出現「status 欄位」「src/xxx.ts」</td><td>詞彙表被當成規格或便條紙</td><td>刪除實作細節；只保留概念定義。實作決策改放 ADR 或 spec</td></tr>
-    <tr><td>詞彙表定義與程式碼行為矛盾</td><td>程式碼先行、詞彙沒跟上</td><td>交叉比對浮現矛盾，決定「改詞彙」還是「改程式碼」</td></tr>
-    <tr><td>ADR 堆了一堆「理所當然」的決策</td><td>三個條件缺一就建了 ADR</td><td>只在「難以逆轉＋無上下文會驚訝＋真實取捨」同時成立時才建</td></tr>
-  </table>
-</div>
-<div class="tutorial-block tb-challenge">
-  <h3><span class="tb-icon">🏆</span> 進階挑戰題</h3>
-  <ol>
-    <li><strong>過載術語解析</strong>：團隊整天講「order」，但你發現它同時指「購物車結帳的請求」「已建立的訂單記錄」「電子郵件裡要出貨的包裹」。設計三筆詞彙表定義把它們拆開，並各舉一個使用情境。</li>
-    <li><strong>ADR 三條件</strong>：下列哪些該建 ADR、哪些該跳過？（a）選用 Postgres 當寫入模型（b）表單欄位用 camelCase 命名（c）訂單狀態機加入 pending 態。逐項用三條件判斷。</li>
-    <li><strong>矛盾浮現</strong>：詞彙表定義「cancellation 是完整取消訂單」，但程式碼的 <code>cancelOrder</code> 只把 status 設成 CANCELLED、不處理已出貨商品。寫出你作為 agent 會對使用者說的一句話。</li>
-  </ol>
-</div>
-
-<div class="tutorial-block tb-project">
-  <h3><span class="tb-icon">🏗️</span> ① 專案級端到端 Worked Example</h3>
-  <p><strong>專案情境</strong>：你正在建立一個電商系統的領域模型，團隊對「訂單」的定義有歧義。</p>
-<ol>
-  <li>先跑 <code>/domain-modeling</code>，找出通用語言：「訂單」到底是 <code>Order</code>（實體，有 ID、可變）還是 <code>OrderSnapshot</code>（值物件，不可變）？</li>
-  <li>建立聚合邊界：<code>Order</code> 聚合包含 <code>OrderItem</code>（值物件）和 <code>OrderStatus</code>（值物件），但不包含 <code>Customer</code>（另一個聚合）。</li>
-  <li>記錄 ADR：決定「訂單的折扣在 Order 聚合內計算，不傳到外部」。這個決策會影響 <code>/codebase-design</code> 的介面設計。</li>
-  <li>用 <code>/writing-for-agents</code> 把領域模型寫進 CONTEXT.md，讓所有技能共享同一套語言。</li>
-</ol>
-<p><strong>關鍵</strong>：領域模型不是 ER 圖——它是在回答「這個系統裡的東西是什麼、有什麼規則、怎麼互動」。模型的價值不在畫得漂亮，在於團隊對術語的共識。</p>
-</div>
-<div class="tutorial-block tb-theory">
-  <h3><span class="tb-icon">⚡</span> ② 效能 / 品質 / 安全深度</h3>
-  <table>
-  <tr><th>面向</th><th>實務考量</th></tr>
-  <tr><td>效能</td><td>領域模型本身不影響執行效能，但它決定了「邊界在哪」——錯誤的聚合邊界會導致不必要的跨服務呼叫，這才是效能殺手。</td></tr>
-  <tr><td>品質</td><td>領域模型的品質指標：術語是否無歧義（同一個詞在不同 context 意思不同 = 壞模型）、聚合邊界是否穩定（不常跨邊界修改）。</td></tr>
-  <tr><td>安全</td><td>聚合邊界是天然的權限邊界——跨聚合的操作需要明確的授權。確保模型中標註了「誰可以對什麼做什麼」。</td></tr>
-</table>
-</div>
-<div class="tutorial-block tb-comparison">
-  <h3><span class="tb-icon">📊</span> ③ 技能間比較對照表</h3>
-  <table>
-  <tr><th>面向</th><th>domain-modeling</th><th>codebase-design</th><th>triage</th><th>差異說明</th></tr>
-  <tr><td>焦點</td><td>語言與概念</td><td>模組與介面</td><td>Issue 分流</td><td>domain-modeling 管「怎麼說」，codebase-design 管「怎麼拆」，triage 管「誰來做」</td></tr>
-  <tr><td>輸出</td><td>CONTEXT.md / ADR</td><td>模組介面規格</td><td>分類 + 優先級</td><td>domain-modeling 輸出語言共識，codebase-design 輸出結構規格，triage 輸出任務分派</td></tr>
-  <tr><td>時機</td><td>專案初期</td><td>模組設計時</td><td>Issue 進來時</td><td>domain-modeling 是地基，codebase-design 是藍圖，triage 是施工排程</td></tr>
-</table>
-</div>
-<div class="tutorial-block tb-checklist">
-  <h3><span class="tb-icon">✅</span> ④ 互動式進階檢核清單</h3>
-  <ul>
-    <li>□ 能區分「實體」（有 ID、可變）和「值物件」（不可變、無 ID）</li>
-    <li>□ 能定義聚合邊界，說明哪些東西在同一個聚合內</li>
-    <li>□ 知道 ADR 是「記錄決策」而不是「畫圖」</li>
-    <li>□ 能把領域模型寫進 CONTEXT.md 讓所有技能共享</li>
-    <li>□ 能用通用語言讓非技術人員也看得懂模型</li>
-  </ul>
-</div>
 
 </div>
 </body>

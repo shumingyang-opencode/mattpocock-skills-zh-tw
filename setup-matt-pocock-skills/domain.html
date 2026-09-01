@@ -26,8 +26,8 @@
 <div class="pair"><div class="col-en" lang="en"><h2>Before exploring, read these</h2></div><div class="col-zh" lang="zh-Hant"><h2>探索前，先讀這些</h2></div></div>
 <div class="pair"><div class="col-en" lang="en"><ul>
 <li><strong><code>CONTEXT.md</code></strong> at the repo root, or</li>
-<li><strong><code>CONTEXT-MAP.md</code></strong> at the repo root if it exists — it points at one <code>CONTEXT.md</code> per context. Read each one relevant to the topic.</li>
-<li><strong><code>docs/adr/</code></strong> — read ADRs that touch the area you're about to work in. In multi-context repos, also check <code>src/&lt;context&gt;/docs/adr/</code> for context-scoped decisions.</li>
+<li><strong><code>CONTEXT-MAP.md</code></strong> at the repo root if it exists: it points at one <code>CONTEXT.md</code> per context. Read each one relevant to the topic.</li>
+<li><strong><code>docs/adr/</code></strong>: read ADRs that touch the area you're about to work in. In multi-context repos, also check <code>src/&lt;context&gt;/docs/adr/</code> for context-scoped decisions.</li>
 </ul></div><div class="col-zh" lang="zh-Hant"><ul>
 <li>repo 根目錄的 <strong><code>CONTEXT.md</code></strong>，或</li>
 <li>repo 根目錄的 <strong><code>CONTEXT-MAP.md</code></strong>（如果存在）——它指向每個上下文一份 <code>CONTEXT.md</code>。讀與主題相關的每一份。</li>
@@ -73,11 +73,11 @@
 </code></pre></div></div>
 <div class="pair"><div class="col-en" lang="en"><h2>Use the glossary's vocabulary</h2></div><div class="col-zh" lang="zh-Hant"><h2>使用詞彙表的詞彙</h2></div></div>
 <div class="pair"><div class="col-en" lang="en"><p>When your output names a domain concept (in an issue title, a refactor proposal, a hypothesis, a test name), use the term as defined in <code>CONTEXT.md</code>. Don't drift to synonyms the glossary explicitly avoids.</p></div><div class="col-zh" lang="zh-Hant"><p>當你的輸出為某個領域概念命名時（在 issue 標題、重構提案、假設、測試名稱中），使用 <code>CONTEXT.md</code> 中定義的術語。不要漂移到詞彙表明確避免的同義詞。</p></div></div>
-<div class="pair"><div class="col-en" lang="en"><p>If the concept you need isn't in the glossary yet, that's a signal — either you're inventing language the project doesn't use (reconsider) or there's a real gap (note it for <code>/domain-modeling</code>).</p></div><div class="col-zh" lang="zh-Hant"><p>如果你需要的概念還不在詞彙表裡，那是個訊號——不是你在發明專案沒用的語言（再想想），就是存在真實的缺口（為 <code>/domain-modeling</code> 記下它）。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>If the concept you need isn't in the glossary yet, that's a signal: either you're inventing language the project doesn't use (reconsider) or there's a real gap (note it for <code>/domain-modeling</code>).</p></div><div class="col-zh" lang="zh-Hant"><p>如果你需要的概念還不在詞彙表裡，那是個訊號——不是你在發明專案沒用的語言（再想想），就是存在真實的缺口（為 <code>/domain-modeling</code> 記下它）。</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><h2>Flag ADR conflicts</h2></div><div class="col-zh" lang="zh-Hant"><h2>標記 ADR 衝突</h2></div></div>
 <div class="pair"><div class="col-en" lang="en"><p>If your output contradicts an existing ADR, surface it explicitly rather than silently overriding:</p></div><div class="col-zh" lang="zh-Hant"><p>如果你的輸出與既有 ADR 矛盾，明確把它浮上檯面，而不是默默覆寫：</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><blockquote>
-<p><em>Contradicts ADR-0007 (event-sourced orders) — but worth reopening because…</em></p>
+<p><em>Contradicts ADR-0007 (event-sourced orders), but worth reopening because…</em></p>
 </blockquote></div><div class="col-zh" lang="zh-Hant"><blockquote>
 <p><em>與 ADR-0007（事件溯源訂單）矛盾——但值得重新討論，因為……</em></p>
 </blockquote></div></div>

@@ -27,7 +27,7 @@
 </table>
 <h1>to-questionnaire</h1>
 <div class="subtitle">你自己答不了的決策，變成能答的人來填的問卷。</div>
-<div class="pair"><div class="col-en" lang="en"><p>Turn something the user can't answer alone into a <strong>questionnaire</strong> — a Markdown document they hand to one person to fill in async, or fill out together over a meeting. The recipient holds knowledge the user lacks; the questionnaire pulls it out of them.</p></div><div class="col-zh" lang="zh-Hant"><p>將一個使用者無法獨自回答的事情轉化為一份<strong>問卷</strong> — 一份 Markdown 文件，他們把它交給一個人非同步填寫，或在會議中一起填寫。收件人握有使用者缺乏的知識；問卷把它從他們身上引出來。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Turn something the user can't answer alone into a <strong>questionnaire</strong>: a Markdown document they hand to one person to fill in async, or fill out together over a meeting. The recipient holds knowledge the user lacks; the questionnaire pulls it out of them.</p></div><div class="col-zh" lang="zh-Hant"><p>將一個使用者無法獨自回答的事情轉化為一份<strong>問卷</strong> — 一份 Markdown 文件，他們把它交給一個人非同步填寫，或在會議中一起填寫。收件人握有使用者缺乏的知識；問卷把它從他們身上引出來。</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><p><strong>Grill the send, not the subject.</strong> Interview the user only about the <em>send</em>, which they can always answer: who it goes to, and what they need back. The questions in the document then target the <strong>gap</strong> between what the recipient knows and what the user needs.</p></div><div class="col-zh" lang="zh-Hant"><p><strong>質詢的是寄送，不是主題。</strong> 只訪問使用者關於_寄送_的事，這他們總是能回答：寄給誰，以及他們需要回覆什麼。文件中的問題然後針對收件人所知與使用者所需之間的<strong>缺口</strong>。</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><ol>
 <li><strong>Who is it going to?</strong> Ask, in one exchange, the recipient's role, expertise, and relationship to the user. This fixes the questionnaire's tone and how much context it must carry. Done when you know who the recipient is and what they know that the user doesn't.</li>
@@ -45,17 +45,17 @@
 <li><strong>撰寫問卷。</strong> 起草針對第 1–2 步缺口的問題，遵循下方的文件結構。將它寫到目前目錄的 <code>to-questionnaire-&lt;slug&gt;.md</code>（slug 取自主題），並回報路徑。當檔案存在且使用者在第 2 步提出的每一項都被一個問題涵蓋時，就完成了。</li>
 </ol></div></div>
 <div class="pair"><div class="col-en" lang="en"><h2>Document structure</h2></div><div class="col-zh" lang="zh-Hant"><h2>文件結構</h2></div></div>
-<div class="pair"><div class="col-en" lang="en"><p>Frame the document as a <strong>discovery questionnaire</strong>: the user lacks context, the recipient holds it. Order questions most-important-first — async means you may only get one pass — and group them under <code>##</code> headings by theme once there are more than a handful. Write it using the template below.</p></div><div class="col-zh" lang="zh-Hant"><p>將文件框定為一份<strong>發現問卷</strong>：使用者缺乏脈絡，收件人握有它。以最重要的優先排序問題 — 非同步意味著您可能只有一次機會 — 當問題超過幾則時，按主題分組在 <code>##</code> 標題下。使用下面的範本撰寫。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Frame the document as a <strong>discovery questionnaire</strong>: the user lacks context, the recipient holds it. Order questions most-important-first, since async means you may only get one pass, and group them under <code>##</code> headings by theme once there are more than a handful. Write it using the template below.</p></div><div class="col-zh" lang="zh-Hant"><p>將文件框定為一份<strong>發現問卷</strong>：使用者缺乏脈絡，收件人握有它。以最重要的優先排序問題 — 非同步意味著您可能只有一次機會 — 當問題超過幾則時，按主題分組在 <code>##</code> 標題下。使用下面的範本撰寫。</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><p><questionnaire-template></p>
 <h1><Questionnaire title></h1>
 <p><strong>Purpose:</strong> why this questionnaire exists and the decision riding on it.</p>
-<p><strong>From:</strong> <the user> — <strong>To:</strong> <the recipient> — <strong>How your answers will be used:</strong> <where they go></p>
+<p><strong>From:</strong> <the user>, <strong>To:</strong> <the recipient>, <strong>How your answers will be used:</strong> <where they go></p>
 <h2>Context</h2>
 <p>One paragraph orienting a recipient who wasn't in the user's head. Enough to answer well, not a page.</p>
 <h2>How to answer</h2>
-<p>Deadline and rough effort. Partial answers and "I don't know" are useful — flag anything you're unsure of rather than skipping it.</p>
+<p>Deadline and rough effort. Partial answers and "I don't know" are useful: flag anything you're unsure of rather than skipping it.</p>
 <h2><Theme heading></h2>
-<p>One <code>##</code> section per theme. Under each, its questions, most-important-first. Every question is one idea — never compound — with an answer stub directly beneath, and a one-line <em>why this matters</em> only where the question could be misread or invite a throwaway answer.</p>
+<p>One <code>##</code> section per theme. Under each, its questions, most-important-first. Every question is one idea, never compound, with an answer stub directly beneath, and a one-line <em>why this matters</em> only where the question could be misread or invite a throwaway answer.</p>
 <p><question-example></p>
 <h3>What load is the system expected to handle at launch?</h3>
 <p><em>Why this matters: it decides whether we provision for burst traffic now or defer it.</em></p>
@@ -83,118 +83,6 @@
 <h2>Anything else?</h2>
 <p>一個收尾的包羅萬象：任何我們沒問但您認為我們應該知道的事？</p>
 <p></questionnaire-template></p></div></div>
-<div class="tutorial-block">
-  <h3><span class="tb-icon">📖</span> 教學解說</h3>
-  <p><code>to-questionnaire</code> 解決的是<strong>知識在別人的腦子裡</strong>的情境。你做了一個功能的 grill，但某些關鍵決策取決於一個你聯絡不上的人（PM、設計師、法務）。這個技能幫你寫一份問卷，寄給那個人填，然後把答案帶回 grill 或 to-spec。</p>
-  <p>關鍵設計：<strong>質詢的是寄送，不是主題</strong>。Agent 只訪問你「寄給誰、需要什麼回覆」——因為這些你總是能回答。問卷的問題針對「收件人知道但你不知道」的缺口。</p>
-</div>
-<div class="tutorial-block tb-example">
-  <h3><span class="tb-icon">💡</span> Worked Example</h3>
-  <p><strong>情境</strong>：你要做 CSV 匯出，但匯出的欄位隱私規範由法務決定。</p>
-  <ol>
-    <li>呼叫 <code>/to-questionnaire "CSV 匯出的欄位隱私規範"</code></li>
-    <li>Agent 問：「寄給誰？」→ 你：「法務的王小明」</li>
-    <li>Agent 問：「你需要他回答什麼？」→ 你：「哪些欄位可以匯出、哪些需要脫敏」</li>
-    <li>Agent 產出問卷：`to-questionnaire-privacy.md`，包含：Context（專案背景）、問題（按主題分組）、Anything else</li>
-    <li>你把問卷寄給王小明 → 他填完回覆 → 你把答案帶回 grill</li>
-  </ol>
-</div>
-<div class="tutorial-block tb-mistake">
-  <h3><span class="tb-icon">⚠️</span> 常見錯誤</h3>
-  <ul>
-    <li><strong>問卷問題太廣</strong>——「你覺得隱私方面有什麼問題？」太模糊。要具體：「以下哪些欄位需要脫敏？」</li>
-    <li><strong>訪問 agent 關於主題</strong>——Agent 應該訪問你關於「寄送」，不是關於「CSV 隱私規範」。你可能不懂隱私規範，但你知道誰懂。</li>
-    <li><strong>問卷沒有 Context</strong>——收件人不在你的腦子裡。問卷需要一段背景說明，讓他們能好好回答。</li>
-    <li><strong>問卷沒有截止時間</strong>——非同步問卷很容易被拖延。加一個 deadline。</li>
-  </ul>
-</div>
-<div class="tutorial-block tb-checklist">
-  <h3><span class="tb-icon">✅</span> 練習 / 驗收清單</h3>
-  <ul>
-    <li>□ 問卷有 Context 區段（讓收件人能好好回答）</li>
-    <li>□ 問題具體且按主題分組</li>
-    <li>□ 有截止時間和粗略 effort 說明</li>
-    <li>□ 每個問題都對應到「收件人知道但你不知道」的缺口</li>
-    <li>□ 有「Anything else」收尾的包羅萬象問題</li>
-  </ul>
-</div>
-<div class="tutorial-block tb-example">
-  <h3><span class="tb-icon">🚀</span> 進階真實情境 Worked Example</h3>
-  <p><strong>情境</strong>：你的「訂閱制改版」卡在一個決策——既有會員的折扣該怎麼轉移。這個問題只有營運主管知道答案，但他下週才回國。</p>
-  <ol>
-    <li>呼叫 <code>/to-questionnaire "既有會員折扣轉移到訂閱制的規則"</code>。</li>
-    <li>Agent 質詢寄送：「寄給誰？」→ 你：「營運主管（負責既有會員權益）」。「你需要他回答什麼？」→ 你：「(1) 折扣是否延續 (2) 延續多久 (3) 新訂閱與折扣能否疊加」。</li>
-    <li>Agent 依缺口設計問題：主管掌握的是「會員權益的歷史承諾」，你缺的是「轉移規則的決定權」——問題瞄準「我們能改動哪些既有承諾」這個你無從知道的邊界。</li>
-    <li>問卷結構：Context（一段話說明改版背景與既有折扣承諾）、主題分組（折扣延續／時間窗／疊加規則）、每個問題一個想法＋作答欄位＋只有易誤讀時才加「為何重要」。</li>
-    <li>寄出後主管填回：折扣延續一年、新舊不疊加。你帶著答案回到 <code>/grill-with-docs</code>，把「折扣轉移規則」寫進 CONTEXT.md。</li>
-  </ol>
-  <p><strong>設計決策</strong>：本例的關鍵是<strong>「寄給誰」的判斷影響問卷的專業深度</strong>——營運主管不需要（也不該）被問技術細節，他要回答的是「商業承諾」問題。若你誤把問卷寄給工程師，會拿到技術可行性的回答，卻仍然不知道「該不該延續折扣」。</p>
-</div>
-<div class="tutorial-block tb-theory">
-  <h3><span class="tb-icon">🔬</span> 深入原理擴充</h3>
-  <p>to-questionnaire 是 grill 的<strong>非同步變體</strong>。grill 假設「能做決策的人就在對話裡」；to-questionnaire 處理的是「能做決策的人在別處、且不在場」。因此它的設計目標從「磨利思考」變成「<strong>最小化來回次數</strong>」——非同步意味著你可能只有一次機會，所以問題要按重要性排序、每題只問一件事、並明確給出「不知道也很有用」的許可。</p>
-  <p>「質詢的是寄送，不是主題」這個原則來自一個洞察：<strong>使用者對主題的無知不是問題，對寄送的無知才是</strong>。你不知道折扣轉移規則，但你一定知道誰知道——所以 agent 只訪問你能答的（寄給誰、需要什麼回覆），再從「收件人知識與你的需求之間的缺口」反推問題。</p>
-  <p><strong>陷阱案例</strong>：很多人把問卷當成「知識測驗卷」，於是在 Context 裡塞滿專案背景、把每個問題都加上「為什麼重要」、還問「你覺得這個功能該不該做」這種開放式問題。真相是：<strong>問卷是「引產」工具，不是「傳教」工具</strong>——收件人握有知識，問卷的任務是把知識引出來。Context 只要「足以回答」的一小段；「為什麼重要」只在問題可能被誤讀或引來敷衍時才加；開放式大哉問（「該不該做」）把決策責任推回給不懂的人，等於沒問。</p>
-</div>
-<div class="tutorial-block tb-diagnosis">
-  <h3><span class="tb-icon">🩺</span> 診斷式疑難排解表</h3>
-  <table>
-    <tr><th>症狀</th><th>可能原因</th><th>解決方案</th></tr>
-    <tr><td>收件人答非所問</td><td>問題太開放或沒按主題分組</td><td>每題只問一件事、按主題 <code>##</code> 分組、最重要的排前面</td></tr>
-    <tr><td>收件人說「這我看不懂」</td><td>Context 太長或沒寫給「不在你腦中」的人</td><td>Context 只留一段必要的背景；用收件人領域的詞彙描述</td></tr>
-    <tr><td>問卷拖了一個月沒回</td><td>沒有截止時間與努力說明</td><td>在「How to answer」寫明 deadline 與預估時間，並允許部分回答</td></tr>
-    <tr><td>問題含兩個以上想法</td><td>複合問題，收件人無法一次答</td><td>拆成多題，每題單一想法＋作答欄位</td></tr>
-    <tr><td>回覆不完整，關鍵決策仍缺</td><td>第 2 步「需要什麼回覆」沒收集完整</td><td>發問卷前先列出「必須能帶著去決策的清單」，確保每項都被一題涵蓋</td></tr>
-  </table>
-</div>
-<div class="tutorial-block tb-challenge">
-  <h3><span class="tb-icon">🏆</span> 進階挑戰題</h3>
-  <ol>
-    <li><strong>缺口分析</strong>：你要設計一個「從 SQLite 遷移到 Postgres」的問卷，對象是負責舊系統的資深 DBA。列出收件人知道但你不知道的三個知識區塊，並各設計一個精準問題。</li>
-    <li><strong>複合題拆分</strong>：把「這個系統的流量高峰是什麼時候、為什麼會高峰、我們該不該先做快取」拆成符合「一題一想法」的三個問題，並排序。</li>
-    <li><strong>非同步設計</strong>：你的問卷只有一次來回機會。說明你怎麼用「最重要的優先＋部分回答許可＋Anything else 收尾」三道防線，確保即使收件人敷衍也能拿到最有價值的資訊。</li>
-  </ol>
-</div>
-
-<div class="tutorial-block tb-project">
-  <h3><span class="tb-icon">🏗️</span> ① 專案級端到端 Worked Example</h3>
-  <p><strong>專案情境</strong>：你需要團隊決定「是否要從 JavaScript 遷移到 TypeScript」，但你無法自己回答所有問題。</p>
-<ol>
-  <li>先跑 <code>/to-questionnaire</code>，把「遷移到 TypeScript」的決策轉化為問卷：包含技術面（現有 codebase 的 TS 適配度）、團隊面（成員的 TS 經驗）、業務面（遷移對 deliverable 的影響）。</li>
-  <li>問卷會自動產生具體的問題：「你的 codebase 中有多少 % 的檔案有 <code>@ts-check</code>？」「團隊中幾個人有 2 年以上的 TS 經驗？」</li>
-  <li>把問卷發給團隊成員填寫——問卷的格式是可填寫的，不是只能看的。</li>
-  <li>收集回答後，用 <code>/to-spec</code> 把問卷結果轉化為遷移規格。</li>
-</ol>
-<p><strong>關鍵</strong>：to-questionnaire 的價值在「把模糊的決策轉化為可回答的問題」。你不知道答案沒關係——問卷的目的是「讓知道答案的人可以回答」。</p>
-</div>
-<div class="tutorial-block tb-theory">
-  <h3><span class="tb-icon">⚡</span> ② 效能 / 品質 / 安全深度</h3>
-  <table>
-  <tr><th>面向</th><th>實務考量</th></tr>
-  <tr><td>效能</td><td>問卷的問題數量直接影響填寫者的意願。限制在 5-8 個核心問題——超過 10 個問題的問卷回收率會急遽下降。</td></tr>
-  <tr><td>品質</td><td>問卷的品質取決於「問題是否夠具體」。模糊的問題（「你覺得 TypeScript 好不好？」）產出模糊的答案；具體的問題（「在你的 codebase 中，有多少 error 是 TypeScript 能在 compile time 抓到的？」）產出有用的數據。</td></tr>
-  <tr><td>安全</td><td>問卷可能收集到敏感資訊（例如「你覺得現有系統的安全性夠嗎？」）——確保問卷的存取權限正確設定，不是所有人都能看到所有人的回答。</td></tr>
-</table>
-</div>
-<div class="tutorial-block tb-comparison">
-  <h3><span class="tb-icon">📊</span> ③ 技能間比較對照表</h3>
-  <table>
-  <tr><th>面向</th><th>to-questionnaire</th><th>grill-me</th><th>research</th><th>差異說明</th></tr>
-  <tr><td>方法</td><td>問卷收集</td><td>口頭質詢</td><td>外部研究</td><td>to-questionnaire 从人收集，grill-me 從想法挖掘，research 從外部來源蒐集</td></tr>
-  <tr><td>對象</td><td>團隊成員</td><td>你自己</td><td>文件/資料</td><td>to-questionnaire 的答案來自人，grill-me 的答案來自你的思考，research 的答案來自外部</td></tr>
-  <tr><td>輸出</td><td>可填寫問卷</td><td>口頭質詢</td><td>研究報告</td><td>to-questionnaire 輸出「需要人回答的問題」，grill-me 輸出「被挑戰的假設」，research 輸出「已知的事實」</td></tr>
-</table>
-</div>
-<div class="tutorial-block tb-checklist">
-  <h3><span class="tb-icon">✅</span> ④ 互動式進階檢核清單</h3>
-  <ul>
-    <li>□ 問卷問題夠具體——不是「好不好」而是「有多少 %」</li>
-    <li>□ 問卷在 5-8 個核心問題以內</li>
-    <li>□ 問卷收集的敏感資訊有正確的存取權限</li>
-    <li>□ 問卷結果可以用 /to-spec 轉化為規格</li>
-    <li>□ 知道 to-questionnaire 的答案來自人，不來自文件</li>
-  </ul>
-</div>
 
 </div>
 </body>

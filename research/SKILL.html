@@ -29,7 +29,7 @@
 <div class="pair"><div class="col-en" lang="en"><p>Spin up a <strong>background agent</strong> to do the research, so you keep working while it reads.</p></div><div class="col-zh" lang="zh-Hant"><p>啟動一個<strong>背景代理</strong>來做研究，讓它閱讀時你繼續工作。</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><p>Its job:</p></div><div class="col-zh" lang="zh-Hant"><p>它的工作：</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><ol>
-<li>Investigate the question against <strong>primary sources</strong> — official docs, source code, specs, first-party APIs — not a secondary write-up of them. Follow every claim back to the source that owns it.</li>
+<li>Investigate the question against <strong>primary sources</strong> (official docs, source code, specs, first-party APIs), not a secondary write-up of them. Follow every claim back to the source that owns it.</li>
 <li>Write the findings to a single Markdown file, citing each claim's source.</li>
 <li>Save it where the repo already keeps such notes; match the existing convention, and if there is none, put it somewhere sensible and say where.</li>
 </ol></div><div class="col-zh" lang="zh-Hant"><ol>
@@ -37,122 +37,6 @@
 <li>把發現寫成單一 Markdown 檔案，引用每項主張的來源。</li>
 <li>存在 repo 已經存放此類筆記的地方；遵循既有慣例，如果沒有，就放在一個合理的位置並說在哪裡。</li>
 </ol></div></div>
-<div class="tutorial-block">
-  <h3><span class="tb-icon">📖</span> 教學解說</h3>
-  <p><code>research</code> 是<strong>委派閱讀苦工</strong>的技能。它的設計是：你問一個問題，agent 在背景調查主要來源（官方文件、原始碼、規格、第一方 API），產出一份有引用的 Markdown 報告。你不用等它——它在背景跑，你可以繼續做其他事。</p>
-  <p>關鍵約束：<strong>只信主要來源</strong>。不要信二手轉述、部落格文章、Stack Overflow 回答。每一項主張都要追回到擁有它的來源。這是為了確保研究報告的可信度。</p>
-</div>
-<div class="tutorial-block tb-example">
-  <h3><span class="tb-icon">💡</span> Worked Example</h3>
-  <p><strong>情境</strong>：你要決定 CSV 匯出該用 streaming 還是 batch，需要了解 Node.js 的 Stream API。</p>
-  <ol>
-    <li>呼叫 <code>/research "Node.js Readable Stream 在大資料量下的記憶體行為"</code></li>
-    <li>Agent 在背景調查：
-      <ul>
-        <li>Node.js 官方文件的 Stream 章節（主要來源）</li>
-        <li>Node.js 原始碼中 highWaterMark 的實作（主要來源）</li>
-      </ul>
-    </li>
-    <li>產出報告：`research/nodejs-stream-memory.md`，引用了官方文件和原始碼</li>
-    <li>你拿到報告後，決策有根有據</li>
-  </ol>
-</div>
-<div class="tutorial-block tb-mistake">
-  <h3><span class="tb-icon">⚠️</span> 常見錯誤</h3>
-  <ul>
-    <li><strong>信二手來源</strong>——部落格文章、Medium、Stack Overflow 都是二手轉述。Research 只信主要來源。</li>
-    <li><strong>沒有引用</strong>——報告裡的每個主張都該有來源連結。沒有引用 = 沒有可信度。</li>
-    <li><strong>把 research 當成取代思考</strong>——Research 餵養思考，不是取代思考。拿到報告後，你還是要做決策。</li>
-    <li><strong>問題太廣</strong>——「研究 Node.js」太廣。要精準：「Node.js Readable Stream 在大資料量下的記憶體行為」。</li>
-  </ul>
-</div>
-<div class="tutorial-block tb-checklist">
-  <h3><span class="tb-icon">✅</span> 練習 / 驗收清單</h3>
-  <ul>
-    <li>□ 問題精準、範圍明確</li>
-    <li>□ 報告只引用主要來源（官方文件、原始碼、規格）</li>
-    <li>□ 每個主張都有來源連結</li>
-    <li>□ 報告存在 repo 的合理位置</li>
-    <li>□ 拿到報告後有做後續決策</li>
-  </ul>
-</div>
-<div class="tutorial-block tb-example">
-  <h3><span class="tb-icon">🚀</span> 進階真實情境 Worked Example</h3>
-  <p><strong>情境</strong>：你的團隊要在現有 Node.js API 加入「webhook 簽章驗證」，你只知道「要用 HMAC」，但不想憑印象選演算法——讓 research 去查清事實。</p>
-  <ol>
-    <li>精準提問：<code>/research "GitHub webhook 的 HMAC 簽章驗證規格：header 名稱、payload 格式、常數時間比較的實作要求"</code>。</li>
-    <li>背景代理只查主要來源：GitHub 官方 docs 的 webhook 章節（header 叫 <code>X-Hub-Signature-256</code>、payload 是 raw body、前綴 <code>sha256=</code>）、Node.js crypto 官方文件（<code>crypto.timingSafeEqual</code> 的用途與限制）。</li>
-    <li>報告 <code>research/webhook-hmac.md</code> 逐條引用來源。你發現一個關鍵事實：<code>timingSafeEqual</code> 要求兩邊 input 等長，否則要先 hash 才能比較——這正是最容易被寫錯的地方。</li>
-    <li>你帶著報告進 grill-with-docs，把「用 X-Hub-Signature-256 + timingSafeEqual + 先 hash 再比較」的決策寫進 CONTEXT.md 與實作 spec。</li>
-    <li>implement 時，報告裡的引用讓 code-review 的規範軸有據可查——「為什麼這樣寫」都有官方文件背書。</li>
-  </ol>
-  <p><strong>設計決策</strong>：本例的關鍵是「先 hash 再比較」這種安全細節<strong>不在任何人的參數式知識裡可靠存在</strong>——正是 research 該出場的地方。同時注意：research 沒有替你決定「該用 GitHub 規格」，它只查「GitHub 規格是什麼」。決策（採用 GitHub 規格）是你做的。</p>
-</div>
-<div class="tutorial-block tb-theory">
-  <h3><span class="tb-icon">🔬</span> 深入原理擴充</h3>
-  <p>research 對抗的是 LLM 的<strong>參數式知識</strong>——模型在預訓練中「記住」的事實。這些事實大部分正確，但會在細節處失準（版本、參數名、行為差異），而且模型「很有自信地錯」。技能強制「只信主要來源」正是把信任從「參數式記憶」轉移到「可驗證的文檔」。</p>
-  <p>「把每項主張追回擁有它的來源」是<strong>引用責任制</strong>：一份研究報告的可信度，等於它的引用可被逐一驗證的程度。這也讓後續技能受益——code-review 的規格軸、implement 的決策，都能沿著引用鏈追溯到官方文件。</p>
-  <p><strong>陷阱案例</strong>：很多人以為「找一堆文件＝research」，於是指望一份報告裡塞滿二十個連結就完事。真相是：<strong>連結多不代表可信，來源層級才是關鍵</strong>——官方文件的一行，勝過十篇部落格轉述。更糟的是把 Stack Overflow 回答當「事實來源」，而它常常是過時或錯誤的。判斷原則是：<strong>這個來源「擁有」這項主張嗎？</strong>官方 docs 擁有 API 行為、原始碼擁有實作細節；部落格只是轉述，不擁有任何主張。</p>
-</div>
-<div class="tutorial-block tb-diagnosis">
-  <h3><span class="tb-icon">🩺</span> 診斷式疑難排解表</h3>
-  <table>
-    <tr><th>症狀</th><th>可能原因</th><th>解決方案</th></tr>
-    <tr><td>報告引用一堆部落格／Stack Overflow</td><td>沒檢查來源層級，二手轉述被當事實</td><td>重查主要來源（官方 docs、原始碼、規格、第一方 API）；部落格只能當線索</td></tr>
-    <tr><td>主張沒有引用，無法驗證</td><td>寫報告時省略了來源</td><td>每項主張加引用；沒有引用的句子從報告中刪掉或標為「未驗證」</td></tr>
-    <tr><td>問題太廣，報告變成百科全書</td><td>提問範圍沒收窄</td><td>把問題改成「X 在條件 Y 下的行為」；廣題目拆成數個精準子題</td></tr>
-    <tr><td>拿到報告後直接照做，沒做決策</td><td>把 research 當成取代思考</td><td>報告只餵養思考；用 grill-with-docs 把事實轉成決策再進實作</td></tr>
-    <tr><td>報告存在奇怪位置，沒人找得到</td><td>沒遵循 repo 既有的筆記慣例</td><td>放 repo 已存放此類筆記的地方；沒有慣例就放合理位置並說在哪</td></tr>
-  </table>
-</div>
-<div class="tutorial-block tb-challenge">
-  <h3><span class="tb-icon">🏆</span> 進階挑戰題</h3>
-  <ol>
-    <li><strong>來源分級</strong>：給你四個來源——官方 API 文件、GitHub 上的 issue 討論、熱門部落格教學、原始碼註解。為「某函式的行為」排序可信度，並說明各該在什麼情境下使用。</li>
-    <li><strong>提問收窄</strong>：把「研究 Node.js 效能」這個過廣的問題，改寫成三個適合 research 的精準子題，並各標出應該查的主要來源。</li>
-    <li><strong>引用責任制</strong>：寫出一份 3 行的研究結論，主題「Prisma 的 connection pool 預設值」，每行都要有具體引用。然後說明這份結論能如何被 code-review 的規格軸使用。</li>
-  </ol>
-</div>
-
-<div class="tutorial-block tb-project">
-  <h3><span class="tb-icon">🏗️</span> ① 專案級端到端 Worked Example</h3>
-  <p><strong>專案情境</strong>：你要選擇一個 state management 方案（Redux vs Zustand vs Jotai），需要有根據的比較。</p>
-<ol>
-  <li>先跑 <code>/research</code>，定義研究問題：「在 React 18 + TypeScript 的大型 SPA 中，哪個 state management 方案的效能、DX、維護性最好？」</li>
-  <li>research 會從高可信度來源蒐集資料：官方文件、benchmark、真實專案的案例研究（不是部落格文章）。</li>
-  <li>產出比較報告：表格對比三者的 bundle size、學習曲線、SSR 支援、DevTools 支援、社群活躍度。</li>
-  <li>把報告寫進 repo 的 <code>docs/research-state-management.md</code>，連結到相關的 issue。這份文件可以被 <code>/to-spec</code> 引用。</li>
-</ol>
-<p><strong>關鍵</strong>：research 的價值在「可信度」——它只用主要來源（官方文件、benchmark），不用次要來源（部落格、社群討論）。文件的可信度取決於來源的品質。</p>
-</div>
-<div class="tutorial-block tb-theory">
-  <h3><span class="tb-icon">⚡</span> ② 效能 / 品質 / 安全深度</h3>
-  <table>
-  <tr><th>面向</th><th>實務考量</th></tr>
-  <tr><td>效能</td><td>research 的 token 成本與來源數量成正比。限制在 5-10 個高可信度來源，避免「什麼都看」導致 token 爆炸。</td></tr>
-  <tr><td>品質</td><td>報告的品質取決於「問題是否夠明確」。模糊的問題（「哪個 state management 好」）產出模糊的答案；具體的問題（「在 React 18 的 SSR 場景中，Zustand 和 Redux 的 hydration 策略有什麼不同」）產出有用的比較。</td></tr>
-  <tr><td>安全</td><td>研究報告可能揭露安全相關的資訊（例如某個 library 有 known vulnerabilities）——確保把這些記在報告的安全章節中。</td></tr>
-</table>
-</div>
-<div class="tutorial-block tb-comparison">
-  <h3><span class="tb-icon">📊</span> ③ 技能間比較對照表</h3>
-  <table>
-  <tr><th>面向</th><th>research</th><th>grill-me</th><th>to-spec</th><th>差異說明</th></tr>
-  <tr><td>方法</td><td>蒐集 + 分析</td><td>質詢 + 淬煉</td><td>綜合 + 規劃</td><td>research 是「搞清楚」，grill-me 是「被挑戰」，to-spec 是「決定做什麼」</td></tr>
-  <tr><td>輸出</td><td>研究報告</td><td>口頭質詢</td><td>規格說明</td><td>research 輸出「已知的事」，grill-me 輸出「被挑戰的假設」，to-spec 輸出「要做的事」</td></tr>
-  <tr><td>來源</td><td>主要來源（官方文件）</td><td>你的想法</td><td>對話記錄</td><td>research 用外部來源，grill-me 用你的內部想法，to-spec 用已討論的內容</td></tr>
-</table>
-</div>
-<div class="tutorial-block tb-checklist">
-  <h3><span class="tb-icon">✅</span> ④ 互動式進階檢核清單</h3>
-  <ul>
-    <li>□ 研究問題夠具體——不是「哪個好」而是「在什麼場景下哪個更適合」</li>
-    <li>□ 只用高可信度來源（官方文件、benchmark），不用部落格文章</li>
-    <li>□ 報告在 5-10 個來源以內——避免 token 爆炸</li>
-    <li>□ 報告包含安全相關的發現</li>
-    <li>□ 報告被寫進 repo 的 docs/ 並連結到相關 issue</li>
-  </ul>
-</div>
 
 </div>
 </body>

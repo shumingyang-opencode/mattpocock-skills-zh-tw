@@ -27,13 +27,13 @@
 <h1>writing-for-agents</h1>
 <div class="subtitle">教你怎麼寫「給 agent 看」的文件——技能、AGENTS.md 都算。</div>
 <div class="back-link" style="margin-top:-0.6rem">附屬文件：<a href="SKILL-MECHANICS.html">SKILL-MECHANICS</a></div>
-<div class="pair"><div class="col-en" lang="en"><p>Reference for writing any document an agent consumes — a skill, an <code>AGENTS.md</code> / <code>CLAUDE.md</code>, a doc reached by a pointer. The packaging differs; the writing does not: the same levers make each one predictable — the agent taking the same <em>process</em> every run, not producing the same output.</p></div><div class="col-zh" lang="zh-Hant"><p>為任何代理消費的文件撰寫的參考 — 一個技能、一份 <code>AGENTS.md</code> / <code>CLAUDE.md</code>、一份透過指標觸達的文件。包裝不同；寫法不同不是問題：相同的槓桿讓每一份都可預測 — 代理每次執行都採取相同的_流程_，而不是產出相同的結果。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Reference for writing any document an agent consumes: a skill, an <code>AGENTS.md</code> / <code>CLAUDE.md</code>, a doc reached by a pointer. The packaging differs; the writing does not: the same levers make each one predictable, since the agent takes the same <em>process</em> every run rather than producing the same output.</p></div><div class="col-zh" lang="zh-Hant"><p>為任何代理消費的文件撰寫的參考 — 一個技能、一份 <code>AGENTS.md</code> / <code>CLAUDE.md</code>、一份透過指標觸達的文件。包裝不同；寫法不同不是問題：相同的槓桿讓每一份都可預測 — 代理每次執行都採取相同的_流程_，而不是產出相同的結果。</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><p>When the document you're writing is a skill, read <a href="SKILL-MECHANICS.html"><code>SKILL-MECHANICS.md</code></a> for frontmatter, invocation choice, and router skills.</p></div><div class="col-zh" lang="zh-Hant"><p>當您撰寫的文件是技能時，閱讀 <a href="SKILL-MECHANICS.html"><code>SKILL-MECHANICS.md</code></a> 了解 frontmatter、呼叫選擇與路由器技能。</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><h2>Context pointers</h2></div><div class="col-zh" lang="zh-Hant"><h2>脈絡指標（Context pointers）</h2></div></div>
-<div class="pair"><div class="col-en" lang="en"><p>A <strong>context pointer</strong> is a reference held in the agent's context that names some out-of-context material and encodes the condition for reaching it. A skill's description is one; a line in <code>AGENTS.md</code> naming a doc is the same object. The pointer's <em>wording</em>, not its target, decides when the agent reaches the material — and how reliably. A must-have target behind a weakly worded pointer is a variance bug: sharpen the wording first, and inline the material only if sharpening fails.</p></div><div class="col-zh" lang="zh-Hant"><p><strong>脈絡指標</strong>是代理脈絡中持有的引用，它指名某個不在脈絡中的材料，並編碼了觸達它的條件。技能的 description 是一個；<code>AGENTS.md</code> 中指名一份文件的一行是同一種物件。指標的_措辭_，而不是它的目標，決定了代理何時觸達該材料 — 以及多可靠。一個措辭軟弱卻指向必備目標的指標，是變異 bug：先磨利措辭，只有磨利失敗時才內嵌材料。</p></div></div>
-<div class="pair"><div class="col-en" lang="en"><p>A pointer does two jobs — state what the material is, and list the <strong>branches</strong> that should trigger reaching it (a branch is a distinct case the document handles, so different runs take different paths through it). Every word of an always-loaded pointer costs on every turn, so it earns even harder pruning than the body:</p></div><div class="col-zh" lang="zh-Hant"><p>指標做兩件工作 — 說明材料是什麼，並列出應該觸發觸達它的<strong>分支</strong>（分支是文件處理的一個不同案例，因此不同的執行會走過不同的路徑）。每個永遠載入的指標的每個字都會在每一輪耗費成本，因此它比正文更需要毫不留情的修剪：</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>A <strong>context pointer</strong> is a reference held in the agent's context that names some out-of-context material and encodes the condition for reaching it. A skill's description is one; a line in <code>AGENTS.md</code> naming a doc is the same object. The pointer's <em>wording</em>, not its target, decides when the agent reaches the material, and how reliably. A must-have target behind a weakly worded pointer is a variance bug: sharpen the wording first, and inline the material only if sharpening fails.</p></div><div class="col-zh" lang="zh-Hant"><p><strong>脈絡指標</strong>是代理脈絡中持有的引用，它指名某個不在脈絡中的材料，並編碼了觸達它的條件。技能的 description 是一個；<code>AGENTS.md</code> 中指名一份文件的一行是同一種物件。指標的_措辭_，而不是它的目標，決定了代理何時觸達該材料 — 以及多可靠。一個措辭軟弱卻指向必備目標的指標，是變異 bug：先磨利措辭，只有磨利失敗時才內嵌材料。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>A pointer does two jobs: state what the material is, and list the <strong>branches</strong> that should trigger reaching it (a branch is a distinct case the document handles, so different runs take different paths through it). Every word of an always-loaded pointer costs on every turn, so it earns even harder pruning than the body:</p></div><div class="col-zh" lang="zh-Hant"><p>指標做兩件工作 — 說明材料是什麼，並列出應該觸發觸達它的<strong>分支</strong>（分支是文件處理的一個不同案例，因此不同的執行會走過不同的路徑）。每個永遠載入的指標的每個字都會在每一輪耗費成本，因此它比正文更需要毫不留情的修剪：</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><ul>
-<li><strong>Front-load the leading word</strong> — the pointer is where it does its triggering work.</li>
+<li><strong>Front-load the leading word</strong>: the pointer is where it does its triggering work.</li>
 <li><strong>One trigger per branch.</strong> Synonyms that rename a single branch are one branch written twice; collapse them and keep only genuinely distinct branches.</li>
 <li><strong>Cut identity the body already carries.</strong></li>
 </ul></div><div class="col-zh" lang="zh-Hant"><ul>
@@ -44,33 +44,33 @@
 <div class="pair"><div class="col-en" lang="en"><h2>The two loads</h2></div><div class="col-zh" lang="zh-Hant"><h2>兩種負載（The two loads）</h2></div></div>
 <div class="pair"><div class="col-en" lang="en"><p>Every document and pointer you add spends one of two budgets:</p></div><div class="col-zh" lang="zh-Hant"><p>您新增的每份文件與指標都花費兩種預算之一：</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><ul>
-<li><strong>Context load</strong> — the cost of always-loaded material on the agent's window: an <code>AGENTS.md</code> line, a skill description, anything sitting in context every turn, spending tokens and attention whether or not it fires.</li>
-<li><strong>Cognitive load</strong> — the cost on the human: which documents exist and when to reach for each. The human is the index. Not a cost to minimise — it is the price of human agency; spend it where human judgement matters, remove it where it does not.</li>
+<li><strong>Context load</strong> is the cost of always-loaded material on the agent's window: an <code>AGENTS.md</code> line, a skill description, anything sitting in context every turn, spending tokens and attention whether or not it fires.</li>
+<li><strong>Cognitive load</strong> is the cost on the human: which documents exist and when to reach for each. The human is the index. Not a cost to minimise: it is the price of human agency; spend it where human judgement matters, remove it where it does not.</li>
 </ul></div><div class="col-zh" lang="zh-Hant"><ul>
 <li><strong>脈絡負載（Context load）</strong> — 永遠載入的材料對代理視窗的成本：一行 <code>AGENTS.md</code>、一個技能 description、任何每輪都坐在脈絡裡的東西，無論是否觸發都花費 token 與注意力。</li>
 <li><strong>認知負載（Cognitive load）</strong> — 施加在人類身上的成本：存在哪些文件，以及何時取用每一份。人類就是索引。這不是一個要最小化的成本 — 它是人類能動性的代價；把它花在人判斷重要的地方，在它不重要的地方移除它。</li>
 </ul></div></div>
 <div class="pair"><div class="col-en" lang="en"><p>Material reached only through a pointer escapes context load at the price of the pointer's own line; material with no pointer at all rides entirely on cognitive load.</p></div><div class="col-zh" lang="zh-Hant"><p>只有透過指標觸達的材料，以指標自身那行的代價逃離脈絡負載；完全沒有指標的材料則整個落在認知負載上。</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><h2>Information hierarchy</h2></div><div class="col-zh" lang="zh-Hant"><h2>資訊階層（Information hierarchy）</h2></div></div>
-<div class="pair"><div class="col-en" lang="en"><p>A document is built from two content types — <strong>steps</strong> (the ordered actions the agent performs) and <strong>reference</strong> (definitions, rules, facts consulted on demand) — that mix freely: all steps (a recipe), all reference (a review's rules, this skill), or both. The core decision is where each piece sits on the <strong>information hierarchy</strong>, a ladder ranked by how immediately the agent needs the material:</p></div><div class="col-zh" lang="zh-Hant"><p>一份文件由兩種內容類型組成 — <strong>步驟</strong>（代理執行的有序動作）與<strong>參考</strong>（按需查閱的定義、規則、事實）— 它們可以自由混合：全是步驟（一份配方）、全是參考（一份審查的規則、本技能）、或兩者兼具。核心決策是每個片段落在<strong>資訊階層</strong>的哪個位置，這是一個按代理多迫切需要該材料來排序的階梯：</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>A document is built from two content types: <strong>steps</strong> (the ordered actions the agent performs) and <strong>reference</strong> (definitions, rules, facts consulted on demand). The two mix freely: all steps (a recipe), all reference (a review's rules, this skill), or both. The core decision is where each piece sits on the <strong>information hierarchy</strong>, a ladder ranked by how immediately the agent needs the material:</p></div><div class="col-zh" lang="zh-Hant"><p>一份文件由兩種內容類型組成 — <strong>步驟</strong>（代理執行的有序動作）與<strong>參考</strong>（按需查閱的定義、規則、事實）— 它們可以自由混合：全是步驟（一份配方）、全是參考（一份審查的規則、本技能）、或兩者兼具。核心決策是每個片段落在<strong>資訊階層</strong>的哪個位置，這是一個按代理多迫切需要該材料來排序的階梯：</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><ol>
-<li><strong>In-file step</strong> — the primary tier: what the agent does, in order.</li>
-<li><strong>In-file reference</strong> — consulted on demand. Often a legitimately flat peer-set (every rule of a review on one rung) — a fine arrangement, not a smell.</li>
-<li><strong>Disclosed reference</strong> — pushed out into a separate file, reached by a context pointer, loaded only when the pointer fires. Spans a sibling file in the same folder through fully external reference that lives anywhere and any document can point at.</li>
+<li><strong>In-file step</strong> is the primary tier: what the agent does, in order.</li>
+<li><strong>In-file reference</strong> is consulted on demand. Often a legitimately flat peer-set (every rule of a review on one rung), which is a fine arrangement, not a smell.</li>
+<li><strong>Disclosed reference</strong> is pushed out into a separate file, reached by a context pointer, loaded only when the pointer fires. Spans a sibling file in the same folder through fully external reference that lives anywhere and any document can point at.</li>
 </ol></div><div class="col-zh" lang="zh-Hant"><ol>
 <li><strong>檔案內步驟</strong> — 主要層級：代理做什麼，依序。</li>
 <li><strong>檔案內參考</strong> — 按需查閱。通常是一組名正言順的平坦同級（一份審查的每個規則在同一個橫檔上）— 這是恰當的安排，不是壞味道。</li>
 <li><strong>揭露的參考</strong> — 被推出去到一個獨立檔案，透過脈絡指標觸達，只在指標觸發時才載入。從同一資料夾中的同級檔案，跨到完全外部的參考，可以存放在任何地方、任何文件都可以指向它。</li>
 </ol></div></div>
 <div class="pair"><div class="col-en" lang="en"><p>Push too little down and the top bloats; push too much and you hide material the agent actually needs. That tension is the whole decision.</p></div><div class="col-zh" lang="zh-Hant"><p>推太少下去，頂層會臃腫；推太多，您會藏起代理真正需要的材料。那個張力就是全部的決策。</p></div></div>
-<div class="pair"><div class="col-en" lang="en"><p><strong>Progressive disclosure</strong> is the move down the ladder — out of the main file and behind a pointer — so the top stays legible. Not primarily a token optimisation: it is how the hierarchy is protected. Branching is the cleanest disclosure test: inline what every branch needs, and push behind a pointer what only some branches reach. When a document has steps, in-file reference that should be disclosed buries them and turns attending to them into a coin-flip — a variance lever, not just a legibility one.</p></div><div class="col-zh" lang="zh-Hant"><p><strong>漸進式揭露（Progressive disclosure）</strong> 是往階梯下走的動作 — 移出主檔案並放到指標後面 — 這樣頂層保持可讀。這主要不是 token 最佳化：這是階層被保護的方式。分支是最乾淨的揭露測試：內嵌每個分支都需要的東西，並把只有某些分支會觸達的東西放到指標後面。當一份文件有步驟時，應該被揭露的檔案內參考會埋沒它們，並把注意它們變成擲硬幣 — 這是變異槓桿，不只是可讀性槓桿。</p></div></div>
-<div class="pair"><div class="col-en" lang="en"><p><strong>Co-location</strong> is the within-file companion: where the ladder decides <em>how far down</em> a piece sits, co-location decides <em>what sits beside it</em> once there. Keep a concept's definition, rules, and caveats under one heading rather than scattered, so reading one part brings its neighbours with it. The test: the document should read like documentation written for the agent — grouped material reads that way; scattered material does not. (Distinct from duplication: that repeats one meaning in two places; scattering fragments one meaning across many.)</p></div><div class="col-zh" lang="zh-Hant"><p><strong>共置（Co-location）</strong> 是檔案內的同路人：階梯決定一個片段_落得多低_，共置則決定它到達後_旁邊放什麼_。把一個概念的定義、規則與注意事項放在同一個標題下，而不是散落各處，這樣閱讀一部分會連帶帶出它的鄰居。測試方式：文件應該讀起來像是為代理撰寫的文件 — 分組的材料就是這樣讀的；散落的材料則不是。（不同於重複：重複是在兩處重複同一個意義；散落是把一個意義拆散到多處。）</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p><strong>Progressive disclosure</strong> is the move down the ladder (out of the main file and behind a pointer) so the top stays legible. Not primarily a token optimisation: it is how the hierarchy is protected. Branching is the cleanest disclosure test: inline what every branch needs, and push behind a pointer what only some branches reach. When a document has steps, in-file reference that should be disclosed buries them and turns attending to them into a coin-flip: a variance lever, not just a legibility one.</p></div><div class="col-zh" lang="zh-Hant"><p><strong>漸進式揭露（Progressive disclosure）</strong> 是往階梯下走的動作 — 移出主檔案並放到指標後面 — 這樣頂層保持可讀。這主要不是 token 最佳化：這是階層被保護的方式。分支是最乾淨的揭露測試：內嵌每個分支都需要的東西，並把只有某些分支會觸達的東西放到指標後面。當一份文件有步驟時，應該被揭露的檔案內參考會埋沒它們，並把注意它們變成擲硬幣 — 這是變異槓桿，不只是可讀性槓桿。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p><strong>Co-location</strong> is the within-file companion: where the ladder decides <em>how far down</em> a piece sits, co-location decides <em>what sits beside it</em> once there. Keep a concept's definition, rules, and caveats under one heading rather than scattered, so reading one part brings its neighbours with it. The test: the document should read like documentation written for the agent. Grouped material reads that way; scattered material does not. (Distinct from duplication: that repeats one meaning in two places; scattering fragments one meaning across many.)</p></div><div class="col-zh" lang="zh-Hant"><p><strong>共置（Co-location）</strong> 是檔案內的同路人：階梯決定一個片段_落得多低_，共置則決定它到達後_旁邊放什麼_。把一個概念的定義、規則與注意事項放在同一個標題下，而不是散落各處，這樣閱讀一部分會連帶帶出它的鄰居。測試方式：文件應該讀起來像是為代理撰寫的文件 — 分組的材料就是這樣讀的；散落的材料則不是。（不同於重複：重複是在兩處重複同一個意義；散落是把一個意義拆散到多處。）</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><p><strong>Sprawl</strong> is the failure mode here: a document simply too long, even when every line is live and unique. Attention thins across the excess, and every extra line is one more to keep relevant. The cure is the ladder: disclose reference behind pointers, and split by branch or sequence so each path carries only what it needs.</p></div><div class="col-zh" lang="zh-Hant"><p><strong>蔓延（Sprawl）</strong> 是這裡的失敗模式：一份文件就是太長，即使每一行都是活的且獨特。注意力在過度之間變薄，每一行多出來的都是另一個要維持相關性的負擔。解方就是階梯：把參考揭露到指標後面，並按分支或序列拆分，這樣每條路徑只承載它需要的東西。</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><h2>Steps and completion criteria</h2></div><div class="col-zh" lang="zh-Hant"><h2>步驟與完成標準（Steps and completion criteria）</h2></div></div>
-<div class="pair"><div class="col-en" lang="en"><p>Every step ends on a <strong>completion criterion</strong> — the condition that tells the agent the work is done. Two properties make it a lever:</p></div><div class="col-zh" lang="zh-Hant"><p>每個步驟都以一個<strong>完成標準</strong>結束 — 告訴代理工作已完成的條件。兩個性質使它成為槓桿：</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Every step ends on a <strong>completion criterion</strong>, the condition that tells the agent the work is done. Two properties make it a lever:</p></div><div class="col-zh" lang="zh-Hant"><p>每個步驟都以一個<strong>完成標準</strong>結束 — 告訴代理工作已完成的條件。兩個性質使它成為槓桿：</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><ul>
-<li><strong>Clarity</strong> — can the agent tell done from not-done? A vague bound ("understanding reached") invites <strong>premature completion</strong>: ending the step before it is genuinely done, attention slipping to <em>being done</em>. The visible steps still ahead — the <strong>post-completion steps</strong> — supply the pull; the criterion's clarity is the resistance. Defend in order: <strong>sharpen the bound first</strong> (local and cheap); only if it is irreducibly fuzzy <em>and</em> you observe the rush, hide the later steps by splitting the sequence — and hiding only works across a real context boundary (a hand-off or a subagent dispatch; an inline call leaves the later steps in context and clears nothing).</li>
-<li><strong>Demand</strong> — how much it requires. "Every modified model accounted for" forces thorough work where "produce a change list" does not. Demand drives <strong>legwork</strong> — the digging the agent does within the work, latent in the wording rather than written as its own step — and it is not step-bound: "every rule applied" binds a body of flat reference just as "every step done" binds a sequence, which is how an all-reference document still carries an exhaustiveness bar.</li>
+<li><strong>Clarity</strong>: can the agent tell done from not-done? A vague bound ("understanding reached") invites <strong>premature completion</strong>: ending the step before it is genuinely done, attention slipping to <em>being done</em>. The visible steps still ahead (the <strong>post-completion steps</strong>) supply the pull; the criterion's clarity is the resistance. Defend in order: <strong>sharpen the bound first</strong> (local and cheap); only if it is irreducibly fuzzy <em>and</em> you observe the rush, hide the later steps by splitting the sequence. Hiding only works across a real context boundary (a hand-off or a subagent dispatch; an inline call leaves the later steps in context and clears nothing).</li>
+<li><strong>Demand</strong>: how much it requires. "Every modified model accounted for" forces thorough work where "produce a change list" does not. Demand drives <strong>legwork</strong> (the digging the agent does within the work, latent in the wording rather than written as its own step), and it is not step-bound: "every rule applied" binds a body of flat reference just as "every step done" binds a sequence, which is how an all-reference document still carries an exhaustiveness bar.</li>
 </ul></div><div class="col-zh" lang="zh-Hant"><ul>
 <li><strong>明確性（Clarity）</strong> — 代理能分辨完成與未完成嗎？一個模糊的邊界（「已達成理解」）引來<strong>過早完成</strong>：在真正完成之前就結束步驟，注意力溜到_表現為完成_。仍然可見、尚未完成的步驟 — <strong>完成後步驟（post-completion steps）</strong> — 提供拉力；標準的明確性就是阻力。依序防禦：<strong>先磨利邊界</strong>（在地且廉價）；只有當它無法化約地模糊_且_您觀察到匆忙，才透過拆分序列隱藏後面的步驟 — 而且隱藏只在跨越真實的脈絡邊界時有效（一次交接或子代理派遣；行內呼叫會把後面的步驟留在脈絡中，什麼也沒清除）。</li>
 <li><strong>要求度（Demand）</strong> — 它要求多少。「每個被修改的模型都被列入」迫使徹底的工作，而「產出變更清單」則不會。要求驅動<strong>跑腿（legwork）</strong> — 代理在工作內部做的挖掘，潛藏在措辭中而非寫成它自己的步驟 — 而且它不受步驟束縛：「每條規則都被套用」束縛的是大量平坦的參考，正如「每個步驟都完成」束縛的是序列，這正是全參考文件仍承載一個窮盡性門檻的方式。</li>
@@ -79,148 +79,37 @@
 <div class="pair"><div class="col-en" lang="en"><h2>When to split</h2></div><div class="col-zh" lang="zh-Hant"><h2>何時拆分（When to split）</h2></div></div>
 <div class="pair"><div class="col-en" lang="en"><p>Splitting one document into two spends one of the two loads, so split only when the cut earns it:</p></div><div class="col-zh" lang="zh-Hant"><p>把一份文件拆成兩份會花費兩種負載之一，所以只有當拆分值得這個代價時才拆：</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><ul>
-<li><strong>By sequence</strong> — split a run of steps where the post-completion steps tempt the agent to rush the one in front of it. Keeping them out of view drives more legwork on the current task. Beware the reverse: merging sequences exposes each step's later steps to what follows, inviting premature completion.</li>
-<li><strong>By invocation</strong> — skill-specific: see <a href="SKILL-MECHANICS.html"><code>SKILL-MECHANICS.md</code></a>.</li>
+<li><strong>By sequence</strong>: split a run of steps where the post-completion steps tempt the agent to rush the one in front of it. Keeping them out of view drives more legwork on the current task. Beware the reverse: merging sequences exposes each step's later steps to what follows, inviting premature completion.</li>
+<li><strong>By invocation</strong>, skill-specific: see <a href="SKILL-MECHANICS.html"><code>SKILL-MECHANICS.md</code></a>.</li>
 </ul></div><div class="col-zh" lang="zh-Hant"><ul>
 <li><strong>按序列</strong> — 在完成後步驟會誘使代理衝過眼前那一步的地方拆分一串步驟。讓它們保持在視野外會推動當前任務上更多的跑腿。小心反向操作：合併序列會把每個步驟的後續步驟暴露給接下來的東西，引來過早完成。</li>
 <li><strong>按呼叫</strong> — 技能特定：參閱 <a href="SKILL-MECHANICS.html"><code>SKILL-MECHANICS.md</code></a>。</li>
 </ul></div></div>
 <div class="pair"><div class="col-en" lang="en"><h2>Leading words</h2></div><div class="col-zh" lang="zh-Hant"><h2>領頭詞（Leading words）</h2></div></div>
-<div class="pair"><div class="col-en" lang="en"><p>A <strong>leading word</strong> is a compact concept already living in the model's pretraining that the agent thinks with while running the document (<em>lesson</em>, <em>fog of war</em>, <em>tracer bullets</em>). Repeated as a token, never as a sentence, it accumulates a distributed definition and anchors a whole region of behaviour in the fewest tokens, by recruiting priors the model already holds. Coining your own works if you define it clearly, but a made-up word recruits no priors — you pay in definition tokens what a pretrained word gives free; reach for an existing word first.</p></div><div class="col-zh" lang="zh-Hant"><p><strong>領頭詞</strong>是一個已經活在模型預訓練中的緊湊概念，代理在執行文件時用它思考（<em>lesson</em>、<em>fog of war</em>、<em>tracer bullets</em>）。以 token 重複，從不當句子，它累積一個分散式定義，並以最少的 token 錨定一整片行為區域，透過招喚模型已經持有的先驗。自創一個詞在您清楚定義它時也行，但一個杜撰的詞招喚不到先驗 — 您會為預訓練詞免費提供的東西付出定義 token 的代價；先伸手拿既有的詞。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>A <strong>leading word</strong> is a compact concept already living in the model's pretraining that the agent thinks with while running the document (<em>lesson</em>, <em>fog of war</em>, <em>tracer bullets</em>). Repeated as a token, never as a sentence, it accumulates a distributed definition and anchors a whole region of behaviour in the fewest tokens, by recruiting priors the model already holds. Coining your own works if you define it clearly, but a made-up word recruits no priors: you pay in definition tokens what a pretrained word gives free; reach for an existing word first.</p></div><div class="col-zh" lang="zh-Hant"><p><strong>領頭詞</strong>是一個已經活在模型預訓練中的緊湊概念，代理在執行文件時用它思考（<em>lesson</em>、<em>fog of war</em>、<em>tracer bullets</em>）。以 token 重複，從不當句子，它累積一個分散式定義，並以最少的 token 錨定一整片行為區域，透過招喚模型已經持有的先驗。自創一個詞在您清楚定義它時也行，但一個杜撰的詞招喚不到先驗 — 您會為預訓練詞免費提供的東西付出定義 token 的代價；先伸手拿既有的詞。</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><p>It anchors twice. In the body, <em>execution</em>: the agent reaches for the same behaviour every time the word appears, and inside flat reference it focuses attention on a class of thing to look for. In a pointer, <em>invocation</em>: when the same word lives in your prompts, your docs, and your codebase, the agent links that shared language to the material and reaches it more reliably.</p></div><div class="col-zh" lang="zh-Hant"><p>它錨定兩次。在正文中，<em>執行</em>：每次詞出現時代理都會伸手拿同一個行為，在平坦的參考內部它把注意力聚焦在一類要找的東西上。在指標中，<em>呼叫</em>：當同一個詞活在您的提示、您的文件與您的程式碼庫中，代理會把那個共享語言連結到材料，並更可靠地觸達它。</p></div></div>
-<div class="pair"><div class="col-en" lang="en"><p>Hunt for opportunities to refactor with leading words. A triad spelled out at three sites, a pointer spending a sentence to gesture at one idea — each is a passage begging to collapse into a single token:</p></div><div class="col-zh" lang="zh-Hant"><p>尋找用領頭詞重構的機會。一個在三個地點被展開的三位一體、一個花一句話指涉單一概念的指標 — 每個都是渴望塌縮成單一 token 的段落：</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Hunt for opportunities to refactor with leading words. A triad spelled out at three sites, a pointer spending a sentence to gesture at one idea. Each is a passage begging to collapse into a single token:</p></div><div class="col-zh" lang="zh-Hant"><p>尋找用領頭詞重構的機會。一個在三個地點被展開的三位一體、一個花一句話指涉單一概念的指標 — 每個都是渴望塌縮成單一 token 的段落：</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><ul>
 <li>"fast, deterministic, low-overhead" → <em>tight</em> (a <em>tight</em> loop).</li>
-<li>"a loop you believe in" → <em>red</em> — a fuzzy gate becomes a binary observable state (the loop goes <em>red</em> on the bug, or it doesn't).</li>
+<li>"a loop you believe in" → <em>red</em>, turning a fuzzy gate into a binary observable state (the loop goes <em>red</em> on the bug, or it doesn't).</li>
 </ul></div><div class="col-zh" lang="zh-Hant"><ul>
 <li>"fast, deterministic, low-overhead" → <em>tight</em>（一個 <em>tight</em> 迴圈）。</li>
 <li>"a loop you believe in" → <em>red</em> — 一個模糊的閘門變成二元的可觀察狀態（迴圈在 bug 上 <em>red</em>，或不）。</li>
 </ul></div></div>
-<div class="pair"><div class="col-en" lang="en"><p>You win twice: fewer tokens, and a sharper hook for the agent to hang its thinking on. Assume every document is carrying restatements that leading words retire — go find them.</p></div><div class="col-zh" lang="zh-Hant"><p>您贏兩次：更少的 token，以及一個更銳利的鉤子讓代理懸掛它的思考。假設每份文件都攜帶著領頭詞可以退役的複述 — 去找它們。</p></div></div>
-<div class="pair"><div class="col-en" lang="en"><p><strong>Negation</strong> is the failure mode beside this lever: steering by prohibition drags the forbidden behaviour into context and makes it <em>more</em> available, not less. <em>Don't think of an elephant</em>, and the elephant is all there is; the negation is a weak modifier the strongly-activated concept overruns, so the ban half-reads as an instruction to do the thing. Prompt the <strong>positive</strong> — state the target behaviour ("write one-line comments") so the banned one is never spoken. A prohibition earns its place only as a hard guardrail you cannot phrase positively; even then, pair it with the positive target so attention lands on what to do.</p></div><div class="col-zh" lang="zh-Hant"><p><strong>否定（Negation）</strong> 是這個槓桿旁邊的失敗模式：以禁止來操舵會把被禁止的行為拖進脈絡，讓它_更_可用，而不是更不可用。<em>不要想大象</em>，然後大象就是全部；否定是一個軟弱的修飾語，強烈啟動的概念會壓過它，所以禁令有一半被讀成做那件事的指示。提示<strong>正向</strong> — 陳述目標行為（「寫單行註解」），這樣被禁止的那個永遠不會被說出。只有當禁令是您無法以正向措辭表達的硬護欄時，它才配得上它的位置；即便如此，也要把它與正向目標配對，讓注意力落在該做的事上。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>You win twice: fewer tokens, and a sharper hook for the agent to hang its thinking on. Assume every document is carrying restatements that leading words retire. Go find them.</p></div><div class="col-zh" lang="zh-Hant"><p>您贏兩次：更少的 token，以及一個更銳利的鉤子讓代理懸掛它的思考。假設每份文件都攜帶著領頭詞可以退役的複述 — 去找它們。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p><strong>Negation</strong> is the failure mode beside this lever: steering by prohibition drags the forbidden behaviour into context and makes it <em>more</em> available, not less. <em>Don't think of an elephant</em>, and the elephant is all there is; the negation is a weak modifier the strongly-activated concept overruns, so the ban half-reads as an instruction to do the thing. Prompt the <strong>positive</strong>: state the target behaviour ("write one-line comments") so the banned one is never spoken. A prohibition earns its place only as a hard guardrail you cannot phrase positively; even then, pair it with the positive target so attention lands on what to do.</p></div><div class="col-zh" lang="zh-Hant"><p><strong>否定（Negation）</strong> 是這個槓桿旁邊的失敗模式：以禁止來操舵會把被禁止的行為拖進脈絡，讓它_更_可用，而不是更不可用。<em>不要想大象</em>，然後大象就是全部；否定是一個軟弱的修飾語，強烈啟動的概念會壓過它，所以禁令有一半被讀成做那件事的指示。提示<strong>正向</strong> — 陳述目標行為（「寫單行註解」），這樣被禁止的那個永遠不會被說出。只有當禁令是您無法以正向措辭表達的硬護欄時，它才配得上它的位置；即便如此，也要把它與正向目標配對，讓注意力落在該做的事上。</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><h2>Pruning</h2></div><div class="col-zh" lang="zh-Hant"><h2>修剪（Pruning）</h2></div></div>
 <div class="pair"><div class="col-en" lang="en"><ul>
-<li>Keep each meaning in a <strong>single source of truth</strong>: one authoritative place, so changing the behaviour is a one-place edit. <strong>Duplication</strong> — the same meaning in more than one place — costs maintenance and tokens, and inflates a meaning's prominence on the ladder past its real rank. (The accidental inverse of a leading word, which repeats a token on purpose, never the meaning.)</li>
-<li>The <strong>environment</strong> is a source of truth too — <code>package.json</code> scripts, config files, the directory layout, <code>--help</code> output — and a document that restates it is a <strong>cache</strong>: a copy of a lookup, earning its load only when the lookup is expensive. Cache what the agent cannot find by looking: the unwritten convention, the reason behind a choice, the gotcha no config confesses. Leave the one-file, one-command lookups to the environment, where they cannot go stale.</li>
+<li>Keep each meaning in a <strong>single source of truth</strong>: one authoritative place, so changing the behaviour is a one-place edit. <strong>Duplication</strong> (the same meaning in more than one place) costs maintenance and tokens, and inflates a meaning's prominence on the ladder past its real rank. (The accidental inverse of a leading word, which repeats a token on purpose, never the meaning.)</li>
+<li>The <strong>environment</strong> is a source of truth too (<code>package.json</code> scripts, config files, the directory layout, <code>--help</code> output), and a document that restates it is a <strong>cache</strong>: a copy of a lookup, earning its load only when the lookup is expensive. Cache what the agent cannot find by looking: the unwritten convention, the reason behind a choice, the gotcha no config confesses. Leave the one-file, one-command lookups to the environment, where they cannot go stale.</li>
 <li>Check every line for <strong>relevance</strong>: does it still bear on what the document does? A line loses relevance by never bearing on the task (mere exposition, or a branch that should be disclosed) or by going stale as the behaviour or world it describes changes. Shorter documents are easier to keep relevant. Without a pruning discipline the default fate is <strong>sediment</strong>: stale layers that settle because adding feels safe and removing feels risky, until you must core down through them to find what is still live.</li>
-<li>Hunt <strong>no-ops</strong> sentence by sentence: an instruction the model already obeys by default pays load to say nothing. The test — does it change behaviour versus the default? — is model-relative, not reader-relative: two people disagreeing about a no-op disagree about the default, and settle it by running the document, not by debate. When a sentence fails, delete the whole sentence rather than trim words from it. The test also grades leading words: a word too weak to beat the default (<em>be thorough</em> when the agent is already thorough-ish) is a no-op, and the fix is a stronger word (<em>relentless</em>), not a different technique.</li>
+<li>Hunt <strong>no-ops</strong> sentence by sentence: an instruction the model already obeys by default pays load to say nothing. The test (does it change behaviour versus the default?) is model-relative, not reader-relative: two people disagreeing about a no-op disagree about the default, and settle it by running the document, not by debate. When a sentence fails, delete the whole sentence rather than trim words from it. The test also grades leading words: a word too weak to beat the default (<em>be thorough</em> when the agent is already thorough-ish) is a no-op, and the fix is a stronger word (<em>relentless</em>), not a different technique.</li>
 </ul></div><div class="col-zh" lang="zh-Hant"><ul>
 <li>把每個意義保持在<strong>單一真相來源</strong>中：一個權威位置，這樣改變行為就是一個位置的一次編輯。<strong>重複</strong> — 同一個意義在超過一個位置 — 耗費維護與 token，並把一個意義在階梯上的顯眼度膨脹超過它的真實等級。（領頭詞的意外反面：刻意重複一個 token，絕不重複意義。）</li>
 <li><strong>環境</strong>也是真相來源 — <code>package.json</code> 的 scripts、設定檔、目錄佈局、<code>--help</code> 輸出 — 而重述它的文件是<strong>快取</strong>：一次查閱的副本，只在查閱很貴時才值得它的負載。快取代理無法靠觀看找到的東西：未寫成的慣例、選擇背後的理由、沒有設定會坦白的陷阱。把單檔、單命令的查閱留給環境，它們在那裡不會過期。</li>
 <li>檢查每一行的<strong>相關性</strong>：它仍然關乎文件在做什麼嗎？一行可能因為從不關乎任務（純粹的敘述，或一個應該被揭露的分支）或因為它所描述的行為或世界改變而過時，來失去相關性。更短的文件更容易保持相關。沒有修剪紀律，預設的命運是<strong>沉積（sediment）</strong>：過時層沉澱下來，因為新增感覺安全而移除感覺冒險，直到您必須往下鑽穿它們，才能找到仍然活著的東西。</li>
 <li>逐句尋找<strong>無效運算（no-ops）</strong>：一個模型預設已經服從的指示，付出負載卻什麼也沒說。測試方式 — 它相對於預設改變行為嗎？— 是模型相對的，不是讀者相對的：兩個人對一個無效運算意見分歧，是對預設意見分歧，並靠執行文件來解決，而不是靠辯論。當一個句子失敗時，刪掉整個句子，而不是從它身上修剪單詞。這個測試也為領頭詞打分：一個太弱以致無法擊敗預設的詞（當代理已經有點徹底時說 <em>be thorough</em>）是一個無效運算，解方是更強的詞（<em>relentless</em>），而不是不同的技巧。</li>
 </ul></div></div>
-<div class="tutorial-block">
-  <h3><span class="tb-icon">📖</span> 教學解說</h3>
-  <p><code>writing-for-agents</code> 是「怎麼寫好技能」這套方法論的<strong>機器可讀版</strong>。write-great-skills.html 是給人看的教學；這個技能是給 agent 看的參考。它的核心概念是：<strong>所有 agent-facing 文件的寫法本質相同</strong>——無論是技能、AGENTS.md、規格、ticket，都用同樣的槓桿（context pointer、leading words、pruning）來控制行為。</p>
-  <p>最重要的設計概念是<strong>資訊階層</strong>：步驟（agent 執行的有序動作）→ 檔內參考（按需查閱）→ 揭露參考（用 context pointer 拉的外部檔）。每一層的選擇都在平衡 context load 和 cognitive load。</p>
-</div>
-<div class="tutorial-block tb-example">
-  <h3><span class="tb-icon">💡</span> Worked Example</h3>
-  <p><strong>情境</strong>：你要寫一個「幫專案加 prettier」的 AGENTS.md 規則。</p>
-  <ol>
-    <li><strong>Context pointer</strong>：在 AGENTS.md 裡寫一行——「Prettier: 見 <code>docs/prettier.md</code>」。這就是一個 context pointer。Agent 每次都看到這行，但只在需要時才拉那個檔案。</li>
-    <li><strong>Leading word</strong>：在 prettier.md 裡寫「run <code>npx prettier --check .</code> before every commit」而不是「確保程式碼格式正確」。Leading word 是 <code>prettier --check</code>，它會觸發 agent 對 prettier CLI 的先驗。</li>
-    <li><strong>Pruning</strong>：不要在 prettier.md 裡解釋 prettier 是什麼——agent 已經知道了。只寫「在這個專案裡怎麼用」。跑 deletion test：把「prettier 是什麼」那段砍掉，agent 行為不變，就是 no-op。</li>
-    <li><strong>資訊階層</strong>：步驟 = 在 commit 前跑 prettier --check；參考 = .prettierrc 的設定說明。步驟放前面，參考放後面。</li>
-  </ol>
-</div>
-<div class="tutorial-block tb-mistake">
-  <h3><span class="tb-icon">⚠️</span> 常見錯誤</h3>
-  <ul>
-    <li><strong>把 AGENTS.md 寫成說明書</strong>——解釋 prettier 是什麼、為什麼要用它。Agent 不需要這些；它需要的是「在這個專案裡怎麼用」。</li>
-    <li><strong>Context pointer 措辭太弱</strong>——「相關文件見 docs/」太模糊。要精準：「Prettier 設定見 <code>docs/prettier.md</code>」。</li>
-    <li><strong>否定句引導</strong>——「不要用 semicolons」→ agent 反而會想 semicolons。改用正向：「使用 no-semi 風格」。</li>
-    <li><strong>把參考資料全部塞進主檔</strong>——AGENTS.md 或 SKILL.md 越大，每次 request 的成本越高。拆出去用 pointer。</li>
-  </ul>
-</div>
-<div class="tutorial-block tb-checklist">
-  <h3><span class="tb-icon">✅</span> 練習 / 驗收清單</h3>
-  <ul>
-    <li>□ 能說明資訊階層的三層（步驟 → 檔內參考 → 揭露參考）</li>
-    <li>□ Context pointer 的措辭精準（有 leading word、有明確檔案路徑）</li>
-    <li>□ 沒有否定句引導（都用正向行為描述）</li>
-    <li>□ 沒有 agent 已知的背景知識（跑了 deletion test）</li>
-    <li>□ SKILL.md / AGENTS.md 每一行都對行為有實際影響</li>
-  </ul>
-</div>
-<div class="tutorial-block tb-example">
-  <h3><span class="tb-icon">🚀</span> 進階真實情境 Worked Example</h3>
-  <p><strong>情境</strong>：你要為專案寫一份 <code>AGENTS.md</code>，內容涵蓋「測試怎麼跑」「commits 規範」「領域詞彙指向」。你只有 15 行預算，得用 writing-for-agents 的槓桿設計它。</p>
-  <ol>
-    <li>資訊階層：15 行全塞得下「步驟＋參考」嗎？不——把測試與 commits 當 in-file steps（agent 每輪都需要），把領域詞彙細節放進 <code>CONTEXT.md</code>，用一行 context pointer 指向。</li>
-    <li>Context pointer 措辭：不寫「領域詞彙見相關文件」，改寫「領域詞彙（如 order、charge）定義見 <code>CONTEXT.md</code>」——前載領域詞、給明確路徑、列出觸發分支。</li>
-    <li>Leading word：測試指令寫「跑 <code>pnpm test</code>，遵循 <strong>red-green</strong> 循環」而不是「寫測試時要小心，確保測試合理」——red-green 召喚 TDD 先驗，比一段懇求有效。</li>
-    <li>Pruning：跑 deletion test——「確保測試合理」這行刪掉行為沒變 → no-op 砍掉；「commits 用 conventional 格式」保留（agent 預設不會用）。</li>
-    <li>完成：AGENTS.md 15 行，每行都承載行為；CONTEXT.md 與其他 docs 用 pointer 揭露，不塞進主檔。</li>
-  </ol>
-  <p><strong>設計決策</strong>：15 行預算的強制力來自「context load 意識」——AGENTS.md 每一行每輪都在燒 token。所以每行都必須回答「它每輪被看到時，值得那筆成本嗎？」。這就是 writing-for-agents 與「把文件寫完整」最大的分歧點。</p>
-</div>
-<div class="tutorial-block tb-theory">
-  <h3><span class="tb-icon">🔬</span> 深入原理擴充</h3>
-  <p>「資訊階層」的梯子（in-file step → in-file reference → disclosed reference）實質是<strong>按「被需要的頻率」排序的載入策略</strong>。每往下一階，材料離 agent 的即時注意力越遠、代價越小——但代價是「到達它的條件」必須由指標精確描述。階梯設計的張力在「推太少頂層臃腫」與「推太多藏起必需品」之間，而「分支」是決定該推多深的測試：<strong>每個分支都需要的放上面，只有某些分支需要的推下去</strong>。</p>
-  <p>「co-location（共置）」是文件內的配套：它處理「在同一層，哪些東西該擺在一起」——把概念的定義、規則、注意事項放同一標題下，讓閱讀一部分帶出鄰居。它的反面是「scattering（散落）」：把一個意義拆散到多處。兩者別混淆：重複是「一個意義兩處重說」，散落是「一個意義被拆碎」。</p>
-  <p><strong>陷阱案例</strong>：很多人以為「文件詳細＝agent 執行得越準」，於是在 AGENTS.md 裡把 commit 格式、branch 命名、code review 流程、環境變數、部署指令、歷史背景全寫上——結果 200 行的 AGENTS.md 讓 agent 每輪讀 200 行，還常常在真正要執行時「選擇性忽略」其中 190 行。真相是：<strong>多不是好，精才是好</strong>。文件的每一行都在跟其他行競爭 agent 的注意力；最該被看到的那一行，若埋在 200 行裡，效果跟不存在一樣。這正是「sprawl（蔓延）」的定義——即使每行都活著，文件太長本身就讓注意力變薄。</p>
-</div>
-<div class="tutorial-block tb-diagnosis">
-  <h3><span class="tb-icon">🩺</span> 診斷式疑難排解表</h3>
-  <table>
-    <tr><th>症狀</th><th>可能原因</th><th>解決方案</th></tr>
-    <tr><td>AGENTS.md 破百行，agent 執行常漏步驟</td><td>sprawl——文件太長稀釋注意力，該揭露的沒揭露</td><td>把分支與背景推到獨立檔（pointer），主檔只留每輪都要的步驟</td></tr>
-    <tr><td>agent 該拉參考檔時沒拉</td><td>context pointer 措辭太弱或沒列觸發條件</td><td>前載 leading word、指名目標內容、列明確分支條件、給明確路徑</td></tr>
-    <tr><td>文件描述與 package.json / config 衝突</td><td>把環境當成真相來源的內容複述進文件（cache 沒價值）</td><td>刪掉複述，讓 agent 直接查環境；文件只記「環境看不到的慣例與理由」</td></tr>
-    <tr><td>同一個意義出現在兩份文件</td><td>duplication——兩處改動要同步，早晚分叉</td><td>合併到單一真相來源，另一處改用 pointer 引用</td></tr>
-    <tr><td>刪掉一段文字後 agent 行為不變</td><td>該段是 no-op，或 leading word 太弱</td><td>刪整段；若是引導詞太弱，換更強的先驗詞（如 relentless）</td></tr>
-  </table>
-</div>
-<div class="tutorial-block tb-challenge">
-  <h3><span class="tb-icon">🏆</span> 進階挑戰題</h3>
-  <ol>
-    <li><strong>資訊階梯決策</strong>：專案有「測試指令」「commit 規範」「部署流程」「領域詞彙」「歷史決策 ADR」。把五者各放到階梯的哪一層（in-file step / in-file ref / disclosed ref），並說明依據。</li>
-    <li><strong>Pointer 措辭比較</strong>：比較「文件見 docs/」與「測試規範見 <code>docs/testing.md</code>（跑測試前必讀）」兩個 pointer 的觸發可靠度，並用「指針的措辭決定觸達可靠性」原則解釋差距。</li>
-    <li><strong>No-op 獵殺</strong>：給一段 60 行的 AGENTS.md，逐行標出「in-file step」「in-file ref」「該揭露的」「該刪的 no-op」「與環境重複的 cache」五類，並重寫成 20 行。</li>
-  </ol>
-</div>
-
-<div class="tutorial-block tb-project">
-  <h3><span class="tb-icon">🏗️</span> ① 專案級端到端 Worked Example</h3>
-  <p><strong>專案情境</strong>：你要為一個新技能撰寫 AGENTS.md 和 SKILL.md。</p>
-<ol>
-  <li>先跑 <code>/writing-for-agents</code>，它會問：「這個技能的觸發詞是什麼？它的輸入是什麼？它的輸出是什麼？」</li>
-  <li>撰寫 SKILL.md：name（技能名稱）、description（觸發條件 + 用途）、content（詳細指引）。確保 description 包含足夠的觸發詞讓 agent 能正確路由。</li>
-  <li>撰寫 AGENTS.md 的對應區塊：說明這個技能和其他技能的關係（例如「implement 依賴 to-tickets 的輸出」）。</li>
-  <li>用 <code>/skill-validate</code> 驗證 SKILL.md 的格式是否正確（frontmatter、naming conventions、description limits）。</li>
-</ol>
-<p><strong>關鍵</strong>：writing-for-agents 的核心問題是「agent 怎麼知道要用這個技能？」——答案在 description 的觸發詞。如果觸發詞不夠，agent 永遠不會選中你寫的技能。</p>
-</div>
-<div class="tutorial-block tb-theory">
-  <h3><span class="tb-icon">⚡</span> ② 效能 / 品質 / 安全深度</h3>
-  <table>
-  <tr><th>面向</th><th>實務考量</th></tr>
-  <tr><td>效能</td><td>description 的長度直接影響 agent 的 token 成本——每個 session 都會讀 description。限制在 2-3 句話，包含觸發詞和核心用途。</td></tr>
-  <tr><td>品質</td><td>SKILL.md 的品質指標：agent 能否從 description 正確路由到這個技能。測試方法：給 agent 10 個不同的觸發詞，看它是否能選中正確的技能。</td></tr>
-  <tr><td>安全</td><td>SKILL.md 中不應該包含 API key 或 token——技能的參數透過 agent 的環境變數傳遞，不是寫在文件裡。</td></tr>
-</table>
-</div>
-<div class="tutorial-block tb-comparison">
-  <h3><span class="tb-icon">📊</span> ③ 技能間比較對照表</h3>
-  <table>
-  <tr><th>面向</th><th>writing-for-agents</th><th>to-spec</th><th>teach</th><th>差異說明</th></tr>
-  <tr><td>目的</td><td>寫給 agent 讀的文件</td><td>寫給人讀的規格</td><td>教會人一個技能</td><td>writing-for-agents 是「讓 agent 能用」，to-spec 是「讓人能做」，teach 是「讓人能學會」</td></tr>
-  <tr><td>格式</td><td>SKILL.md / AGENTS.md</td><td>規格文件</td><td>教學文件</td><td>writing-for-agents 有嚴格的格式要求（frontmatter、naming），to-spec 和 teach 較自由</td></tr>
-  <tr><td>時機</td><td>建立/編輯技能時</td><td>討論完後</td><td>團隊需要新技能時</td><td>writing-for-agents 是「建工具」，to-spec 是「建計畫」，teach 是「建能力」</td></tr>
-</table>
-</div>
-<div class="tutorial-block tb-checklist">
-  <h3><span class="tb-icon">✅</span> ④ 互動式進階檢核清單</h3>
-  <ul>
-    <li>□ SKILL.md 的 description 包含足夠的觸發詞</li>
-    <li>□ description 在 2-3 句話以內——太長會增加 token 成本</li>
-    <li>□ SKILL.md 中沒有 API key 或 token</li>
-    <li>□ 知道 writing-for-agents 的核心問題是「agent 怎麼知道要用這個技能」</li>
-    <li>□ 用 /skill-validate 驗證格式是否正確</li>
-  </ul>
-</div>
 
 </div>
 </body>

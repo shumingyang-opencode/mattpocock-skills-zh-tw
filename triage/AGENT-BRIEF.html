@@ -22,15 +22,15 @@
 <h1>AGENT-BRIEF</h1>
 <div class="subtitle">triage · 附屬文件</div>
 <div class="pair"><div class="col-en" lang="en"><h1>Writing Agent Briefs</h1></div><div class="col-zh" lang="zh-Hant"><h1>撰寫代理簡報</h1></div></div>
-<div class="pair"><div class="col-en" lang="en"><p>An agent brief is a structured comment posted on a GitHub issue or PR when it moves to <code>ready-for-agent</code>. It is the authoritative specification that an AFK agent will work from. The original body and discussion are context — the agent brief is the contract.</p></div><div class="col-zh" lang="zh-Hant"><p>代理簡報是當 issue 或 PR 移入 <code>ready-for-agent</code> 時，貼在 GitHub issue 或 PR 上的結構化評論。它是 AFK 代理據以工作的權威規格說明。原始內文與討論是脈絡——代理簡報才是合約。</p></div></div>
-<div class="pair"><div class="col-en" lang="en"><p>The brief states <strong>what the agent should do</strong>, which stretches to both surfaces: for an issue, that's building the change from nothing; for a PR, it's what's left to do <em>to the existing diff</em> — finish it, close gaps, address review points. Same principles either way; the PR example below shows the difference.</p></div><div class="col-zh" lang="zh-Hant"><p>簡報陳述<strong>代理應該做什麼</strong>，這延伸到兩個介面：對 issue 而言，是從零開始建置這項變更；對 PR 而言，是<em>對既有 diff</em> 還剩什麼要做——完成它、補上缺口、處理審查意見。兩種情況的原則相同；下方的 PR 範例會顯示差異。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>An agent brief is a structured comment posted on a GitHub issue or PR when it moves to <code>ready-for-agent</code>. It is the authoritative specification that an AFK agent will work from. The original body and discussion are context: the agent brief is the contract.</p></div><div class="col-zh" lang="zh-Hant"><p>代理簡報是當 issue 或 PR 移入 <code>ready-for-agent</code> 時，貼在 GitHub issue 或 PR 上的結構化評論。它是 AFK 代理據以工作的權威規格說明。原始內文與討論是脈絡——代理簡報才是合約。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>The brief states <strong>what the agent should do</strong>, which stretches to both surfaces: for an issue, that's building the change from nothing; for a PR, it's what's left to do <em>to the existing diff</em>: finish it, close gaps, address review points. Same principles either way; the PR example below shows the difference.</p></div><div class="col-zh" lang="zh-Hant"><p>簡報陳述<strong>代理應該做什麼</strong>，這延伸到兩個介面：對 issue 而言，是從零開始建置這項變更；對 PR 而言，是<em>對既有 diff</em> 還剩什麼要做——完成它、補上缺口、處理審查意見。兩種情況的原則相同；下方的 PR 範例會顯示差異。</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><h2>Principles</h2></div><div class="col-zh" lang="zh-Hant"><h2>原則</h2></div></div>
 <div class="pair"><div class="col-en" lang="en"><h3>Durability over precision</h3></div><div class="col-zh" lang="zh-Hant"><h3>耐用勝於精確</h3></div></div>
 <div class="pair"><div class="col-en" lang="en"><p>The issue may sit in <code>ready-for-agent</code> for days or weeks. The codebase will change in the meantime. Write the brief so it stays useful even as files are renamed, moved, or refactored.</p></div><div class="col-zh" lang="zh-Hant"><p>issue 可能會在 <code>ready-for-agent</code> 停留數天或數週。程式碼庫在此期間會改變。撰寫簡報時，要讓它在檔案被重新命名、移動或重構後依然有用。</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><ul>
 <li><strong>Do</strong> describe interfaces, types, and behavioral contracts</li>
 <li><strong>Do</strong> name specific types, function signatures, or config shapes that the agent should look for or modify</li>
-<li><strong>Don't</strong> reference file paths — they go stale</li>
+<li><strong>Don't</strong> reference file paths: they go stale</li>
 <li><strong>Don't</strong> reference line numbers</li>
 <li><strong>Don't</strong> assume the current implementation structure will remain the same</li>
 </ul></div><div class="col-zh" lang="zh-Hant"><ul>
@@ -79,9 +79,9 @@ Describe what should happen after the agent's work is complete.
 Be specific about edge cases and error conditions.
 
 **Key interfaces:**
-- `TypeName` — what needs to change and why
-- `functionName()` return type — what it currently returns vs what it should return
-- Config shape — any new configuration options needed
+- `TypeName`: what needs to change and why
+- `functionName()` return type: what it currently returns vs what it should return
+- Config shape: any new configuration options needed
 
 **Acceptance criteria:**
 - [ ] Specific, testable criterion 1
@@ -135,7 +135,7 @@ Truncation should break at the last word boundary before 1024 characters
 and append &quot;...&quot; to indicate truncation.
 
 **Key interfaces:**
-- The `SkillMetadata` type's `description` field — no type change needed,
+- The `SkillMetadata` type's `description` field: no type change needed,
   but the validation/processing logic that populates it needs to respect
   word boundaries
 - Any function that reads SKILL.md frontmatter and extracts the description
@@ -200,7 +200,7 @@ requested the feature. When triaging new issues, these files should be
 checked for matches.
 
 **Key interfaces:**
-- Markdown file format in `.out-of-scope/` — each file should have a
+- Markdown file format in `.out-of-scope/`: each file should have a
   `# Concept Name` heading, a `**Decision:**` line, a `**Reason:**` line,
   and a `**Prior requests:**` list with issue links
 - The triage workflow should read all `.out-of-scope/*.md` files early
@@ -269,7 +269,7 @@ remain: errors are still printed as human text (not JSON), and the new flag has
 no test coverage.
 
 **Desired behavior:**
-With `--json`, all output — including errors — is well-formed JSON on stdout,
+With `--json`, all output (including errors) is well-formed JSON on stdout,
 and the command's exit codes are unchanged. The existing human-readable output
 is untouched when the flag is absent.
 

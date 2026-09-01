@@ -5,12 +5,535 @@
     "date": "2026-08-05"
   },
   "upstream": {
-    "release": "v1.2.2",
-    "commit": "8b36d4fb2635b3c21998dcd8144439c9e5ba7302",
-    "date": "2026-08-05"
+    "release": "v1.2.3",
+    "commit": "6654f6b60cd9d5be8b54c6fafe44346dabeb3b76",
+    "date": "2026-08-06"
   },
-  "up_to_date": true,
-  "pending": [],
-  "non_md_count": 0,
-  "checked_at": "2026-08-06T07:44:04Z"
+  "up_to_date": false,
+  "pending": [
+    {
+      "kind": "translate",
+      "path": ".changeset/add-implement-spec-skill.md",
+      "reason": "added"
+    },
+    {
+      "kind": "translate",
+      "path": ".changeset/domain-modeling-trigger-context-adr.md",
+      "reason": "added"
+    },
+    {
+      "kind": "translate",
+      "path": ".changeset/fix-yaml-frontmatter-colons.md",
+      "reason": "added"
+    },
+    {
+      "kind": "translate",
+      "path": ".changeset/grilling-add-hr-between-questions.md",
+      "reason": "added"
+    },
+    {
+      "kind": "translate",
+      "path": ".changeset/grilling-remove-em-dashes.md",
+      "reason": "added"
+    },
+    {
+      "kind": "translate",
+      "path": ".changeset/remove-em-dashes-repo-wide.md",
+      "reason": "added"
+    },
+    {
+      "kind": "translate",
+      "path": ".changeset/skill-tool-invocation-terminology.md",
+      "reason": "added"
+    },
+    {
+      "kind": "translate",
+      "path": ".changeset/user-invoked-skill-invocation.md",
+      "reason": "added"
+    },
+    {
+      "kind": "translate",
+      "path": ".changeset/wait-what-context-map.md",
+      "reason": "added"
+    },
+    {
+      "kind": "new-skill",
+      "path": "skills/in-progress/implement-spec/SKILL.md",
+      "reason": "added",
+      "note": "需翻譯＋加入 registry（blurb/level/inv）"
+    },
+    {
+      "kind": "new-skill",
+      "path": "skills/in-progress/retro/SKILL.md",
+      "reason": "added",
+      "note": "需翻譯＋加入 registry（blurb/level/inv）"
+    },
+    {
+      "kind": "translate",
+      "path": ".agents/adr/0001-explicit-setup-pointer-only-for-hard-dependencies.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": ".agents/adr/0002-ship-as-a-claude-code-plugin.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": ".agents/install-block.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": ".agents/invocation.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": ".agents/writing-docs.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": ".out-of-scope/mainstream-issue-trackers-only.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": ".out-of-scope/question-limits.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": ".out-of-scope/setup-skill-verify-mode.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": "CHANGELOG.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": "CLAUDE.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": "CONTEXT.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": "README.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": "docs/engineering/ask-matt.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": "docs/engineering/code-review.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": "docs/engineering/codebase-design.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": "docs/engineering/diagnosing-bugs.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": "docs/engineering/domain-modeling.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": "docs/engineering/grill-with-docs.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": "docs/engineering/implement.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": "docs/engineering/improve-codebase-architecture.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": "docs/engineering/prototype.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": "docs/engineering/research.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": "docs/engineering/resolving-merge-conflicts.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": "docs/engineering/setup-matt-pocock-skills.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": "docs/engineering/tdd.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": "docs/engineering/to-spec.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": "docs/engineering/to-tickets.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": "docs/engineering/triage.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": "docs/engineering/wayfinder.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": "docs/engineering/wizard.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": "docs/productivity/grill-me.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": "docs/productivity/grilling.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": "docs/productivity/handoff.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": "docs/productivity/teach.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": "docs/productivity/to-questionnaire.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": "docs/productivity/wait-what.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": "docs/productivity/writing-for-agents.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": "skills/deprecated/README.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": "skills/engineering/README.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": "skills/engineering/ask-matt/PHASE-BOUNDARIES.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": "skills/engineering/ask-matt/SKILL.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": "skills/engineering/code-review/SKILL.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": "skills/engineering/codebase-design/DEEPENING.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": "skills/engineering/codebase-design/DESIGN-IT-TWICE.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": "skills/engineering/codebase-design/SKILL.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": "skills/engineering/diagnosing-bugs/SKILL.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": "skills/engineering/domain-modeling/ADR-FORMAT.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": "skills/engineering/domain-modeling/CONTEXT-FORMAT.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": "skills/engineering/domain-modeling/SKILL.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": "skills/engineering/grill-with-docs/SKILL.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": "skills/engineering/improve-codebase-architecture/HTML-REPORT.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": "skills/engineering/improve-codebase-architecture/SKILL.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": "skills/engineering/prototype/LOGIC.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": "skills/engineering/prototype/SKILL.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": "skills/engineering/prototype/UI.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": "skills/engineering/research/SKILL.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": "skills/engineering/resolving-merge-conflicts/SKILL.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": "skills/engineering/setup-matt-pocock-skills/SKILL.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": "skills/engineering/setup-matt-pocock-skills/domain.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": "skills/engineering/setup-matt-pocock-skills/issue-tracker-github.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": "skills/engineering/setup-matt-pocock-skills/issue-tracker-gitlab.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": "skills/engineering/setup-matt-pocock-skills/issue-tracker-local.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": "skills/engineering/tdd/SKILL.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": "skills/engineering/to-spec/SKILL.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": "skills/engineering/to-tickets/SKILL.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": "skills/engineering/triage/AGENT-BRIEF.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": "skills/engineering/triage/OUT-OF-SCOPE.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": "skills/engineering/triage/SKILL.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": "skills/engineering/wayfinder/SKILL.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": "skills/engineering/wizard/SKILL.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": "skills/in-progress/README.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": "skills/in-progress/claude-handoff/SKILL.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": "skills/in-progress/loop-me/SKILL.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": "skills/in-progress/setup-ts-deep-modules/SKILL.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": "skills/in-progress/writing-beats/SKILL.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": "skills/in-progress/writing-fragments/SKILL.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": "skills/in-progress/writing-shape/SKILL.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": "skills/misc/README.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": "skills/misc/git-guardrails-claude-code/SKILL.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": "skills/misc/setup-pre-commit/SKILL.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": "skills/productivity/README.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": "skills/productivity/grill-me/SKILL.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": "skills/productivity/grilling/SKILL.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": "skills/productivity/handoff/SKILL.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": "skills/productivity/teach/GLOSSARY-FORMAT.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": "skills/productivity/teach/LEARNING-RECORD-FORMAT.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": "skills/productivity/teach/MISSION-FORMAT.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": "skills/productivity/teach/RESOURCES-FORMAT.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": "skills/productivity/teach/SKILL.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": "skills/productivity/to-questionnaire/SKILL.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": "skills/productivity/wait-what/SKILL.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": "skills/productivity/writing-for-agents/SKILL-MECHANICS.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": "skills/productivity/writing-for-agents/SKILL.md",
+      "reason": "modified"
+    }
+  ],
+  "non_md_count": 22,
+  "checked_at": "2026-09-01T02:14:10Z"
 }

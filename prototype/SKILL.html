@@ -30,23 +30,23 @@
 <div class="pair"><div class="col-en" lang="en"><h1>Prototype</h1></div><div class="col-zh" lang="zh-Hant"><h1>原型</h1></div></div>
 <div class="pair"><div class="col-en" lang="en"><p>A prototype is <strong>throwaway code that answers a question</strong>. The question decides the shape.</p></div><div class="col-zh" lang="zh-Hant"><p>一個原型是<strong>回答問題的一次性程式碼</strong>。問題決定了它的形狀。</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><h2>Pick a branch</h2></div><div class="col-zh" lang="zh-Hant"><h2>選擇分支</h2></div></div>
-<div class="pair"><div class="col-en" lang="en"><p>Identify which question is being answered — from the user's prompt, the surrounding code, or by asking if the user is around:</p></div><div class="col-zh" lang="zh-Hant"><p>判斷正在回答的是哪個問題——從使用者的提示、周邊程式碼，或在場時直接詢問使用者：</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Identify which question is being answered, using the user's prompt, the surrounding code, or by asking if the user is around:</p></div><div class="col-zh" lang="zh-Hant"><p>判斷正在回答的是哪個問題——從使用者的提示、周邊程式碼，或在場時直接詢問使用者：</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><ul>
-<li><strong>"Does this logic / state model feel right?"</strong> → <a href="LOGIC.html">LOGIC.md</a>. Build a single shareable HTML file — free-play buttons plus tabbed guided walkthroughs — that pushes the state machine through cases that are hard to reason about on paper, and that a non-developer can drive.</li>
+<li><strong>"Does this logic / state model feel right?"</strong> → <a href="LOGIC.html">LOGIC.md</a>. Build a single shareable HTML file (free-play buttons plus tabbed guided walkthroughs) that pushes the state machine through cases that are hard to reason about on paper, and that a non-developer can drive.</li>
 <li><strong>"What should this look like?"</strong> → <a href="UI.html">UI.md</a>. Generate several radically different UI variations on a single route, switchable via a URL search param and a floating bottom bar.</li>
 </ul></div><div class="col-zh" lang="zh-Hant"><ul>
 <li><strong>「這個邏輯 / 狀態模型合理嗎？」</strong> → <a href="LOGIC.html">LOGIC.md</a>。建立單一可分享的 HTML 檔案——自由遊玩按鈕加上分頁式引導示範——把狀態機器推向那些在紙上難以推演的案例，讓非開發者也能操作。</li>
 <li><strong>「這個東西應該長什麼樣子？」</strong> → <a href="UI.html">UI.md</a>。在單一路由上產生數個截然不同的 UI 變體，可透過 URL 搜尋參數與浮動底欄切換。</li>
 </ul></div></div>
-<div class="pair"><div class="col-en" lang="en"><p>The two branches produce very different artifacts — getting this wrong wastes the whole prototype. If the question is genuinely ambiguous and the user isn't reachable, default to whichever branch better matches the surrounding code (a backend module → logic; a page or component → UI) and state the assumption at the top of the prototype.</p></div><div class="col-zh" lang="zh-Hant"><p>兩個分支產出的產物差異很大——選錯分支會浪費整個原型。如果問題真的模稜兩可、又聯絡不上使用者，預設選擇較符合周邊程式碼的分支（後端模組 → 邏輯；頁面或元件 → UI），並在原型頂端寫明這個假設。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>The two branches produce very different artifacts, so getting this wrong wastes the whole prototype. If the question is genuinely ambiguous and the user isn't reachable, default to whichever branch better matches the surrounding code (a backend module → logic; a page or component → UI) and state the assumption at the top of the prototype.</p></div><div class="col-zh" lang="zh-Hant"><p>兩個分支產出的產物差異很大——選錯分支會浪費整個原型。如果問題真的模稜兩可、又聯絡不上使用者，預設選擇較符合周邊程式碼的分支（後端模組 → 邏輯；頁面或元件 → UI），並在原型頂端寫明這個假設。</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><h2>Rules that apply to both</h2></div><div class="col-zh" lang="zh-Hant"><h2>兩種分支皆適用的規則</h2></div></div>
 <div class="pair"><div class="col-en" lang="en"><ol>
-<li><strong>Throwaway from day one, and clearly marked as such.</strong> Locate the prototype code close to where it will actually be used (next to the module or page it's prototyping for) so context is obvious — but name it so a casual reader can see it's a prototype, not production. For throwaway UI routes, obey whatever routing convention the project already uses; don't invent a new top-level structure.</li>
-<li><strong>Trivial to run.</strong> A UI prototype starts from one command in the project's task runner — <code>pnpm &lt;name&gt;</code>, <code>python &lt;path&gt;</code>, <code>bun &lt;path&gt;</code>, etc. A logic demo is a single HTML file the user double-clicks. Either way, no thinking required to start it.</li>
-<li><strong>No persistence by default.</strong> State lives in memory. Persistence is the thing the prototype is <em>checking</em>, not something it should depend on. If the question explicitly involves a database, hit a scratch DB or a local file with a clear "PROTOTYPE — wipe me" name.</li>
+<li><strong>Throwaway from day one, and clearly marked as such.</strong> Locate the prototype code close to where it will actually be used (next to the module or page it's prototyping for) so context is obvious, but name it so a casual reader can see it's a prototype, not production. For throwaway UI routes, obey whatever routing convention the project already uses; don't invent a new top-level structure.</li>
+<li><strong>Trivial to run.</strong> A UI prototype starts from one command in the project's task runner: <code>pnpm &lt;name&gt;</code>, <code>python &lt;path&gt;</code>, <code>bun &lt;path&gt;</code>, etc. A logic demo is a single HTML file the user double-clicks. Either way, no thinking required to start it.</li>
+<li><strong>No persistence by default.</strong> State lives in memory. Persistence is the thing the prototype is <em>checking</em>, not something it should depend on. If the question explicitly involves a database, hit a scratch DB or a local file with a clear "PROTOTYPE, wipe me" name.</li>
 <li><strong>Skip the polish.</strong> No tests, no error handling beyond what makes the prototype <em>runnable</em>, no abstractions. The point is to learn something fast.</li>
 <li><strong>Surface the state.</strong> After every action (logic) or on every variant switch (UI), print or render the full relevant state so the user can see what changed.</li>
-<li><strong>Capture it when done.</strong> Fold any validated decision into the real code, then capture the prototype itself as a <strong>primary source</strong>: commit it to a throwaway branch, out of main, and leave a context pointer to that branch on the implementation issue. Capture the answer too — the verdict and the question it settled — in the issue or a commit. The main branch keeps only the validated decision.</li>
+<li><strong>Capture it when done.</strong> Fold any validated decision into the real code, then capture the prototype itself as a <strong>primary source</strong>: commit it to a throwaway branch, out of main, and leave a context pointer to that branch on the implementation issue. Capture the answer too (the verdict and the question it settled) in the issue or a commit. The main branch keeps only the validated decision.</li>
 </ol></div><div class="col-zh" lang="zh-Hant"><ol>
 <li><strong>從第一天就是一次性，並清楚標示。</strong> 把原型程式碼放在實際使用處附近（在它要服務的模組或頁面旁邊），讓上下文一目了然——但要命名得讓隨意瀏覽的人一看就知道是原型，不是正式程式。對於一次性的 UI 路由，遵循專案既有的路由慣例；不要發明新的頂層結構。</li>
 <li><strong>執行成本趨近於零。</strong> UI 原型從專案任務執行器的單一指令開始——<code>pnpm &lt;name&gt;</code>、<code>python &lt;path&gt;</code>、<code>bun &lt;path&gt;</code> 等。邏輯示範是使用者雙擊即可開啟的單一 HTML 檔案。無論哪種方式，啟動它都不需要思考。</li>
@@ -55,120 +55,6 @@
 <li><strong>呈現狀態。</strong> 每次動作之後（邏輯）或每次切換變體時（UI），印出或渲染完整的相關狀態，讓使用者看到改變了什麼。</li>
 <li><strong>完成時留存。</strong> 把任何經驗證的決策折疊回正式程式碼，然後把原型本身當成<strong>主要來源</strong>留存：提交到一條一次性分支、不放進 main，並在實作 issue 上留下指向該分支的上下文指標。答案也要留存——結論以及它定案的問題——寫進 issue 或一次 commit。main 分支只保留經過驗證的決策。</li>
 </ol></div></div>
-<div class="tutorial-block">
-  <h3><span class="tb-icon">📖</span> 教學解說</h3>
-  <p><code>prototype</code> 的核心原則是：<strong>原型是用來回答問題的，不是用來交付功能的</strong>。它是一次性的——從第一天就設計為要被丟棄。它的價值在於快速驗證設計決策，而不是產出可上線的程式碼。</p>
-  <p>關鍵設計：原型分為 <strong>UI</strong> 和 <strong>Logic</strong> 兩種分支。選錯分支會浪費整個原型。判斷標準：如果問題是「它該長什麼樣」→ UI；如果是「狀態模型對不對」→ Logic。如果分不出，看周邊程式碼——後端模組 → Logic，頁面或元件 → UI。</p>
-</div>
-<div class="tutorial-block tb-example">
-  <h3><span class="tb-icon">💡</span> Worked Example</h3>
-  <p><strong>情境</strong>：你要設計一個拖曳排序的 UI，不確定用 DnD Kit 還是自己寫。</p>
-  <ol>
-    <li>呼叫 <code>/prototype</code>，問題：「用 DnD Kit 實作拖曳排序，效果如何？」</li>
-    <li>選 UI 分支，建一個 <code>prototype/dnd-test/</code> 目錄</li>
-    <li>寫一個單頁 HTML + React：能拖曳、能排序、能看到狀態變化</li>
-    <li>執行：<code>pnpm dev</code>（一行指令就能跑）</li>
-    <li>觀察：拖曳手感如何？效能如何？</li>
-    <li>結論：「DnD Kit 手感好但 API 複雜，不如自己寫」→ 決策折疊回 main，原型留在一次性分支</li>
-  </ol>
-</div>
-<div class="tutorial-block tb-mistake">
-  <h3><span class="tb-icon">⚠️</span> 常見錯誤</h3>
-  <ul>
-    <li><strong>原型寫得太精緻</strong>——加了 error handling、加了 loading state、加了測試。原型是用來回答問題的，不是用來交付的。跳過打磨。</li>
-    <li><strong>原型留進 main</strong>——原型應該在一次性分支上。Main 只保留經驗證的決策。</li>
-    <li><strong>沒有清楚標示「這是原型」</strong>——讓隨意瀏覽的人一看就知道這是原型，不是正式程式。</li>
-    <li><strong>把原型當成 deliverable</strong>——原型的價值是回答問題，不是產出功能。問題回答完，原型就完成使命了。</li>
-  </ul>
-</div>
-<div class="tutorial-block tb-checklist">
-  <h3><span class="tb-icon">✅</span> 練習 / 驗收清單</h3>
-  <ul>
-    <li>□ 能區分 UI 和 Logic 兩種原型分支</li>
-    <li>□ 原型能一行指令啟動</li>
-    <li>□ 沒有 error handling、測試、抽象化</li>
-    <li>□ 每次動作後有呈現狀態</li>
-    <li>□ 完成後原型留在一次性分支，決策折疊回 main</li>
-  </ul>
-</div>
-<div class="tutorial-block tb-example">
-  <h3><span class="tb-icon">🚀</span> 進階真實情境 Worked Example</h3>
-  <p><strong>情境</strong>：你在設計一個「購物車優惠疊加」的狀態模型——滿額折、折扣碼、會員價三者同時存在時如何計算。你無法用紙上推演確定規則，決定用 LOGIC 分支原型。</p>
-  <ol>
-    <li>判斷分支：問題是「狀態模型對不對」→ LOGIC（不是 UI）。建一個可雙擊開啟的單一 HTML 檔。</li>
-    <li>把狀態機器推向紙上難推的案例：先滿額折再折扣碼 vs 先折扣碼再滿額折，金額差多少？滿額折的門檻以「折扣後」還是「折扣前」計算？</li>
-    <li>原型內建自由遊玩按鈕 + 分頁引導：讓非開發者（PM）也能操作，把不同疊加順序的結果並排顯示。</li>
-    <li>每次動作後把完整狀態印在畫面上——PM 看見「折扣碼把金額降到門檻以下，滿額折就消失了」的怪異行為。</li>
-    <li>結論：疊加順序必須固定為「會員價→滿額折→折扣碼」，且滿額折以折扣後金額計算。決策折疊回正式程式碼。</li>
-    <li>留存：原型 commit 到 <code>prototype/discount-stack</code> 一次性分支（不在 main），實作 issue 上留上下文指標；答案（判定與問題）寫進 issue。</li>
-  </ol>
-  <p><strong>設計決策</strong>：本例最大的陷阱是「優惠疊加順序」這種規則在紙上永遠討論不出結果——每個人都有直覺，但直覺互相衝突。LOGIC 原型的價值是讓 PM 親自「看到」一個順序下的具體金額，把「我覺得」變成「我看到」。這就是「原型的價值是回答問題，不是交付功能」的實例。</p>
-</div>
-<div class="tutorial-block tb-theory">
-  <h3><span class="tb-icon">🔬</span> 深入原理擴充</h3>
-  <p>「throwaway（一次性）」在原型技能裡是<strong>對程式碼撰寫方式的約束，不是銷毀的承諾</strong>。這組設計有三層含義：(1) 不寫測試、不做抽象——因為測試與抽象是「要長期維護」的訊號，會拖慢「快速學到東西」的目標；(2) 狀態不持久化——因為持久化是原型要<em>檢驗</em>的事，不是它該依賴的事；(3) 完成後留存到一次性分支——因為原型是<strong>主要來源</strong>，未來要回溯「當時為什麼這樣設計」時，原型是證據。</p>
-  <p>對 AI coding assistant 而言，「prototype 分支 + issue 指標」的留存機制解決了<strong>決策的追溯性</strong>。正式程式碼裡的判斷（如「疊加順序固定」）背後的理由不在 code 裡，而在原型互動裡——若不留存原型與答案，後人看到程式碼只知道「這樣寫」，不知道「為什麼這樣寫」。</p>
-  <p><strong>陷阱案例</strong>：很多人以為「prototype 的程式碼可以亂寫，反正丟掉」，於是把實驗寫在正式目錄、命名成 <code>test-discount.ts</code>，甚至直接在 main 上 commit。真相是：<strong>「一次性」約束的是品質，不是位置</strong>。技能要求把原型放在「實際使用處附近」但命名清楚標示、且在一次性分支上——這是為了讓「這是原型」的訊號對未來的讀者（人與 agent）一望即知。命名不清的 prototype 混進 main，就會變成下一輪 code-review 的「範圍蔓延」。</p>
-</div>
-<div class="tutorial-block tb-diagnosis">
-  <h3><span class="tb-icon">🩺</span> 診斷式疑難排解表</h3>
-  <table>
-    <tr><th>症狀</th><th>可能原因</th><th>解決方案</th></tr>
-    <tr><td>原型越寫越精緻，開始加 error handling 與測試</td><td>把原型當成要交付的產品</td><td>回到「原型回答問題」的目標，砍掉所有非 runnable 需要的程式碼</td></tr>
-    <tr><td>UI 問題用了 LOGIC 分支（或反之）</td><td>分支判斷錯誤，產物形狀不對</td><td>「長什麼樣」→ UI；「狀態模型對不對」→ LOGIC；模糊時看周邊程式碼（後端→Logic、頁面→UI）</td></tr>
-    <tr><td>原型 commit 進 main</td><td>沒走一次性分支流程</td><td>移到 <code>prototype/&lt;name&gt;</code> 分支，main 只留驗證後的決策</td></tr>
-    <tr><td>原型無法一行指令啟動</td><td>執行成本太高，違反「trivial to run」</td><td>UI 用任務執行器單指令（pnpm &lt;name&gt;）、LOGIC 用雙擊即開的單一 HTML</td></tr>
-    <tr><td>使用者在原型裡看不到狀態變化</td><td>沒做「surface the state」</td><td>每次動作後印出／渲染完整相關狀態，讓決策看得見</td></tr>
-  </table>
-</div>
-<div class="tutorial-block tb-challenge">
-  <h3><span class="tb-icon">🏆</span> 進階挑戰題</h3>
-  <ol>
-    <li><strong>分支選擇</strong>：三個問題（a）拖曳排序手感如何（b）並發下購物車計數是否一致（c）訂單狀態機的邊界案例。各選 LOGIC 或 UI，並說明判斷依據。</li>
-    <li><strong>留存設計</strong>：原型驗證了「疊加順序固定」的決策。描述「決策折疊回正式程式碼、原型留分支、issue 記答案」三個動作的完整做法與彼此如何連結。</li>
-    <li><strong>時間盒思考</strong>：你的 LOGIC 原型跑了兩小時還在加功能。用「原型是回答問題的」原則設計一個停止規則，並說明你該怎麼判斷「答案已經拿到」。 </li>
-  </ol>
-</div>
-
-<div class="tutorial-block tb-project">
-  <h3><span class="tb-icon">🏗️</span> ① 專案級端到端 Worked Example</h3>
-  <p><strong>專案情境</strong>：你設計了一個「拖曳排序」的狀態模型，不確定是否正確，想先做個原型確認。</p>
-<ol>
-  <li>先跑 <code>/prototype</code>，描述你的狀態模型：<code>{ items: Item[], dragging: Item | null, over: Item | null }</code>。</li>
-  <li>prototype 會問：「dragging 和 over 可以同時存在嗎？如果使用者在 drag 中按 Escape 會怎樣？」——這些是你沒想到的 edge case。</p>
-  <li>回答後，prototype 建立一個最小的 HTML 原型：可拖曳的清單，狀態模型在 console 中即時顯示。</li>
-  <li>測試 edge case：拖曳中按 Escape → <code>dragging: null</code>、拖到無效區域 → 回到原位。確認狀態模型是否完整。</li>
-</ol>
-<p><strong>關鍵</strong>：原型不是「做一個 demo」，而是「回答一個設計問題」。問題越具體（「狀態模型是否涵蓋所有 edge case」），原型越有價值。</p>
-</div>
-<div class="tutorial-block tb-theory">
-  <h3><span class="tb-icon">⚡</span> ② 效能 / 品質 / 安全深度</h3>
-  <table>
-  <tr><th>面向</th><th>實務考量</th></tr>
-  <tr><td>效能</td><td>原型是「一次性」的——不要在原型上寫 production-ready 的程式碼。原型的價值在回答問題，不在可維護性。</td></tr>
-  <tr><td>品質</td><td>原型的品質指標：是否能回答你提出的設計問題。如果原型做了 10 個功能但回答不了問題，那是失敗的原型。</td></tr>
-  <tr><td>安全</td><td>原型可能包含 mock 的 API 呼叫——確保原型中的 API key 或 token 是 placeholder，不是真實值。原型不該被 deploy。</td></tr>
-</table>
-</div>
-<div class="tutorial-block tb-comparison">
-  <h3><span class="tb-icon">📊</span> ③ 技能間比較對照表</h3>
-  <table>
-  <tr><th>面向</th><th>prototype</th><th>tdd</th><th>grill-me</th><th>差異說明</th></tr>
-  <tr><td>目的</td><td>回答設計問題</td><td>驗證行為</td><td>壓力測試想法</td><td>prototype 是「做看看」，tdd 是「測看看」，grill-me 是「問看看」</td></tr>
-  <tr><td>壽命</td><td>一次性</td><td>永久</td><td>一次性</td><td>prototype 和 grill-me 的產出都是 disposable，tdd 的測試是 permanent</td></tr>
-  <tr><td>時機</td><td>不確定時</td><td>確定時</td><td>有想法時</td><td>prototype 用於「不知道對不對」，tdd 用於「知道對但要驗證」，grill-me 用於「覺得對但要被挑戰」</td></tr>
-</table>
-</div>
-<div class="tutorial-block tb-checklist">
-  <h3><span class="tb-icon">✅</span> ④ 互動式進階檢核清單</h3>
-  <ul>
-    <li>□ 原型是為了回答一個具體的設計問題</li>
-    <li>□ 知道原型是「一次性」的——不要在上面寫 production-ready 程式碼</li>
-    <li>□ 原型回答了問題就算成功，做了 10 個功能但回答不了問題是失敗</li>
-    <li>□ 原型中的 API key 或 token 是 placeholder</li>
-    <li>□ 知道原型的價值在「確認設計」不在「做 demo」</li>
-  </ul>
-</div>
 
 </div>
 </body>

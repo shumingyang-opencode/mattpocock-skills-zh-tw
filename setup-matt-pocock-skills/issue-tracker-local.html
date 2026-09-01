@@ -27,7 +27,7 @@
 <div class="pair"><div class="col-en" lang="en"><ul>
 <li>One feature per directory: <code>.scratch/&lt;feature-slug&gt;/</code></li>
 <li>The spec is <code>.scratch/&lt;feature-slug&gt;/spec.md</code></li>
-<li>Implementation issues are one file per ticket at <code>.scratch/&lt;feature-slug&gt;/issues/&lt;NN&gt;-&lt;slug&gt;.md</code>, numbered from <code>01</code> — never a single combined tickets file</li>
+<li>Implementation issues are one file per ticket at <code>.scratch/&lt;feature-slug&gt;/issues/&lt;NN&gt;-&lt;slug&gt;.md</code>, numbered from <code>01</code>, never a single combined tickets file</li>
 <li>Triage state is recorded as a <code>Status:</code> line near the top of each issue file (see <code>triage-labels.md</code> for the role strings)</li>
 <li>Comments and conversation history append to the bottom of the file under a <code>## Comments</code> heading</li>
 </ul></div><div class="col-zh" lang="zh-Hant"><ul>
@@ -44,7 +44,7 @@
 <div class="pair"><div class="col-en" lang="en"><h2>Wayfinding operations</h2></div><div class="col-zh" lang="zh-Hant"><h2>尋路操作</h2></div></div>
 <div class="pair"><div class="col-en" lang="en"><p>Used by <code>/wayfinder</code>. The <strong>map</strong> is a file with one <strong>child</strong> file per ticket.</p></div><div class="col-zh" lang="zh-Hant"><p>由 <code>/wayfinder</code> 使用。<strong>地圖</strong>是一個檔案，每個 ticket 一個<strong>子</strong>檔案。</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><ul>
-<li><strong>Map</strong>: <code>.scratch/&lt;effort&gt;/map.md</code> — the Notes / Decisions-so-far / Fog body.</li>
+<li><strong>Map</strong>: <code>.scratch/&lt;effort&gt;/map.md</code> (the Notes / Decisions-so-far / Fog body).</li>
 <li><strong>Child ticket</strong>: <code>.scratch/&lt;effort&gt;/issues/NN-&lt;slug&gt;.md</code>, numbered from <code>01</code>, with the question in the body. A <code>Type:</code> line records the ticket type (<code>research</code>/<code>prototype</code>/<code>grilling</code>/<code>task</code>); a <code>Status:</code> line records <code>claimed</code>/<code>resolved</code>.</li>
 <li><strong>Blocking</strong>: a <code>Blocked by: NN, NN</code> line near the top. A ticket is unblocked when every file it lists is <code>resolved</code>.</li>
 <li><strong>Frontier</strong>: scan <code>.scratch/&lt;effort&gt;/issues/</code> for files that are open, unblocked, and unclaimed; first by number wins.</li>

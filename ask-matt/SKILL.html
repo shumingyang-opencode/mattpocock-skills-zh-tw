@@ -34,13 +34,13 @@
 <div class="pair"><div class="col-en" lang="en"><h2>The main flow: idea → ship</h2></div><div class="col-zh" lang="zh-Hant"><h2>主流程：點子 → 交付</h2></div></div>
 <div class="pair"><div class="col-en" lang="en"><p>The route most work travels. You have an idea and want it built.</p></div><div class="col-zh" lang="zh-Hant"><p>多數工作走的路徑。你有個點子，想要把它做出來。</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><ol>
-<li><strong><code>/grill-with-docs</code></strong> — sharpen the idea by interview. Start here whenever you are <strong>working in a working directory</strong>: it's stateful, retaining what it learns in <code>CONTEXT.md</code> and ADRs. (No working directory? Use <code>/grill-me</code> — see Standalone. Both run the same <code>/grilling</code> primitive; <code>grill-with-docs</code> is the one that leaves a paper trail, which makes it the better of the two whenever a repo is there to leave it in.)</li>
-<li><strong>Branch — can you settle every question in conversation?</strong> If a question needs a runnable answer (state, business logic, a UI you have to see), detour through a prototype, bridged by <strong><code>/handoff</code></strong> in both directions (a prototype lives in its own directory, which is exactly what <code>/handoff</code> is for — see Phase boundaries):
+<li><strong><code>/grill-with-docs</code></strong> sharpens the idea by interview. Start here whenever you are <strong>working in a working directory</strong>: it's stateful, retaining what it learns in <code>CONTEXT.md</code> and ADRs. (No working directory? Use <code>/grill-me</code> instead, covered under Standalone. Both run the same <code>/grilling</code> primitive; <code>grill-with-docs</code> is the one that leaves a paper trail, which makes it the better of the two whenever a repo is there to leave it in.)</li>
+<li><strong>Branch: can you settle every question in conversation?</strong> If a question needs a runnable answer (state, business logic, a UI you have to see), detour through a prototype, bridged by <strong><code>/handoff</code></strong> in both directions (a prototype lives in its own directory, which is exactly what <code>/handoff</code> is for; see Phase boundaries):
    - <strong><code>/handoff</code></strong> out, then open a fresh session against that file,
    - <strong><code>/prototype</code></strong> to answer the question with throwaway code,
    - <strong><code>/handoff</code></strong> back what you learned, and reference it from the original idea thread.</li>
-<li><strong>Branch — is this a multi-session build?</strong>
-   - <strong>Yes</strong> → <strong><code>/to-spec</code></strong> (turn the thread into a spec), then <strong><code>/to-tickets</code></strong> to split it into tracer-bullet tickets, each declaring its <strong>blocking edges</strong>. On a local tracker that's one file per ticket under <code>.scratch/&lt;feature&gt;/issues/</code>, worked blockers-first by hand; on a real tracker the edges become native blocking links, so any ticket whose blockers are done can be grabbed — kick off <strong><code>/implement</code></strong> per ticket, <strong><code>/clear</code>ing context between each one</strong>. Each ticket is self-contained, so the last one's context is disposable.
+<li><strong>Branch: is this a multi-session build?</strong>
+   - <strong>Yes</strong> → <strong><code>/to-spec</code></strong> (turn the thread into a spec), then <strong><code>/to-tickets</code></strong> to split it into tracer-bullet tickets, each declaring its <strong>blocking edges</strong>. On a local tracker that's one file per ticket under <code>.scratch/&lt;feature&gt;/issues/</code>, worked blockers-first by hand; on a real tracker the edges become native blocking links, so any ticket whose blockers are done can be grabbed: kick off <strong><code>/implement</code></strong> per ticket, <strong><code>/clear</code>ing context between each one</strong>. Each ticket is self-contained, so the last one's context is disposable.
    - <strong>No</strong> → <strong><code>/implement</code></strong> right here, in the same context window.</li>
 </ol></div><div class="col-zh" lang="zh-Hant"><ol>
 <li><strong><code>/grill-with-docs</code></strong> — 透過訪談磨利點子。每當你在<strong>工作目錄</strong>中作業時就從這裡開始：它是有狀態的，會把學到的內容留在 <code>CONTEXT.md</code> 與 ADR 中。（沒有工作目錄？改用 <code>/grill-me</code>——見「獨立技能」。兩者都運行同一個 <code>/grilling</code> 原語；<code>grill-with-docs</code> 是會留下紙本痕跡的那個，因此只要有 repo 可以留存，它就是兩者中較好的一個。）</li>
@@ -52,10 +52,10 @@
    - <strong>是</strong> → <strong><code>/to-spec</code></strong>（把討論串轉成規格說明），然後用 <strong><code>/to-tickets</code></strong> 把它拆成曳光彈 ticket，每個 ticket 都宣告自己的<strong>阻塞邊</strong>。在本機追蹤器上，這表示每個 ticket 一個檔案，放在 <code>.scratch/&lt;feature&gt;/issues/</code> 下，以人工方式優先處理阻塞者已完成的 ticket；在真正的追蹤器上，這些邊會變成原生的阻塞連結，因此任何阻塞項已完成的 ticket 都可以被認領——逐個 ticket 啟動 <strong><code>/implement</code></strong>，並在每個 ticket 之間 <strong><code>/clear</code></strong> 上下文。每個 ticket 都是自足的，所以最後一個的上下文可以直接丟棄。
    - <strong>否</strong> → 直接在<strong>同一個上下文視窗</strong>中執行 <strong><code>/implement</code></strong>。</li>
 </ol></div></div>
-<div class="pair"><div class="col-en" lang="en"><p>Either way, <strong><code>/implement</code></strong> builds each issue by driving <strong><code>/tdd</code></strong> internally — one red-green slice at a time — then closes out by running <strong><code>/code-review</code></strong>, a two-axis review (Standards + Spec) of the diff, before committing. Reach for <strong><code>/tdd</code></strong> on its own when you just want to build a concrete behaviour test-first without a full spec, and <strong><code>/code-review</code></strong> on its own whenever you want to review a branch or PR against a fixed point.</p></div><div class="col-zh" lang="zh-Hant"><p>不管哪條路，<strong><code>/implement</code></strong> 透過在內部驅動 <strong><code>/tdd</code></strong> 來建置每個 issue——一次一個紅-綠切片——然後在 commit 之前，以 <strong><code>/code-review</code></strong> 收尾，這是針對 diff 的雙軸審查（規範 + 規格）。當你只想在沒有完整規格說明的情況下以測試先行的方式建置某個具體行為時，就單獨使用 <strong><code>/tdd</code></strong>；每當你想針對固定基點審查某個分支或 PR 時，就單獨使用 <strong><code>/code-review</code></strong>。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Either way, <strong><code>/implement</code></strong> builds each issue by driving <strong><code>/tdd</code></strong> internally (one red-green slice at a time), then closes out by running <strong><code>/code-review</code></strong>, a two-axis review (Standards + Spec) of the diff, before committing. Reach for <strong><code>/tdd</code></strong> on its own when you just want to build a concrete behaviour test-first without a full spec, and <strong><code>/code-review</code></strong> on its own whenever you want to review a branch or PR against a fixed point.</p></div><div class="col-zh" lang="zh-Hant"><p>不管哪條路，<strong><code>/implement</code></strong> 透過在內部驅動 <strong><code>/tdd</code></strong> 來建置每個 issue——一次一個紅-綠切片——然後在 commit 之前，以 <strong><code>/code-review</code></strong> 收尾，這是針對 diff 的雙軸審查（規範 + 規格）。當你只想在沒有完整規格說明的情況下以測試先行的方式建置某個具體行為時，就單獨使用 <strong><code>/tdd</code></strong>；每當你想針對固定基點審查某個分支或 PR 時，就單獨使用 <strong><code>/code-review</code></strong>。</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><h3>Context hygiene</h3></div><div class="col-zh" lang="zh-Hant"><h3>上下文衛生</h3></div></div>
-<div class="pair"><div class="col-en" lang="en"><p>Keep steps 1–3 in <strong>one unbroken context window</strong> — don't compact or clear until after <code>/to-tickets</code> — so the grilling, spec, and tickets all build on the same thinking. Each <code>/implement</code> then starts fresh, working from the ticket.</p></div><div class="col-zh" lang="zh-Hant"><p>把步驟 1–3 保持在<strong>一個不間斷的上下文視窗</strong>中——在 <code>/to-tickets</code> 完成之前不要 compact 或 clear——讓 grilling、規格說明與 ticket 都建立在同一份思考上。之後每次 <code>/implement</code> 才從 ticket 出發、重新開始。</p></div></div>
-<div class="pair"><div class="col-en" lang="en"><p>The limit on this is the <strong><a href="https://www.aihero.dev/ai-coding-dictionary/smart-zone">smart zone</a></strong>: the window (~150k tokens on state-of-the-art models) within which the model still reasons sharply. If a session approaches it before <code>/to-tickets</code>, don't push on degraded — <code>/compact</code> at the nearest phase boundary and carry on (see Phase boundaries).</p></div><div class="col-zh" lang="zh-Hant"><p>這個做法的上限是<strong><a href="https://www.aihero.dev/ai-coding-dictionary/smart-zone">智慧區</a></strong>：模型仍能清晰推理的視窗（在最新的模型上約 150k tokens）。如果 session 在 <code>/to-tickets</code> 之前就逼近這個上限，不要硬撐到品質劣化——在最接近的階段邊界 <code>/compact</code>，然後繼續（見「階段邊界」）。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Keep steps 1–3 in <strong>one unbroken context window</strong> (don't compact or clear until after <code>/to-tickets</code>) so the grilling, spec, and tickets all build on the same thinking. Each <code>/implement</code> then starts fresh, working from the ticket.</p></div><div class="col-zh" lang="zh-Hant"><p>把步驟 1–3 保持在<strong>一個不間斷的上下文視窗</strong>中——在 <code>/to-tickets</code> 完成之前不要 compact 或 clear——讓 grilling、規格說明與 ticket 都建立在同一份思考上。之後每次 <code>/implement</code> 才從 ticket 出發、重新開始。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>The limit on this is the <strong><a href="https://www.aihero.dev/ai-coding-dictionary/smart-zone">smart zone</a></strong>: the window (~150k tokens on state-of-the-art models) within which the model still reasons sharply. If a session approaches it before <code>/to-tickets</code>, don't push on degraded; <code>/compact</code> at the nearest phase boundary and carry on (see Phase boundaries).</p></div><div class="col-zh" lang="zh-Hant"><p>這個做法的上限是<strong><a href="https://www.aihero.dev/ai-coding-dictionary/smart-zone">智慧區</a></strong>：模型仍能清晰推理的視窗（在最新的模型上約 150k tokens）。如果 session 在 <code>/to-tickets</code> 之前就逼近這個上限，不要硬撐到品質劣化——在最接近的階段邊界 <code>/compact</code>，然後繼續（見「階段邊界」）。</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><h2>On-ramps</h2></div><div class="col-zh" lang="zh-Hant"><h2>進入匝道</h2></div></div>
 <div class="pair"><div class="col-en" lang="en"><p>A starting situation that generates work, then merges onto the main flow.</p></div><div class="col-zh" lang="zh-Hant"><p>一種會產生工作的起始情境，接著匯入主流程。</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><ul>
@@ -63,42 +63,42 @@
 </ul></div><div class="col-zh" lang="zh-Hant"><ul>
 <li><strong>Bug 與請求不斷堆積</strong> → <strong><code>/triage</code></strong>。它讓 issues 在分診角色之間流動，產出可供代理（agent-ready）使用的 issues，之後由 <strong><code>/implement</code></strong> 接手。</li>
 </ul></div></div>
-<div class="pair"><div class="col-en" lang="en"><p>Triage is only for issues <strong>you didn't create</strong> — bug reports, incoming feature requests, anything that arrives raw. Tickets that <code>/to-tickets</code> produced are already agent-ready, so <strong>don't triage them</strong>.</p></div><div class="col-zh" lang="zh-Hant"><p>分診只用於<strong>不是你建立</strong>的 issues——Bug 回報、進來的功能請求、任何以原始樣貌抵達的內容。<code>/to-tickets</code> 產出的 ticket 已經可供代理使用，所以<strong>不要再分診它們</strong>。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Triage is only for issues <strong>you didn't create</strong>: bug reports, incoming feature requests, anything that arrives raw. Tickets that <code>/to-tickets</code> produced are already agent-ready, so <strong>don't triage them</strong>.</p></div><div class="col-zh" lang="zh-Hant"><p>分診只用於<strong>不是你建立</strong>的 issues——Bug 回報、進來的功能請求、任何以原始樣貌抵達的內容。<code>/to-tickets</code> 產出的 ticket 已經可供代理使用，所以<strong>不要再分診它們</strong>。</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><ul>
-<li><strong>Something's broken</strong> → <strong><code>/diagnosing-bugs</code></strong>. For the hard ones: the bug that resists a first glance, the intermittent flake, the regression that crept in between two known-good states. It refuses to theorise until it has a <strong>tight feedback loop</strong> — one command that already goes red on <em>this</em> bug — then fixes with a regression test. Its post-mortem hands off to <strong><code>/improve-codebase-architecture</code></strong> when the real finding is that there's no good seam to lock the bug down.</li>
+<li><strong>Something's broken</strong> → <strong><code>/diagnosing-bugs</code></strong>. For the hard ones: the bug that resists a first glance, the intermittent flake, the regression that crept in between two known-good states. It refuses to theorise until it has a <strong>tight feedback loop</strong> (one command that already goes red on <em>this</em> bug), then fixes with a regression test. Its post-mortem hands off to <strong><code>/improve-codebase-architecture</code></strong> when the real finding is that there's no good seam to lock the bug down.</li>
 </ul></div><div class="col-zh" lang="zh-Hant"><ul>
 <li><strong>有東西壞了</strong> → <strong><code>/diagnosing-bugs</code></strong>。用於那些棘手的：一眼看不穿的 bug、間歇性的 flake、在兩個已知良好狀態之間悄悄冒出的回歸。在取得<strong>緊密的回饋迴圈</strong>——一個對<em>這個</em> bug 已經顯示紅色的指令——之前，它拒絕空談理論，然後以回歸測試修復。當真正的發現是沒有好的接縫可以把 bug 鎖住時，它的事後檢討會交接給 <strong><code>/improve-codebase-architecture</code></strong>。</li>
 </ul></div></div>
 <div class="pair"><div class="col-en" lang="en"><ul>
-<li><strong>A huge, foggy effort — a greenfield project or a huge feature build, too big for one session</strong> → <strong><code>/wayfinder</code></strong>, the most cognitively demanding flow here. When the way from here to the destination isn't visible yet, it charts a <strong>shared map</strong> of <strong>decision tickets</strong> on the issue tracker and resolves them one at a time — producing <strong>decisions, not deliverables</strong> — until the fog is pushed back and the way is clear. Where <strong><code>/grill-with-docs</code></strong> sharpens an idea you can hold in one session, wayfinder is for the idea you can't — and it's slower and denser, so save it for exactly that, never a well-scoped feature.</li>
+<li><strong>A huge, foggy effort: a greenfield project or a huge feature build, too big for one session</strong> → <strong><code>/wayfinder</code></strong>, the most cognitively demanding flow here. When the way from here to the destination isn't visible yet, it charts a <strong>shared map</strong> of <strong>decision tickets</strong> on the issue tracker and resolves them one at a time, producing <strong>decisions, not deliverables</strong>, until the fog is pushed back and the way is clear. Where <strong><code>/grill-with-docs</code></strong> sharpens an idea you can hold in one session, wayfinder is for the idea you can't, and it's slower and denser, so save it for exactly that, never a well-scoped feature.</li>
 </ul></div><div class="col-zh" lang="zh-Hant"><ul>
 <li><strong>一個巨大、迷霧籠罩的努力——綠地專案或巨大的功能建置，大得單一 session 裝不下</strong> → <strong><code>/wayfinder</code></strong>，這裡認知負擔最重的流程。當從這裡到目的地的路徑還看不見時，它會在 Issue 追蹤器上繪製一張<strong>決策 ticket 的共享地圖</strong>，並逐一解決它們——產出的是<strong>決策，而非交付物</strong>——直到迷霧被推開、路徑清晰為止。<strong><code>/grill-with-docs</code></strong> 磨利的是你可以在單一 session 中掌握的點子，wayfinder 則是給你掌握不了的那種——它比較慢也比較密集，所以只把它留給這種情況，絕不用在範圍明確的功能上。</li>
 </ul></div></div>
-<div class="pair"><div class="col-en" lang="en"><p>When the map clears, <strong>it hands off, it doesn't build</strong>: merge onto the main flow at <strong><code>/to-spec</code></strong>, which collapses the map's linked decisions into a buildable plan, then <code>/to-tickets</code> and <code>/implement</code> as usual. Looping the map straight into <code>/implement</code> skips that collapse and throws the linked detail away — go straight to <code>/implement</code> only when the effort turned out genuinely small.</p></div><div class="col-zh" lang="zh-Hant"><p>當地圖清晰後，<strong>它交接，而不是建置</strong>：在 <strong><code>/to-spec</code></strong> 匯入主流程，它會把地圖上彼此關聯的決策收斂成可建置的計畫，然後照常 <code>/to-tickets</code> 與 <code>/implement</code>。把地圖直接繞進 <code>/implement</code> 會跳過那次收斂，把關聯的細節丟掉——只有當這次努力實際上真的很小時，才直接前往 <code>/implement</code>。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>When the map clears, <strong>it hands off, it doesn't build</strong>: merge onto the main flow at <strong><code>/to-spec</code></strong>, which collapses the map's linked decisions into a buildable plan, then <code>/to-tickets</code> and <code>/implement</code> as usual. Looping the map straight into <code>/implement</code> skips that collapse and throws the linked detail away, so go straight to <code>/implement</code> only when the effort turned out genuinely small.</p></div><div class="col-zh" lang="zh-Hant"><p>當地圖清晰後，<strong>它交接，而不是建置</strong>：在 <strong><code>/to-spec</code></strong> 匯入主流程，它會把地圖上彼此關聯的決策收斂成可建置的計畫，然後照常 <code>/to-tickets</code> 與 <code>/implement</code>。把地圖直接繞進 <code>/implement</code> 會跳過那次收斂，把關聯的細節丟掉——只有當這次努力實際上真的很小時，才直接前往 <code>/implement</code>。</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><h2>Codebase health</h2></div><div class="col-zh" lang="zh-Hant"><h2>程式碼庫健康</h2></div></div>
-<div class="pair"><div class="col-en" lang="en"><p>Not feature work — upkeep.</p></div><div class="col-zh" lang="zh-Hant"><p>不是功能開發——是維護。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Not feature work, just upkeep.</p></div><div class="col-zh" lang="zh-Hant"><p>不是功能開發——是維護。</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><ul>
-<li><strong><code>/improve-codebase-architecture</code></strong> — run whenever you have a spare moment to keep the codebase good for agents to operate in. It surfaces <strong>deepening opportunities</strong>; picking one <em>generates an idea</em> you can take into the main flow at <code>/grill-with-docs</code>. It's the survey that finds the candidates; <strong><code>/codebase-design</code></strong> (below) is the bench you design the chosen one on.</li>
+<li><strong><code>/improve-codebase-architecture</code></strong> runs whenever you have a spare moment to keep the codebase good for agents to operate in. It surfaces <strong>deepening opportunities</strong>; picking one <em>generates an idea</em> you can take into the main flow at <code>/grill-with-docs</code>. It's the survey that finds the candidates; <strong><code>/codebase-design</code></strong> (below) is the bench you design the chosen one on.</li>
 </ul></div><div class="col-zh" lang="zh-Hant"><ul>
 <li><strong><code>/improve-codebase-architecture</code></strong> ——只要有空閒時間就執行，讓程式碼庫對代理而言保持良好作業狀態。它會浮現<strong>深化機會</strong>；挑選其中一個就會<em>產生一個點子</em>，你可以帶著它從 <code>/grill-with-docs</code> 進入主流程。它是找出候選者的普查；<strong><code>/codebase-design</code></strong>（見下方）則是你用來設計所選項目的工作台。</li>
 </ul></div></div>
 <div class="pair"><div class="col-en" lang="en"><h2>Vocabulary underneath</h2></div><div class="col-zh" lang="zh-Hant"><h2>底層詞彙</h2></div></div>
-<div class="pair"><div class="col-en" lang="en"><p>Two model-invoked references that run <em>beneath</em> the other skills — each the single source of truth for its vocabulary. Reach for them directly when the <strong>words</strong>, not the process, are the problem; or let the skills above pull them in.</p></div><div class="col-zh" lang="zh-Hant"><p>兩個由模型自動叫用的參考，運行在<em>其他技能之下</em>——各自是其詞彙的單一事實來源。當問題出在<strong>用詞</strong>而非流程時，直接使用它們；或讓上面的技能把它們帶進來。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Two model-invoked references that run <em>beneath</em> the other skills, each the single source of truth for its vocabulary. Reach for them directly when the <strong>words</strong>, not the process, are the problem; or let the skills above pull them in.</p></div><div class="col-zh" lang="zh-Hant"><p>兩個由模型自動叫用的參考，運行在<em>其他技能之下</em>——各自是其詞彙的單一事實來源。當問題出在<strong>用詞</strong>而非流程時，直接使用它們；或讓上面的技能把它們帶進來。</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><ul>
-<li><strong><code>/domain-modeling</code></strong> — sharpen the project's <em>domain</em> language: challenge a fuzzy term, resolve an overloaded word ("account" doing three jobs), record a hard-to-reverse decision as an ADR. It's the active discipline <code>/grill-with-docs</code> drives to keep <code>CONTEXT.md</code> a clean glossary.</li>
-<li><strong><code>/codebase-design</code></strong> — the deep-module vocabulary (module, interface, depth, seam, adapter, leverage, locality) for designing a module's <em>shape</em>: a lot of behaviour behind a small interface at a clean seam. <code>/tdd</code> and <code>/improve-codebase-architecture</code> both speak it.</li>
+<li><strong><code>/domain-modeling</code></strong>: sharpen the project's <em>domain</em> language: challenge a fuzzy term, resolve an overloaded word ("account" doing three jobs), record a hard-to-reverse decision as an ADR. It's the active discipline <code>/grill-with-docs</code> drives to keep <code>CONTEXT.md</code> a clean glossary.</li>
+<li><strong><code>/codebase-design</code></strong> is the deep-module vocabulary (module, interface, depth, seam, adapter, leverage, locality) for designing a module's <em>shape</em>: a lot of behaviour behind a small interface at a clean seam. <code>/tdd</code> and <code>/improve-codebase-architecture</code> both speak it.</li>
 </ul></div><div class="col-zh" lang="zh-Hant"><ul>
 <li><strong><code>/domain-modeling</code></strong> ——磨利專案的<em>領域</em>語言：質疑模糊的術語、解決一個詞過度負載的問題（"account" 同時做三件事）、把難以反轉的決策記錄成 ADR。這是 <code>/grill-with-docs</code> 驅動的主動紀律，讓 <code>CONTEXT.md</code> 保持為乾淨的詞彙表。</li>
 <li><strong><code>/codebase-design</code></strong> ——用於設計模組<em>形狀</em>的深模組詞彙（模組、介面、深度、接縫、轉接器、槓桿收益、局部性）：在乾淨的接縫處，用小介面涵蓋大量行為。<code>/tdd</code> 和 <code>/improve-codebase-architecture</code> 都用這套詞彙。</li>
 </ul></div></div>
 <div class="pair"><div class="col-en" lang="en"><h2>Phase boundaries</h2></div><div class="col-zh" lang="zh-Hant"><h2>階段邊界</h2></div></div>
-<div class="pair"><div class="col-en" lang="en"><p>A <strong>phase</strong> is a chunk of work inside a session — the grilling, the implementation, the QA. At the <strong>boundary</strong> between two of them you have five options, and picking between them is the fuzziest decision in this whole map:</p></div><div class="col-zh" lang="zh-Hant"><p><strong>phase（階段）</strong> 是 session 內的一塊工作——grilling、實作、QA。在兩者之間的<strong>邊界</strong>，你有五個選項，而如何在其中選擇，是整張地圖中最模糊的決策：</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>A <strong>phase</strong> is a chunk of work inside a session: the grilling, the implementation, the QA. At the <strong>boundary</strong> between two of them you have five options, and picking between them is the fuzziest decision in this whole map:</p></div><div class="col-zh" lang="zh-Hant"><p><strong>phase（階段）</strong> 是 session 內的一塊工作——grilling、實作、QA。在兩者之間的<strong>邊界</strong>，你有五個選項，而如何在其中選擇，是整張地圖中最模糊的決策：</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><ul>
-<li><strong>Continue</strong> — stay put. Costs nothing, loses nothing.</li>
-<li><strong><code>/clear</code></strong> — empty the window, when nothing here matters to what's next.</li>
-<li><strong><code>/handoff</code></strong> — write a portable markdown file. Narrow: only for a <strong>new harness</strong>, a <strong>new directory</strong>, a <strong>colleague</strong>, or forking a side task <strong>mid-phase</strong>. What it buys is portability.</li>
-<li><strong>Subagent</strong> — send a tightly-scoped task to its own window and get a report back.</li>
-<li><strong><code>/compact</code></strong> — compress this context and seed a fresh session with it. The <strong>default</strong>, at the bottom of the tree rather than the first reach.</li>
+<li><strong>Continue</strong>: stay put. Costs nothing, loses nothing.</li>
+<li><strong><code>/clear</code></strong>: empty the window, when nothing here matters to what's next.</li>
+<li><strong><code>/handoff</code></strong> writes a portable markdown file. Narrow: only for a <strong>new harness</strong>, a <strong>new directory</strong>, a <strong>colleague</strong>, or forking a side task <strong>mid-phase</strong>. What it buys is portability.</li>
+<li><strong>Subagent</strong>: send a tightly-scoped task to its own window and get a report back.</li>
+<li><strong><code>/compact</code></strong> compresses this context and seeds a fresh session with it. The <strong>default</strong>, at the bottom of the tree rather than the first reach.</li>
 </ul></div><div class="col-zh" lang="zh-Hant"><ul>
 <li><strong>Continue（繼續）</strong> ——待在原地。不花任何成本，也不失去任何東西。</li>
 <li><strong><code>/clear</code></strong> ——清空視窗，當這裡的內容對接下來要做的事都不重要時。</li>
@@ -106,20 +106,20 @@
 <li><strong>Subagent（子代理）</strong> ——把範圍緊密限定的任務送到它自己的視窗，並拿回一份報告。</li>
 <li><strong><code>/compact</code></strong> ——壓縮這個上下文，並用它孕育出一個新的 session。這是<strong>預設選項</strong>，位於樹的底部，而不是最先伸手去拿的。</li>
 </ul></div></div>
-<div class="pair"><div class="col-en" lang="en"><p>Read <a href="PHASE-BOUNDARIES.html">PHASE-BOUNDARIES.md</a> for the ordered tree — the five questions, the reasoning behind each branch, and why the primary-source cost makes <strong>Continue</strong> the one to rule out first. Make the decision <strong>at</strong> a boundary; mid-phase, continue or split the rest into subagents.</p></div><div class="col-zh" lang="zh-Hant"><p>閱讀 <a href="PHASE-BOUNDARIES.html">PHASE-BOUNDARIES.md</a> 以了解有序的決策樹——五個問題、每個分支背後的推理，以及為什麼主要來源的成本讓 <strong>Continue（繼續）</strong> 成為最先排除的選項。在邊界<strong>上</strong>做決定；在階段中途，就繼續，或把剩餘的部分拆給子代理。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Read <a href="PHASE-BOUNDARIES.html">PHASE-BOUNDARIES.md</a> for the ordered tree: the five questions, the reasoning behind each branch, and why the primary-source cost makes <strong>Continue</strong> the one to rule out first. Make the decision <strong>at</strong> a boundary; mid-phase, continue or split the rest into subagents.</p></div><div class="col-zh" lang="zh-Hant"><p>閱讀 <a href="PHASE-BOUNDARIES.html">PHASE-BOUNDARIES.md</a> 以了解有序的決策樹——五個問題、每個分支背後的推理，以及為什麼主要來源的成本讓 <strong>Continue（繼續）</strong> 成為最先排除的選項。在邊界<strong>上</strong>做決定；在階段中途，就繼續，或把剩餘的部分拆給子代理。</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><h2>Standalone</h2></div><div class="col-zh" lang="zh-Hant"><h2>獨立技能</h2></div></div>
 <div class="pair"><div class="col-en" lang="en"><p>Off the main flow entirely.</p></div><div class="col-zh" lang="zh-Hant"><p>完全脫離主流程。</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><ul>
-<li><strong><code>/grill-me</code></strong> — the same relentless interview as <code>/grill-with-docs</code>, but <strong>stateless</strong>: it saves nothing locally and builds no <code>CONTEXT.md</code>. Reach for it when you are <strong>not working in a working directory</strong> — sharpening a plan, a design, a piece of writing, anything with no repo under it. If you are in a working directory, use <code>/grill-with-docs</code> instead: it runs the same interview and leaves a paper trail, so it is strictly the better one.</li>
-<li><strong><code>/grilling</code></strong> — the interview primitive itself: rounds, the frontier, facts are the agent's job and decisions are yours. <code>/grill-me</code> and <code>/grill-with-docs</code> are the two named ways in, and <code>/triage</code>, <code>/wayfinder</code> and <code>/improve-codebase-architecture</code> all run it internally. Reach for it directly only when you want the interview with no wrapper around it.</li>
-<li><strong><code>/resolving-merge-conflicts</code></strong> — work an in-progress merge or rebase conflict hunk by hunk, resolving by <strong>intent</strong> traced to each side's primary source rather than by picking lines, then finish the operation. It never runs <code>--abort</code>. Standalone and off every flow: reach for it when you are already mid-conflict.</li>
-<li><strong><code>/prototype</code></strong> — a small, throwaway program that answers one design question: does this state model feel right, or what should this UI look like. Throwaway is a constraint on how the code is written, not a promise to destroy it: the answer folds into the real code, and the prototype itself is kept as a <strong>primary source</strong> on a <code>prototype/&lt;name&gt;</code> branch out of main, pointed at from the implementation issue. It's the detour in step 2 of the main flow, but reach for it any time a design question is hard to settle on paper.</li>
-<li><strong><code>/research</code></strong> — delegate reading legwork to a <strong>background agent</strong>: it investigates a question against <strong>primary sources</strong>, then leaves a cited Markdown file in the repo. Keep working while it reads. The file it produces is something to take <em>into</em> the main flow at <code>/grill-with-docs</code> — research feeds the thinking, it doesn't replace it.</li>
-<li><strong><code>/to-questionnaire</code></strong> — when the thing blocking you isn't in your head or the codebase but in <strong>someone else's</strong>, this writes them a questionnaire to fill in. It's the inverse of <code>/grill-me</code>: instead of interviewing you about the subject, it interviews you about the <strong>send</strong> — who it's going to, what you need back — and aims the questions at the gap. What comes back is material for <code>/grill-with-docs</code> or <code>/to-spec</code>.</li>
-<li><strong><code>/wizard</code></strong> — for the steps only a <strong>human</strong> can take: provisioning infrastructure, setting up credentials or CI secrets, clicking through an unfamiliar third-party dashboard, running a one-off migration or cutover. It generates an interactive bash script that opens each URL, captures each value, and writes it into <code>.env</code> and GitHub secrets — so the procedure stops being something you re-explain to an agent every time. Model-invoked, so the agent reaches for it the moment it hits a wall only you can pass. If the agent could just do it itself, it should; this is for where a human is genuinely in the loop.</li>
-<li><strong><code>/wait-what</code></strong> — the corrective for a message that didn't land. Use it mid-conversation, inside any other skill, and the agent re-pitches what it just said with the context you were missing, in plain English, using the <code>CONTEXT.md</code> vocabulary. It works after the fact; <code>/grill-with-docs</code> is the upfront cure, because a shared language agreed early is what stops the jargon arriving at all.</li>
-<li><strong><code>/teach</code></strong> — learn a concept over multiple sessions, using the current directory as a stateful workspace.</li>
-<li><strong><code>/writing-for-agents</code></strong> — reference for writing documents agents consume: skills, AGENTS.md, pointed-at docs.</li>
+<li><strong><code>/grill-me</code></strong>: the same relentless interview as <code>/grill-with-docs</code>, but <strong>stateless</strong>: it saves nothing locally and builds no <code>CONTEXT.md</code>. Reach for it when you are <strong>not working in a working directory</strong> (sharpening a plan, a design, a piece of writing, anything with no repo under it). If you are in a working directory, use <code>/grill-with-docs</code> instead: it runs the same interview and leaves a paper trail, so it is strictly the better one.</li>
+<li><strong><code>/grilling</code></strong> is the interview primitive itself: rounds, the frontier, facts are the agent's job and decisions are yours. <code>/grill-me</code> and <code>/grill-with-docs</code> are the two named ways in, and <code>/triage</code>, <code>/wayfinder</code> and <code>/improve-codebase-architecture</code> all run it internally. Reach for it directly only when you want the interview with no wrapper around it.</li>
+<li><strong><code>/resolving-merge-conflicts</code></strong> works an in-progress merge or rebase conflict hunk by hunk, resolving by <strong>intent</strong> traced to each side's primary source rather than by picking lines, then finishes the operation. It never runs <code>--abort</code>. Standalone and off every flow: reach for it when you are already mid-conflict.</li>
+<li><strong><code>/prototype</code></strong> is a small, throwaway program that answers one design question: does this state model feel right, or what should this UI look like. Throwaway is a constraint on how the code is written, not a promise to destroy it: the answer folds into the real code, and the prototype itself is kept as a <strong>primary source</strong> on a <code>prototype/&lt;name&gt;</code> branch out of main, pointed at from the implementation issue. It's the detour in step 2 of the main flow, but reach for it any time a design question is hard to settle on paper.</li>
+<li><strong><code>/research</code></strong>: delegate reading legwork to a <strong>background agent</strong>: it investigates a question against <strong>primary sources</strong>, then leaves a cited Markdown file in the repo. Keep working while it reads. The file it produces is something to take <em>into</em> the main flow at <code>/grill-with-docs</code>, since research feeds the thinking rather than replacing it.</li>
+<li><strong><code>/to-questionnaire</code></strong> comes in when the thing blocking you isn't in your head or the codebase but in <strong>someone else's</strong>, and it writes them a questionnaire to fill in. It's the inverse of <code>/grill-me</code>: instead of interviewing you about the subject, it interviews you about the <strong>send</strong> (who it's going to, what you need back) and aims the questions at the gap. What comes back is material for <code>/grill-with-docs</code> or <code>/to-spec</code>.</li>
+<li><strong><code>/wizard</code></strong> is for the steps only a <strong>human</strong> can take: provisioning infrastructure, setting up credentials or CI secrets, clicking through an unfamiliar third-party dashboard, running a one-off migration or cutover. It generates an interactive bash script that opens each URL, captures each value, and writes it into <code>.env</code> and GitHub secrets, so the procedure stops being something you re-explain to an agent every time. Model-invoked, so the agent reaches for it the moment it hits a wall only you can pass. If the agent could just do it itself, it should; this is for where a human is genuinely in the loop.</li>
+<li><strong><code>/wait-what</code></strong> is the corrective for a message that didn't land. Use it mid-conversation, inside any other skill, and the agent re-pitches what it just said with the context you were missing, in plain English, using the <code>CONTEXT.md</code> vocabulary. It works after the fact; <code>/grill-with-docs</code> is the upfront cure, because a shared language agreed early is what stops the jargon arriving at all.</li>
+<li><strong><code>/teach</code></strong>: learn a concept over multiple sessions, using the current directory as a stateful workspace.</li>
+<li><strong><code>/writing-for-agents</code></strong> is the reference for writing documents agents consume: skills, AGENTS.md, pointed-at docs.</li>
 </ul></div><div class="col-zh" lang="zh-Hant"><ul>
 <li><strong><code>/grill-me</code></strong> ——與 <code>/grill-with-docs</code> 相同的鍥而不捨的訪談，但<strong>無狀態</strong>：它不會在本機儲存任何東西，也不會建立 <code>CONTEXT.md</code>。當你<strong>不在工作目錄</strong>中作業時使用它——磨利一個計畫、一個設計、一篇寫作、任何下面沒有 repo 的內容。如果你在工作目錄中，改用 <code>/grill-with-docs</code>：它運行相同的訪談並留下紙本痕跡，所以嚴格來說是較好的選擇。</li>
 <li><strong><code>/grilling</code></strong> ——訪談原語本身：回合、前沿，事實是代理的工作，決策是你的。<code>/grill-me</code> 和 <code>/grill-with-docs</code> 是兩個有名稱的入口，而 <code>/triage</code>、<code>/wayfinder</code> 與 <code>/improve-codebase-architecture</code> 都在內部運行它。只有當你想要沒有任何外殼包裹的訪談時，才直接使用它。</li>
@@ -133,161 +133,7 @@
 <li><strong><code>/writing-for-agents</code></strong> ——撰寫代理會消費之文件的參考：skills、AGENTS.md、被指向的文件。</li>
 </ul></div></div>
 <div class="pair"><div class="col-en" lang="en"><h2>Precondition</h2></div><div class="col-zh" lang="zh-Hant"><h2>前置條件</h2></div></div>
-<div class="pair"><div class="col-en" lang="en"><p><strong><code>/setup-matt-pocock-skills</code></strong> — run before your first engineering flow to configure the issue tracker, triage labels, and doc layout the other skills assume. Custom issue trackers also work.</p></div><div class="col-zh" lang="zh-Hant"><p><strong><code>/setup-matt-pocock-skills</code></strong> ——在你的第一個工程流程之前執行，以設定其他技能所預設的 Issue 追蹤器、分診標籤與文件布局。自訂的 Issue 追蹤器也行。</p></div></div>
-<div class="tutorial-block">
-  <h3><span class="tb-icon">📖</span> 教學解說</h3>
-  <p><code>ask-matt</code> 是整個技能集的<strong>路由器</strong>。當你不知道下一步該做什麼，或不確定該用哪個技能時，把你的狀況描述給它聽，它會幫你挑對的入口。關鍵概念是 <strong>flow（流程）</strong>——穿越技能的一條路徑。多數工作走主流程（點子 → 交付），但也有進入匝道（從 bug 或大工程匯入）和獨立技能。</p>
-  <p>路由技能的設計要點：<strong>description 要精準</strong>。因為它是 model-invoked，它的 description 常駐在 agent context 裡。如果 description 太模糊，agent 會在不該觸發時觸發；太具體，則會漏掉該觸發的情境。這就是 write-great-skills 裡提到的「trigger precision」。</p>
-</div>
-<div class="tutorial-block tb-example">
-  <h3><span class="tb-icon">💡</span> Worked Example</h3>
-  <p><strong>情境</strong>：你有一個 Django 專案，想加一個「用戶匯出 CSV」功能。你不太確定從哪裡開始。</p>
-  <ol>
-    <li>呼叫 <code>/ask-matt</code>：「我想在 Django 專案加一個 CSV 匯出功能，不確定要先 grill 還是直接 implement」</li>
-    <li>它會判斷這是<strong>主流程</strong>的起點，建議你從 <code>/grill-with-docs</code> 開始，先把需求想清楚</li>
-    <li>Grill 完後，它會問「這要跨越多個 session 嗎？」如果答案是是，它會引導你走 <code>/to-spec</code> → <code>/to-tickets</code> → <code>/implement</code></li>
-    <li>如果 grill 發現需要實際跑一下才能確認某些設計決策，它會建議你繞道 <code>/prototype</code>，用 handoff 來回搭橋</li>
-  </ol>
-</div>
-<div class="tutorial-block tb-mistake">
-  <h3><span class="tb-icon">⚠️</span> 常見錯誤</h3>
-  <ul>
-    <li><strong>跳過 grill 直接 implement</strong>——這是主流程最常見的錯誤。沒有先想清楚需求就動手，最後會花更多時間重做。</li>
-    <li><strong>在 grill 之前就 compact context</strong>——主流程的步驟 1–3 應該在同一個不間斷的 context window 裡，因為 grilling、規格、ticket 都要建立在同一份思考上。</li>
-    <li><strong>把 triage 用在自己建立的 ticket 上</strong>——triage 只用於外來的 issues。<code>/to-tickets</code> 產出的 ticket 已經是 agent-ready，不需要再分診。</li>
-    <li><strong>把 wayfinder 用在範圍明確的功能上</strong>——wayfinder 是給「大到連地圖都還沒畫」的超大工程。範圍明確的功能，用 grill-with-docs → to-spec → to-tickets 就夠了。</li>
-  </ul>
-</div>
-<div class="tutorial-block tb-checklist">
-  <h3><span class="tb-icon">✅</span> 練習 / 驗收清單</h3>
-  <ul>
-    <li>□ 能畫出主流程的步驟順序（grill → branch → spec → tickets → implement）</li>
-    <li>□ 知道三種進入匝道各自的觸發情境（bug、大工程、broken）</li>
-    <li>□ 知道 prototype 什麼時候該用（需要實際跑才能回答的問題）</li>
-    <li>□ 知道 context hygiene 的規則（步驟 1–3 不間斷，逼近 smart zone 時 compact）</li>
-    <li>□ 知道 triage 只用於外來 issues，不用於自己產出的 ticket</li>
-    <li>□ 知道 wayfinder 完成後要手動 merge 到主流程（to-spec），不能直接 implement</li>
-  </ul>
-</div>
-<div class="tutorial-block tb-example">
-  <h3><span class="tb-icon">🚀</span> 進階真實情境 Worked Example</h3>
-  <p><strong>情境</strong>：你在一個 monorepo 中工作，今天收到兩件事：產品經理丟來「下個月要上線 AI 摘要功能」的鬆散點子，同時線上有一個 P1 事故在排隊。</p>
-  <ol>
-    <li>先問 <code>/ask-matt</code>：「線上 P1 事故 + 一個大功能點子，怎麼排？」</li>
-    <li>路由判斷：P1 事故是「有東西壞了」→ 走 <code>/diagnosing-bugs</code>（進入匝道）；AI 摘要點子「大到單一 session 裝不下」→ 走 <code>/wayfinder</code>（另一條進入匝道）。兩條匝道並行，不衝突。</li>
-    <li>事故處理：<code>/diagnosing-bugs</code> 先建立一條會變紅的迴圈（curl 指令），確認是快取失效而非資料損壞 → 修復 + 回歸測試。</li>
-    <li>點子處理：<code>/wayfinder</code> 繪製地圖，先命名目的地「一份可交付的 AI 摘要規格」，再把迷霧切成 research / grilling / prototype 三種 ticket。</li>
-    <li>當 wayfinder 地圖清晰、事故也修完，兩條路在 <code>/to-spec</code> 匯入主流程 → <code>/to-tickets</code> → 逐 ticket <code>/implement</code>。</li>
-  </ol>
-  <p><strong>設計決策</strong>：ask-matt 的價值在於它把「該走哪條路」的判斷集中在一處。這裡的關鍵是兩件事<strong>不同時進主流程</strong>——事故是緊急維修（獨立技能），點子是長期規劃（wayfinder）。若誤把事故當成功能 ticket 丟進主流程，會讓 implement 被一個「無法復現的 bug」卡住整個流程。</p>
-</div>
-<div class="tutorial-block tb-theory">
-  <h3><span class="tb-icon">🔬</span> 深入原理擴充</h3>
-  <p>Router（路由器）技能的本質是<strong>把路由決策做成一個可測試的入口</strong>。它跟普通技能的差別：router 的「輸出」不是產物，而是<strong>一個技能的選擇</strong>。這表示它的品質衡量方式不同——好 router 的指標是「選擇的正確率」，不是「產出的品質」。</p>
-  <p>實務上 router 的行為幾乎全由 <strong>description 的分支結構</strong>決定。每個分支對應一種使用者情境，而描述裡每多一組同義詞，就多一份 context load。最佳化方向是把描述寫成「一組互斥的 if 條件」：每個觸發詞對應唯一一個技能，字與字之間不重疊。</p>
-  <p><strong>陷阱案例</strong>：很多人以為 router 描述寫得越「詳細周全」越好，於是把「面試、訪談、interview、問問題、腦力激盪」全部塞進 <code>/grilling</code> 的觸發詞。結果 <code>/grilling</code> 在「客戶訪談需求蒐集」這種<a href="writing-for-agents/SKILL.html">非編程任務</a>上頻繁誤觸發，燒掉 token 又打斷主流程。真相是：<strong>同義詞是同一分支寫了兩次</strong>，每組同義詞只該保留一個最精準的詞（「interview」），其餘全部刪掉。多寫不會讓 router 更聰明，只會讓它更常在不該出現時出現。</p>
-</div>
-<div class="tutorial-block tb-diagnosis">
-  <h3><span class="tb-icon">🩺</span> 診斷式疑難排解表</h3>
-  <table>
-    <tr><th>症狀</th><th>可能原因</th><th>解決方案</th></tr>
-    <tr><td>ask-matt 推薦的技能明顯不對</td><td>某個技能的 description 有語意重疊或模糊分支，router 誤判</td><td>用 <code>/writing-for-agents</code> 的指針準則重寫該技能 description：一分支一觸發詞，刪同義詞</td></tr>
-    <tr><td>每次開新 session 都要重頭解釋一遍</td><td>主流程步驟 1–3 的 context 被 <code>/clear</code> 或 compact 切斷</td><td>只在階段邊界 compact；用 <code>/handoff</code> 產生交接文件跨 session 保持狀態</td></tr>
-    <tr><td>明明該 grill 卻直接 implement 了</td><td>點子還模糊就衝進執行，跳過 router 的主流程判斷</td><td>強制從 <code>/grill-with-docs</code> 起手，直到能清楚說出「要做什麼」才往下走</td></tr>
-    <tr><td>P1 事故與大功能同時到，卡住不知先做哪個</td><td>誤把事故當功能 ticket 排入主流程</td><td>事故走 <code>/diagnosing-bugs</code> 匝道、大工程走 <code>/wayfinder</code> 匝道，兩者並行不互斥</td></tr>
-    <tr><td>wayfinder 地圖畫完卻不知道下一步</td><td>想直接把地圖繞進 implement，跳過 to-spec 收斂</td><td>地圖清晰後先 merge 到 <code>/to-spec</code>，讓關聯決策收斂成可建置計畫</td></tr>
-  </table>
-</div>
-<div class="tutorial-block tb-challenge">
-  <h3><span class="tb-icon">🏆</span> 進階挑戰題</h3>
-  <ol>
-    <li><strong>路由壓力測試</strong>：你收到「現有 API 偶爾回傳 500」的 bug 報告。寫出 ask-matt 應該走的三條可能路徑，並說明為什麼「直接呼叫 /implement」是錯的。</li>
-    <li><strong>同義詞審查</strong>：假設 <code>/research</code> 的 description 同時含「調查、查資料、調研、研究、research、investigate」。用一分支一觸發詞原則重寫它，並解釋每刪掉一個詞對 context load 的影響。</li>
-    <li><strong>匝道判讀</strong>：給出五個情境（新功能點子、P1 事故、外部 PR 湧入、超大工程、需要實際跑才能確認的設計決策），一一對應到正確的進入匝道或獨立技能。</li>
-  </ol>
-</div>
-<div class="tutorial-block tb-example">
-  <h3><span class="tb-icon">🏗️</span> 專案級端到端 Worked Example</h3>
-  <p><strong>專案情境</strong>：一個真實專案「把公司手動的庫存盤點流程，改造成自動化庫存管理系統」。這個專案跨 6 個 session、動用 8 個技能，全程由 ask-matt 做路由——這是 router 在整條主流程上的完整示範。</p>
-  <ol>
-    <li><strong>Session 1（L1）</strong>：呼叫 <code>/ask-matt</code>：「庫存盤點太花人力，想自動化，不知道從哪開始」。路由 → <code>/grill-with-docs</code>。在 repo 中 grill，決策寫進 <code>CONTEXT.md</code>：自動化範圍、盤點頻率、欄位定義。</li>
-    <li><strong>Session 2（L2）</strong>：grill 判斷這是多 session 工程 → 路由到 <code>/to-spec</code>（收斂規格）→ <code>/to-tickets</code>（拆出「同步供應商庫存」「盤點差異報表」「對帳 API」三張曳光彈 ticket，標好阻塞邊）。</li>
-    <li><strong>Session 3（L3 前段）</strong>：第一張 ticket 的 <code>/implement</code> 內部驅動 <code>/tdd</code>；中途遇到「同步效能」需要實際跑 → 路由繞道 <code>/handoff</code> 出去 → <code>/prototype</code> 驗證 → <code>/handoff</code> 回來。</li>
-    <li><strong>Session 4（L3 後段）</strong>：第二、三張 ticket 依序 implement；遇到線上偶發「庫存數對不上」→ 路由到維護匝道 <code>/diagnosing-bugs</code> 建立會變紅的迴圈修掉。</li>
-    <li><strong>Session 5（L4）</strong>：全功能完成 → 路由到 <code>/code-review</code> 雙軸審查 → 修完用 <code>/resolving-merge-conflicts</code> 合回 main。</li>
-    <li><strong>Session 6（維護）</strong>：系統上線後，定期路由到 <code>/improve-codebase-architecture</code> 掃描深化候選，讓系統對未來的 agent 更好作業。</li>
-  </ol>
-  <p><strong>預期輸出</strong>：六個 session 各產出一個可交接的產物（CONTEXT.md → spec → tickets → 可運作功能 → 審查通過的 main → 深化報告）。ask-matt 的輸出不是檔案，而是每一次「下一步該呼叫哪個技能」的判斷——全部串起來就是「點子 → 交付」的完整旅程。</p>
-  <p><strong>關鍵設計</strong>：注意 ask-matt 的判斷有<strong>層次</strong>——同一時刻只能有一個「下一個動作」，所以它一次只建議一個技能，不會把六個 session 的路線圖一次列給你。這樣 session 間的 context 才不會被「其實還沒輪到」的資訊污染。</p>
-</div>
-<div class="tutorial-block tb-theory">
-  <h3><span class="tb-icon">⚙️</span> 效能 / 品質 / 安全深度</h3>
-  <p><strong>效能</strong>：router 的描述是 <code>disable-model-invocation: true</code> 的 user-invoked 技能——它根本不進 agent context，所以每輪 request 的成本是 <strong>0 token</strong>。這是效能上最優的選擇：把「該選哪個技能」的判斷留給人類（cognitive load），完全不佔 agent 的 context load。相對地，<code>/research</code>、<code>/diagnosing-bugs</code> 這類 model-invoked 技能每輪都燒 description 的 token——所以描述越短越省。</p>
-  <p><strong>品質</strong>：router 的品質指標是<strong>路由正確率</strong>——把工作導向正確技能的比例。它不產出檔案，所以「品質」無法從產物看，只能從「後續流程是否順暢」回推：若 grill 之後 spec 難產、implement 頻頻卡住，很可能是一開始就路由錯了入口。</p>
-  <p><strong>安全</strong>：router 是<strong>攻擊面集中點</strong>——如果某個惡意或寫壞的技能 description 宣稱「任何 request 都該走我」，ask-matt 會把它路由過去，讓敏感工作（如修正式環境、處理客戶資料）落入錯誤工具。防禦方式：router 依賴其他技能的 description 做判斷，所以定期用 <code>/writing-for-agents</code> 審查各技能 description 的觸發條件是否互斥、是否過度宣稱範圍，就是對 router 的安全性維護。</p>
-</div>
-<div class="tutorial-block">
-  <h3><span class="tb-icon">🧭</span> 技能間比較對照表</h3>
-  <table>
-    <tr><th>面向</th><th>本 skill（ask-matt）</th><th>相關 skill</th><th>差異說明</th></tr>
-    <tr><td>核心職責</td><td>路由——選出下一個該呼叫的技能</td><td>zones / learning-path</td><td>後兩者是「地圖/路線圖」（靜態分類），ask-matt 是「導航員」（依當下狀況動態給一個下一步）</td></tr>
-    <tr><td>產出物</td><td>一個技能選擇（無檔案產物）</td><td>grilling</td><td>grilling 產出決策與文件；ask-matt 只決定「該用誰」，自己不下場</td></tr>
-    <tr><td>觸發方式</td><td>user-invoked（<code>disable-model-invocation: true</code>）</td><td>writing-for-agents</td><td>後者是 model-invoked 的參考技能；ask-matt 刻意藏起描述，由人類決定何時問路</td></tr>
-    <tr><td>依賴</td><td>依賴所有技能的描述品質</td><td>writing-for-agents</td><td>描述寫得不好，router 一定誤判——所以寫好技能是本 skill 的上游條件</td></tr>
-    <tr><td>使用時機</td><td>卡住、不知道下一步時</td><td>map.html（技能全景圖）</td><td>全景圖是「瀏覽全部技能」的靜態目錄；ask-matt 是「我現在這個狀況該用誰」的動態查詢</td></tr>
-  </table>
-</div>
-<div class="tutorial-block tb-checklist">
-  <h3><span class="tb-icon">✅</span> 互動式檢核清單</h3>
-  <ul>
-    <li>- [ ] 我能在一句話內描述我卡住的點，讓 ask-matt 能判斷入口</li>
-    <li>- [ ] 我知道「卡住時問 router」與「看地圖自選技能」的分界（動態 vs 靜態）</li>
-    <li>- [ ] 我確認過 router 依賴的技能描述彼此觸發條件互斥（沒有語意重疊）</li>
-    <li>- [ ] 我知道 ask-matt 一次只給一個「下一個動作」，不會一次列完整路線</li>
-    <li>- [ ] 我能說出 ask-matt 為何是 user-invoked（省 context、讓判斷留在人手上）</li>
-    <li>- [ ] 我知道 router 判斷錯誤時該往上游查（技能描述品質，用 writing-for-agents 修）</li>
-  </ul>
-</div>
-
-<div class="tutorial-block tb-project">
-  <h3><span class="tb-icon">🏗️</span> ① 專案級端到端 Worked Example</h3>
-  <p><strong>專案情境</strong>：你接手一個有 15 個 skill 的大型 repo，需要快速判斷哪些 skill 適合當前任務。</p>
-<ol>
-  <li>先跑 <code>/ask-matt</code>，描述你的需求：「我要幫一個 React 專案加 i18n，需要改 code、加測試、開 ticket」。</li>
-  <li>ask-matt 會路由到 <code>implement</code>（實作）、<code>tdd</code>（測試）、<code>to-tickets</code>（拆 ticket）三個技能。</li>
-  <li>依序載入每個技能，執行完整流程：先 <code>/to-tickets</code> 拆出 5 張票，再 <code>/implement</code> 逐張完成，最後 <code>/tdd</code> 補測試。</li>
-  <li>若某個技能不適用，ask-matt 會建議替代方案——例如「不需要 code-review，因為是新功能不是改既有 code」。</li>
-</ol>
-<p><strong>關鍵</strong>：ask-matt 的價值不在「告訴你用什麼」，而在「幫你排除不需要的」——減少載入錯誤技能的 token 浪費。</p>
-</div>
-<div class="tutorial-block tb-theory">
-  <h3><span class="tb-icon">⚡</span> ② 效能 / 品質 / 安全深度</h3>
-  <table>
-  <tr><th>面向</th><th>實務考量</th></tr>
-  <tr><td>效能</td><td>ask-matt 的路由判斷是 O(n) 掃描所有技能描述。技能數量超過 30 個時，可考慮用 tag 分群（engineering / productivity / writing）縮小搜尋範圍。</td></tr>
-  <tr><td>品質</td><td>路由錯誤的常見原因：使用者描述太籠統（「幫我寫 code」→ 可能是 implement、tdd、甚至 codebase-design）。要求使用者提供「做什麼」+「怎麼驗證」可提升路由準確度。</td></tr>
-  <tr><td>安全</td><td>ask-matt 本身不執行任何操作，僅做路由推薦。但它可能推薦不適合的技能——始終先讀技能的 description 再決定是否載入。</td></tr>
-</table>
-</div>
-<div class="tutorial-block tb-comparison">
-  <h3><span class="tb-icon">📊</span> ③ 技能間比較對照表</h3>
-  <table>
-  <tr><th>面向</th><th>ask-matt</th><th>to-questionnaire</th><th>handoff</th><th>差異說明</th></tr>
-  <tr><td>用途</td><td>技能路由</td><td>決策問卷</td><td>對話交接</td><td>ask-matt 找技能，to-questionnaire 找答案，handoff 換代理</td></tr>
-  <tr><td>輸出</td><td>技能推薦清單</td><td>可填寫的問卷</td><td>交接文件</td><td>ask-matt 輸出的是「下一步去哪」，不是「做什麼」</td></tr>
-  <tr><td>時機</td><td>任務開始前</td><td>需要他人輸入時</td><td>換人接手時</td><td>三者分別用於選路、徵詢、交接三個不同階段</td></tr>
-</table>
-</div>
-<div class="tutorial-block tb-checklist">
-  <h3><span class="tb-icon">✅</span> ④ 互動式進階檢核清單</h3>
-  <ul>
-    <li>□ 能描述一個複雜任務，讓 ask-matt 正確路由到 2-3 個技能</li>
-    <li>□ 能判斷 ask-matt 推薦的技能是否真的適用（不盲從）</li>
-    <li>□ 知道 ask-matt 不執行操作——它只是路由器</li>
-    <li>□ 能用 tag 或群組縮小 ask-matt 的搜尋範圍</li>
-    <li>□ 遇到路由錯誤時，能調整描述方式讓下次更準確</li>
-  </ul>
-</div>
+<div class="pair"><div class="col-en" lang="en"><p><strong><code>/setup-matt-pocock-skills</code></strong>: run before your first engineering flow to configure the issue tracker, triage labels, and doc layout the other skills assume. Custom issue trackers also work.</p></div><div class="col-zh" lang="zh-Hant"><p><strong><code>/setup-matt-pocock-skills</code></strong> ——在你的第一個工程流程之前執行，以設定其他技能所預設的 Issue 追蹤器、分診標籤與文件布局。自訂的 Issue 追蹤器也行。</p></div></div>
 
 </div>
 </body>

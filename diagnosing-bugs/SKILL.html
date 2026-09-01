@@ -29,22 +29,11 @@
 <div class="pair"><div class="col-en" lang="en"><h1>Diagnosing Bugs</h1></div><div class="col-zh" lang="zh-Hant"><h1>診斷 Bug</h1></div></div>
 <div class="pair"><div class="col-en" lang="en"><p>A discipline for hard bugs. Skip phases only when explicitly justified.</p></div><div class="col-zh" lang="zh-Hant"><p>一套應付硬 bug 的紀律。只有明確證成時才可跳過階段。</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><p>When exploring the codebase, read <code>CONTEXT.md</code> (if it exists) to get a clear mental model of the relevant modules, and check ADRs in the area you're touching.</p></div><div class="col-zh" lang="zh-Hant"><p>探索程式碼時，先讀 <code>CONTEXT.md</code>（如果存在）以取得相關模組的清晰心智模型，並檢查你要觸及的區域中的 ADR。</p></div></div>
-<div class="pair"><div class="col-en" lang="en"><h2>Phase 1 — Build a feedback loop</h2></div><div class="col-zh" lang="zh-Hant"><h2>第一階段——建立回饋迴圈</h2></div></div>
-<div class="pair"><div class="col-en" lang="en"><p><strong>This is the skill.</strong> Everything else is mechanical. If you have a <strong>tight</strong> pass/fail signal for the bug — one that goes red on <em>this</em> bug — you will find the cause; bisection, hypothesis-testing, and instrumentation all just consume it. If you don't have one, no amount of staring at code will save you.</p></div><div class="col-zh" lang="zh-Hant"><p><strong>這就是本技能的核心。</strong> 其他一切都是機械性作業。如果你對這個 bug 有一個<strong>緊密</strong>的通過/失敗訊號——一個會因為_這個_ bug 而變紅的訊號——你就會找到原因；二分、假設檢驗與插樁都只是在消耗它。如果你沒有這樣的訊號，再怎麼瞪著程式碼看也救不了你。</p></div></div>
-<div class="pair"><div class="col-en" lang="en"><p>Spend disproportionate effort here. <strong>Be aggressive. Be creative. Refuse to give up.</strong></p></div><div class="col-zh" lang="zh-Hant"><p>在這裡投入不成比例的精力。<strong>要積極。要有創意。拒絕放棄。</strong></p></div></div>
-<div class="pair"><div class="col-en" lang="en"><h3>Ways to construct one — try them in roughly this order</h3></div><div class="col-zh" lang="zh-Hant"><h3>建立回饋迴圈的方法——大致依此順序嘗試</h3></div></div>
-<div class="pair"><div class="col-en" lang="en"><ol>
-<li><strong>Failing test</strong> at whatever seam reaches the bug — unit, integration, e2e.</li>
-<li><strong>Curl / HTTP script</strong> against a running dev server.</li>
-<li><strong>CLI invocation</strong> with a fixture input, diffing stdout against a known-good snapshot.</li>
-<li><strong>Headless browser script</strong> (Playwright / Puppeteer) — drives the UI, asserts on DOM/console/network.</li>
-<li><strong>Replay a captured trace.</strong> Save a real network request / payload / event log to disk; replay it through the code path in isolation.</li>
-<li><strong>Throwaway harness.</strong> Spin up a minimal subset of the system (one service, mocked deps) that exercises the bug code path with a single function call.</li>
-<li><strong>Property / fuzz loop.</strong> If the bug is "sometimes wrong output", run 1000 random inputs and look for the failure mode.</li>
-<li><strong>Bisection harness.</strong> If the bug appeared between two known states (commit, dataset, version), automate "boot at state X, check, repeat" so you can <code>git bisect run</code> it.</li>
-<li><strong>Differential loop.</strong> Run the same input through old-version vs new-version (or two configs) and diff outputs.</li>
-<li><strong>HITL bash script.</strong> Last resort. If a human must click, drive <em>them</em> with <code>scripts/hitl-loop.template.sh</code> so the loop is still structured. Captured output feeds back to you.</li>
-</ol></div><div class="col-zh" lang="zh-Hant"><ol>
+<div class="pair"><div class="col-en" lang="en"><h2>Redact</h2></div><div class="col-zh" lang="zh-Hant"><h2>第一階段——建立回饋迴圈</h2></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>This skill has you show commands, outputs and captured artifacts. <strong>Redact every secret first</strong>: write <code>&lt;REDACTED&gt;</code> in its place. Build loops against env vars, so the credential stays in the environment rather than in what you show. Captured artifacts carry auth headers: quote only the lines that carry the signal.</p></div><div class="col-zh" lang="zh-Hant"><p><strong>這就是本技能的核心。</strong> 其他一切都是機械性作業。如果你對這個 bug 有一個<strong>緊密</strong>的通過/失敗訊號——一個會因為_這個_ bug 而變紅的訊號——你就會找到原因；二分、假設檢驗與插樁都只是在消耗它。如果你沒有這樣的訊號，再怎麼瞪著程式碼看也救不了你。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>If the redacted output is not enough to diagnose the bug, say so and ask the user.</p></div><div class="col-zh" lang="zh-Hant"><p>在這裡投入不成比例的精力。<strong>要積極。要有創意。拒絕放棄。</strong></p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h2>Phase 1: Build a feedback loop</h2></div><div class="col-zh" lang="zh-Hant"><h3>建立回饋迴圈的方法——大致依此順序嘗試</h3></div></div>
+<div class="pair"><div class="col-en" lang="en"><p><strong>This is the skill.</strong> Everything else is mechanical. If you have a <strong>tight</strong> pass/fail signal for the bug (one that goes red on <em>this</em> bug), you will find the cause; bisection, hypothesis-testing, and instrumentation all just consume it. If you don't have one, no amount of staring at code will save you.</p></div><div class="col-zh" lang="zh-Hant"><ol>
 <li><strong>失敗測試</strong>，在任何觸及 bug 的接縫——單元、整合、e2e。</li>
 <li><strong>curl / HTTP 腳本</strong>，對著正在執行的開發伺服器。</li>
 <li><strong>CLI 呼叫</strong>，搭配固定裝置輸入，把 stdout 跟已知良好快照做 diff。</li>
@@ -56,271 +45,125 @@
 <li><strong>差異迴圈</strong>。把相同輸入跑過舊版 vs 新版（或兩種設定），diff 輸出。</li>
 <li><strong>HITL bash 腳本</strong>。最後手段。如果必須由人點擊，用 <code>scripts/hitl-loop.template.sh</code> 驅動_他們_，讓迴圈仍然結構化。擷取的輸出會回饋給你。</li>
 </ol></div></div>
-<div class="pair"><div class="col-en" lang="en"><p>Build the right feedback loop, and the bug is 90% fixed.</p></div><div class="col-zh" lang="zh-Hant"><p>建立正確的回饋迴圈，bug 就完成九成了。</p></div></div>
-<div class="pair"><div class="col-en" lang="en"><h3>Tighten the loop</h3></div><div class="col-zh" lang="zh-Hant"><h3>收緊迴圈</h3></div></div>
-<div class="pair"><div class="col-en" lang="en"><p>Treat the loop as a product. Once you have <em>a</em> loop, <strong>tighten</strong> it:</p></div><div class="col-zh" lang="zh-Hant"><p>把迴圈當產品來經營。一旦有了_一個_迴圈，就<strong>收緊</strong>它：</p></div></div>
-<div class="pair"><div class="col-en" lang="en"><ul>
-<li>Can I make it faster? (Cache setup, skip unrelated init, narrow the test scope.)</li>
-<li>Can I make the signal sharper? (Assert on the specific symptom, not "didn't crash".)</li>
-<li>Can I make it more deterministic? (Pin time, seed RNG, isolate filesystem, freeze network.)</li>
-</ul></div><div class="col-zh" lang="zh-Hant"><ul>
+<div class="pair"><div class="col-en" lang="en"><p>Spend disproportionate effort here. <strong>Be aggressive. Be creative. Refuse to give up.</strong></p></div><div class="col-zh" lang="zh-Hant"><p>建立正確的回饋迴圈，bug 就完成九成了。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h3>Ways to construct one, in roughly this order</h3></div><div class="col-zh" lang="zh-Hant"><h3>收緊迴圈</h3></div></div>
+<div class="pair"><div class="col-en" lang="en"><ol>
+<li><strong>Failing test</strong> at whatever seam reaches the bug: unit, integration, e2e.</li>
+<li><strong>Curl / HTTP script</strong> against a running dev server.</li>
+<li><strong>CLI invocation</strong> with a fixture input, diffing stdout against a known-good snapshot.</li>
+<li><strong>Headless browser script</strong> (Playwright / Puppeteer) that drives the UI and asserts on DOM/console/network.</li>
+<li><strong>Replay a captured trace.</strong> Save a real network request / payload / event log to disk; replay it through the code path in isolation.</li>
+<li><strong>Throwaway harness.</strong> Spin up a minimal subset of the system (one service, mocked deps) that exercises the bug code path with a single function call.</li>
+<li><strong>Property / fuzz loop.</strong> If the bug is "sometimes wrong output", run 1000 random inputs and look for the failure mode.</li>
+<li><strong>Bisection harness.</strong> If the bug appeared between two known states (commit, dataset, version), automate "boot at state X, check, repeat" so you can <code>git bisect run</code> it.</li>
+<li><strong>Differential loop.</strong> Run the same input through old-version vs new-version (or two configs) and diff outputs.</li>
+<li><strong>HITL bash script.</strong> Last resort. If a human must click, drive <em>them</em> with <code>scripts/hitl-loop.template.sh</code> so the loop is still structured. Captured output feeds back to you.</li>
+</ol></div><div class="col-zh" lang="zh-Hant"><p>把迴圈當產品來經營。一旦有了_一個_迴圈，就<strong>收緊</strong>它：</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Build the right feedback loop, and the bug is 90% fixed.</p></div><div class="col-zh" lang="zh-Hant"><ul>
 <li>能不能讓它更快？（快取設定、跳過無關的初始化、縮小測試範圍。）</li>
 <li>能不能讓訊號更銳利？（斷言具體症狀，而不是「沒有崩潰」。）</li>
 <li>能不能讓它更確定？（釘住時間、播種 RNG、隔離檔案系統、凍結網路。）</li>
 </ul></div></div>
-<div class="pair"><div class="col-en" lang="en"><p>A 30-second flaky loop is barely better than no loop; a 2-second deterministic one is tight — a debugging superpower.</p></div><div class="col-zh" lang="zh-Hant"><p>一個要花 30 秒的搖擺迴圈只比沒有迴圈好一點點；一個 2 秒且確定的是緊密的——這是除錯的超能力。</p></div></div>
-<div class="pair"><div class="col-en" lang="en"><h3>Non-deterministic bugs</h3></div><div class="col-zh" lang="zh-Hant"><h3>非確定性 bug</h3></div></div>
-<div class="pair"><div class="col-en" lang="en"><p>The goal is not a clean repro but a <strong>higher reproduction rate</strong>. Loop the trigger 100×, parallelise, add stress, narrow timing windows, inject sleeps. A 50%-flake bug is debuggable; 1% is not — keep raising the rate until it's debuggable.</p></div><div class="col-zh" lang="zh-Hant"><p>目標不是乾淨的重現，而是<strong>更高的重現率</strong>。把觸發器重複 100 次、平行化、加壓力、收窄時間窗、注入 sleep。50% 會搖擺的 bug 可以除錯；1% 的不能——持續拉高重現率，直到它能被除錯。</p></div></div>
-<div class="pair"><div class="col-en" lang="en"><h3>When you genuinely cannot build a loop</h3></div><div class="col-zh" lang="zh-Hant"><h3>當你真的無法建立迴圈</h3></div></div>
-<div class="pair"><div class="col-en" lang="en"><p>Stop and say so explicitly. List what you tried. Ask the user for: (a) access to whatever environment reproduces it, (b) a captured artifact (HAR file, log dump, core dump, screen recording with timestamps), or (c) permission to add temporary production instrumentation. Do <strong>not</strong> proceed to hypothesise without a loop.</p></div><div class="col-zh" lang="zh-Hant"><p>停下來，明確說出來。列出你試過什麼。向使用者要求：(a) 存取能重現它的任何環境，(b) 一個擷取的產物（HAR 檔、日誌傾倒、核心傾倒、帶時間戳的螢幕錄影），或 (c) 加入暫時正式環境插樁的權限。<strong>不要</strong>在沒有迴圈的情況下繼續做假設。</p></div></div>
-<div class="pair"><div class="col-en" lang="en"><h3>Completion criterion — a tight loop that goes red</h3></div><div class="col-zh" lang="zh-Hant"><h3>完成標準——一個會變紅的緊密迴圈</h3></div></div>
-<div class="pair"><div class="col-en" lang="en"><p>Phase 1 is done when the loop is <strong>tight</strong> and <strong>red-capable</strong>: you can name <strong>one command</strong> — a script path, a test invocation, a curl — that you have <strong>already run at least once</strong> (paste the invocation and its output), and that is:</p></div><div class="col-zh" lang="zh-Hant"><p>第一階段完成的條件是迴圈<strong>緊密</strong>且<strong>能變紅</strong>：你能指認出<strong>一個指令</strong>——一個腳本路徑、一次測試呼叫、一個 curl——你<strong>至少已經跑過一次</strong>（貼出該呼叫及其輸出），而且它：</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h3>Tighten the loop</h3></div><div class="col-zh" lang="zh-Hant"><p>一個要花 30 秒的搖擺迴圈只比沒有迴圈好一點點；一個 2 秒且確定的是緊密的——這是除錯的超能力。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Treat the loop as a product. Once you have <em>a</em> loop, <strong>tighten</strong> it:</p></div><div class="col-zh" lang="zh-Hant"><h3>非確定性 bug</h3></div></div>
 <div class="pair"><div class="col-en" lang="en"><ul>
-<li>[ ] <strong>Red-capable</strong> — it drives the actual bug code path and asserts the <strong>user's exact symptom</strong>, so it can go red on this bug and green once fixed. Not "runs without erroring" — it must be able to <em>catch this specific bug</em>.</li>
-<li>[ ] <strong>Deterministic</strong> — same verdict every run (flaky bugs: a pinned, high reproduction rate, per above).</li>
-<li>[ ] <strong>Fast</strong> — seconds, not minutes.</li>
-<li>[ ] <strong>Agent-runnable</strong> — you can run it unattended; a human in the loop only via <code>scripts/hitl-loop.template.sh</code>.</li>
-</ul></div><div class="col-zh" lang="zh-Hant"><ul>
+<li>Can I make it faster? (Cache setup, skip unrelated init, narrow the test scope.)</li>
+<li>Can I make the signal sharper? (Assert on the specific symptom, not "didn't crash".)</li>
+<li>Can I make it more deterministic? (Pin time, seed RNG, isolate filesystem, freeze network.)</li>
+</ul></div><div class="col-zh" lang="zh-Hant"><p>目標不是乾淨的重現，而是<strong>更高的重現率</strong>。把觸發器重複 100 次、平行化、加壓力、收窄時間窗、注入 sleep。50% 會搖擺的 bug 可以除錯；1% 的不能——持續拉高重現率，直到它能被除錯。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>A 30-second flaky loop is barely better than no loop; a 2-second deterministic one is tight, a debugging superpower.</p></div><div class="col-zh" lang="zh-Hant"><h3>當你真的無法建立迴圈</h3></div></div>
+<div class="pair"><div class="col-en" lang="en"><h3>Non-deterministic bugs</h3></div><div class="col-zh" lang="zh-Hant"><p>停下來，明確說出來。列出你試過什麼。向使用者要求：(a) 存取能重現它的任何環境，(b) 一個擷取的產物（HAR 檔、日誌傾倒、核心傾倒、帶時間戳的螢幕錄影），或 (c) 加入暫時正式環境插樁的權限。<strong>不要</strong>在沒有迴圈的情況下繼續做假設。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>The goal is not a clean repro but a <strong>higher reproduction rate</strong>. Loop the trigger 100×, parallelise, add stress, narrow timing windows, inject sleeps. A 50%-flake bug is debuggable; 1% is not, so keep raising the rate until it's debuggable.</p></div><div class="col-zh" lang="zh-Hant"><h3>完成標準——一個會變紅的緊密迴圈</h3></div></div>
+<div class="pair"><div class="col-en" lang="en"><h3>When you genuinely cannot build a loop</h3></div><div class="col-zh" lang="zh-Hant"><p>第一階段完成的條件是迴圈<strong>緊密</strong>且<strong>能變紅</strong>：你能指認出<strong>一個指令</strong>——一個腳本路徑、一次測試呼叫、一個 curl——你<strong>至少已經跑過一次</strong>（貼出該呼叫及其輸出），而且它：</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Stop and say so explicitly. List what you tried. Ask the user for: (a) access to whatever environment reproduces it, (b) a redacted captured artifact (HAR file, log dump, core dump, screen recording with timestamps), or (c) permission to add temporary production instrumentation. Do <strong>not</strong> proceed to hypothesise without a loop.</p></div><div class="col-zh" lang="zh-Hant"><ul>
 <li>[ ] <strong>能變紅</strong>——它驅動真正的 bug 程式碼路徑，並斷言<strong>使用者的確切症狀</strong>，所以它會因為這個 bug 而變紅、修好後變綠。不是「跑起來沒有報錯」——它必須能_抓到這個特定 bug_。</li>
 <li>[ ] <strong>確定</strong>——每次執行結果相同（搖擺 bug：釘住的高重現率，如上述）。</li>
 <li>[ ] <strong>快速</strong>——幾秒，不是幾分鐘。</li>
 <li>[ ] <strong>代理可執行</strong>——你可以無人看管地跑它；只有透過 <code>scripts/hitl-loop.template.sh</code> 才需要人在迴圈中。</li>
 </ul></div></div>
-<div class="pair"><div class="col-en" lang="en"><p>If you catch yourself reading code to build a theory before this command exists, <strong>stop — jumping straight to a hypothesis is the exact failure this skill prevents.</strong> No red-capable command, no Phase 2.</p></div><div class="col-zh" lang="zh-Hant"><p>如果你發現自己在這個指令存在之前就讀程式碼建理論，<strong>停下來——直接跳到假設正是本技能要防止的失敗模式。</strong> 沒有能變紅的指令，就沒有第二階段。</p></div></div>
-<div class="pair"><div class="col-en" lang="en"><h2>Phase 2 — Reproduce + minimise</h2></div><div class="col-zh" lang="zh-Hant"><h2>第二階段——重現 + 最小化</h2></div></div>
-<div class="pair"><div class="col-en" lang="en"><p>Run the loop. Watch it go red — the bug appears.</p></div><div class="col-zh" lang="zh-Hant"><p>執行迴圈。看它變紅——bug 出現了。</p></div></div>
-<div class="pair"><div class="col-en" lang="en"><p>Confirm:</p></div><div class="col-zh" lang="zh-Hant"><p>確認：</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h3>Completion criterion: a tight loop that goes red</h3></div><div class="col-zh" lang="zh-Hant"><p>如果你發現自己在這個指令存在之前就讀程式碼建理論，<strong>停下來——直接跳到假設正是本技能要防止的失敗模式。</strong> 沒有能變紅的指令，就沒有第二階段。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Phase 1 is done when the loop is <strong>tight</strong> and <strong>red-capable</strong>: you can name <strong>one command</strong> (a script path, a test invocation, a curl) that you have <strong>already run at least once</strong> (show the invocation and its output, redacted), and that is:</p></div><div class="col-zh" lang="zh-Hant"><h2>第二階段——重現 + 最小化</h2></div></div>
 <div class="pair"><div class="col-en" lang="en"><ul>
-<li>[ ] The loop produces the failure mode the <strong>user</strong> described — not a different failure that happens to be nearby. Wrong bug = wrong fix.</li>
-<li>[ ] The failure is reproducible across multiple runs (or, for non-deterministic bugs, reproducible at a high enough rate to debug against).</li>
-<li>[ ] You have captured the exact symptom (error message, wrong output, slow timing) so later phases can verify the fix actually addresses it.</li>
-</ul></div><div class="col-zh" lang="zh-Hant"><ul>
+<li>[ ] <strong>Red-capable</strong>: it drives the actual bug code path and asserts the <strong>user's exact symptom</strong>, so it can go red on this bug and green once fixed. Not "runs without erroring"; it must be able to <em>catch this specific bug</em>.</li>
+<li>[ ] <strong>Deterministic</strong>: same verdict every run (flaky bugs: a pinned, high reproduction rate, per above).</li>
+<li>[ ] <strong>Fast</strong>: seconds, not minutes.</li>
+<li>[ ] <strong>Agent-runnable</strong>: you can run it unattended; a human in the loop only via <code>scripts/hitl-loop.template.sh</code>.</li>
+</ul></div><div class="col-zh" lang="zh-Hant"><p>執行迴圈。看它變紅——bug 出現了。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>If you catch yourself reading code to build a theory before this command exists, <strong>stop: jumping straight to a hypothesis is the exact failure this skill prevents.</strong> No red-capable command, no Phase 2.</p></div><div class="col-zh" lang="zh-Hant"><p>確認：</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h2>Phase 2: Reproduce + minimise</h2></div><div class="col-zh" lang="zh-Hant"><ul>
 <li>[ ] 迴圈產生的是<strong>使用者</strong>描述的那個失敗模式——不是碰巧在附近的其他失敗。錯誤的 bug = 錯誤的修復。</li>
 <li>[ ] 失敗在多次執行間可重現（或對非確定性 bug，重現率高到足以針對它除錯）。</li>
 <li>[ ] 你已擷取確切的症狀（錯誤訊息、錯誤輸出、緩慢的時序），讓後續階段可以驗證修復確實對症下藥。</li>
 </ul></div></div>
-<div class="pair"><div class="col-en" lang="en"><h3>Minimise</h3></div><div class="col-zh" lang="zh-Hant"><h3>最小化</h3></div></div>
-<div class="pair"><div class="col-en" lang="en"><p>Once it's red, shrink the repro to the <strong>smallest scenario that still goes red</strong>. Cut inputs, callers, config, data, and steps <strong>one at a time</strong>, re-running the loop after each cut — keep only what's load-bearing for the failure.</p></div><div class="col-zh" lang="zh-Hant"><p>一旦它變紅，把重現縮到<strong>仍會變紅的最小情境</strong>。<strong>一次一個</strong>地砍掉輸入、呼叫者、設定、資料與步驟，每次砍完重跑迴圈——只保留對失敗真正承重的東西。</p></div></div>
-<div class="pair"><div class="col-en" lang="en"><p>Why bother: a minimal repro shrinks the hypothesis space in Phase 3 (fewer moving parts left to suspect) and becomes the clean regression test in Phase 5.</p></div><div class="col-zh" lang="zh-Hant"><p>為什麼要費心：最小重現會縮小第三階段的假設空間（剩下可懷疑的活動部件更少），並成為第五階段的乾淨回歸測試。</p></div></div>
-<div class="pair"><div class="col-en" lang="en"><p>Done when <strong>every remaining element is load-bearing</strong> — removing any one of them makes the loop go green.</p></div><div class="col-zh" lang="zh-Hant"><p>完成條件是<strong>每個剩餘元素都承重</strong>——移除任何一個都會讓迴圈變綠。</p></div></div>
-<div class="pair"><div class="col-en" lang="en"><p>Do not proceed until you have reproduced <strong>and</strong> minimised.</p></div><div class="col-zh" lang="zh-Hant"><p>在完成重現<strong>與</strong>最小化之前，不要往下走。</p></div></div>
-<div class="pair"><div class="col-en" lang="en"><h2>Phase 3 — Hypothesise</h2></div><div class="col-zh" lang="zh-Hant"><h2>第三階段——提出假設</h2></div></div>
-<div class="pair"><div class="col-en" lang="en"><p>Generate <strong>3–5 ranked hypotheses</strong> before testing any of them. Single-hypothesis generation anchors on the first plausible idea.</p></div><div class="col-zh" lang="zh-Hant"><p>在測試任何假設之前，產生 <strong>3–5 個排序的假設</strong>。單一假設容易錨定在第一個看起來合理的想法上。</p></div></div>
-<div class="pair"><div class="col-en" lang="en"><p>Each hypothesis must be <strong>falsifiable</strong>: state the prediction it makes.</p></div><div class="col-zh" lang="zh-Hant"><p>每個假設都必須<strong>可否證</strong>：說出它做出的預測。</p></div></div>
-<div class="pair"><div class="col-en" lang="en"><blockquote>
-<p>Format: "If <X> is the cause, then <changing Y> will make the bug disappear / <changing Z> will make it worse."</p>
-</blockquote></div><div class="col-zh" lang="zh-Hant"><blockquote>
+<div class="pair"><div class="col-en" lang="en"><p>Run the loop. Watch it go red as the bug appears.</p></div><div class="col-zh" lang="zh-Hant"><h3>最小化</h3></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Confirm:</p></div><div class="col-zh" lang="zh-Hant"><p>一旦它變紅，把重現縮到<strong>仍會變紅的最小情境</strong>。<strong>一次一個</strong>地砍掉輸入、呼叫者、設定、資料與步驟，每次砍完重跑迴圈——只保留對失敗真正承重的東西。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><ul>
+<li>[ ] The loop produces the failure mode the <strong>user</strong> described, not a different failure that happens to be nearby. Wrong bug = wrong fix.</li>
+<li>[ ] The failure is reproducible across multiple runs (or, for non-deterministic bugs, reproducible at a high enough rate to debug against).</li>
+<li>[ ] You have captured the exact symptom (error message, wrong output, slow timing) so later phases can verify the fix actually addresses it.</li>
+</ul></div><div class="col-zh" lang="zh-Hant"><p>為什麼要費心：最小重現會縮小第三階段的假設空間（剩下可懷疑的活動部件更少），並成為第五階段的乾淨回歸測試。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h3>Minimise</h3></div><div class="col-zh" lang="zh-Hant"><p>完成條件是<strong>每個剩餘元素都承重</strong>——移除任何一個都會讓迴圈變綠。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Once it's red, shrink the repro to the <strong>smallest scenario that still goes red</strong>. Cut inputs, callers, config, data, and steps <strong>one at a time</strong>, re-running the loop after each cut, and keep only what's load-bearing for the failure.</p></div><div class="col-zh" lang="zh-Hant"><p>在完成重現<strong>與</strong>最小化之前，不要往下走。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Why bother: a minimal repro shrinks the hypothesis space in Phase 3 (fewer moving parts left to suspect) and becomes the clean regression test in Phase 5.</p></div><div class="col-zh" lang="zh-Hant"><h2>第三階段——提出假設</h2></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Done when <strong>every remaining element is load-bearing</strong>: removing any one of them makes the loop go green.</p></div><div class="col-zh" lang="zh-Hant"><p>在測試任何假設之前，產生 <strong>3–5 個排序的假設</strong>。單一假設容易錨定在第一個看起來合理的想法上。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Do not proceed until you have reproduced <strong>and</strong> minimised.</p></div><div class="col-zh" lang="zh-Hant"><p>每個假設都必須<strong>可否證</strong>：說出它做出的預測。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h2>Phase 3: Hypothesise</h2></div><div class="col-zh" lang="zh-Hant"><blockquote>
 <p>格式：「如果 <X> 是原因，那麼 &lt;改變 Y&gt; 會讓 bug 消失 / &lt;改變 Z&gt; 會讓它更糟。」</p>
 </blockquote></div></div>
-<div class="pair"><div class="col-en" lang="en"><p>If you cannot state the prediction, the hypothesis is a vibe — discard or sharpen it.</p></div><div class="col-zh" lang="zh-Hant"><p>如果你說不出預測，那假設只是一種感覺——丟棄它或把它磨利。</p></div></div>
-<div class="pair"><div class="col-en" lang="en"><p><strong>Show the ranked list to the user before testing.</strong> They often have domain knowledge that re-ranks instantly ("we just deployed a change to #3"), or know hypotheses they've already ruled out. Cheap checkpoint, big time saver. Don't block on it — proceed with your ranking if the user is AFK.</p></div><div class="col-zh" lang="zh-Hant"><p><strong>在測試之前，把排序後的清單給使用者看。</strong> 他們通常擁有能立刻重新排序的領域知識（「我們剛剛部署了 #3 的改動」），或知道他們已經排除的假設。便宜的檢查點，省下大把時間。不要被它卡住——如果使用者 AFK，就照你的排序往下走。</p></div></div>
-<div class="pair"><div class="col-en" lang="en"><h2>Phase 4 — Instrument</h2></div><div class="col-zh" lang="zh-Hant"><h2>第四階段——插樁</h2></div></div>
-<div class="pair"><div class="col-en" lang="en"><p>Each probe must map to a specific prediction from Phase 3. <strong>Change one variable at a time.</strong></p></div><div class="col-zh" lang="zh-Hant"><p>每個探針都必須對應到第三階段的特定預測。<strong>一次只改一個變數。</strong></p></div></div>
-<div class="pair"><div class="col-en" lang="en"><p>Tool preference:</p></div><div class="col-zh" lang="zh-Hant"><p>工具偏好：</p></div></div>
-<div class="pair"><div class="col-en" lang="en"><ol>
-<li><strong>Debugger / REPL inspection</strong> if the env supports it. One breakpoint beats ten logs.</li>
-<li><strong>Targeted logs</strong> at the boundaries that distinguish hypotheses.</li>
-<li>Never "log everything and grep".</li>
-</ol></div><div class="col-zh" lang="zh-Hant"><ol>
+<div class="pair"><div class="col-en" lang="en"><p>Generate <strong>3–5 ranked hypotheses</strong> before testing any of them. Single-hypothesis generation anchors on the first plausible idea.</p></div><div class="col-zh" lang="zh-Hant"><p>如果你說不出預測，那假設只是一種感覺——丟棄它或把它磨利。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Each hypothesis must be <strong>falsifiable</strong>: state the prediction it makes.</p></div><div class="col-zh" lang="zh-Hant"><p><strong>在測試之前，把排序後的清單給使用者看。</strong> 他們通常擁有能立刻重新排序的領域知識（「我們剛剛部署了 #3 的改動」），或知道他們已經排除的假設。便宜的檢查點，省下大把時間。不要被它卡住——如果使用者 AFK，就照你的排序往下走。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><blockquote>
+<p>Format: "If <X> is the cause, then <changing Y> will make the bug disappear / <changing Z> will make it worse."</p>
+</blockquote></div><div class="col-zh" lang="zh-Hant"><h2>第四階段——插樁</h2></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>If you cannot state the prediction, the hypothesis is a vibe: discard or sharpen it.</p></div><div class="col-zh" lang="zh-Hant"><p>每個探針都必須對應到第三階段的特定預測。<strong>一次只改一個變數。</strong></p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p><strong>Show the ranked list to the user before testing.</strong> They often have domain knowledge that re-ranks instantly ("we just deployed a change to #3"), or know hypotheses they've already ruled out. Cheap checkpoint, big time saver. Don't block on it; proceed with your ranking if the user is AFK.</p></div><div class="col-zh" lang="zh-Hant"><p>工具偏好：</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h2>Phase 4: Instrument</h2></div><div class="col-zh" lang="zh-Hant"><ol>
 <li><strong>除錯器 / REPL 檢視</strong>，如果環境支援的話。一個中斷點勝過十個日誌。</li>
 <li><strong>具針對性的日誌</strong>，放在能區分假設的邊界上。</li>
 <li>永遠不要「全部打日誌然後 grep」。</li>
 </ol></div></div>
-<div class="pair"><div class="col-en" lang="en"><p><strong>Tag every debug log</strong> with a unique prefix, e.g. <code>[DEBUG-a4f2]</code>. Cleanup at the end becomes a single grep. Untagged logs survive; tagged logs die.</p></div><div class="col-zh" lang="zh-Hant"><p><strong>用獨特前綴標記每個除錯日誌</strong>，例如 <code>[DEBUG-a4f2]</code>。最後的清理變成單次 grep。未標記的日誌存活；標記的日誌陣亡。</p></div></div>
-<div class="pair"><div class="col-en" lang="en"><p><strong>Perf branch.</strong> For performance regressions, logs are usually wrong. Instead: establish a baseline measurement (timing harness, <code>performance.now()</code>, profiler, query plan), then bisect. Measure first, fix second.</p></div><div class="col-zh" lang="zh-Hant"><p><strong>效能分支。</strong> 對效能回歸，日誌通常是錯的。改成：先建立基線量測（時序測試架、<code>performance.now()</code>、profiler、查詢計畫），再二分。先量測，後修復。</p></div></div>
-<div class="pair"><div class="col-en" lang="en"><h2>Phase 5 — Fix + regression test</h2></div><div class="col-zh" lang="zh-Hant"><h2>第五階段——修復 + 回歸測試</h2></div></div>
-<div class="pair"><div class="col-en" lang="en"><p>Write the regression test <strong>before the fix</strong> — but only if there is a <strong>correct seam</strong> for it.</p></div><div class="col-zh" lang="zh-Hant"><p><strong>在修復之前</strong>寫回歸測試——但只有當它有<strong>正確的接縫</strong>時。</p></div></div>
-<div class="pair"><div class="col-en" lang="en"><p>A correct seam is one where the test exercises the <strong>real bug pattern</strong> as it occurs at the call site. If the only available seam is too shallow (single-caller test when the bug needs multiple callers, unit test that can't replicate the chain that triggered the bug), a regression test there gives false confidence.</p></div><div class="col-zh" lang="zh-Hant"><p>正確的接縫是測試在<strong>呼叫點實際發生的 bug 模式</strong>上運作的接縫。如果唯一可用的接縫太淺（bug 需要多個呼叫者時卻只有單一呼叫者測試、無法重現觸發 bug 的鏈的單元測試），在那裡的回歸測試會給你錯誤的信心。</p></div></div>
-<div class="pair"><div class="col-en" lang="en"><p><strong>If no correct seam exists, that itself is the finding.</strong> Note it. The codebase architecture is preventing the bug from being locked down. Flag this for the next phase.</p></div><div class="col-zh" lang="zh-Hant"><p><strong>如果沒有正確的接縫，那本身就是發現。</strong> 記下它。程式庫架構正在阻止 bug 被鎖定。把這個標記給下一階段。</p></div></div>
-<div class="pair"><div class="col-en" lang="en"><p>If a correct seam exists:</p></div><div class="col-zh" lang="zh-Hant"><p>如果正確的接縫存在：</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Each probe must map to a specific prediction from Phase 3. <strong>Change one variable at a time.</strong></p></div><div class="col-zh" lang="zh-Hant"><p><strong>用獨特前綴標記每個除錯日誌</strong>，例如 <code>[DEBUG-a4f2]</code>。最後的清理變成單次 grep。未標記的日誌存活；標記的日誌陣亡。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Tool preference:</p></div><div class="col-zh" lang="zh-Hant"><p><strong>效能分支。</strong> 對效能回歸，日誌通常是錯的。改成：先建立基線量測（時序測試架、<code>performance.now()</code>、profiler、查詢計畫），再二分。先量測，後修復。</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><ol>
-<li>Turn the minimised repro into a failing test at that seam.</li>
-<li>Watch it fail.</li>
-<li>Apply the fix.</li>
-<li>Watch it pass.</li>
-<li>Re-run the Phase 1 feedback loop against the original (un-minimised) scenario.</li>
-</ol></div><div class="col-zh" lang="zh-Hant"><ol>
+<li><strong>Debugger / REPL inspection</strong> if the env supports it. One breakpoint beats ten logs.</li>
+<li><strong>Targeted logs</strong> at the boundaries that distinguish hypotheses.</li>
+<li>Never "log everything and grep".</li>
+</ol></div><div class="col-zh" lang="zh-Hant"><h2>第五階段——修復 + 回歸測試</h2></div></div>
+<div class="pair"><div class="col-en" lang="en"><p><strong>Tag every debug log</strong> with a unique prefix, e.g. <code>[DEBUG-a4f2]</code>. Cleanup at the end becomes a single grep. Untagged logs survive; tagged logs die.</p></div><div class="col-zh" lang="zh-Hant"><p><strong>在修復之前</strong>寫回歸測試——但只有當它有<strong>正確的接縫</strong>時。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p><strong>Perf branch.</strong> For performance regressions, logs are usually wrong. Instead: establish a baseline measurement (timing harness, <code>performance.now()</code>, profiler, query plan), then bisect. Measure first, fix second.</p></div><div class="col-zh" lang="zh-Hant"><p>正確的接縫是測試在<strong>呼叫點實際發生的 bug 模式</strong>上運作的接縫。如果唯一可用的接縫太淺（bug 需要多個呼叫者時卻只有單一呼叫者測試、無法重現觸發 bug 的鏈的單元測試），在那裡的回歸測試會給你錯誤的信心。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h2>Phase 5: Fix + regression test</h2></div><div class="col-zh" lang="zh-Hant"><p><strong>如果沒有正確的接縫，那本身就是發現。</strong> 記下它。程式庫架構正在阻止 bug 被鎖定。把這個標記給下一階段。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Write the regression test <strong>before the fix</strong>, but only if there is a <strong>correct seam</strong> for it.</p></div><div class="col-zh" lang="zh-Hant"><p>如果正確的接縫存在：</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>A correct seam is one where the test exercises the <strong>real bug pattern</strong> as it occurs at the call site. If the only available seam is too shallow (single-caller test when the bug needs multiple callers, unit test that can't replicate the chain that triggered the bug), a regression test there gives false confidence.</p></div><div class="col-zh" lang="zh-Hant"><ol>
 <li>把最小化的重現變成該接縫上的失敗測試。</li>
 <li>看它失敗。</li>
 <li>套用修復。</li>
 <li>看它通過。</li>
 <li>針對原始（未最小化）情境重跑第一階段的回饋迴圈。</li>
 </ol></div></div>
-<div class="pair"><div class="col-en" lang="en"><h2>Phase 6 — Cleanup + post-mortem</h2></div><div class="col-zh" lang="zh-Hant"><h2>第六階段——清理 + 事後檢討</h2></div></div>
-<div class="pair"><div class="col-en" lang="en"><p>Required before declaring done:</p></div><div class="col-zh" lang="zh-Hant"><p>宣告完成前必須完成：</p></div></div>
-<div class="pair"><div class="col-en" lang="en"><ul>
-<li>[ ] Original repro no longer reproduces (re-run the Phase 1 loop)</li>
-<li>[ ] Regression test passes (or absence of seam is documented)</li>
-<li>[ ] All <code>[DEBUG-...]</code> instrumentation removed (<code>grep</code> the prefix)</li>
-<li>[ ] Throwaway prototypes deleted (or moved to a clearly-marked debug location)</li>
-<li>[ ] The hypothesis that turned out correct is stated in the commit / PR message — so the next debugger learns</li>
-</ul></div><div class="col-zh" lang="zh-Hant"><ul>
+<div class="pair"><div class="col-en" lang="en"><p><strong>If no correct seam exists, that itself is the finding.</strong> Note it. The codebase architecture is preventing the bug from being locked down. Flag this for the next phase.</p></div><div class="col-zh" lang="zh-Hant"><h2>第六階段——清理 + 事後檢討</h2></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>If a correct seam exists:</p></div><div class="col-zh" lang="zh-Hant"><p>宣告完成前必須完成：</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><ol>
+<li>Turn the minimised repro into a failing test at that seam.</li>
+<li>Watch it fail.</li>
+<li>Apply the fix.</li>
+<li>Watch it pass.</li>
+<li>Re-run the Phase 1 feedback loop against the original (un-minimised) scenario.</li>
+</ol></div><div class="col-zh" lang="zh-Hant"><ul>
 <li>[ ] 原始重現不再重現（重跑第一階段迴圈）</li>
 <li>[ ] 回歸測試通過（或接縫缺失已記錄在案）</li>
 <li>[ ] 所有 <code>[DEBUG-...]</code> 插樁已移除（grep 該前綴）</li>
 <li>[ ] 一次性原型已刪除（或移到清楚標記的除錯位置）</li>
 <li>[ ] 正確的假設寫進 commit / PR 訊息——讓下一位除錯者學到</li>
 </ul></div></div>
-<div class="pair"><div class="col-en" lang="en"><p><strong>Then ask: what would have prevented this bug?</strong> If the answer involves architectural change (no good test seam, tangled callers, hidden coupling) hand off to the <code>/improve-codebase-architecture</code> skill with the specifics. Make the recommendation <strong>after</strong> the fix is in, not before — you have more information now than when you started.</p></div><div class="col-zh" lang="zh-Hant"><p><strong>然後問：什麼能防止這個 bug？</strong> 如果答案涉及架構變更（沒有好的測試接縫、呼叫者糾纏不清、隱藏的耦合），把具體內容交接給 <code>/improve-codebase-architecture</code> 技能。在修復完成<strong>之後</strong>再提出建議，不要提前——你現在比開始時擁有更多資訊。</p></div></div>
-<div class="tutorial-block">
-  <h3><span class="tb-icon">📖</span> 教學解說</h3>
-  <p><code>diagnosing-bugs</code> 的核心哲學是：<strong>先有迴圈，再談假設</strong>。大多數除錯的失敗來自「直接跳到假設」——你猜了一個原因，花時間追下去，結果猜錯了。這個技能強制你先建立一個<strong>會變紅的緊密迴圈</strong>（一個指令能重現 bug），然後才開始猜。</p>
-  <p>六個階段的順序很關鍵：(1) 建迴圈 → (2) 重現+最小化 → (3) 假設 → (4) 插樁 → (5) 修復+回歸測試 → (6) 清理+事後檢討。每個階段都有明確的完成標準——沒有通過就不能往下走。</p>
-</div>
-<div class="tutorial-block tb-example">
-  <h3><span class="tb-icon">💡</span> Worked Example</h3>
-  <p><strong>情境</strong>：用戶回報「偶爾會收到空的 CSV 匯出」，但你無法重現。</p>
-  <ol>
-    <li><strong>Phase 1</strong>：建立迴圈。寫一個腳本 <code>test-export.sh</code>：<code>curl -s /api/export?start=2024-01-01 | head -5</code>。跑 100 次，發現有 3 次回傳空結果。迴圈建立了——重現率 3%。</li>
-    <li><strong>Phase 2</strong>：最小化。砍掉日期篩選參數 → 仍然 3%。砍掉 header → 仍然 3%。發現跟並發有關——兩個同時請求時更容易觸發。最小重現：<code>for i in {1..10}; do curl -s /api/export &amp; done; wait</code>。</li>
-    <li><strong>Phase 3</strong>：提出 3 個假設：(a) 共用 cursor 沒有 thread safety (b) 記憶體不足 (c) 超時。展示給使用者看——使用者說「我們上週改了 cursor pooling」→ 假設 (a) 排第一。</li>
-    <li><strong>Phase 4</strong>：插樁。加 <code>[DEBUG-cursor]</code> 日誌在 cursor 初始化處，確認是否有 race condition。</li>
-    <li><strong>Phase 5</strong>：修復。加 mutex 保護 cursor 初始化。回歸測試通過。</li>
-  </ol>
-</div>
-<div class="tutorial-block tb-mistake">
-  <h3><span class="tb-icon">⚠️</span> 常見錯誤</h3>
-  <ul>
-    <li><strong>直接跳到假設</strong>——「我覺得是 race condition」→ 花兩小時追，結果不是。技能要求先有迴圈再猜。</li>
-    <li><strong>迴圈太慢</strong>——一個要跑 30 秒的迴圈只比沒有好一點。目標是幾秒內完成。</li>
-    <li><strong>沒有最小化就開始假設</strong>——最小化能縮小假設空間。未最小化 = 更多活動部件 = 更多可能原因。</li>
-    <li><strong>一個假設就開始測</strong>——單一假設容易錨定。先列出 3–5 個排序的假設，展示給使用者看。</li>
-  </ul>
-</div>
-<div class="tutorial-block tb-checklist">
-  <h3><span class="tb-icon">✅</span> 練習 / 驗收清單</h3>
-  <ul>
-    <li>□ 迴圈能在幾秒內完成</li>
-    <li>□ 迴圈是確定性的（或有高重現率）</li>
-    <li>□ 迴圈能變紅（不是「跑起來沒有報錯」）</li>
-    <li>□ 最小化後每個剩餘元素都承重</li>
-    <li>□ 有 3–5 個排序的假設，且每個都可否證</li>
-    <li>□ 測試前把假設清單展示給使用者看</li>
-    <li>□ 修復後有回歸測試</li>
-    <li>□ 清理了所有插樁（grep 確認）</li>
-  </ul>
-</div>
-<div class="tutorial-block tb-example">
-  <h3><span class="tb-icon">🚀</span> 進階真實情境 Worked Example</h3>
-  <p><strong>情境</strong>：用戶回報「匯出功能在某個時段特別慢，有時直接 504」，但開發環境完全無法重現。</p>
-  <ol>
-    <li><strong>Phase 1 建迴圈</strong>：開發環境無法重現 → 抓不到真實症狀。改為重播追蹤：把正式環境的一筆慢請求的 HAR / trace 存到磁碟，寫一個 harness 重播同一筆 payload 進隔離的匯出程式碼路徑 → 它在本地穩定地慢了 40 秒，迴圈建立。</li>
-    <li><strong>收緊迴圈</strong>：把時間窗縮小到只量測「CSV 序列化」而非整個 HTTP 層，速度從 40 秒降到 3 秒。</li>
-    <li><strong>Phase 2 最小化</strong>：逐一砍掉欄位，發現只要包含某個多層 JSON 欄位就慢——最小重現是「含嵌套 JSON 的單筆紀錄」。每個剩餘元素都承重。</li>
-    <li><strong>Phase 3 假設</strong>：(a) 序列化用遞迴展平造成指數爆炸（b) 欄位值被重複解析多次（c) 資料庫查詢 N+1。展示給使用者——他們說「我們這週把 JSON 欄位從 SELECT 改成邊讀邊 parse」→ 假設 (b) 升到第一。</li>
-    <li><strong>Phase 4 插樁</strong>：在 parse 處加 <code>[DEBUG-json]</code> 計數，確認同一個欄位被 parse 了 5 次（一次一次地 parse，而非讀一次用多次）。</li>
-    <li><strong>Phase 5–6</strong>：回歸測試鎖定「同欄位只 parse 一次」，修復後重播原始 trace 確認從 40 秒回到 2 秒；移除全部插樁。</li>
-  </ol>
-  <p><strong>設計決策</strong>：本例與初階範例（空 CSV）最大的不同是<strong>開發環境無法重現</strong>。重點不是執著於「在本地重現」，而是「拿到能觸發 bug 的輸入」——用重播真實 trace 的方式把正式環境的輸入帶進本地，迴圈照樣建立。這是 Phase 1 的「重播擷取追蹤」技巧在真實世界的典型用法。</p>
-</div>
-<div class="tutorial-block tb-theory">
-  <h3><span class="tb-icon">🔬</span> 深入原理擴充</h3>
-  <p>「先建迴圈再談假設」背後是科學方法論裡的<strong>可證偽性</strong>原則。假設本身沒有價值，<strong>假設的預測</strong>才有——而預測必須能被一次實驗判死。本技能把它形式化為「迴圈能變紅」：一個不能變紅的迴圈，代表你連「bug 的具體定義」都還沒抓到，任何假設都是空想。這也是為什麼 Phase 2 要求確認「是使用者描述的那個失敗模式」，而不是碰巧在附近的其他失敗——抓錯 bug 的假設再多也白搭。</p>
-  <p>對 AI coding assistant 而言，這個紀律對抗的是模型最容易犯的錯誤：<strong>模式匹配式的猜測</strong>。模型看到「效能慢」就聯想到「N+1 查詢」，然後開始翻程式碼找證據——這是把結論當前提。技能強制你先找到「一條保證會紅的指令」，從根上斷絕這種倒果為因。</p>
-  <p><strong>陷阱案例</strong>：很多人以為「加了一堆 <code>console.log</code> 就叫插樁」。但「log everything and grep」正是 Phase 4 明令禁止的——無差別日誌產生的資料太多，反而稀釋掉能區分假設的那一條線索。更糟的是未標記的日誌會在修復後殘留在正式環境。真相是：<strong>插樁的數量要最少、位置要精準</strong>——每個探針對應 Phase 3 的一個具體預測，且必須帶 <code>[DEBUG-xxx]</code> 前綴讓清理變成單次 grep。</p>
-</div>
-<div class="tutorial-block tb-diagnosis">
-  <h3><span class="tb-icon">🩺</span> 診斷式疑難排解表</h3>
-  <table>
-    <tr><th>症狀</th><th>可能原因</th><th>解決方案</th></tr>
-    <tr><td>開發環境無法重現正式環境的 bug</td><td>觸發條件藏在正式環境的特定輸入或流量模式裡</td><td>重播擷取的 trace（HAR / log dump / 事件日誌），把輸入帶進本地隔離環境</td></tr>
-    <tr><td>迴圈每次結果不同（flaky）</td><td>時間窗、並發或隨機性沒被釘住</td><td>釘時間、播種 RNG、隔離檔案系統與網路；對非確定 bug 用高重現率代替 100%</td></tr>
-    <tr><td>測試「跑起來沒報錯」但 bug 還在</td><td>訊號太鈍，斷言的是「沒崩潰」而非具體症狀</td><td>把斷言改成針對使用者確切症狀（特定輸出 / 特定錯誤碼），確保它能真的變紅</td></tr>
-    <tr><td>除錯日誌殘留在正式環境</td><td>日誌沒帶唯一前綴，清理時無從 grep</td><td>每個日誌帶 <code>[DEBUG-xxx]</code> 前綴，Phase 6 用單次 grep 確認全部移除</td></tr>
-    <tr><td>修完後原始情境仍復發</td><td>只用最小重現驗證，沒回到原始（未最小化）情境</td><td>修復後重跑 Phase 1 的原始迴圈，確認原始 repro 不再重現</td></tr>
-  </table>
-</div>
-<div class="tutorial-block tb-challenge">
-  <h3><span class="tb-icon">🏆</span> 進階挑戰題</h3>
-  <ol>
-    <li><strong>迴圈設計</strong>：一個「偶爾（約 3%）訂單金額計算錯誤」的 bug。設計一個能提高到可除錯重現率的迴圈（提示：平行化、固定種子、收窄時間窗）。寫出具體指令。</li>
-    <li><strong>假設可否證</strong>：假設「是 cache 未失效造成的」。把這句話改寫成可否證的形式：「如果 X 是原因，那麼改變 Y 會讓 bug 消失／改變 Z 會讓它更糟。」並說明該插哪個樁。</li>
-    <li><strong>接縫判斷</strong>：bug 需要多個呼叫者同時觸發，但唯一可測的接縫只有單一呼叫者。根據 Phase 5，這說明什麼？你該在回歸測試上做什麼、該交接給誰？</li>
-  </ol>
-</div>
-<div class="tutorial-block tb-example">
-  <h3><span class="tb-icon">🏗️</span> 專案級端到端 Worked Example</h3>
-  <p><strong>專案情境</strong>：一個「訂單匯出服務」的完整事故處理專案——線上偶發 504＋部分訂單遺漏，你負責用 diagnosing-bugs 的六階段從頭到尾修完，並把教訓回饋進專案。</p>
-  <ol>
-    <li><strong>Phase 1 建迴圈</strong>：開發環境重現不了 → 用「重播擷取追蹤」把正式環境的慢請求 trace 存下來，寫 harness 在隔離路徑重播 → 穩定重現「含大 JSON 欄位時序列化慢 40 秒、部分訂單被截斷」。迴圈：<code>node replay.js --trace trace-1042.json</code>，2 秒內給紅。</li>
-    <li><strong>Phase 2 最小化</strong>：逐一砍欄位/呼叫者，最小重現縮到「單筆含嵌套 JSON 的訂單」。每個剩餘元素都承重。</li>
-    <li><strong>Phase 3 假設</strong>：列出 4 個可否證假設並排序（重複解析 JSON、序列化指數爆炸、N+1 查詢、記憶體不足）；展示給使用者，對方說「我們上週把 JSON 欄位改成邊讀邊 parse」→ 重複解析升到第一。</li>
-    <li><strong>Phase 4 插樁</strong>：在 parse 點加 <code>[DEBUG-json]</code> 計數，確認同一欄位被 parse 5 次。</li>
-    <li><strong>Phase 5 修復＋回歸</strong>：先寫回歸測試鎖定「同欄位只 parse 一次」（接縫：序列化函式公開介面）→ 看它紅 → 修 → 綠 → 重播原始 trace 確認 40 秒回到 2 秒、無訂單遺漏。</li>
-    <li><strong>Phase 6 事後檢討</strong>：清理插樁（grep <code>[DEBUG-</code>）、把正確假設寫進 commit。發現「序列化模組沒有好接縫」→ 交接給 <code>/improve-codebase-architecture</code> 深化候選。</li>
-  </ol>
-  <p><strong>預期輸出</strong>：一個回歸測試＋一個修復 commit＋一段寫進 commit 的事後檢討＋一張交給架構改善的深化候選。整起事故從「無法重現」到「被測試鎖住」。</p>
-  <p><strong>關鍵設計</strong>：全案的「迴圈」只有一個（<code>replay.js</code>），但它在每個階段被不同方式消耗——最小化砍輸入、假設驗證看計數、回歸測試當基準。迴圈先於一切，這就是本技能的核心。</p>
-</div>
-<div class="tutorial-block tb-theory">
-  <h3><span class="tb-icon">⚙️</span> 效能 / 品質 / 安全深度</h3>
-  <p><strong>效能</strong>：診斷本身就是效能工作——迴圈的速度決定除錯速度。Phase 4 對效能回歸有專屬分支：「日誌通常是錯的，先建立基線量測再二分」。實務上把量測做成 script（<code>perf-baseline.sh</code>），每次修改後重跑，把「效能」變成「可二分的事實」而非「感覺」。</p>
-  <p><strong>品質</strong>：品質保證來自回歸測試的<strong>接縫正確性</strong>——測試必須在「真實 bug 模式發生的呼叫點」運作，否則給的是錯誤信心。若沒有正確接縫，「那本身就是發現」——這比「貼一個假測試」更誠實，也是交接給架構改善的正確起點。</p>
-  <p><strong>安全</strong>：事故處理常夾帶安全風險：(1) 插樁若打在正式環境，日誌可能記錄敏感 payload——<code>[DEBUG-json]</code> 前綴讓清理變成單次 grep，且插樁內容絕不列印訂單個資；(2) 修復時為了「快速止血」容易繞過既有授權——修完後必須跑 <code>/code-review</code> 的安全檢查確認沒開旁路；(3) 若事故是安全事件（資料洩漏、未授權存取），Phase 6 的事後檢討要額外寫「防範機制」而非只是「修復方法」。</p>
-</div>
-<div class="tutorial-block">
-  <h3><span class="tb-icon">🧭</span> 技能間比較對照表</h3>
-  <table>
-    <tr><th>面向</th><th>本 skill（diagnosing-bugs）</th><th>相關 skill</th><th>差異說明</th></tr>
-    <tr><td>核心問題</td><td>「壞了，為什麼？」——建迴圈、追根因</td><td>code-review</td><td>review 檢查「變更」；本 skill 診斷「執行中的系統」</td></tr>
-    <tr><td>假設管理</td><td>先有迴圈才談假設，3–5 個排序可否證假設</td><td>research</td><td>research 查「外部事實」；本 skill 驗證「內部假設」——research 可作為建迴圈前的背景補給</td></tr>
-    <tr><td>收尾方式</td><td>回歸測試＋事後檢討＋交接架構改善</td><td>tdd</td><td>tdd 從頭就以測試驅動；本 skill 是「事後補回歸」——但兩者共用「紅→綠」紀律</td></tr>
-    <tr><td>副作用控制</td><td>插樁必須帶 <code>[DEBUG-]</code> 前綴、事後清理</td><td>implement</td><td>implement 的乾淨 commit 政策與本 skill 的清理政策是同一原則的兩個應用</td></tr>
-    <tr><td>效能取向</td><td>先量測再二分（效能回歸分支）</td><td>improve-codebase-architecture</td><td>後者改善「結構」讓未來更好除錯；本 skill 解決「眼前」的 bug</td></tr>
-  </table>
-</div>
-<div class="tutorial-block tb-checklist">
-  <h3><span class="tb-icon">✅</span> 互動式檢核清單</h3>
-  <ul>
-    <li>- [ ] 我有一條「已跑過至少一次」、能在 bug 上變紅、幾秒內完成的迴圈</li>
-    <li>- [ ] 我已最小化到「每個剩餘元素都承重」</li>
-    <li>- [ ] 我有 3–5 個可否證的排序假設，且在測試前展示給使用者</li>
-    <li>- [ ] 插樁都有 <code>[DEBUG-]</code> 前綴，且每個探針對應一個具體預測</li>
-    <li>- [ ] 回歸測試在「正確接縫」上（否則已記錄「無正確接縫」並交接）</li>
-    <li>- [ ] Phase 6 完成：插樁清乾淨、假設寫進 commit、交接給該接的 skill</li>
-  </ul>
-</div>
-
-<div class="tutorial-block tb-project">
-  <h3><span class="tb-icon">🏗️</span> ① 專案級端到端 Worked Example</h3>
-  <p><strong>專案情境</strong>：使用者回報「API 回應時間從 200ms 暴增到 3s」，你需要定位根因。</p>
-<ol>
-  <li>先跑 <code>/diagnosing-bugs</code>，收集症狀：哪些 endpoint 變慢？是所有請求還是特定參數？是最近才變慢嗎？</li>
-  <li>建立假說：可能是 N+1 query、可能是 cache miss、可能是新版本的 regression。</li>
-  <li>設計最小實驗：跑 <code>EXPLAIN ANALYZE</code> 確認是否有 N+1、檢查 cache hit rate、比對新舊版本的 query plan。</li>
-  <li>驗證根因：假說被證實後，用 <code>git bisect</code> 定位引入 regression 的 commit。</li>
-  <li>修復並確認：修復後跑 <code>/tdd</code> 加一迴歸測試，確保不會再發生。</li>
-</ol>
-<p><strong>關鍵</strong>：診斷迴圈的核心是「假說→實驗→驗證」，不是「猜→改→試」。每個假說都要有可量化的驗證方式。</p>
-</div>
-<div class="tutorial-block tb-theory">
-  <h3><span class="tb-icon">⚡</span> ② 效能 / 品質 / 安全深度</h3>
-  <table>
-  <tr><th>面向</th><th>實務考量</th></tr>
-  <tr><td>效能</td><td>診斷迴圈本身有「偵測成本」：每次假說驗證都要跑實驗。用 <code>git bisect</code> 可在 O(log n) 內定位 regression，比逐 commit 測試快得多。</td></tr>
-  <tr><td>品質</td><td>「修了但沒加迴歸測試」是 diagnose 最常見的遺漏。確保每個修復都伴隨一個「之前會壞、現在不會」的測試。</td></tr>
-  <tr><td>安全</td><td>診斷過程中可能需要跑 <code>git reset --hard</code> 或 <code>git stash</code>——確保在安全分支上操作，避免丟失未 commit 的變更。</td></tr>
-</table>
-</div>
-<div class="tutorial-block tb-comparison">
-  <h3><span class="tb-icon">📊</span> ③ 技能間比較對照表</h3>
-  <table>
-  <tr><th>面向</th><th>diagnosing-bugs</th><th>tdd</th><th>resolving-merge-conflicts</th><th>差異說明</th></tr>
-  <tr><td>目標</td><td>找到根因</td><td>驗證行為</td><td>解決衝突</td><td>diagnosing-bugs 是「為什麼壞了」，tdd 是「怎麼知道壞了」，resolving 是「兩邊衝突怎麼合」</td></tr>
-  <tr><td>時機</td><td>Bug 發生時</td><td>寫新功能時</td><td>merge 時</td><td>三者分別用於事中排查、事前預防、事後整合</td></tr>
-  <tr><td>方法</td><td>假說→實驗→驗證</td><td>紅→綠→重構</td><td>分析→取捨→合併</td><td>diagnosing-bugs 是科學方法，tdd 是工程循環，resolving 是協調流程</td></tr>
-</table>
-</div>
-<div class="tutorial-block tb-checklist">
-  <h3><span class="tb-icon">✅</span> ④ 互動式進階檢核清單</h3>
-  <ul>
-    <li>□ 能區分「症狀」（API 變慢）和「根因」（N+1 query）</li>
-    <li>□ 知道每個假說都要有可量化的驗證方式</li>
-    <li>□ 能用 git bisect 在 O(log n) 內定位 regression</li>
-    <li>□ 修復後一定加迴歸測試</li>
-    <li>□ 知道診斷迴圈是在安全分支上操作</li>
-  </ul>
-</div>
+<div class="pair"><div class="col-en" lang="en"><h2>Phase 6: Cleanup</h2></div><div class="col-zh" lang="zh-Hant"><p><strong>然後問：什麼能防止這個 bug？</strong> 如果答案涉及架構變更（沒有好的測試接縫、呼叫者糾纏不清、隱藏的耦合），把具體內容交接給 <code>/improve-codebase-architecture</code> 技能。在修復完成<strong>之後</strong>再提出建議，不要提前——你現在比開始時擁有更多資訊。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Required before declaring done:</p></div><div class="col-zh" lang="zh-Hant"><p class="en-only">（無繁中對照）</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><ul>
+<li>[ ] Original repro no longer reproduces (re-run the Phase 1 loop)</li>
+<li>[ ] Regression test passes (or absence of seam is documented)</li>
+<li>[ ] All <code>[DEBUG-...]</code> instrumentation removed (<code>grep</code> the prefix)</li>
+<li>[ ] Throwaway prototypes deleted (or moved to a clearly-marked debug location)</li>
+<li>[ ] The hypothesis that turned out correct is stated in the commit / PR message, so the next debugger learns</li>
+</ul></div><div class="col-zh" lang="zh-Hant"><p class="en-only">（無繁中對照）</p></div></div>
 
 </div>
 </body>

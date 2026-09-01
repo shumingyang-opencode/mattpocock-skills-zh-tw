@@ -82,16 +82,16 @@
 <li>交錯練習（在練習中混合不同但相關的主題 — 僅限於技能練習）</li>
 </ul></div></div>
 <div class="pair"><div class="col-en" lang="en"><h2>Lessons</h2></div><div class="col-zh" lang="zh-Hant"><h2>課程（Lessons）</h2></div></div>
-<div class="pair"><div class="col-en" lang="en"><p>A lesson is the main thing you produce — the unit in which knowledge and skills reach the user. Each lesson is one self-contained HTML file, saved to <code>./lessons/</code> and titled <code>0001-&lt;dash-case-name&gt;.html</code> where the number increments each time.</p></div><div class="col-zh" lang="zh-Hant"><p>課程是您產出的主要東西 — 知識與技能觸達使用者的單位。每個課程是一個自包含的 HTML 檔案，儲存到 <code>./lessons/</code> 並命名為 <code>0001-&lt;dash-case-name&gt;.html</code>，數字每次遞增。</p></div></div>
-<div class="pair"><div class="col-en" lang="en"><p>A lesson should be <strong>beautiful</strong> — clean, readable typography and layout — since the user will return to these later to review. Think Tufte.</p></div><div class="col-zh" lang="zh-Hant"><p>課程應該是<strong>美觀的</strong> — 乾淨、可讀的排版與版面 — 因為使用者稍後會回來複習。想想 Tufte。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>A lesson is the main thing you produce: the unit in which knowledge and skills reach the user. Each lesson is one self-contained HTML file, saved to <code>./lessons/</code> and titled <code>0001-&lt;dash-case-name&gt;.html</code> where the number increments each time.</p></div><div class="col-zh" lang="zh-Hant"><p>課程是您產出的主要東西 — 知識與技能觸達使用者的單位。每個課程是一個自包含的 HTML 檔案，儲存到 <code>./lessons/</code> 並命名為 <code>0001-&lt;dash-case-name&gt;.html</code>，數字每次遞增。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>A lesson should be <strong>beautiful</strong>, with clean, readable typography and layout, since the user will return to these later to review. Think Tufte.</p></div><div class="col-zh" lang="zh-Hant"><p>課程應該是<strong>美觀的</strong> — 乾淨、可讀的排版與版面 — 因為使用者稍後會回來複習。想想 Tufte。</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><p>The lesson should be short, and completable very quickly. Learners' working memory is very small, and we need to stay within it. But each lesson should give the user a single tangible win that they can build on. It should be directly tied to the mission, and should be in the user's zone of proximal development.</p></div><div class="col-zh" lang="zh-Hant"><p>課程應該簡短，且能非常快速地完成。學習者的工作記憶非常小，我們需要保持在其中。但每個課程都應該給使用者一個具體的、可以累積的勝利。它應該直接與任務相關，並落在使用者的近側發展區內。</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><p>If possible, open the lesson file for the user by running a CLI command.</p></div><div class="col-zh" lang="zh-Hant"><p>如果可能，透過執行 CLI 命令為使用者開啟課程檔案。</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><p>Each lesson should link via HTML anchors to other lessons and reference documents.</p></div><div class="col-zh" lang="zh-Hant"><p>每個課程應該透過 HTML 錨點連結到其他課程與參考文件。</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><p>Each lesson should recommend a primary source for the user to read or watch. This should be the most high-quality, high-trust resource you found on the topic.</p></div><div class="col-zh" lang="zh-Hant"><p>每個課程應該推薦一個使用者可以閱讀或觀看的主要來源。這應該是您在該主題上找到的最優質、最高信任度的資源。</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><p>Each lesson should contain a reminder to ask followup questions to the agent. The agent is their teacher, and can assist with anything that's unclear.</p></div><div class="col-zh" lang="zh-Hant"><p>每個課程都應該包含一個提醒，請使用者向代理提出後續問題。代理是他們的老師，可以協助任何不清楚的事。</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><h2>Assets</h2></div><div class="col-zh" lang="zh-Hant"><h2>Assets</h2></div></div>
-<div class="pair"><div class="col-en" lang="en"><p>Lessons are built from reusable <strong>components</strong>, stored in <code>./assets/</code>: stylesheets, quiz widgets, simulators, diagram helpers — anything a second lesson could reuse.</p></div><div class="col-zh" lang="zh-Hant"><p>課程由可重用的<strong>元件</strong>組成，儲存在 <code>./assets/</code>：樣式表、測驗小工具、模擬器、圖表輔助 — 任何第二個課程可能重用的東西。</p></div></div>
-<div class="pair"><div class="col-en" lang="en"><p>Reuse is the default, not the exception. Before authoring a lesson, read <code>./assets/</code> and build from the components already there. When a lesson needs something new and reusable, write it as a component in <code>./assets/</code> and link to it — never inline code a future lesson would duplicate.</p></div><div class="col-zh" lang="zh-Hant"><p>重用是預設，而不是例外。在撰寫課程之前，先閱讀 <code>./assets/</code> 並從已有的元件出發建構。當課程需要新的、可重用的東西時，將其作為 <code>./assets/</code> 中的一個元件撰寫並連結它 — 絕不要內嵌未來課程會重複的程式碼。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Lessons are built from reusable <strong>components</strong>, stored in <code>./assets/</code>: stylesheets, quiz widgets, simulators, diagram helpers, and anything else a second lesson could reuse.</p></div><div class="col-zh" lang="zh-Hant"><p>課程由可重用的<strong>元件</strong>組成，儲存在 <code>./assets/</code>：樣式表、測驗小工具、模擬器、圖表輔助 — 任何第二個課程可能重用的東西。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Reuse is the default, not the exception. Before authoring a lesson, read <code>./assets/</code> and build from the components already there. When a lesson needs something new and reusable, write it as a component in <code>./assets/</code> and link to it; never inline code a future lesson would duplicate.</p></div><div class="col-zh" lang="zh-Hant"><p>重用是預設，而不是例外。在撰寫課程之前，先閱讀 <code>./assets/</code> 並從已有的元件出發建構。當課程需要新的、可重用的東西時，將其作為 <code>./assets/</code> 中的一個元件撰寫並連結它 — 絕不要內嵌未來課程會重複的程式碼。</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><p>A shared stylesheet is the first component every workspace earns: every lesson links it, so the lessons look like one consistent course rather than a pile of one-offs. As the workspace grows, so should the component library.</p></div><div class="col-zh" lang="zh-Hant"><p>一個共享的樣式表是每個工作區第一個獲得的元件：每個課程都連結它，因此課程看起來像一個一致的系列，而不是一堆一次性作品。隨著工作區成長，元件庫也應該成長。</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><h2>The Mission</h2></div><div class="col-zh" lang="zh-Hant"><h2>任務（The Mission）</h2></div></div>
 <div class="pair"><div class="col-en" lang="en"><p>Every lesson should be tied into the mission - the reason that the user is interested in learning about the topic.</p></div><div class="col-zh" lang="zh-Hant"><p>每個課程都應該與任務連結 — 也就是使用者對學習主題感興趣的原因。</p></div></div>
@@ -151,123 +151,6 @@
 <div class="pair"><div class="col-en" lang="en"><p>Glossaries, in particular, are an essential reference. Once one is created, it should be adhered to in every lesson.</p></div><div class="col-zh" lang="zh-Hant"><p>特別是詞彙表，是必不可少的參考。一旦建立，每個課程都應該遵守它。</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><h2><code>NOTES.md</code></h2></div><div class="col-zh" lang="zh-Hant"><h2><code>NOTES.md</code></h2></div></div>
 <div class="pair"><div class="col-en" lang="en"><p>The user will sometimes express preferences of how they want to be taught, or things you should keep in mind. This is the place to record those preferences, so you can refer back to them when designing lessons or working with the user.</p></div><div class="col-zh" lang="zh-Hant"><p>使用者有時會表達希望如何被教導的偏好，或您應該記住的事情。這是記錄這些偏好的地方，以便您在設計課程或與使用者合作時可以回頭參考。</p></div></div>
-<div class="tutorial-block">
-  <h3><span class="tb-icon">📖</span> 教學解說</h3>
-  <p><code>teach</code> 是一個<strong>有狀態的教學系統</strong>。它不是一次性回答問題，而是把目前目錄當成教室，建立一套完整的學習工作區——MISSION.md（學習動機）、reference/（參考資料）、learning-records/（學習紀錄）、lessons/（課程）。每次 session 都從上次停下的地方繼續。</p>
-  <p>核心哲學是<strong>流暢度 vs 儲存強度</strong>：流暢度讓你覺得「我懂了」，但儲存強度才是真正的目標。要建立儲存強度，需要「適度難度」——提取練習、間隔練習、交錯練習。太簡單 = 沒有學到東西；太難 = 超出近側發展區。</p>
-</div>
-<div class="tutorial-block tb-example">
-  <h3><span class="tb-icon">💡</span> Worked Example</h3>
-  <p><strong>情境</strong>：你要教使用者 TypeScript 的泛型。</p>
-  <ol>
-    <li>先建立 MISSION.md：「使用者想用泛型写出可重用的 API client」</li>
-    <li>從 RESOURCES.md 找高品質來源：TypeScript 官方文件 Generics 章節</li>
-    <li>設計一個落在近側發展區的課程：「用泛型重構一個 any-heavy 的 fetch wrapper」</li>
-    <li>課程包含：(a) 知識教學（泛型的基本語法）→ (b) 互動練習（改寫一個具體的函数）→ (c) 測驗（確認理解）</li>
-    <li>建立 learning record：記錄使用者學到了什麼、哪些還需要複習</li>
-    <li>建立 reference/0001-generics-cheatsheet.html：泛型速查表</li>
-  </ol>
-</div>
-<div class="tutorial-block tb-mistake">
-  <h3><span class="tb-icon">⚠️</span> 常見錯誤</h3>
-  <ul>
-    <li><strong>沒有先建立 MISSION.md</strong>——不知道使用者為什麼想學，教學就沒有根基。课程會太抽象。</li>
-    <li><strong>课程太長</strong>——學習者的工作記憶很小。每個课程應該能在幾分鐘內完成。</li>
-    <li><strong>只教知識不練習</strong>——知識 = 獲取，技能 = 持久性。沒有互動練習 = 學了就忘。</li>
-    <li><strong>不建立參考資料</strong>——课程很少被回顧，參考資料會。每個主题都該有速查表。</li>
-    <li><strong>忽略學習紀錄</strong>——學習紀錄是判斷近側發展區的依據。沒有它 = 不知道下一步該教什麼。</li>
-  </ul>
-</div>
-<div class="tutorial-block tb-checklist">
-  <h3><span class="tb-icon">✅</span> 練習 / 驗收清單</h3>
-  <ul>
-    <li>□ MISSION.md 已建立，明確記錄學習動機</li>
-    <li>□ 課程落在近側發展區（不太簡單也不太難）</li>
-    <li>□ 課程包含知識教學 + 互動練習 + 測驗</li>
-    <li>□ 每個课程能在幾分鐘內完成</li>
-    <li>□ 有建立參考資料（速查表、詞彙表等）</li>
-    <li>□ 有建立學習紀錄</li>
-    <li>□ 課程有引用高品質的主要來源</li>
-  </ul>
-</div>
-<div class="tutorial-block tb-example">
-  <h3><span class="tb-icon">🚀</span> 進階真實情境 Worked Example</h3>
-  <p><strong>情境</strong>：使用者想學「用 React 畫資料視覺化」，但他已經會 React 基礎（JSX、state、props），他真正的目標是「畫出能互動的圖表」。</p>
-  <ol>
-    <li>讀學習紀錄：既有 <code>learning-records/</code> 顯示他已掌握 JSX 與 useState，且先前踩過「把整個圖表塞進 useEffect」的坑 → 近側發展區是「宣告式圖表」而不是「React 入門」。</li>
-    <li>MISSION.md 已存在：「做一個公司內部的流量儀表板」。所有課程都綁這個目標。</li>
-    <li>設計課程 0004：一個自包含 HTML，「用 declarative 的方式畫一個即時更新長條圖」。知識部分只教「資料→圖表的映射」，不重講 React 基礎（那是舊課程的範圍）。</li>
-    <li>互動練習：給一串假資料與一個空元件，讓使用者用 <code>svg</code> 畫出長條圖；測驗的每個選項字數相等，不洩漏答案。</li>
-    <li>回饋迴圈：練習後立即顯示「你的長條圖與預期輸出」的對照，錯誤當場指出。</li>
-    <li>建立 reference/0004-charting-cheatsheet.html（SVG 座標、scale 轉換速查），並新增 learning record 記錄「已掌握 declarative chart」。</li>
-  </ol>
-  <p><strong>設計決策</strong>：本例的關鍵是<strong>從 learning-records 判斷近側發展區</strong>——「他會 React 基礎」是知識，「用宣告式方式畫圖」才是剛好落在他能力邊緣的技能。若忽略 learning-records 而重教 JSX，使用者會覺得無聊；若直接教 D3 高階動畫，會超出他的發展區。</p>
-</div>
-<div class="tutorial-block tb-theory">
-  <h3><span class="tb-icon">🔬</span> 深入原理擴充</h3>
-  <p>teach 的學習科學根基是<strong>提取練習（retrieval practice）＋間隔（spacing）＋交錯（interleaving）</strong>三件套，以及它們背後的<strong>流暢度 vs 儲存強度</strong>區分。流暢度是「現在讀得順不順」，儲存強度是「一個月後還記不記得」。訓練流暢度的方法（反覆閱讀）幾乎不增加儲存強度；訓練儲存強度的方法（費力回想）反而會暫時降低流暢度——這就是「適度難度（desirable difficulty）」：讓學習「感覺更難」其實是在建立長期記憶。</p>
-  <p>對 AI coding assistant 而言，teach 是「用工作區檔案代替對話記憶」的典範：MISSION.md、learning-records、NOTES.md 都是<strong>序列化的學習狀態</strong>，讓跨 session 教學不依賴模型記得上次講到哪。這與 handoff、CONTEXT.md 是同一套「狀態外置」哲學。</p>
-  <p><strong>陷阱案例</strong>：很多人以為「課程做得多、講得細＝教得好」，於是把一個主題拆成 20 分鐘的長文，塞滿術語與完整歷史背景。真相是：<strong>知識的難度是敵人，技能的難度是工具</strong>——知識階段要降低難度（少術語、少背景、只給技能所需），技能階段才拉高難度（費力提取、互動練習）。把兩者混在一起，等於在教技能時同時增加知識負擔，工作記憶一次爆掉。</p>
-</div>
-<div class="tutorial-block tb-diagnosis">
-  <h3><span class="tb-icon">🩺</span> 診斷式疑難排解表</h3>
-  <table>
-    <tr><th>症狀</th><th>可能原因</th><th>解決方案</th></tr>
-    <tr><td>使用者覺得課程太簡單／太難</td><td>沒讀 learning-records，課程超出或低於近側發展區</td><td>先讀 learning-records 判斷能力邊緣，把課程落在「剛好被挑戰」的位置</td></tr>
-    <tr><td>學完一週後全忘了</td><td>課程只練了流暢度（反覆閱讀），沒練儲存強度</td><td>加入提取練習（從記憶回想）、間隔複習、技能類用交錯練習</td></tr>
-    <tr><td>課程與使命無關，使用者失去動機</td><td>MISSION.md 沒建立或課程脫離使命</td><td>確認 MISSION.md；每個課程都直接綁定使用者的真實目標</td></tr>
-    <tr><td>測驗選項長短不一，洩漏答案</td><td>違反「每個答案字數相同」規則</td><td>讓選項字數（最好字元數）相等，不讓格式給線索</td></tr>
-    <tr><td>課程內嵌了大量背景知識與術語</td><td>知識與技能混在一起，工作記憶爆掉</td><td>知識只留技能所需，背景資訊移去 reference；技能用互動練習建立</td></tr>
-  </table>
-</div>
-<div class="tutorial-block tb-challenge">
-  <h3><span class="tb-icon">🏆</span> 進階挑戰題</h3>
-  <ol>
-    <li><strong>發展區定位</strong>：使用者「會 JS 但沒寫過 React」。為他設計第一堂課的內容邊界（教什麼、不教什麼），並解釋它為何恰好在近側發展區內。</li>
-    <li><strong>儲存強度練習設計</strong>：主題「React 的 key prop」。設計三個練習，分別對應提取練習、間隔、交錯，並說明各自的機制。</li>
-    <li><strong>測驗公平性</strong>：設計一個四選一的測驗，主題「useEffect 的依賴陣列」，四個選項字數相同且正確答案不因格式洩漏。寫出選項與講解。</li>
-  </ol>
-</div>
-
-<div class="tutorial-block tb-project">
-  <h3><span class="tb-icon">🏗️</span> ① 專案級端到端 Worked Example</h3>
-  <p><strong>專案情境</strong>：你要教新團隊成員使用 TDD，但他們從未接觸過。</p>
-<ol>
-  <li>先跑 <code>/teach</code>，從最簡單的場景開始：「寫一個 add(a, b) 函式的 TDD」。</li>
-  <li>逐步引導：先讓他們體驗「紅」（寫失敗測試）的挫折感，再體驗「綠」（實作通過）的成就感。</li>
-  <li>然後進入「接縫」概念：為什麼測試 <code>add()</code> 而不是測試 <code>Calculator.internalAdd()</code>？</li>
-  <li>最後用真實專案的場景練習：從「購物車總和」到「優惠券計算」，讓他們自己發現反模式。</li>
-</ol>
-<p><strong>關鍵</strong>：teach 不是「把文件讀一遍」——它是「用漸進式場景引導學習」。先體驗、再理解、最後自己發現。</p>
-</div>
-<div class="tutorial-block tb-theory">
-  <h3><span class="tb-icon">⚡</span> ② 效能 / 品質 / 安全深度</h3>
-  <table>
-  <tr><th>面向</th><th>實務考量</th></tr>
-  <tr><td>效能</td><td>teach 的 token 成本與教學輪數成正比。建議限制在 3-5 個場景——每個場景都要有明確的學習目標。</td></tr>
-  <tr><td>品質</td><td>教學品質的指標：學習者是否能在離開 teach 後，自己用 TDD 完成一個新功能。如果不能，教學失敗。</td></tr>
-  <tr><td>安全</td><td>teach 可能會在教學過程中建立測試檔案——確保測試中的 mock 或 fixture 不包含真實的 API key 或 credential。</td></tr>
-</table>
-</div>
-<div class="tutorial-block tb-comparison">
-  <h3><span class="tb-icon">📊</span> ③ 技能間比較對照表</h3>
-  <table>
-  <tr><th>面向</th><th>teach</th><th>grill-me</th><th>prototype</th><th>差異說明</th></tr>
-  <tr><td>目標</td><td>教會一個技能</td><td>淬煉一個想法</td><td>回答一個問題</td><td>teach 是「讓你學會」，grill-me 是「讓你想清楚」，prototype 是「讓你看到」</td></tr>
-  <tr><td>對象</td><td>不熟悉的人</td><td>有想法的人</td><td>不確定的人</td><td>teach 適合新手，grill-me 適合有想法但需要挑戰的人，prototype 適合有假設但需要驗證的人</td></tr>
-  <tr><td>時機</td><td>團隊需要新技能時</td><td>計畫需要淬煉時</td><td>設計需要確認時</td><td>teach 是長期投資（團隊能力），grill-me 是中期投資（計畫品質），prototype 是短期投資（設計確認）</td></tr>
-</table>
-</div>
-<div class="tutorial-block tb-checklist">
-  <h3><span class="tb-icon">✅</span> ④ 互動式進階檢核清單</h3>
-  <ul>
-    <li>□ 教學從最簡單的場景開始，逐步增加複雜度</li>
-    <li>□ 學習者在 teach 結束後能自己用 TDD 完成新功能</li>
-    <li>□ 知道 teach 不是「讀文件」而是「引導體驗」</li>
-    <li>□ 教學過程中的 fixture 不包含真實 credential</li>
-    <li>□ 每個場景都有明確的學習目標</li>
-  </ul>
-</div>
 
 </div>
 </body>

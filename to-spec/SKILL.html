@@ -21,14 +21,14 @@
 </div>
 <table class="fm-table">
 <tr><td>name</td><td><code>to-spec</code></td></tr>
-<tr><td>description (EN)</td><td>Turn the current conversation into a spec and publish it to the project issue tracker — no interview, just synthesis of what you've already discussed.</td></tr>
+<tr><td>description (EN)</td><td>Turn the current conversation into a spec and publish it to the project issue tracker: no interview, just synthesis of what you've already discussed.</td></tr>
 <tr><td>說明 (繁中)</td><td>把目前的對話轉成規格說明並發佈到專案 Issue 追蹤器——不訪談，只綜合你已經討論過的內容。</td></tr>
 <tr><td>disable-model-invocation</td><td><code>true</code></td></tr>
 </table>
 <h1>to-spec</h1>
 <div class="subtitle">把聊完的共識整理成一份規格丟進 tracker，不用再訪談一遍。</div>
-<div class="pair"><div class="col-en" lang="en"><p>This skill takes the current conversation context and codebase understanding and produces a spec. Do NOT interview the user — just synthesize what you already know.</p></div><div class="col-zh" lang="zh-Hant"><p>這個技能取用目前對話的上下文與程式碼庫理解，產出一份規格說明。<strong>不要</strong>訪談使用者——只要綜合你已經知道的內容。</p></div></div>
-<div class="pair"><div class="col-en" lang="en"><p>The issue tracker and triage label vocabulary should have been provided to you — run <code>/setup-matt-pocock-skills</code> if not.</p></div><div class="col-zh" lang="zh-Hant"><p>Issue 追蹤器與分診標籤詞彙應該已經提供給你——如果沒有，執行 <code>/setup-matt-pocock-skills</code>。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>This skill takes the current conversation context and codebase understanding and produces a spec. Do NOT interview the user; just synthesize what you already know.</p></div><div class="col-zh" lang="zh-Hant"><p>這個技能取用目前對話的上下文與程式碼庫理解，產出一份規格說明。<strong>不要</strong>訪談使用者——只要綜合你已經知道的內容。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>The issue tracker and triage label vocabulary should have been provided to you. If not, tell the user to run <code>/setup-matt-pocock-skills</code>.</p></div><div class="col-zh" lang="zh-Hant"><p>Issue 追蹤器與分診標籤詞彙應該已經提供給你——如果沒有，執行 <code>/setup-matt-pocock-skills</code>。</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><h2>Process</h2></div><div class="col-zh" lang="zh-Hant"><h2>流程</h2></div></div>
 <div class="pair"><div class="col-en" lang="en"><ol>
 <li>Explore the repo to understand the current state of the codebase, if you haven't already. Use the project's domain glossary vocabulary throughout the spec, and respect any ADRs in the area you're touching.</li>
@@ -72,7 +72,7 @@
 <li>Specific interactions</li>
 </ul>
 <p>Do NOT include specific file paths or code snippets. They may end up being outdated very quickly.</p>
-<p>Exception: if a prototype produced a snippet that encodes a decision more precisely than prose can (state machine, reducer, schema, type shape), inline it within the relevant decision and note briefly that it came from a prototype. Trim to the decision-rich parts — not a working demo, just the important bits.</p>
+<p>Exception: if a prototype produced a snippet that encodes a decision more precisely than prose can (state machine, reducer, schema, type shape), inline it within the relevant decision and note briefly that it came from a prototype. Trim to the decision-rich parts, not a working demo, just the important bits.</p>
 <h2>Testing Decisions</h2>
 <p>A list of testing decisions that were made. Include:</p>
 <ul>
@@ -123,123 +123,6 @@
 <h2>補充說明</h2>
 <p>關於此功能的任何補充說明。</p>
 <p></spec-template></p></div></div>
-<div class="tutorial-block">
-  <h3><span class="tb-icon">📖</span> 教學解說</h3>
-  <p><code>to-spec</code> 的工作是把 grill 產出的散裝決策，<strong>收斂成一份結構化的規格說明</strong>。規格的目的是讓 implement 有明確的方向——它不需要包含所有實作細節，但必須回答「要建什麼、為什麼、怎麼驗收」。</p>
-  <p>規格模板有四個核心區塊：問題陳述（從使用者視角）、解決方案（從使用者視角）、使用者故事（極其詳盡）、實作決策（不包含具體檔案路徑）。最後一個是關鍵——具體路徑很快就過時，規格應該描述<strong>決策</strong>而不是實作。</p>
-</div>
-<div class="tutorial-block tb-example">
-  <h3><span class="tb-icon">💡</span> Worked Example</h3>
-  <p><strong>從 grill 到 spec 的轉換</strong>：</p>
-  <ol>
-    <li>Grill 的 CONTEXT.md 裡有：「支援日期範圍篩選」「先只做 CSV」「匯出到下載串流」</li>
-    <li>to-spec 把這些決策重新組織成規格模板：
-      <ul>
-        <li>問題陳述：「管理員需要匯出用戶資料到 CSV，但目前沒有匯出功能」</li>
-        <li>使用者故事：「作為管理員，我想要匯出指定日期範圍的用戶資料，以便做離線分析」</li>
-        <li>實作決策：「使用 CSV 串流（不一次載入全部資料到記憶體）」「篩選條件從 query string 讀取」</li>
-      </ul>
-    </li>
-    <li>規格不會寫「在 <code>src/export.ts</code> 裡建 <code>exportCSV</code> 函數」——那是 implement 的事</li>
-  </ol>
-</div>
-<div class="tutorial-block tb-mistake">
-  <h3><span class="tb-icon">⚠️</span> 常見錯誤</h3>
-  <ul>
-    <li><strong>規格包含具體檔案路徑或程式碼片段</strong>——它們很快就過時。例外：如果 prototype 產出的片段比散文更能精確編碼決策（狀態機、reducer、schema），可以內嵌但要註明來源。</li>
-    <li><strong>使用者故事不夠詳盡</strong>——規格模板要求「極其詳盡」。每一個 edge case 都該在使用者故事中被覆蓋。</li>
-    <li><strong>把規格當成實作指南</strong>——規格描述「要做什麼」，不是「怎麼做」。具體的實作方式由 implement 決定。</li>
-    <li><strong>沒有包含 Out of Scope</strong>——明確列出什麼不在範圍內，能防止 implement 做多做少。</li>
-  </ul>
-</div>
-<div class="tutorial-block tb-checklist">
-  <h3><span class="tb-icon">✅</span> 練習 / 驗收清單</h3>
-  <ul>
-    <li>□ 規格包含四個核心區塊（問題陳述、解決方案、使用者故事、實作決策）</li>
-    <li>□ 使用者故事極其詳盡，覆蓋所有 edge case</li>
-    <li>□ 沒有具體檔案路徑或程式碼片段（除非來自 prototype 且有標註）</li>
-    <li>□ 有明確的 Out of Scope 區塊</li>
-    <li>□ 有 Testing Decisions 區塊（描述什麼是好測試、哪些模組要測）</li>
-  </ul>
-</div>
-<div class="tutorial-block tb-example">
-  <h3><span class="tb-icon">🚀</span> 進階真實情境 Worked Example</h3>
-  <p><strong>情境</strong>：你跟設計師 grill 完了「購物車結帳流程改版」，CONTEXT.md 裡有十幾個決策，包括「結帳改單頁」「支援 guest checkout」「付款失敗留在原頁」。現在要收斂成 spec。</p>
-  <ol>
-    <li>探索 repo：確認既有結帳模組的狀態，用 CONTEXT.md 詞彙（checkout、guest checkout、payment failure）貫穿整份 spec。</li>
-    <li>勾勒測試接縫：既有最高接縫是 <code>POST /api/checkout</code> endpoint。spec 決定沿用（既有接縫優先、用最高的接縫、全 repo 接縫數量維持最少）。與使用者確認。</li>
-    <li>寫 spec：問題陳述（從使用者的視角）、解決方案、使用者故事（逐條覆蓋：訪客結帳、會員結帳、付款失敗重試、單頁轉場）、實作決策（結帳改單頁、guest checkout 引入、付款失敗留在原頁）、測試決策（只測外部行為、測 /api/checkout、prior art 是既有 checkout 測試）。</li>
-    <li>實作決策不寫檔案路徑或程式碼——只寫「引入 guest checkout 身分」這種決策層級描述。</li>
-    <li>Out of Scope：寫明「不包含新付款方式（如 line pay）、不包含結帳頁重新設計（設計師之後單獨開）」。</li>
-    <li>發佈到 issue tracker，套 <code>ready-for-agent</code> 標籤——不需要再分診。</li>
-  </ol>
-  <p><strong>設計決策</strong>：本例的關鍵是<strong>「付款失敗留在原頁」這種從使用者視角描述的決策</strong>——spec 不該寫「把 error 物件 return 給前端」，而該寫使用者會經歷的行為。這樣 implement 才能自己決定技術做法，而驗收時能用使用者行為判斷是否完成。</p>
-</div>
-<div class="tutorial-block tb-theory">
-  <h3><span class="tb-icon">🔬</span> 深入原理擴充</h3>
-  <p>to-spec 的「不訪談、只綜合」是刻意與 grill 對立的設計。grill 是發散（問很多問題、產出很多決策），spec 是收斂（把決策組織成可交付的結構）。若 to-spec 也開始訪談，就會把「已討論過的事」再問一遍，浪費 context 且打斷流程。這背後是「<strong>決策只做一次</strong>」原則：grill 已做的決策，spec 直接採用，不再重開。</p>
-  <p>「實作決策不寫具體路徑／程式碼」是<strong>對過時風險的管理</strong>：檔案路徑與程式碼片段的生命週期以天計，spec 的生命週期以週計。寫進去，規格發佈三天後就開始撒謊。例外只有一種——prototype 產出「比散文更能精確編碼決策」的片段（狀態機、schema、型別形狀），這種片段內嵌的是決策本身而非實作細節，可以留下。</p>
-  <p><strong>陷阱案例</strong>：很多人以為「規格越詳細越好」，於是在 Implementation Decisions 裡寫下「在 src/checkout.ts 建立 CheckoutService，用 repository pattern，注入 PaymentGateway」。真相是：<strong>規格描述「要做什麼」，不是「怎麼做」</strong>。repo pattern 或 service 結構是實作選擇，寫進規格等於在還沒看見程式碼前就承諾了架構——這正是 to-tickets 的「把規格當成實作指南」反模式，也是 codebase-design 警告的「過早收斂」。</p>
-</div>
-<div class="tutorial-block tb-diagnosis">
-  <h3><span class="tb-icon">🩺</span> 診斷式疑難排解表</h3>
-  <table>
-    <tr><th>症狀</th><th>可能原因</th><th>解決方案</th></tr>
-    <tr><td>規格寫了檔案路徑或程式碼片段</td><td>把實作細節混進決策層級</td><td>刪除路徑與片段；只有 prototype 產出的決策型片段（狀態機等）可內嵌並註明</td></tr>
-    <tr><td>implement 讀完規格還問「到底要建什麼」</td><td>使用者故事不夠詳盡，或解決方案太抽象</td><td>把每個 edge case 都寫成使用者故事；問題陳述從使用者視角具體描述</td></tr>
-    <tr><td>implement 做超範圍的功能</td><td>spec 沒有 Out of Scope 區塊</td><td>明確列出「不包含什麼」，讓 implement 有拒絕範圍蔓延的依據</td></tr>
-    <tr><td>測試不知道該測什麼、測在哪</td><td>缺 Testing Decisions 區塊</td><td>寫明接縫、什麼構成好測試、prior art 在哪</td></tr>
-    <tr><td>spec 發佈後又要重問使用者</td><td>to-spec 沒有「只綜合」而是重新訪談</td><td>確認不訪談；已討論的決策直接採用，缺的資訊由 CONTEXT.md／prototype 補齊</td></tr>
-  </table>
-</div>
-<div class="tutorial-block tb-challenge">
-  <h3><span class="tb-icon">🏆</span> 進階挑戰題</h3>
-  <ol>
-    <li><strong>決策分級</strong>：把以下十個句子分成「該進規格」與「該留給 implement」兩組：（a）用 Postgres（b）在 src/checkout.ts 建檔（c）結帳改單頁（d）用 repository pattern（e）付款失敗留在原頁（f）支援 guest checkout（g）注入 PaymentGateway（h）引入 guest 身分模型（i）前端用 React Query（j）不包含新付款方式。並說明分組依據。</li>
-    <li><strong>接縫數量</strong>：spec 指出測試接縫該「越少越好，理想是一個」。若你的功能跨 API＋背景任務，設計一個單一最高接縫能涵蓋的情境，並說明為什麼這比兩個接縫好。</li>
-    <li><strong>prototype 片段內嵌</strong>：prototype 產出一個 15 行的狀態機定義，精確編碼「付款失敗→留在原頁→重試」的行為。寫出該怎麼把它內嵌進 spec 的實作決策（含註明來源與修剪原則）。</li>
-  </ol>
-</div>
-
-<div class="tutorial-block tb-project">
-  <h3><span class="tb-icon">🏗️</span> ① 專案級端到端 Worked Example</h3>
-  <p><strong>專案情境</strong>：你和團隊討論了 30 分鐘「使用者驗證流程」，有共識但沒有文件。</p>
-<ol>
-  <li>先跑 <code>/to-spec</code>，它會從對話記錄中提煉出規格：驗證方式（email + password）、token 策略（JWT, 7 天過期）、錯誤處理（401/403/429）。</li>
-  <li>規格會自動包含 acceptance criteria：「使用者可以用 email + password 登入」「token 過期後自動 redirect 到登入頁」「5 次錯誤後鎖定 15 分鐘」。</li>
-  <li>把規格發佈到 issue tracker：每條 acceptance criteria 對應一張 ticket。</li>
-  <li>規格可以被 <code>/implement</code> 直接使用——implement 會逐條讀 acceptance criteria 並實作。</li>
-</ol>
-<p><strong>關鍵</strong>：to-spec 的價值在「把口頭共識變成可執行的規格」。不需要額外訪談——它只綜合你已經討論過的內容。</p>
-</div>
-<div class="tutorial-block tb-theory">
-  <h3><span class="tb-icon">⚡</span> ② 效能 / 品質 / 安全深度</h3>
-  <table>
-  <tr><th>面向</th><th>實務考量</th></tr>
-  <tr><td>效能</td><td>to-spec 的 token 成本與對話長度成正比。30 分鐘的對話大約是 3-5K tokens——在預算內。如果對話超過 1 小時，先用 <code>/handoff</code> 壓縮再跑 to-spec。</td></tr>
-  <tr><td>品質</td><td>規格的品質取決於「對話是否有足夠的細節」。如果對話只說「做一個登入功能」，規格會很粗糙；如果對話說了「用 JWT、7 天過期、5 次鎖定」，規格會很具體。</td></tr>
-  <tr><td>安全</td><td>規格中可能包含安全相關的決策（例如「JWT 的 secret 用 HMAC-SHA256」）——確保這些決策被記錄在 ADR 中，而不只是在規格裡一行帶過。</td></tr>
-</table>
-</div>
-<div class="tutorial-block tb-comparison">
-  <h3><span class="tb-icon">📊</span> ③ 技能間比較對照表</h3>
-  <table>
-  <tr><th>面向</th><th>to-spec</th><th>to-tickets</th><th>to-questionnaire</th><th>差異說明</th></tr>
-  <tr><td>輸入</td><td>對話記錄</td><td>spec / plan</td><td>待決策事項</td><td>to-spec 從對話來，to-tickets 從 spec 來，to-questionnaire 從問題來</td></tr>
-  <tr><td>輸出</td><td>規格說明</td><td>ticket 清單</td><td>問卷</td><td>to-spec 輸出「做什麼」，to-tickets 輸出「拆成什麼」，to-questionnaire 輸出「問什麼」</td></tr>
-  <tr><td>時機</td><td>討論完後</td><td>規格完成後</td><td>需要他人輸入時</td><td>to-spec 是「記錄」，to-tickets 是「拆分」，to-questionnaire 是「徵詢」</td></tr>
-</table>
-</div>
-<div class="tutorial-block tb-checklist">
-  <h3><span class="tb-icon">✅</span> ④ 互動式進階檢核清單</h3>
-  <ul>
-    <li>□ 規格包含明確的 acceptance criteria</li>
-    <li>□ 不需要額外訪談——to-spec 只綜合已討論的內容</li>
-    <li>□ 規格中的安全決策被記錄在 ADR 中</li>
-    <li>□ 每條 acceptance criteria 都可以對應一張 ticket</li>
-    <li>□ 知道 to-spec 輸出的是「做什麼」，不是「怎麼做」</li>
-  </ul>
-</div>
 
 </div>
 </body>
