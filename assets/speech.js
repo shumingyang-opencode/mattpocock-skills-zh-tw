@@ -32,11 +32,11 @@
 
   /** 過濾出可朗讀的區塊 */
   function collectReadableNodes(container) {
+    // 支援 .guide 內或直接在 container 內的元素
     const selectors =
-      ".guide h2, .guide h3, .guide h4, .guide p, " +
-      ".guide li, .guide td, .guide th, .guide blockquote, " +
-      ".guide .callout, .guide .outcome, " +
-      ".guide .demo-block > pre, .guide .demo-block > .demo-render";
+      "h2, h3, h4, p, li, td, th, blockquote, " +
+      ".callout, .outcome, " +
+      ".demo-block > pre, .demo-block > .demo-render";
     const nodes = Array.from(container.querySelectorAll(selectors));
     // 只保留有實質文字的
     return nodes.filter((n) => {
