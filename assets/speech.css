@@ -1,0 +1,288 @@
+/* speech.css — 語音朗讀浮動控制面板樣式 */
+
+/* ---------- 浮動面板 ---------- */
+.speech-panel {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 2147483647;
+  background: rgba(23, 23, 31, 0.96);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  padding: 0.8rem 1rem;
+  font-family: "Noto Sans TC", "PingFang TC", sans-serif;
+  font-size: 0.78rem;
+  color: #eceaf4;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.06);
+  transition: opacity 0.2s, transform 0.2s;
+  min-width: 260px;
+}
+
+.speech-panel.speech-hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(12px);
+}
+
+/* ---------- 頂列：播放控制 ---------- */
+.speech-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.speech-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.05);
+  color: #eceaf4;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, transform 0.1s;
+  flex-shrink: 0;
+}
+
+.speech-btn:hover {
+  background: rgba(34, 211, 238, 0.15);
+  border-color: rgba(34, 211, 238, 0.4);
+}
+
+.speech-btn:active {
+  transform: scale(0.94);
+}
+
+.speech-btn.active {
+  background: rgba(34, 211, 238, 0.2);
+  border-color: rgba(34, 211, 238, 0.6);
+  color: #22d3ee;
+}
+
+.speech-btn.stop {
+  color: #f87171;
+}
+
+.speech-btn.stop:hover {
+  background: rgba(248, 113, 113, 0.15);
+  border-color: rgba(248, 113, 113, 0.4);
+}
+
+/* ---------- 語速滑桿 ---------- */
+.speech-speed-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex: 1;
+}
+
+.speech-speed-wrap label {
+  font-size: 0.68rem;
+  color: #a3a1b6;
+  white-space: nowrap;
+}
+
+.speech-speed-wrap input[type="range"] {
+  flex: 1;
+  height: 4px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  outline: none;
+}
+
+.speech-speed-wrap input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #22d3ee;
+  cursor: pointer;
+  box-shadow: 0 0 6px rgba(34, 211, 238, 0.5);
+}
+
+.speech-speed-wrap input[type="range"]::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #22d3ee;
+  cursor: pointer;
+  border: none;
+}
+
+.speech-speed-val {
+  font-size: 0.68rem;
+  color: #22d3ee;
+  min-width: 2.2em;
+  text-align: right;
+}
+
+/* ---------- 語音 / 語言選擇 ---------- */
+.speech-row2 {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.4rem;
+}
+
+.speech-select {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  color: #eceaf4;
+  font-size: 0.72rem;
+  padding: 0.3rem 0.5rem;
+  outline: none;
+  cursor: pointer;
+}
+
+.speech-select:focus {
+  border-color: rgba(34, 211, 238, 0.5);
+}
+
+.speech-select option {
+  background: #17171f;
+  color: #eceaf4;
+}
+
+/* ---------- 語言模式切換 ---------- */
+.speech-lang-modes {
+  display: flex;
+  gap: 0.3rem;
+}
+
+.speech-lang-btn {
+  font-size: 0.64rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.04);
+  color: #a3a1b6;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.speech-lang-btn:hover {
+  color: #eceaf4;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.speech-lang-btn.active {
+  background: rgba(34, 211, 238, 0.15);
+  border-color: rgba(34, 211, 238, 0.5);
+  color: #22d3ee;
+}
+
+/* ---------- 狀態文字 ---------- */
+.speech-status {
+  font-size: 0.64rem;
+  color: #6e6c80;
+  margin-top: 0.3rem;
+  text-align: center;
+  min-height: 1em;
+}
+
+/* ---------- 段落高亮 ---------- */
+.speech-highlight {
+  background: rgba(251, 191, 36, 0.12) !important;
+  border-left: 3px solid #fbbf24 !important;
+  padding-left: 0.6rem !important;
+  border-radius: 0 6px 6px 0 !important;
+  transition: background 0.25s, border-color 0.25s;
+}
+
+/* ---------- 展開/收合 ---------- */
+.speech-toggle {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 2147483646;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(23, 23, 31, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: #22d3ee;
+  font-size: 1.2rem;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s, background 0.15s;
+}
+
+.speech-toggle:hover {
+  transform: scale(1.08);
+  background: rgba(34, 211, 238, 0.15);
+}
+
+.speech-toggle.panel-open {
+  display: none;
+}
+
+/* ---------- 鍵盤快捷鍵提示 ---------- */
+.speech-hotkeys {
+  display: flex;
+  justify-content: center;
+  gap: 0.6rem;
+  margin-top: 0.35rem;
+  font-size: 0.58rem;
+  color: #6e6c80;
+}
+
+.speech-hotkeys kbd {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+  padding: 0 0.3rem;
+  font-family: inherit;
+  font-size: 0.58rem;
+}
+
+/* ---------- 不支援時的提示 ---------- */
+.speech-unsupported {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 9999;
+  background: rgba(23, 23, 31, 0.96);
+  border: 1px solid rgba(248, 113, 113, 0.3);
+  border-radius: 12px;
+  padding: 0.6rem 0.9rem;
+  font-size: 0.72rem;
+  color: #f87171;
+}
+
+/* ---------- 手機版 ---------- */
+@media (max-width: 600px) {
+  .speech-panel {
+    bottom: 0.8rem;
+    right: 0.8rem;
+    left: 0.8rem;
+    min-width: unset;
+    padding: 0.6rem 0.8rem;
+  }
+
+  .speech-toggle {
+    bottom: 0.8rem;
+    right: 0.8rem;
+  }
+
+  .speech-btn {
+    width: 32px;
+    height: 32px;
+    font-size: 0.9rem;
+  }
+}
