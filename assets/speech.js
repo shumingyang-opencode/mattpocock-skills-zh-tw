@@ -1,4 +1,4 @@
-/* speech.js — L3 語音朗讀核心邏輯（智慧跟讀 + 段落高亮 + 中英切換） */
+/* speech.js — L3 語音朗讀核心邏輯（智慧跟讀 + 段落高亮 + 中英自動切換） */
 
 (function () {
   "use strict";
@@ -6,12 +6,6 @@
   /* ============================================================
    *  工具函式
    * ============================================================ */
-
-  /** 判斷字串是否以中文字符為主 */
-  function isMostlyChinese(text) {
-    const m = text.match(/[\u4e00-\u9fff\u3400-\u4dbf]/g);
-    return m ? m.length / text.length > 0.3 : false;
-  }
 
   /** 從 nodes 提取純文字（跳過 hidden / script / style） */
   function nodeText(node) {
@@ -116,19 +110,97 @@
       this.nodes = collectReadableNodes(container);
     }
 
-    /* ---------- 取得當前語音物件 ---------- */
+    /* ---------- 取得使用者選擇的語音物件 ---------- */
     _getVoice() {
       const all = this.synth.getVoices();
       return all.find((v) => v.voiceURI === this.voiceUri) || all[0] || null;
     }
 
-    /* ---------- 朗讀一段文字 ---------- */
-    _speakText(text, onEnd) {
-      // 取消之前的
+    /* ---------- 根據語言取得語音物件 ---------- */
+    _getVoiceForLang(lang) {
+      const all = this.synth.getVoices();
+      if (lang === "zh") {
+        // 優先用使用者選擇的中文語音，否則用第一個
+        const selected = all.find((v) => v.voiceURI === this.voiceUri);
+        if (selected && (selected.lang.startsWith("zh") || selected.lang.startsWith("cmn"))) {
+          return selected;
+        }
+        return this.zhVoices[0] || all.find((v) => v.lang.startsWith("zh")) || all[0];
+      } else {
+        // 英文：優先用使用者選擇的英文語音，否則用第一個
+        const selected = all.find((v) => v.voiceURI === this.voiceUri);
+        if (selected && selected.lang.startsWith("en")) {
+          return selected;
+        }
+        return this.enVoices[0] || all.find((v) => v.lang.startsWith("en")) || all[0];
+      }
+    }
+
+    /* ============================================================
+     *  中英切換：文字拆分與依序播放
+     * ============================================================ */
+
+    /**
+     * 將文字拆成語言片段
+     * 回傳: [{text: "STEAM", lang: "en"}, {text: "科學", lang: "zh"}, ...]
+     * 標點符號會被跳過（不加入回傳陣列）
+     */
+    _splitByLang(text) {
+      const segments = [];
+      // 正則：中文字串 | 英文數字串 | 其他（標點空白）
+      const re = /([\u4e00-\u9fff\u3400-\u4dbf]+|[a-zA-Z0-9]+|[^\u4e00-\u9fff\u3400-\u4dbfa-zA-Z0-9]+)/g;
+      let m;
+      while ((m = re.exec(text)) !== null) {
+        const seg = m[1];
+        if (/[\u4e00-\u9fff\u3400-\u4dbf]/.test(seg)) {
+          segments.push({ text: seg, lang: "zh" });
+        } else if (/[a-zA-Z0-9]/.test(seg)) {
+          segments.push({ text: seg, lang: "en" });
+        }
+        // 標點/空白 → 跳過不加入
+      }
+      return segments;
+    }
+
+    /**
+     * 依序排隊播放多個語言片段
+     */
+    _speakSegments(segments, onEnd) {
+      if (segments.length === 0) { onEnd(); return; }
+
+      let index = 0;
+      const speakNext = () => {
+        if (index >= segments.length || this.cancelled) { onEnd(); return; }
+        const seg = segments[index];
+        index++;
+
+        const utt = new SpeechSynthesisUtterance(seg.text);
+        const voice = this._getVoiceForLang(seg.lang);
+        if (voice) {
+          utt.voice = voice;
+          utt.lang = voice.lang;
+        }
+        utt.rate = this.rate;
+        utt.pitch = 1;
+
+        utt.onend = () => speakNext();
+        utt.onerror = (e) => {
+          if (e.error !== "canceled" && !this.cancelled) speakNext();
+        };
+
+        this.synth.speak(utt);
+      };
+      speakNext();
+    }
+
+    /**
+     * 單段朗讀（不拆分，用於純中文或純英文模式）
+     */
+    _speakText(text, lang, onEnd) {
       this.synth.cancel();
 
       const utt = new SpeechSynthesisUtterance(text);
-      const voice = this._getVoice();
+      const voice = this._getVoiceForLang(lang);
       if (voice) {
         utt.voice = voice;
         utt.lang = voice.lang;
@@ -145,14 +217,6 @@
 
       this.utterance = utt;
       this.synth.speak(utt);
-    }
-
-    /* ---------- 判斷這段文字該用什麼語言 ---------- */
-    _pickLang(text) {
-      if (this.langMode === "zh") return "zh";
-      if (this.langMode === "en") return "en";
-      // "both" — 偵測
-      return isMostlyChinese(text) ? "zh" : "en";
     }
 
     /* ---------- 檢查是否在 .pair 雙語區 ---------- */
@@ -217,19 +281,29 @@
 
       // 高亮
       this._highlight(node);
-
-      // 判斷語言
-      const lang = this._pickLang(text);
-      const speakText = this._getTextForNode(node, lang);
-
-      this._speakText(speakText, () => {
-        this._unhighlight(node);
-        if (this.playing && !this.cancelled) {
-          this._speakNode(index + 1);
-        }
-      });
-
       this._updateStatus(`朗讀中… (${index + 1}/${this.nodes.length})`);
+
+      // 根據語言模式決定朗讀方式
+      if (this.langMode === "both") {
+        // 雙語模式：拆分文字，依序切換語音
+        const segments = this._splitByLang(text);
+        this._speakSegments(segments, () => {
+          this._unhighlight(node);
+          if (this.playing && !this.cancelled) {
+            this._speakNode(index + 1);
+          }
+        });
+      } else {
+        // 單一語言模式：整段用同一語音
+        const lang = this.langMode; // "zh" 或 "en"
+        const speakText = this._getTextForNode(node, lang);
+        this._speakText(speakText, lang, () => {
+          this._unhighlight(node);
+          if (this.playing && !this.cancelled) {
+            this._speakNode(index + 1);
+          }
+        });
+      }
     }
 
     pause() {
@@ -330,11 +404,11 @@
         <select id="speech-voice-select" class="speech-select" title="選擇語音"></select>
       </div>
       <div class="speech-row2">
-        <span style="font-size:0.66rem;color:#a3a1b6;">語言：</span>
+        <span style="font-size:0.66rem;color:#94a3b8;">語言：</span>
         <div class="speech-lang-modes">
-          <button class="speech-lang-btn active" data-lang="zh">中文</button>
+          <button class="speech-lang-btn" data-lang="zh">中文</button>
           <button class="speech-lang-btn" data-lang="en">English</button>
-          <button class="speech-lang-btn" data-lang="both">雙語</button>
+          <button class="speech-lang-btn active" data-lang="both">雙語</button>
         </div>
       </div>
       <div id="speech-status" class="speech-status"></div>
@@ -386,7 +460,7 @@
       sm.voiceUri = e.target.value;
     });
 
-    // 語言模式
+    // 語言模式（預設「雙語」）
     document.querySelectorAll(".speech-lang-btn").forEach((btn) => {
       btn.addEventListener("click", () => {
         document.querySelectorAll(".speech-lang-btn").forEach((b) => b.classList.remove("active"));
