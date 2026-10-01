@@ -33,7 +33,7 @@
 <div class="pair"><div class="col-en" lang="en"><p>This command is <em>informed</em> by the project's domain model and built on a shared design vocabulary:</p></div><div class="col-zh" lang="zh-Hant"><p>這個指令_受_專案的領域模型_啟發_，並建立在共享的設計詞彙上：</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><ul>
 <li>Call the Skill tool with "codebase-design" for the architecture vocabulary (<strong>module</strong>, <strong>interface</strong>, <strong>depth</strong>, <strong>seam</strong>, <strong>adapter</strong>, <strong>leverage</strong>, <strong>locality</strong>) and its principles (the deletion test, "the interface is the test surface", "one adapter = hypothetical seam, two = real"). Use these terms exactly in every suggestion, and don't drift into "component," "service," "API," or "boundary."</li>
-<li>The domain language in <code>CONTEXT.md</code> gives names to good seams; ADRs in <code>docs/adr/</code> record decisions this command should not re-litigate.</li>
+<li>The domain language in <code>GLOSSARY.md</code> gives names to good seams; ADRs in <code>docs/adr/</code> record decisions this command should not re-litigate.</li>
 </ul></div><div class="col-zh" lang="zh-Hant"><ul>
 <li>執行 <code>/codebase-design</code> 技能取得架構詞彙（<strong>模組</strong>、<strong>介面</strong>、<strong>深度</strong>、<strong>接縫</strong>、<strong>轉接器</strong>、<strong>槓桿收益</strong>、<strong>局部性</strong>）及其原則（刪除測試、「介面就是測試表面」、「一個轉接器 = 假設性接縫，兩個 = 真實」）。在每個建議中精確使用這些術語——不要漂移成「component」「service」「API」或「boundary」。</li>
 <li><code>CONTEXT.md</code> 中的領域語言為好接縫命名；<code>docs/adr/</code> 中的 ADR 記錄了這個指令不該重新爭論的決策。</li>
@@ -48,7 +48,7 @@
 <li>如果使用者指定了方向——一個模組、一個子系統、一個痛點——採用它，並跳過下面的推斷。</li>
 <li>否則，往回走一段良好的 commit 歷史（<code>git log --oneline</code>）找出程式碼庫的熱點——那些一直出現的檔案與區域——讓那些路徑先吸引你的注意力。如果變更四散、沒有清楚熱點，就擴大網子。</li>
 </ul></div></div>
-<div class="pair"><div class="col-en" lang="en"><p>Read the project's domain glossary (<code>CONTEXT.md</code>) and any ADRs in the area you're touching first.</p></div><div class="col-zh" lang="zh-Hant"><p>先讀專案的領域詞彙表（<code>CONTEXT.md</code>）與你要觸及區域中的任何 ADR。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Read the project's domain glossary (<code>GLOSSARY.md</code>) and any ADRs in the area you're touching first.</p></div><div class="col-zh" lang="zh-Hant"><p>先讀專案的領域詞彙表（<code>CONTEXT.md</code>）與你要觸及區域中的任何 ADR。</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><p>Then spawn a sub-agent to walk the codebase. Don't follow rigid heuristics; explore organically and note where you experience friction:</p></div><div class="col-zh" lang="zh-Hant"><p>然後用 Agent 工具、<code>subagent_type=Explore</code> 走訪程式碼庫。不要遵循僵硬的啟發式——有機地探索，並記下你感到摩擦的地方：</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><ul>
 <li>Where does understanding one concept require bouncing between many small modules?</li>
@@ -84,7 +84,7 @@
 <li><strong>建議強度</strong>——<code>Strong</code>、<code>Worth exploring</code>、<code>Speculative</code> 其中一個，渲染成徽章</li>
 </ul></div></div>
 <div class="pair"><div class="col-en" lang="en"><p>End the report with a <strong>Top recommendation</strong> section: which candidate you'd tackle first and why.</p></div><div class="col-zh" lang="zh-Hant"><p>以<strong>頂級建議</strong>章節結束報告：你會先處理哪個候選、為什麼。</p></div></div>
-<div class="pair"><div class="col-en" lang="en"><p><strong>Use CONTEXT.md vocabulary for the domain, and the <code>/codebase-design</code> vocabulary for the architecture.</strong> If <code>CONTEXT.md</code> defines "Order," talk about "the Order intake module," not "the FooBarHandler," and not "the Order service."</p></div><div class="col-zh" lang="zh-Hant"><p><strong>領域用 CONTEXT.md 詞彙，架構用 <code>/codebase-design</code> 詞彙。</strong> 如果 <code>CONTEXT.md</code> 定義了「Order」，就說「the Order intake module」——不是「the FooBarHandler」，也不是「the Order service」。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p><strong>Use GLOSSARY.md vocabulary for the domain, and the <code>/codebase-design</code> vocabulary for the architecture.</strong> If <code>GLOSSARY.md</code> defines "Order," talk about "the Order intake module," not "the FooBarHandler," and not "the Order service."</p></div><div class="col-zh" lang="zh-Hant"><p><strong>領域用 CONTEXT.md 詞彙，架構用 <code>/codebase-design</code> 詞彙。</strong> 如果 <code>CONTEXT.md</code> 定義了「Order」，就說「the Order intake module」——不是「the FooBarHandler」，也不是「the Order service」。</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><p><strong>ADR conflicts</strong>: if a candidate contradicts an existing ADR, only surface it when the friction is real enough to warrant revisiting the ADR. Mark it clearly in the card (e.g. a warning callout: <em>"contradicts ADR-0007, but worth reopening because…"</em>). Don't list every theoretical refactor an ADR forbids.</p></div><div class="col-zh" lang="zh-Hant"><p><strong>ADR 衝突</strong>：如果候選與既有 ADR 矛盾，只有當摩擦真實到值得重開該 ADR 時才浮現它。在卡片中清楚標記（例如警告 callout：<em>"與 ADR-0007 矛盾——但值得重新討論，因為……"</em>）。不要列出每個 ADR 禁止的理論性重構。</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><p>See <a href="HTML-REPORT.html">HTML-REPORT.md</a> for the full HTML scaffold, diagram patterns, and styling guidance.</p></div><div class="col-zh" lang="zh-Hant"><p>完整 HTML 骨架、圖表模式與樣式指引見 <a href="HTML-REPORT.html">HTML-REPORT.md</a>。</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><p>Do NOT propose interfaces yet. After the file is written, ask the user: "Which of these would you like to explore?"</p></div><div class="col-zh" lang="zh-Hant"><p><strong>還不要</strong>提出介面。檔案寫好之後，問使用者：「你想探索哪一個？」</p></div></div>
@@ -92,8 +92,8 @@
 <div class="pair"><div class="col-en" lang="en"><p>Once the user picks a candidate, call the Skill tool with "grilling" to walk the decision tree with them: constraints, dependencies, the shape of the deepened module, what sits behind the seam, what tests survive.</p></div><div class="col-zh" lang="zh-Hant"><p>一旦使用者選了候選，執行 <code>/grilling</code> 技能與他們走決策樹——約束、相依、深化後模組的形狀、接縫後面是什麼、哪些測試會存活。</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><p>Side effects happen inline as decisions crystallize; call the Skill tool with "domain-modeling" to keep the domain model current as you go:</p></div><div class="col-zh" lang="zh-Hant"><p>副作用在決策定案時內嵌發生——邊做邊執行 <code>/domain-modeling</code> 技能讓領域模型保持最新：</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><ul>
-<li><strong>Naming a deepened module after a concept not in <code>CONTEXT.md</code>?</strong> Add the term to <code>CONTEXT.md</code>. Create the file lazily if it doesn't exist.</li>
-<li><strong>Sharpening a fuzzy term during the conversation?</strong> Update <code>CONTEXT.md</code> right there.</li>
+<li><strong>Naming a deepened module after a concept not in <code>GLOSSARY.md</code>?</strong> Add the term to <code>GLOSSARY.md</code>. Create the file lazily if it doesn't exist.</li>
+<li><strong>Sharpening a fuzzy term during the conversation?</strong> Update <code>GLOSSARY.md</code> right there.</li>
 <li><strong>User rejects the candidate with a load-bearing reason?</strong> Offer an ADR, framed as: <em>"Want me to record this as an ADR so future architecture reviews don't re-suggest it?"</em> Only offer when the reason would actually be needed by a future explorer to avoid re-suggesting the same thing; skip ephemeral reasons ("not worth it right now") and self-evident ones.</li>
 <li><strong>Want to explore alternative interfaces for the deepened module?</strong> Call the Skill tool with "codebase-design" and use its design-it-twice parallel sub-agent pattern.</li>
 </ul></div><div class="col-zh" lang="zh-Hant"><ul>
@@ -104,7 +104,5 @@
 </ul></div></div>
 
 </div>
-<link rel="stylesheet" href="../assets/speech.css">
-<script src="../assets/speech.js" defer></script>
 </body>
 </html>

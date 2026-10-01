@@ -6,16 +6,11 @@
   },
   "upstream": {
     "release": "v1.2.3",
-    "commit": "6654f6b60cd9d5be8b54c6fafe44346dabeb3b76",
+    "commit": "d81f3a183412e71a5b1e84ca21bc1a35eea03a60",
     "date": "2026-08-06"
   },
   "up_to_date": false,
   "pending": [
-    {
-      "kind": "translate",
-      "path": ".changeset/add-implement-spec-skill.md",
-      "reason": "added"
-    },
     {
       "kind": "translate",
       "path": ".changeset/domain-modeling-trigger-context-adr.md",
@@ -24,6 +19,21 @@
     {
       "kind": "translate",
       "path": ".changeset/fix-yaml-frontmatter-colons.md",
+      "reason": "added"
+    },
+    {
+      "kind": "translate",
+      "path": ".changeset/graduate-implement-spec.md",
+      "reason": "added"
+    },
+    {
+      "kind": "translate",
+      "path": ".changeset/graduate-pr.md",
+      "reason": "added"
+    },
+    {
+      "kind": "translate",
+      "path": ".changeset/graduate-retro.md",
       "reason": "added"
     },
     {
@@ -43,6 +53,16 @@
     },
     {
       "kind": "translate",
+      "path": ".changeset/remove-resolving-merge-conflicts.md",
+      "reason": "added"
+    },
+    {
+      "kind": "translate",
+      "path": ".changeset/rename-context-to-glossary.md",
+      "reason": "added"
+    },
+    {
+      "kind": "translate",
       "path": ".changeset/skill-tool-invocation-terminology.md",
       "reason": "added"
     },
@@ -57,16 +77,67 @@
       "reason": "added"
     },
     {
+      "kind": "translate",
+      "path": "GLOSSARY.md",
+      "reason": "added"
+    },
+    {
+      "kind": "translate",
+      "path": "docs/engineering/implement-spec.md",
+      "reason": "added"
+    },
+    {
+      "kind": "translate",
+      "path": "docs/engineering/pr.md",
+      "reason": "added"
+    },
+    {
+      "kind": "translate",
+      "path": "docs/engineering/retro.md",
+      "reason": "added"
+    },
+    {
+      "kind": "translate",
+      "path": "skills/engineering/domain-modeling/GLOSSARY-FORMAT.md",
+      "reason": "added"
+    },
+    {
       "kind": "new-skill",
-      "path": "skills/in-progress/implement-spec/SKILL.md",
+      "path": "skills/engineering/implement-spec/SKILL.md",
+      "reason": "added",
+      "note": "需翻譯＋加入 registry（blurb/level/inv）"
+    },
+    {
+      "kind": "translate",
+      "path": "skills/engineering/pr/CREDITS.md",
+      "reason": "added"
+    },
+    {
+      "kind": "new-skill",
+      "path": "skills/engineering/pr/SKILL.md",
       "reason": "added",
       "note": "需翻譯＋加入 registry（blurb/level/inv）"
     },
     {
       "kind": "new-skill",
-      "path": "skills/in-progress/retro/SKILL.md",
+      "path": "skills/engineering/retro/SKILL.md",
       "reason": "added",
       "note": "需翻譯＋加入 registry（blurb/level/inv）"
+    },
+    {
+      "kind": "remove",
+      "path": "CONTEXT.md",
+      "reason": "deleted"
+    },
+    {
+      "kind": "remove",
+      "path": "skills/engineering/domain-modeling/CONTEXT-FORMAT.md",
+      "reason": "deleted"
+    },
+    {
+      "kind": "remove",
+      "path": "skills/engineering/resolving-merge-conflicts/SKILL.md",
+      "reason": "deleted"
     },
     {
       "kind": "translate",
@@ -116,11 +187,6 @@
     {
       "kind": "translate",
       "path": "CLAUDE.md",
-      "reason": "modified"
-    },
-    {
-      "kind": "translate",
-      "path": "CONTEXT.md",
       "reason": "modified"
     },
     {
@@ -305,11 +371,6 @@
     },
     {
       "kind": "translate",
-      "path": "skills/engineering/domain-modeling/CONTEXT-FORMAT.md",
-      "reason": "modified"
-    },
-    {
-      "kind": "translate",
       "path": "skills/engineering/domain-modeling/SKILL.md",
       "reason": "modified"
     },
@@ -346,11 +407,6 @@
     {
       "kind": "translate",
       "path": "skills/engineering/research/SKILL.md",
-      "reason": "modified"
-    },
-    {
-      "kind": "translate",
-      "path": "skills/engineering/resolving-merge-conflicts/SKILL.md",
       "reason": "modified"
     },
     {
@@ -534,6 +590,6 @@
       "reason": "modified"
     }
   ],
-  "non_md_count": 22,
-  "checked_at": "2026-09-01T02:14:10Z"
+  "non_md_count": 24,
+  "checked_at": "2026-10-01T02:40:29Z"
 }
