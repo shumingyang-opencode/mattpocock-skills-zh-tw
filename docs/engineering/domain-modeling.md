@@ -2,11 +2,11 @@
 
 `domain-modeling` 在你設計時建構並磨利專案的**共通語言**——質疑與詞彙表衝突的術語、在你用了模糊詞的地方強制使用精確的詞、以具體情境壓力測試某個關係，直到邊界精確為止。
 
-它是**主動**的紀律，不是被動的。讀取 `CONTEXT.md` 借用其詞彙是任何技能都能做的一行習慣；此技能是用在你要*改變*模型的時刻。這正是它會打斷的原因。它在術語定案的當下把它寫進 `CONTEXT.md`，在對話進行中，而不是在最後產出一份整齊的詞彙表——因為批次版是[會話](https://www.aihero.dev/ai-coding-dictionary/session)的摘要，而行內版才是會話真正的輸出。
+它是**主動**的紀律，不是被動的。讀取 `GLOSSARY.md` 借用其詞彙是任何技能都能做的一行習慣；此技能是用在你要*改變*模型的時刻。這正是它會打斷的原因。它在術語定案的當下把它寫進 `GLOSSARY.md`，在對話進行中，而不是在最後產出一份整齊的詞彙表——因為批次版是[會話](https://www.aihero.dev/ai-coding-dictionary/session)的摘要，而行內版才是會話真正的輸出。
 
 ## 何時使用
 
-輸入 `/domain-modeling`，或當任務適用時，代理會自動採用它。實際上，自動呼叫是這個技能最弱的部分：當 `grill-with-docs` 或 `wayfinder` 說要載入它時，[模型](https://www.aihero.dev/ai-coding-dictionary/model)常常載入 `grilling` 而略過這個。如果 [grilling](https://www.aihero.dev/ai-coding-dictionary/grilling) 會話跑完，而結尾時 `CONTEXT.md` 完全沒被動過，那就是發生這種事了——請在另一個技能旁邊指名呼叫它。
+輸入 `/domain-modeling`，或當任務適用時，代理會自動採用它。實際上，自動呼叫是這個技能最弱的部分：當 `grill-with-docs` 或 `wayfinder` 說要載入它時，[模型](https://www.aihero.dev/ai-coding-dictionary/model)常常載入 `grilling` 而略過這個。如果 [grilling](https://www.aihero.dev/ai-coding-dictionary/grilling) 會話跑完，而結尾時 `GLOSSARY.md` 完全沒被動過，那就是發生這種事了——請在另一個技能旁邊指名呼叫它。
 
 當問題在於*用詞*時取用它：
 
@@ -17,13 +17,13 @@
 | 你剛做了難以逆轉的架構選擇 | `domain-modeling`——如果這個選擇通過門檻，它會提供一份 ADR |
 | 模組的*形狀*才是問題——接縫該在哪裡、介面有多深 | [codebase-design](https://aihero.dev/skills-codebase-design) |
 | 你想在建置前讓整個計畫被盤問 | [grill-with-docs](https://aihero.dev/skills-grill-with-docs)，它在底下驅動此技能 |
-| 你想查一個詞，而不是改它 | 不需要。讀 `CONTEXT.md`。它只是個檔案。 |
+| 你想查一個詞，而不是改它 | 不需要。讀 `GLOSSARY.md`。它只是個檔案。 |
 
 ## 前置條件
 
 事前什麼都不需要。技能會寫入兩個地方，並惰性建立兩者：
 
-- 儲存庫根目錄的 **`CONTEXT.md`**，由第一個定案的術語建立。在根目錄有 `CONTEXT-MAP.md` 的儲存庫中，術語改為寫入該地圖指向的各個 `CONTEXT.md`。
+- 儲存庫根目錄的 **`GLOSSARY.md`**，由第一個定案的術語建立。在根目錄有 `GLOSSARY-MAP.md` 的儲存庫中，術語改為寫入該地圖指向的各個 `GLOSSARY.md`。
 - **`docs/adr/`**，由第一個通過門檻的 ADR 建立。
 
 開始前不需要有任何東西存在，也不會被投機性地建立任何東西。
@@ -32,7 +32,7 @@
 
 詞彙表與 ADR 被賦予不同的標準，而把它們混為一談正是此技能大多數麻煩的來源。
 
-| | `CONTEXT.md` | `docs/adr/NNNN-slug.md` |
+| | `GLOSSARY.md` | `docs/adr/NNNN-slug.md` |
 | --- | --- | --- |
 | 存放 | 術語。一件事**是**什麼，一兩句話，加上 `_Avoid_` 下被否決的同義詞 | 一個決策，一到三句話：情境、選擇、理由 |
 | 撰寫門檻 | 模糊的術語變成正式術語 | **三者皆備**：難以逆轉、沒有情境會令人意外、是真實取捨的結果 |
@@ -41,27 +41,27 @@
 
 漏掉 ADR 三項測試的任一個，就沒有 ADR。容易逆轉的決策反正會被逆轉；不出人意料的決策不是任何人的問題；沒有真實替代方案的決策只記錄了你做了理所當然的事。
 
-`CONTEXT.md` 的規則是真正要抓住的那條，因為它就是實戰中壞掉的那條。**它是詞彙表，除此之外什麼都不是。**若不加以約束，模型會把「寫入 `CONTEXT.md`」當成把每個回答都保存下來的許可，檔案就變成一份進行中的規格說明——這是此技能被回報最多的問題，橫跨好幾個模型。
+`GLOSSARY.md` 的規則是真正要抓住的那條，因為它就是實戰中壞掉的那條。**它是詞彙表，除此之外什麼都不是。**若不加以約束，模型會把「寫入 `GLOSSARY.md`」當成把每個回答都保存下來的許可，檔案就變成一份進行中的規格說明——這是此技能被回報最多的問題，橫跨好幾個模型。
 
 ## 交叉引用，及其止步之處
 
 讓此技能真正起作用的動作：當你陳述某件事如何運作時，它會檢查程式碼並浮現矛盾。*「你的程式碼取消整個 Order，但你剛才說部分取消是可行的——哪一個才是對的？」*在語言或程式碼被改變之前，先讓兩者大聲達成一致。
 
-這個界線值得知道。它交叉引用**程式碼**與已提交的 `CONTEXT.md`/ADR，僅此而已。它不搜尋你的 issue 追蹤器，因此一個幾個月前在已關閉 issue 中被辯論並刻意定案的命名衝突，會被當成全新的東西浮現。有[一個未結請求](https://github.com/mattpocock/skills/issues/717)要修復這件事；在那之前，變通法是把你自己的指示放進 `docs/agents/domain.md`，技能們本來就會讀它。
+這個界線值得知道。它交叉引用**程式碼**與已提交的 `GLOSSARY.md`/ADR，僅此而已。它不搜尋你的 issue 追蹤器，因此一個幾個月前在已關閉 issue 中被辯論並刻意定案的命名衝突，會被當成全新的東西浮現。有[一個未結請求](https://github.com/mattpocock/skills/issues/717)要修復這件事；在那之前，變通法是把你自己的指示放進 `docs/agents/domain.md`，技能們本來就會讀它。
 
 ## 常見問題
 
-**我的 `CONTEXT.md` 有 500 行。1,000 行。3,000 行。我該怎麼辦？**
-規模是症狀，不是病因——檔案吸收了從來就不是詞彙表材料的實作細節與決策。修正是直接的指示：`/grill-with-docs make my CONTEXT.md more concise and remove any implementation details from it`。拿它對一份臃腫的檔案執行，大部分內容都會消失。只有在檔案真正精簡、且仍涵蓋讀者不想同時掌握兩個領域時，才考慮 `CONTEXT-MAP.md` 拆分；拆分一份臃腫的檔案只會給你幾份臃腫的檔案。技能在此的指引還不夠強，無法從源頭防止增生，而追蹤該問題的 issue 仍開著。
+**我的 `GLOSSARY.md` 有 500 行。1,000 行。3,000 行。我該怎麼辦？**
+規模是症狀，不是病因——檔案吸收了從來就不是詞彙表材料的實作細節與決策。修正是直接的指示：`/grill-with-docs make my GLOSSARY.md more concise and remove any implementation details from it`。拿它對一份臃腫的檔案執行，大部分內容都會消失。只有在檔案真正精簡、且仍涵蓋讀者不想同時掌握兩個領域時，才考慮 `GLOSSARY-MAP.md` 拆分；拆分一份臃腫的檔案只會給你幾份臃腫的檔案。技能在此的指引還不夠強，無法從源頭防止增生，而追蹤該問題的 issue 仍開著。
 
-**為什麼是 `CONTEXT.md` 而不是 `GLOSSARY.md`？**
-這是整套技能中被爭論最多的命名問題，沒有定論。反對現行名稱的理由很好：如果它「是詞彙表，除此之外什麼都不是」，那 `GLOSSARY.md` 直接這樣說，而且——正如一位讀者所說——「在 AI 代理的時代，一切都是[上下文](https://www.aihero.dev/ai-coding-dictionary/context)」。支持它的理由是地圖：`CONTEXT-MAP.md` 指向多個 `CONTEXT.md` 檔案讀起來很自然，`GLOSSARY-MAP.md` 就沒那麼自然，而 `context` 是 DDD 中用來指模型某個有界區域的常駐詞。至少有一個人維護本機 fork 純粹只是為了改名檔案。你也可以這麼做，但整套中的其他每個技能都在找 `CONTEXT.md`，所以改名意味著要修補它們全部。
+**為什麼從 `CONTEXT.md` 改叫 `GLOSSARY.md`？**
+上游 1.3.0 把命名爭論收斂了：如果它「是詞彙表，除此之外什麼都不是」，那 `GLOSSARY.md` 直接這樣說；而且在 AI 代理的時代，一切都是[上下文](https://www.aihero.dev/ai-coding-dictionary/context)，`CONTEXT.md` 反而語意模糊。舊名 `CONTEXT.md`／`CONTEXT-MAP.md` 僅出現在 CHANGELOG 歷史紀錄中，現行技能一律讀寫 `GLOSSARY.md`／`GLOSSARY-MAP.md`。
 
 **`/ubiquitous-language` 去哪裡了？**
 它被移除了，而不是被淘汰。它的工作移入 `domain-modeling`，後者持續維護整個模型，而不是從一次對話倒出一份詞彙表。詞彙強制變得更承重，而不是更輕——它現在在 grilling、triage 與對映之下執行，而不是你記得要做的單獨一輪。
 
 **我要怎麼為沒有詞彙表的代碼庫弄一份？**
-明確要求，而不是等它慢慢累積。`/grill-with-docs help me scaffold my existing repo with a CONTEXT.md` 是有文件記載的途徑；要預期一輪很長的盤問——有位使用者回報，在檔案成形前有 50 多個問題。順帶使用在既有代碼庫上建立詞彙表的速度太慢了。
+明確要求，而不是等它慢慢累積。`/grill-with-docs help me scaffold my existing repo with a GLOSSARY.md` 是有文件記載的途徑；要預期一輪很長的盤問——有位使用者回報，在檔案成形前有 50 多個問題。順帶使用在既有代碼庫上建立詞彙表的速度太慢了。
 
 **我可以保留領域模型、用自己的 ADR 格式嗎？**
 目前無法乾淨地做到。詞彙表那一半與 ADR 那一半在同一個技能裡發布，因此有既定 ADR 慣例的團隊——不同模板、不同位置、不同命名——會得到與自家風格衝突的指示。目前的選項是本機複製技能並編輯它，或在儲存庫自己的代理文件中覆寫 ADR 慣例。把兩者拆開是[一個未結請求](https://github.com/mattpocock/skills/issues/557)。
@@ -75,11 +75,11 @@
 ## 這樣就算成功
 
 - 它會在你講到一半時打斷你，問你指的是兩者中的哪一個，而不是選一個然後繼續。
-- `CONTEXT.md` 在對話**進行中**改變，而不是在結尾一次爆發。
+- `GLOSSARY.md` 在對話**進行中**改變，而不是在結尾一次爆發。
 - 它拒絕為你明天就能撤銷的事寫 ADR——並指出三項測試中哪一項失敗。
 - 新條目以一兩句話定義一件事*是*什麼，並在 `_Avoid_` 下點名你放棄的用詞。
 - 當你的程式碼與你的句子不一致時，它會把你的程式碼引用回來給你看。
-- `CONTEXT.md` 變短的頻率與變長的頻率一樣高。
+- `GLOSSARY.md` 變短的頻率與變長的頻率一樣高。
 
 ## 它在哪裡適用
 

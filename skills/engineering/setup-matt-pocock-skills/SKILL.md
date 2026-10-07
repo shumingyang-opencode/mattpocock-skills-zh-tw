@@ -10,7 +10,7 @@ disable-model-invocation: true
 
 - **Issue 追蹤器**——issue 放在哪裡（預設 GitHub；本機 markdown 也開箱即支援）
 - **分診標籤**——五個標準分診角色使用的字串
-- **領域文件**——`CONTEXT.md` 與 ADR 放在哪裡，以及讀取它們的消費規則
+- **領域文件**——`GLOSSARY.md` 與 ADR 放在哪裡，以及讀取它們的消費規則
 
 這是一個提示驅動的技能，不是確定性腳本。探索、呈現你所發現的、與使用者確認，然後寫入。
 
@@ -22,7 +22,7 @@ disable-model-invocation: true
 
 - `git remote -v` 與 `.git/config`——這是 GitHub repo 嗎？哪一個？
 - repo 根目錄的 `AGENTS.md` 與 `CLAUDE.md`——兩者存在嗎？其中一個是否已經有 `## Agent skills` 章節？
-- repo 根目錄的 `CONTEXT.md` 與 `CONTEXT-MAP.md`
+- repo 根目錄的 `GLOSSARY.md` 與 `GLOSSARY-MAP.md`
 - `docs/adr/` 與任何 `src/*/docs/adr/` 目錄
 - `docs/agents/`——這個技能先前的輸出是否已經存在？
 - `.scratch/`——顯示本機 markdown issue 追蹤器慣例已在使用的跡象
@@ -56,9 +56,9 @@ disable-model-invocation: true
 
 預設就是五個標準角色，每個標籤字串等於它的名稱：`needs-triage`、`needs-info`、`ready-for-agent`、`ready-for-human`、`wontfix`。答**是**就原樣寫入。只有當使用者說不——通常是因為他們的追蹤器已使用其他名稱（例如用 `bug:triage` 代替 `needs-triage`）——才收集覆寫，讓 `triage` 套用既有標籤而不是建立重複的。
 
-**C 章節——領域文件。** 預設**單一上下文**——repo 根目錄一份 `CONTEXT.md` + `docs/adr/`。這適合幾乎每個 repo；不用問就寫。
+**C 章節——領域文件。** 預設**單一上下文**——repo 根目錄一份 `GLOSSARY.md` + `docs/adr/`。這適合幾乎每個 repo；不用問就寫。
 
-只有當探索發現 monorepo 訊號時，才提供**多上下文**——根目錄的 `CONTEXT-MAP.md` 指向每個上下文的 `CONTEXT.md` 檔案。然後確認他們想要哪種佈局。
+只有當探索發現 monorepo 訊號時，才提供**多上下文**——根目錄的 `GLOSSARY-MAP.md` 指向每個上下文的 `GLOSSARY.md` 檔案。然後確認他們想要哪種佈局。
 
 ### 3. 確認與編輯
 

@@ -34,7 +34,7 @@
 |---|---|---|
 | PRD | 保留英文 | Product Requirements Document，不譯 |
 | ADR | 保留英文 | Architecture Decision Record，不譯 |
-| CONTEXT.md | 保留英文 | 檔名，不譯 |
+| GLOSSARY.md | 保留英文 | 檔名，不譯 |
 | agent brief | 代理簡報 | triage 產物 |
 | issue | issue | 首字母小寫時保留英文，不譯為「議題/工單」 |
 | Issue | Issue | 首字母大寫時保留英文 |

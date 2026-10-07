@@ -33,7 +33,7 @@
 
 ## Prerequisites
 
-可選 — 僅當技能需要某些東西就位才能運作時才包含；否則整個省略此標題。涵蓋：它**寫入的工作區**（`grill-with-docs` 這類有狀態技能寫 `CONTEXT.md` 與 ADR；`teach` 會建立整個目錄 — 說清楚它寫什麼、寫在哪）、**先前的設定**（`triage`/`to-spec`/`to-tickets` 需要 `setup-matt-pocock-skills` 已設定 issue tracker）、或 **repo 特定工具**。在何處都能跑的無狀態技能沒有前置需求 — 省略該章節。
+可選 — 僅當技能需要某些東西就位才能運作時才包含；否則整個省略此標題。涵蓋：它**寫入的工作區**（`grill-with-docs` 這類有狀態技能寫 `GLOSSARY.md` 與 ADR；`teach` 會建立整個目錄 — 說清楚它寫什麼、寫在哪）、**先前的設定**（`triage`/`to-spec`/`to-tickets` 需要 `setup-matt-pocock-skills` 已設定 issue tracker）、或 **repo 特定工具**。在何處都能跑的無狀態技能沒有前置需求 — 省略該章節。
 
 ## <free-form middle>
 

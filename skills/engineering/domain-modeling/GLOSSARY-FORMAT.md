@@ -1,4 +1,4 @@
-# CONTEXT.md 格式
+# GLOSSARY.md 格式
 
 ## 結構
 
@@ -31,18 +31,18 @@ _Avoid_: Client, buyer, account
 
 ## 單一 vs 多上下文 repo
 
-**單一上下文（多數 repo）：** 根目錄一份 `CONTEXT.md`。
+**單一上下文（多數 repo）：** 根目錄一份 `GLOSSARY.md`。
 
-**多個上下文：** 根目錄的 `CONTEXT-MAP.md` 列出上下文、它們在哪裡、以及它們彼此如何關聯：
+**多個上下文：** 根目錄的 `GLOSSARY-MAP.md` 列出上下文、它們在哪裡、以及它們彼此如何關聯：
 
 ```md
 # Context Map
 
 ## Contexts
 
-- [Ordering](./src/ordering/CONTEXT.md) — receives and tracks customer orders
-- [Billing](./src/billing/CONTEXT.md) — generates invoices and processes payments
-- [Fulfillment](./src/fulfillment/CONTEXT.md) — manages warehouse picking and shipping
+- [Ordering](./src/ordering/GLOSSARY.md) — receives and tracks customer orders
+- [Billing](./src/billing/GLOSSARY.md) — generates invoices and processes payments
+- [Fulfillment](./src/fulfillment/GLOSSARY.md) — manages warehouse picking and shipping
 
 ## Relationships
 
@@ -53,8 +53,8 @@ _Avoid_: Client, buyer, account
 
 技能會推斷適用哪種結構：
 
-- 如果 `CONTEXT-MAP.md` 存在，讀它來找上下文
-- 如果只有根目錄的 `CONTEXT.md`，是單一上下文
-- 如果兩者都不存在，第一個術語定案時惰性地建立根目錄的 `CONTEXT.md`
+- 如果 `GLOSSARY-MAP.md` 存在，讀它來找上下文
+- 如果只有根目錄的 `GLOSSARY.md`，是單一上下文
+- 如果兩者都不存在，第一個術語定案時惰性地建立根目錄的 `GLOSSARY.md`
 
 當有多個上下文時，推斷目前主題與哪一個相關。如果不清楚，就問。

@@ -5,7 +5,7 @@ description: 建立並磨利專案的領域模型。當使用者想釐清領域�
 
 # 領域模型
 
-在設計過程中主動建立並磨利專案的領域模型。這是*主動*的紀律——挑戰術語、發明邊緣案例情境，並在術語定案的那一刻把詞彙表和決策寫下來。（光是*讀* `CONTEXT.md` 來取得詞彙不是本技能——那是一行程式碼習慣，任何技能都能做。本技能是用於當你在改變模型，而不只是消費它。）
+在設計過程中主動建立並磨利專案的領域模型。這是*主動*的紀律——挑戰術語、發明邊緣案例情境，並在術語定案的那一刻把詞彙表和決策寫下來。（光是*讀* `GLOSSARY.md` 來取得詞彙不是本技能——那是一行程式碼習慣，任何技能都能做。本技能是用於當你在改變模型，而不只是消費它。）
 
 ## 檔案結構
 
@@ -13,7 +13,7 @@ description: 建立並磨利專案的領域模型。當使用者想釐清領域�
 
 ```
 /
-├── CONTEXT.md
+├── GLOSSARY.md
 ├── docs/
 │   └── adr/
 │       ├── 0001-event-sourced-orders.md
@@ -21,29 +21,29 @@ description: 建立並磨利專案的領域模型。當使用者想釐清領域�
 └── src/
 ```
 
-如果根目錄有 `CONTEXT-MAP.md`，表示 repo 有多個上下文。地圖指向每個上下文所在位置：
+如果根目錄有 `GLOSSARY-MAP.md`，表示 repo 有多個上下文。地圖指向每個上下文所在位置：
 
 ```
 /
-├── CONTEXT-MAP.md
+├── GLOSSARY-MAP.md
 ├── docs/
 │   └── adr/                          ← system-wide decisions
 ├── src/
 │   ├── ordering/
-│   │   ├── CONTEXT.md
+│   │   ├── GLOSSARY.md
 │   │   └── docs/adr/                 ← context-specific decisions
 │   └── billing/
-│       ├── CONTEXT.md
+│       ├── GLOSSARY.md
 │       └── docs/adr/
 ```
 
-惰性地建立檔案——只在有東西要寫時才建。如果沒有 `CONTEXT.md`，第一個術語定案時建立一個。如果沒有 `docs/adr/`，需要第一個 ADR 時建立。
+惰性地建立檔案——只在有東西要寫時才建。如果沒有 `GLOSSARY.md`，第一個術語定案時建立一個。如果沒有 `docs/adr/`，需要第一個 ADR 時建立。
 
 ## 會話期間
 
 ### 對照詞彙表挑戰
 
-當使用者使用的術語與 `CONTEXT.md` 中既有的語言衝突時，立刻點出來。「你的詞彙表把 'cancellation' 定義為 X，但你似乎指的是 Y——哪個才對？」
+當使用者使用的術語與 `GLOSSARY.md` 中既有的語言衝突時，立刻點出來。「你的詞彙表把 'cancellation' 定義為 X，但你似乎指的是 Y——哪個才對？」
 
 ### 磨利模糊的語言
 
@@ -57,11 +57,11 @@ description: 建立並磨利專案的領域模型。當使用者想釐清領域�
 
 當使用者陳述某個東西如何運作時，檢查程式碼是否同意。如果發現矛盾，把它浮上檯面：「你的程式碼取消整個 Order，但你剛才說可以部分取消——哪個才對？」
 
-### 內嵌更新 CONTEXT.md
+### 內嵌更新 GLOSSARY.md
 
-當一個術語定案時，就地更新 `CONTEXT.md`。不要累積再一次處理——邊發生邊捕捉。使用 [CONTEXT-FORMAT.md](./CONTEXT-FORMAT.md) 中的格式。
+當一個術語定案時，就地更新 `GLOSSARY.md`。不要累積再一次處理——邊發生邊捕捉。使用 [GLOSSARY-FORMAT.md](./GLOSSARY-FORMAT.md) 中的格式。
 
-`CONTEXT.md` 應該完全不含實作細節。不要把 `CONTEXT.md` 當成規格、便條紙，或實作決策的倉庫。它是詞彙表，而且僅此而已。
+`GLOSSARY.md` 應該完全不含實作細節。不要把 `GLOSSARY.md` 當成規格、便條紙，或實作決策的倉庫。它是詞彙表，而且僅此而已。
 
 ### 斟酌提供 ADR
 

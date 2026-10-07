@@ -27,9 +27,9 @@
 
 ## 前置條件
 
-執行它不需要任何前置。它會讀取 `CONTEXT.md` 與 `docs/adr/` 中任何存在的 ADR，並在存在時用你領域自己的名詞說話——候選者讀起來是「加深 Order intake 模組」，而不是「重構 FooBarHandler」。
+執行它不需要任何前置。它會讀取 `GLOSSARY.md` 與 `docs/adr/` 中任何存在的 ADR，並在存在時用你領域自己的名詞說話——候選者讀起來是「加深 Order intake 模組」，而不是「重構 FooBarHandler」。
 
-它寫入兩個地方。報告去 `<tmpdir>/architecture-review-<timestamp>.html`，在儲存庫之外。在 grilling 迴圈中，它會在 `CONTEXT.md` 加入或磨利術語，若檔案不存在則建立它，並提議把被否決的候選者記錄為 ADR，這樣未來的執行不會再建議它。
+它寫入兩個地方。報告去 `<tmpdir>/architecture-review-<timestamp>.html`，在儲存庫之外。在 grilling 迴圈中，它會在 `GLOSSARY.md` 加入或磨利術語，若檔案不存在則建立它，並提議把被否決的候選者記錄為 ADR，這樣未來的執行不會再建議它。
 
 ## 深度，以及獵捕它的報告
 
@@ -98,4 +98,4 @@
 
 ## 它在哪裡適用
 
-`improve-codebase-architecture` 是**定期維護**——每隔幾天執行，在任何鏈之外，目的是為工作排隊而不是執行它。它的鄰居是 [codebase-design](https://aihero.dev/skills-codebase-design)——擁有每個候選者都用其寫成的深度與接縫詞彙；[grilling](https://aihero.dev/skills-grilling)——在你挑選候選者後走過決策樹；以及 [domain-modeling](https://aihero.dev/skills-domain-modeling)——在決策落定時讓 `CONTEXT.md` 與 ADR 保持最新。它產出的是想法，在 [grill-with-docs](https://aihero.dev/skills-grill-with-docs) 或 [to-spec](https://aihero.dev/skills-to-spec) 處重新進入主建置流程。至於哪個技能適合某種情境，[ask-matt](https://aihero.dev/skills-ask-matt) 是整套的路由器。
+`improve-codebase-architecture` 是**定期維護**——每隔幾天執行，在任何鏈之外，目的是為工作排隊而不是執行它。它的鄰居是 [codebase-design](https://aihero.dev/skills-codebase-design)——擁有每個候選者都用其寫成的深度與接縫詞彙；[grilling](https://aihero.dev/skills-grilling)——在你挑選候選者後走過決策樹；以及 [domain-modeling](https://aihero.dev/skills-domain-modeling)——在決策落定時讓 `GLOSSARY.md` 與 ADR 保持最新。它產出的是想法，在 [grill-with-docs](https://aihero.dev/skills-grill-with-docs) 或 [to-spec](https://aihero.dev/skills-to-spec) 處重新進入主建置流程。至於哪個技能適合某種情境，[ask-matt](https://aihero.dev/skills-ask-matt) 是整套的路由器。

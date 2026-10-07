@@ -73,7 +73,7 @@ disable-model-invocation: true
 
 3. **驗證主張。** 在任何 grilling 之前，先檢查主張是否成立。對 bug，依報告人的步驟重現它。對 PR，確認 diff 做到它所宣稱的事——把它 checkout 出來，執行相關的測試或指令。回報發生的事：已確認（附程式碼路徑）、失敗，或細節不足（一個強烈的 `needs-info` 訊號）。已確認的驗證會讓代理簡報強上許多。
 
-4. **Grill（如果需要）。** 如果請求需要充實內容，就一起運行 `/grilling` 與 `/domain-modeling` 技能——一輪一輪地問問題，把它 grill 成型，磨利領域術語，並在決策落定時就地更新 `CONTEXT.md`/ADR。
+4. **Grill（如果需要）。** 如果請求需要充實內容，就一起運行 `/grilling` 與 `/domain-modeling` 技能——一輪一輪地問問題，把它 grill 成型，磨利領域術語，並在決策落定時就地更新 `GLOSSARY.md`/ADR。
 
 5. **套用結果：**
    - `ready-for-agent` — 貼上代理簡報評論（[AGENT-BRIEF.md](AGENT-BRIEF.md)）。

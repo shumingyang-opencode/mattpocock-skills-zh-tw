@@ -14,7 +14,7 @@
 | --- | --- |
 | 一個決策在等待的外部事實 | `research` |
 | 一個*與你一起*、透過訪談做出的決策 | [grilling](https://aihero.dev/skills-grilling) |
-| 一個持久、寫入 `CONTEXT.md` 與 ADR 的架構決策 | [grill-with-docs](https://aihero.dev/skills-grill-with-docs) |
+| 一個持久、寫入 `GLOSSARY.md` 與 ADR 的架構決策 | [grill-with-docs](https://aihero.dev/skills-grill-with-docs) |
 | 查明某個做法是否在你的代碼庫中有效 | [prototype](https://aihero.dev/skills-prototype) |
 | 一個大到塞不進單一會話的計畫 | [wayfinder](https://aihero.dev/skills-wayfinder) |
 

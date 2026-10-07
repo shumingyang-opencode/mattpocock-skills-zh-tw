@@ -17,4 +17,4 @@ Bucket 的 `README.md` 與頂層 `README.md` 把項目分成 **User-invoked** �
 
 ## 被動 vs 主動的領域工作
 
-只是*閱讀* `CONTEXT.md` 取得詞彙，是一行的散文指標，不是 `domain-modeling` 技能。唯有主動的建立/磨練紀律（質疑術語、邊緣情境、寫 ADR、內嵌更新 `CONTEXT.md`）才是 `domain-modeling`。
+只是*閱讀* `GLOSSARY.md` 取得詞彙，是一行的散文指標，不是 `domain-modeling` 技能。唯有主動的建立/磨練紀律（質疑術語、邊緣情境、寫 ADR、內嵌更新 `GLOSSARY.md`）才是 `domain-modeling`。

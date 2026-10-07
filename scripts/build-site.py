@@ -117,7 +117,7 @@ LEVELS = [
 ATTACHED = {
     "ask-matt": ["PHASE-BOUNDARIES"],
     "codebase-design": ["DEEPENING", "DESIGN-IT-TWICE"],
-    "domain-modeling": ["ADR-FORMAT", "CONTEXT-FORMAT"],
+    "domain-modeling": ["ADR-FORMAT", "GLOSSARY-FORMAT"],
     "improve-codebase-architecture": ["HTML-REPORT"],
     "prototype": ["LOGIC", "UI"],
     "setup-matt-pocock-skills": ["domain", "issue-tracker-github", "issue-tracker-gitlab", "issue-tracker-local", "triage-labels"],

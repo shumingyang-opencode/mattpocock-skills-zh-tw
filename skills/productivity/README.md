@@ -10,7 +10,7 @@
 - **[handoff](./handoff/SKILL.md)** — 將目前的對話壓縮成一份交接文件，讓另一個代理可以繼續進行工作。
 - **[teach](./teach/SKILL.md)** — 以目前目錄作為有狀態的教學工作區，跨越多次 session 教導使用者一項新技能或概念。
 - **[to-questionnaire](./to-questionnaire/SKILL.md)** — 將一個您無法獨自回答的決策，轉化為一份 Markdown 問卷，交給唯一能回答的人 — 可以非同步填寫，或在會議中一起填寫。
-- **[wait-what](./wait-what/SKILL.md)** — 當訊息無法被理解的那一刻就觸發它。代理會以您所缺少的脈絡，用您的 `CONTEXT.md` 詞彙，以淺白英文重新闡述。
+- **[wait-what](./wait-what/SKILL.md)** — 當訊息無法被理解的那一刻就觸發它。代理會以您所缺少的脈絡，用您的 `GLOSSARY.md` 詞彙，以淺白英文重新闡述。
 
 ## 模型觸發（Model-invoked）
 

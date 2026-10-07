@@ -13,7 +13,7 @@
 | 你有什麼 | 取用 |
 | --- | --- |
 | 你不在工作目錄中 | [grill-me](https://aihero.dev/skills-grill-me)——相同的[會話](https://www.aihero.dev/ai-coding-dictionary/session)，以代理永遠不會自己觸發的名稱 |
-| 你在工作目錄中 | [grill-with-docs](https://aihero.dev/skills-grill-with-docs)——相同的會話，而且邊做邊寫 `CONTEXT.md` 與 ADR |
+| 你在工作目錄中 | [grill-with-docs](https://aihero.dev/skills-grill-with-docs)——相同的會話，而且邊做邊寫 `GLOSSARY.md` 與 ADR |
 | 一個大到塞不進單一會話的工作 | [wayfinder](https://aihero.dev/skills-wayfinder)——它繪製地圖，並在決策 ticket 內部跑 grilling |
 | 一個對話無法定案的問題——某件事應該看起來或感覺起來如何 | [prototype](https://aihero.dev/skills-prototype)——建置一次性版本，然後回來 |
 | 一個需要訪談的你自己的技能 | 從它內部呼叫 `/grilling`，而不是撰寫另一個訪談 |
@@ -38,7 +38,7 @@
 | --- | --- |
 | 樹、前沿、輪、問題格式、事實對決策 | 這裡 |
 | 會話該跑多久、怎麼處理你無法靠對話回答的問題、如何避免一直點頭 | [grill-me](https://aihero.dev/skills-grill-me) |
-| 什麼被寫進 `CONTEXT.md`、什麼變成 ADR | [grill-with-docs](https://aihero.dev/skills-grill-with-docs) |
+| 什麼被寫進 `GLOSSARY.md`、什麼變成 ADR | [grill-with-docs](https://aihero.dev/skills-grill-with-docs) |
 
 ## 常見問題
 

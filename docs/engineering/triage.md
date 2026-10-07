@@ -96,4 +96,4 @@
 
 ## 它在哪裡適用
 
-`triage` 是**入口**，不是主鏈中的一個步驟。主流程從你有的點子開始——grill、規格說明、ticket、實作、審查——而 `triage` 是外來工作的平行車道。它在同一個地方匯合：一個帶簡報、標示 `ready-for-agent` 的 issue，[implement](https://aihero.dev/skills-implement) 會以處理 [to-tickets](https://aihero.dev/skills-to-tickets) ticket 的方式接起它。當請求在能寫簡報之前需要磨利時，`triage` 一起跑 [grilling](https://aihero.dev/skills-grilling) 與 [domain-modeling](https://aihero.dev/skills-domain-modeling)，一次一輪問題，所以決策在做出當下就落進 `CONTEXT.md` 與 ADR。當你不確定自己在哪條車道時，[ask-matt](https://aihero.dev/skills-ask-matt) 會幫你導航。
+`triage` 是**入口**，不是主鏈中的一個步驟。主流程從你有的點子開始——grill、規格說明、ticket、實作、審查——而 `triage` 是外來工作的平行車道。它在同一個地方匯合：一個帶簡報、標示 `ready-for-agent` 的 issue，[implement](https://aihero.dev/skills-implement) 會以處理 [to-tickets](https://aihero.dev/skills-to-tickets) ticket 的方式接起它。當請求在能寫簡報之前需要磨利時，`triage` 一起跑 [grilling](https://aihero.dev/skills-grilling) 與 [domain-modeling](https://aihero.dev/skills-domain-modeling)，一次一輪問題，所以決策在做出當下就落進 `GLOSSARY.md` 與 ADR。當你不確定自己在哪條車道時，[ask-matt](https://aihero.dev/skills-ask-matt) 會幫你導航。

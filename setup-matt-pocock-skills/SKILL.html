@@ -37,7 +37,7 @@
 </ul></div><div class="col-zh" lang="zh-Hant"><ul>
 <li><strong>Issue 追蹤器</strong>——issue 放在哪裡（預設 GitHub；本機 markdown 也開箱即支援）</li>
 <li><strong>分診標籤</strong>——五個標準分診角色使用的字串</li>
-<li><strong>領域文件</strong>——<code>CONTEXT.md</code> 與 ADR 放在哪裡，以及讀取它們的消費規則</li>
+<li><strong>領域文件</strong>——<code>GLOSSARY.md</code> 與 ADR 放在哪裡，以及讀取它們的消費規則</li>
 </ul></div></div>
 <div class="pair"><div class="col-en" lang="en"><p>This is a prompt-driven skill, not a deterministic script. Explore, present what you found, confirm with the user, then write.</p></div><div class="col-zh" lang="zh-Hant"><p>這是一個提示驅動的技能，不是確定性腳本。探索、呈現你所發現的、與使用者確認，然後寫入。</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><h2>Process</h2></div><div class="col-zh" lang="zh-Hant"><h2>流程</h2></div></div>
@@ -55,7 +55,7 @@
 </ul></div><div class="col-zh" lang="zh-Hant"><ul>
 <li><code>git remote -v</code> 與 <code>.git/config</code>——這是 GitHub repo 嗎？哪一個？</li>
 <li>repo 根目錄的 <code>AGENTS.md</code> 與 <code>CLAUDE.md</code>——兩者存在嗎？其中一個是否已經有 <code>## Agent skills</code> 章節？</li>
-<li>repo 根目錄的 <code>CONTEXT.md</code> 與 <code>CONTEXT-MAP.md</code></li>
+<li>repo 根目錄的 <code>GLOSSARY.md</code> 與 <code>GLOSSARY-MAP.md</code></li>
 <li><code>docs/adr/</code> 與任何 <code>src/*/docs/adr/</code> 目錄</li>
 <li><code>docs/agents/</code>——這個技能先前的輸出是否已經存在？</li>
 <li><code>.scratch/</code>——顯示本機 markdown issue 追蹤器慣例已在使用的跡象</li>
@@ -92,8 +92,8 @@
 <p>你想保留預設的分診標籤嗎？（建議：<strong>是</strong>）</p>
 </blockquote></div></div>
 <div class="pair"><div class="col-en" lang="en"><p>The defaults are the five canonical roles, each label string equal to its name: <code>needs-triage</code>, <code>needs-info</code>, <code>ready-for-agent</code>, <code>ready-for-human</code>, <code>wontfix</code>. On <strong>yes</strong>, write them as-is. Only if the user says no, usually because their tracker already uses other names (e.g. <code>bug:triage</code> for <code>needs-triage</code>), collect the overrides so <code>triage</code> applies existing labels instead of creating duplicates.</p></div><div class="col-zh" lang="zh-Hant"><p>預設就是五個標準角色，每個標籤字串等於它的名稱：<code>needs-triage</code>、<code>needs-info</code>、<code>ready-for-agent</code>、<code>ready-for-human</code>、<code>wontfix</code>。答<strong>是</strong>就原樣寫入。只有當使用者說不——通常是因為他們的追蹤器已使用其他名稱（例如用 <code>bug:triage</code> 代替 <code>needs-triage</code>）——才收集覆寫，讓 <code>triage</code> 套用既有標籤而不是建立重複的。</p></div></div>
-<div class="pair"><div class="col-en" lang="en"><p><strong>Section C: Domain docs.</strong> Default to <strong>single-context</strong> (one <code>GLOSSARY.md</code> + <code>docs/adr/</code> at the repo root). This fits almost every repo; write it without asking.</p></div><div class="col-zh" lang="zh-Hant"><p><strong>C 章節——領域文件。</strong> 預設<strong>單一上下文</strong>——repo 根目錄一份 <code>CONTEXT.md</code> + <code>docs/adr/</code>。這適合幾乎每個 repo；不用問就寫。</p></div></div>
-<div class="pair"><div class="col-en" lang="en"><p>Offer <strong>multi-context</strong> (a root <code>GLOSSARY-MAP.md</code> pointing to per-context <code>GLOSSARY.md</code> files) only when exploration found monorepo signals. Then confirm which layout they want.</p></div><div class="col-zh" lang="zh-Hant"><p>只有當探索發現 monorepo 訊號時，才提供<strong>多上下文</strong>——根目錄的 <code>CONTEXT-MAP.md</code> 指向每個上下文的 <code>CONTEXT.md</code> 檔案。然後確認他們想要哪種佈局。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p><strong>Section C: Domain docs.</strong> Default to <strong>single-context</strong> (one <code>GLOSSARY.md</code> + <code>docs/adr/</code> at the repo root). This fits almost every repo; write it without asking.</p></div><div class="col-zh" lang="zh-Hant"><p><strong>C 章節——領域文件。</strong> 預設<strong>單一上下文</strong>——repo 根目錄一份 <code>GLOSSARY.md</code> + <code>docs/adr/</code>。這適合幾乎每個 repo；不用問就寫。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Offer <strong>multi-context</strong> (a root <code>GLOSSARY-MAP.md</code> pointing to per-context <code>GLOSSARY.md</code> files) only when exploration found monorepo signals. Then confirm which layout they want.</p></div><div class="col-zh" lang="zh-Hant"><p>只有當探索發現 monorepo 訊號時，才提供<strong>多上下文</strong>——根目錄的 <code>GLOSSARY-MAP.md</code> 指向每個上下文的 <code>GLOSSARY.md</code> 檔案。然後確認他們想要哪種佈局。</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><h3>3. Confirm and edit</h3></div><div class="col-zh" lang="zh-Hant"><h3>3. 確認與編輯</h3></div></div>
 <div class="pair"><div class="col-en" lang="en"><p>Show the user a draft of:</p></div><div class="col-zh" lang="zh-Hant"><p>給使用者看草稿：</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><ul>

@@ -13,7 +13,7 @@
 你要三個 grilling 技能中的哪一個，取決於眼前有什麼：
 
 - **任何東西，任何地方**——`grill-me`。它不需要儲存庫、不寫檔案，而且主題不必是程式碼。
-- **一個可供對齊的代碼庫**——[grill-with-docs](https://aihero.dev/skills-grill-with-docs)。相同的訪談，但是[有狀態](https://www.aihero.dev/ai-coding-dictionary/stateful)：它讀你的程式碼，並把它學到的保存進 `CONTEXT.md` 與 ADR。
+- **一個可供對齊的代碼庫**——[grill-with-docs](https://aihero.dev/skills-grill-with-docs)。相同的訪談，但是[有狀態](https://www.aihero.dev/ai-coding-dictionary/stateful)：它讀你的程式碼，並把它學到的保存進 `GLOSSARY.md` 與 ADR。
 - **大到塞不進單一會話**——[wayfinder](https://aihero.dev/skills-wayfinder)。它把工作繪成地圖，並在裡面跑 grilling 會話。
 
 關掉[計畫模式](https://www.aihero.dev/ai-coding-dictionary/agent-mode)。計畫模式會讓代理傾向趕快產出計畫，這與保持在探究中相反。
@@ -71,6 +71,6 @@ When grilling, ask one question at a time.
 
 `grill-me` 是**你可以在任何地方、對任何東西執行的獨立技能**。無狀態正是讓它可攜的原因：沒有儲存庫、沒有工作區、沒有設定，也不假設點子與軟體有關。人們把它指向商業決策、寫作、接下來要做什麼——任何在他們腦中坐不住的東西。
 
-那種可攜性正是與 [grill-with-docs](https://aihero.dev/skills-grill-with-docs) 的全部差異，後者跑相同的訪談，但讀取代碼庫供對齊，並把它學到的記錄為 `CONTEXT.md` 與 ADR。兩者都座落在 [grilling](https://aihero.dev/skills-grilling) 原語上；`grill-me` 是由使用者呼叫的正門，不攜帶任何東西。
+那種可攜性正是與 [grill-with-docs](https://aihero.dev/skills-grill-with-docs) 的全部差異，後者跑相同的訪談，但讀取代碼庫供對齊，並把它學到的記錄為 `GLOSSARY.md` 與 ADR。兩者都座落在 [grilling](https://aihero.dev/skills-grilling) 原語上；`grill-me` 是由使用者呼叫的正門，不攜帶任何東西。
 
 如果你 grill 的東西結果真是軟體，你可以把同一次對話交給 [to-spec](https://aihero.dev/skills-to-spec)，並繼續進入建置流程——那是個選項，不是技能的重點。當你不確定哪條流程適用時，[ask-matt](https://aihero.dev/skills-ask-matt) 會幫你導航。

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>domain-modeling / CONTEXT-FORMAT · mattpocock-skills-zh-tw</title>
+<title>domain-modeling / GLOSSARY-FORMAT · mattpocock-skills-zh-tw</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Noto+Serif+TC:wght@400;600;700&display=swap" rel="stylesheet">
@@ -19,9 +19,9 @@
   <a href="../write-great-skills.html">如何寫出好技能</a>
   <a href="SKILL.html">← 技能主頁 domain-modeling</a> 
 </div>
-<h1>CONTEXT-FORMAT</h1>
+<h1>GLOSSARY-FORMAT</h1>
 <div class="subtitle">domain-modeling · 附屬文件</div>
-<div class="pair"><div class="col-en" lang="en"><p class="zh-only">（無英文對照）</p></div><div class="col-zh" lang="zh-Hant"><h1>CONTEXT.md 格式</h1></div></div>
+<div class="pair"><div class="col-en" lang="en"><p class="zh-only">（無英文對照）</p></div><div class="col-zh" lang="zh-Hant"><h1>GLOSSARY.md 格式</h1></div></div>
 <div class="pair"><div class="col-en" lang="en"><p class="zh-only">（無英文對照）</p></div><div class="col-zh" lang="zh-Hant"><h2>結構</h2></div></div>
 <div class="pair"><div class="col-en" lang="en"><p class="zh-only">（無英文對照）</p></div><div class="col-zh" lang="zh-Hant"><pre><code class="language-md"># {Context Name}
 
@@ -49,15 +49,15 @@ _Avoid_: Client, buyer, account
 <li><strong>當自然聚類浮現時，把術語歸在子標題下。</strong> 如果所有術語都屬於單一內聚領域，扁平清單就夠了。</li>
 </ul></div></div>
 <div class="pair"><div class="col-en" lang="en"><p class="zh-only">（無英文對照）</p></div><div class="col-zh" lang="zh-Hant"><h2>單一 vs 多上下文 repo</h2></div></div>
-<div class="pair"><div class="col-en" lang="en"><p class="zh-only">（無英文對照）</p></div><div class="col-zh" lang="zh-Hant"><p><strong>單一上下文（多數 repo）：</strong> 根目錄一份 <code>CONTEXT.md</code>。</p></div></div>
-<div class="pair"><div class="col-en" lang="en"><p class="zh-only">（無英文對照）</p></div><div class="col-zh" lang="zh-Hant"><p><strong>多個上下文：</strong> 根目錄的 <code>CONTEXT-MAP.md</code> 列出上下文、它們在哪裡、以及它們彼此如何關聯：</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p class="zh-only">（無英文對照）</p></div><div class="col-zh" lang="zh-Hant"><p><strong>單一上下文（多數 repo）：</strong> 根目錄一份 <code>GLOSSARY.md</code>。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p class="zh-only">（無英文對照）</p></div><div class="col-zh" lang="zh-Hant"><p><strong>多個上下文：</strong> 根目錄的 <code>GLOSSARY-MAP.md</code> 列出上下文、它們在哪裡、以及它們彼此如何關聯：</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><p class="zh-only">（無英文對照）</p></div><div class="col-zh" lang="zh-Hant"><pre><code class="language-md"># Context Map
 
 ## Contexts
 
-- [Ordering](./src/ordering/CONTEXT.md) — receives and tracks customer orders
-- [Billing](./src/billing/CONTEXT.md) — generates invoices and processes payments
-- [Fulfillment](./src/fulfillment/CONTEXT.md) — manages warehouse picking and shipping
+- [Ordering](./src/ordering/GLOSSARY.md) — receives and tracks customer orders
+- [Billing](./src/billing/GLOSSARY.md) — generates invoices and processes payments
+- [Fulfillment](./src/fulfillment/GLOSSARY.md) — manages warehouse picking and shipping
 
 ## Relationships
 
@@ -67,9 +67,9 @@ _Avoid_: Client, buyer, account
 </code></pre></div></div>
 <div class="pair"><div class="col-en" lang="en"><p class="zh-only">（無英文對照）</p></div><div class="col-zh" lang="zh-Hant"><p>技能會推斷適用哪種結構：</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><p class="zh-only">（無英文對照）</p></div><div class="col-zh" lang="zh-Hant"><ul>
-<li>如果 <code>CONTEXT-MAP.md</code> 存在，讀它來找上下文</li>
-<li>如果只有根目錄的 <code>CONTEXT.md</code>，是單一上下文</li>
-<li>如果兩者都不存在，第一個術語定案時惰性地建立根目錄的 <code>CONTEXT.md</code></li>
+<li>如果 <code>GLOSSARY-MAP.md</code> 存在，讀它來找上下文</li>
+<li>如果只有根目錄的 <code>GLOSSARY.md</code>，是單一上下文</li>
+<li>如果兩者都不存在，第一個術語定案時惰性地建立根目錄的 <code>GLOSSARY.md</code></li>
 </ul></div></div>
 <div class="pair"><div class="col-en" lang="en"><p class="zh-only">（無英文對照）</p></div><div class="col-zh" lang="zh-Hant"><p>當有多個上下文時，推斷目前主題與哪一個相關。如果不清楚，就問。</p></div></div>
 

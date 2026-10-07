@@ -4,7 +4,7 @@
 
 那些檔案是儲存庫之間唯一不同的東西。技能們在任何地方都相同；它們在執行時讀取 `docs/agents/issue-tracker.md` 並照著做。這就是為什麼這套技能不受限於 GitHub，也為什麼沒有任何技能檔案需要編輯才能指向別處。以「link the skills to a custom issue tracker」呼叫它，對任何你能以程式方式連接的東西都有效，技能本身零變更。
 
-它是提示詞驅動的技能，不是確定性腳本。它讀取你的 `git remote`、既有的 `CLAUDE.md`、既有的 `CONTEXT.md`，提議它找到的內容，並在寫入任何東西之前等你確認。
+它是提示詞驅動的技能，不是確定性腳本。它讀取你的 `git remote`、既有的 `CLAUDE.md`、既有的 `GLOSSARY.md`，提議它找到的內容，並在寫入任何東西之前等你確認。
 
 ## 何時使用
 
@@ -33,7 +33,7 @@
 | --- | --- | --- |
 | **Issue 追蹤器** | 符合你 `git remote` 的那一個 | 永遠——這是唯一真正的選擇 |
 | **分診標籤** | 保留五個標準名稱（`needs-triage`、`needs-info`、`ready-for-agent`、`ready-for-human`、`wontfix`） | 只在安裝 `triage` 技能時 |
-| **領域文件** | 單一上下文：根目錄一個 `CONTEXT.md` 加上 `docs/adr/` | 只在它偵測到 monorepo 訊號時，然後它會提供多上下文的 `CONTEXT-MAP.md` |
+| **領域文件** | 單一上下文：根目錄一個 `GLOSSARY.md` 加上 `docs/adr/` | 只在它偵測到 monorepo 訊號時，然後它會提供多上下文的 `GLOSSARY-MAP.md` |
 
 追蹤器選項：
 
@@ -91,4 +91,4 @@
 
 ## 它在哪裡適用
 
-`setup-matt-pocock-skills` 是工程流程的**一次性設定**，是其他一切都假設的前置條件，而不是鏈中的一個步驟。它的鄰居是它的讀者：[triage](https://aihero.dev/skills-triage)——套用在這裡寫下的標籤詞彙；[to-spec](https://aihero.dev/skills-to-spec) 與 [to-tickets](https://aihero.dev/skills-to-tickets)——發布進這裡點名的追蹤器；以及 [wayfinder](https://aihero.dev/skills-wayfinder)——讀取同一份追蹤器檔案的「Wayfinding operations」區段，來知道地圖與子 [ticket](https://www.aihero.dev/ai-coding-dictionary/ticket) 如何儲存。它記錄的領域文件配置，是 [domain-modeling](https://aihero.dev/skills-domain-modeling) 之後會填滿的那個——它在術語或決策真正定案時惰性建立 `CONTEXT.md` 與 ADR，所以設定後是空的儲存庫是預期狀態。至於接下來該取用哪個技能，[ask-matt](https://aihero.dev/skills-ask-matt) 導航整套。
+`setup-matt-pocock-skills` 是工程流程的**一次性設定**，是其他一切都假設的前置條件，而不是鏈中的一個步驟。它的鄰居是它的讀者：[triage](https://aihero.dev/skills-triage)——套用在這裡寫下的標籤詞彙；[to-spec](https://aihero.dev/skills-to-spec) 與 [to-tickets](https://aihero.dev/skills-to-tickets)——發布進這裡點名的追蹤器；以及 [wayfinder](https://aihero.dev/skills-wayfinder)——讀取同一份追蹤器檔案的「Wayfinding operations」區段，來知道地圖與子 [ticket](https://www.aihero.dev/ai-coding-dictionary/ticket) 如何儲存。它記錄的領域文件配置，是 [domain-modeling](https://aihero.dev/skills-domain-modeling) 之後會填滿的那個——它在術語或決策真正定案時惰性建立 `GLOSSARY.md` 與 ADR，所以設定後是空的儲存庫是預期狀態。至於接下來該取用哪個技能，[ask-matt](https://aihero.dev/skills-ask-matt) 導航整套。

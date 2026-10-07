@@ -140,7 +140,7 @@ npx skills@latest add mattpocock/skills
 範例
 </summary>
 
-這是我的 `course-video-manager` repo 中的一個 [`CONTEXT.md`](https://github.com/mattpocock/course-video-manager/blob/076a5a7a182db0fe1e62971dd7a68bcadf010f1c/CONTEXT.md) 範例。哪一個比較好讀？
+這是我的 `course-video-manager` repo 中的一個 [`GLOSSARY.md`](https://github.com/mattpocock/course-video-manager/blob/076a5a7a182db0fe1e62971dd7a68bcadf010f1c/GLOSSARY.md) 範例。哪一個比較好讀？
 
 - **BEFORE（改寫前）**："There's a problem when a lesson inside a section of a course is made 'real' (i.e. given a spot in the file system)"
 - **AFTER（改寫後）**："There's a problem with the materialization cascade"
@@ -213,7 +213,7 @@ npx skills@latest add mattpocock/skills
 **User-invoked**
 
 - **[ask-matt](./skills/engineering/ask-matt/SKILL.md)** — 問哪個技能或流程適合你的處境。此 repo 中 user-invoked 技能的路由器。
-- **[grill-with-docs](./skills/engineering/grill-with-docs/SKILL.md)** — 同時建立專案領域模型的詰問 session，磨利術語並內嵌更新 `CONTEXT.md` 與 ADR。
+- **[grill-with-docs](./skills/engineering/grill-with-docs/SKILL.md)** — 同時建立專案領域模型的詰問 session，磨利術語並內嵌更新 `GLOSSARY.md` 與 ADR。
 - **[triage](./skills/engineering/triage/SKILL.md)** — 讓 issue 通過分診角色的狀態機。
 - **[improve-codebase-architecture](./skills/engineering/improve-codebase-architecture/SKILL.md)** — 掃描程式碼庫尋找加深機會，以視覺 HTML 報告呈現，再詰問你挑中的那一個。
 - **[setup-matt-pocock-skills](./skills/engineering/setup-matt-pocock-skills/SKILL.md)** — 為工程技能設定此 repo（issue tracker、triage 標籤、領域文件排版）。使用其他工程技能前，每個 repo 執行一次。
@@ -228,7 +228,7 @@ npx skills@latest add mattpocock/skills
 - **[diagnosing-bugs](./skills/engineering/diagnosing-bugs/SKILL.md)** — 針對困難 bug 與效能退化的嚴謹診斷迴圈：建立一個在此 bug 上轉紅的回饋迴圈 → 最小化 → 假設 → 插樁 → 修復 → 回歸測試。
 - **[research](./skills/engineering/research/SKILL.md)** — 以高信任度主要來源調查問題，並把發現記錄成 repo 中帶引用的 Markdown 檔案，以後台代理執行。
 - **[tdd](./skills/engineering/tdd/SKILL.md)** — 帶紅-綠-重構迴圈的測試驅動開發。一次一個垂直切片地建構功能或修復 bug。
-- **[domain-modeling](./skills/engineering/domain-modeling/SKILL.md)** — 主動建立並磨利專案的領域模型 — 對照詞彙表質疑術語、以邊緣情境壓力測試，並內嵌更新 `CONTEXT.md` 與 ADR。
+- **[domain-modeling](./skills/engineering/domain-modeling/SKILL.md)** — 主動建立並磨利專案的領域模型 — 對照詞彙表質疑術語、以邊緣情境壓力測試，並內嵌更新 `GLOSSARY.md` 與 ADR。
 - **[codebase-design](./skills/engineering/codebase-design/SKILL.md)** — 設計深模組的共享紀律與詞彙：大量行為藏在小型介面之後、放在乾淨的接縫、可透過該介面測試。
 - **[code-review](./skills/engineering/code-review/SKILL.md)** — 對固定點以來的 diff 做雙軸審查：**Standards（規範）**（是否遵循 repo 的編碼標準，加上 Fowler 壞味道基線？）與 **Spec（規格）**（是否忠實實作原始 issue/spec？），以平行子代理執行，使兩者互不污染。
 - **[resolving-merge-conflicts](./skills/engineering/resolving-merge-conflicts/SKILL.md)** — 逐塊處理進行中的 git merge 或 rebase 衝突，依每側主要來源追溯意圖來解決，然後完成該操作 — 絕不 `--abort`。
@@ -244,7 +244,7 @@ npx skills@latest add mattpocock/skills
 - **[handoff](./skills/productivity/handoff/SKILL.md)** — 把目前對話壓縮成交接文件，讓另一個代理接手工作。
 - **[teach](./skills/productivity/teach/SKILL.md)** — 以目前目錄作為有狀態的教學工作區，跨越多次 session 教使用者新技能或概念。
 - **[to-questionnaire](./skills/productivity/to-questionnaire/SKILL.md)** — 把你無法獨自回答的決策，變成唯一能回答那人的 Markdown 問卷 — 非同步填寫，或會議中一起填。它詰問的是關於**寄送**（要寄給誰、你需要什麼回覆），而非主題。
-- **[wait-what](./skills/productivity/wait-what/SKILL.md)** — 當訊息一落空就觸發。代理用你缺少的上下文、以淺白英文並使用你 `CONTEXT.md` 的詞彙，重新說明它。
+- **[wait-what](./skills/productivity/wait-what/SKILL.md)** — 當訊息一落空就觸發。代理用你缺少的上下文、以淺白英文並使用你 `GLOSSARY.md` 的詞彙，重新說明它。
 
 **Model-invoked**
 

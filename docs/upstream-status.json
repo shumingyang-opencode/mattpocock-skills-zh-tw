@@ -126,12 +126,12 @@
     },
     {
       "kind": "remove",
-      "path": "CONTEXT.md",
+      "path": "GLOSSARY.md",
       "reason": "deleted"
     },
     {
       "kind": "remove",
-      "path": "skills/engineering/domain-modeling/CONTEXT-FORMAT.md",
+      "path": "skills/engineering/domain-modeling/GLOSSARY-FORMAT.md",
       "reason": "deleted"
     },
     {

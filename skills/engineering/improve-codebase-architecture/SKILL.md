@@ -11,7 +11,7 @@ disable-model-invocation: true
 這個指令_受_專案的領域模型_啟發_，並建立在共享的設計詞彙上：
 
 - 執行 `/codebase-design` 技能取得架構詞彙（**模組**、**介面**、**深度**、**接縫**、**轉接器**、**槓桿收益**、**局部性**）及其原則（刪除測試、「介面就是測試表面」、「一個轉接器 = 假設性接縫，兩個 = 真實」）。在每個建議中精確使用這些術語——不要漂移成「component」「service」「API」或「boundary」。
-- `CONTEXT.md` 中的領域語言為好接縫命名；`docs/adr/` 中的 ADR 記錄了這個指令不該重新爭論的決策。
+- `GLOSSARY.md` 中的領域語言為好接縫命名；`docs/adr/` 中的 ADR 記錄了這個指令不該重新爭論的決策。
 
 ## 流程
 
@@ -22,7 +22,7 @@ disable-model-invocation: true
 - 如果使用者指定了方向——一個模組、一個子系統、一個痛點——採用它，並跳過下面的推斷。
 - 否則，往回走一段良好的 commit 歷史（`git log --oneline`）找出程式碼庫的熱點——那些一直出現的檔案與區域——讓那些路徑先吸引你的注意力。如果變更四散、沒有清楚熱點，就擴大網子。
 
-先讀專案的領域詞彙表（`CONTEXT.md`）與你要觸及區域中的任何 ADR。
+先讀專案的領域詞彙表（`GLOSSARY.md`）與你要觸及區域中的任何 ADR。
 
 然後用 Agent 工具、`subagent_type=Explore` 走訪程式碼庫。不要遵循僵硬的啟發式——有機地探索，並記下你感到摩擦的地方：
 
@@ -51,7 +51,7 @@ disable-model-invocation: true
 
 以**頂級建議**章節結束報告：你會先處理哪個候選、為什麼。
 
-**領域用 CONTEXT.md 詞彙，架構用 `/codebase-design` 詞彙。** 如果 `CONTEXT.md` 定義了「Order」，就說「the Order intake module」——不是「the FooBarHandler」，也不是「the Order service」。
+**領域用 GLOSSARY.md 詞彙，架構用 `/codebase-design` 詞彙。** 如果 `GLOSSARY.md` 定義了「Order」，就說「the Order intake module」——不是「the FooBarHandler」，也不是「the Order service」。
 
 **ADR 衝突**：如果候選與既有 ADR 矛盾，只有當摩擦真實到值得重開該 ADR 時才浮現它。在卡片中清楚標記（例如警告 callout：_"與 ADR-0007 矛盾——但值得重新討論，因為……"_）。不要列出每個 ADR 禁止的理論性重構。
 
@@ -65,7 +65,7 @@ disable-model-invocation: true
 
 副作用在決策定案時內嵌發生——邊做邊執行 `/domain-modeling` 技能讓領域模型保持最新：
 
-- **以 `CONTEXT.md` 中沒有的概念命名深化後的模組？** 把術語加進 `CONTEXT.md`。如果不存在，惰性地建立檔案。
-- **在對話中磨利了模糊術語？** 就地更新 `CONTEXT.md`。
+- **以 `GLOSSARY.md` 中沒有的概念命名深化後的模組？** 把術語加進 `GLOSSARY.md`。如果不存在，惰性地建立檔案。
+- **在對話中磨利了模糊術語？** 就地更新 `GLOSSARY.md`。
 - **使用者以承重的理由拒絕候選？** 提供 ADR，措辭如下：「_要我把它記錄成 ADR，讓未來的架構審查不會再建議它嗎？_」只有當該理由真的會被未來的探索者需要以避免再建議同樣東西時才提供——跳過一時性的理由（「現在不值得」）與顯而易見的理由。
 - **想為深化後的模組探索替代介面？** 執行 `/codebase-design` 技能，用它的 design-it-twice 平行子代理模式。
