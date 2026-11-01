@@ -34,8 +34,8 @@
 <li><strong>規範（軸）</strong>——程式碼是否符合此 repo 記錄的編碼規範？</li>
 <li><strong>規格（軸）</strong>——程式碼是否忠實實作原始 issue / 規格？</li>
 </ul></div></div>
-<div class="pair"><div class="col-en" lang="en"><p>Both axes run as <strong>parallel sub-agents</strong> so they don't pollute each other's context, then this skill aggregates their findings.</p></div><div class="col-zh" lang="zh-Hant"><p>兩個軸都以<strong>平行子代理</strong>執行，讓它們不污染彼此的上下文，然後本技能匯總它們的發現。</p></div></div>
-<div class="pair"><div class="col-en" lang="en"><p>The issue tracker should have been provided to you. If <code>docs/agents/issue-tracker.md</code> is missing, tell the user to run <code>/setup-matt-pocock-skills</code>.</p></div><div class="col-zh" lang="zh-Hant"><p>Issue 追蹤器應該已經提供給你——如果 <code>docs/agents/issue-tracker.md</code> 缺失，執行 <code>/setup-matt-pocock-skills</code>。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Both axes run as <strong>parallel sub-agents</strong> so they don't pollute each other's context, then this skill aggregates their findings. Start every sub-agent with a fresh context window.</p></div><div class="col-zh" lang="zh-Hant"><p>兩個軸都以<strong>平行子代理</strong>執行，讓它們不污染彼此的上下文，然後本技能匯總它們的發現。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>The issue tracker should have been provided to you. If not, tell the user to run <code>/setup-matt-pocock-skills</code>.</p></div><div class="col-zh" lang="zh-Hant"><p>Issue 追蹤器應該已經提供給你——如果 <code>docs/agents/issue-tracker.md</code> 缺失，執行 <code>/setup-matt-pocock-skills</code>。</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><h2>Process</h2></div><div class="col-zh" lang="zh-Hant"><h2>流程</h2></div></div>
 <div class="pair"><div class="col-en" lang="en"><h3>1. Pin the fixed point</h3></div><div class="col-zh" lang="zh-Hant"><h3>1. 釘住固定點</h3></div></div>
 <div class="pair"><div class="col-en" lang="en"><p>Whatever the user said is the fixed point (a commit SHA, branch name, tag, <code>main</code>, <code>HEAD~5</code>, etc.). If they didn't specify one, ask for it.</p></div><div class="col-zh" lang="zh-Hant"><p>無論使用者說的固定點是什麼——一個 commit SHA、分支名稱、標籤、<code>main</code>、<code>HEAD~5</code> 等。如果他們沒指定，就問。</p></div></div>
@@ -44,7 +44,7 @@
 <div class="pair"><div class="col-en" lang="en"><h3>2. Identify the spec source</h3></div><div class="col-zh" lang="zh-Hant"><h3>2. 找出規格來源</h3></div></div>
 <div class="pair"><div class="col-en" lang="en"><p>Look for the originating spec, in this order:</p></div><div class="col-zh" lang="zh-Hant"><p>依此順序尋找原始規格：</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><ol>
-<li>Issue references in the commit messages (<code>#123</code>, <code>Closes #45</code>, GitLab <code>!67</code>, etc.), fetched via the workflow in <code>docs/agents/issue-tracker.md</code>.</li>
+<li>Issue references in the commit messages (<code>#123</code>, <code>Closes #45</code>, GitLab <code>!67</code>, etc.), fetched via the workflow in the tracker doc.</li>
 <li>A path the user passed as an argument.</li>
 <li>A spec file under <code>docs/</code>, <code>specs/</code>, or <code>.scratch/</code> matching the branch name or feature.</li>
 <li>If nothing is found, ask the user where the spec is. If they say there isn't one, the <strong>Spec</strong> sub-agent will skip and report "no spec available".</li>
@@ -55,7 +55,7 @@
 <li>如果什麼都沒找到，問使用者規格在哪。如果他們說沒有，<strong>規格</strong>子代理會跳過並回報「no spec available」。</li>
 </ol></div></div>
 <div class="pair"><div class="col-en" lang="en"><h3>3. Identify the standards sources</h3></div><div class="col-zh" lang="zh-Hant"><h3>3. 找出規範來源</h3></div></div>
-<div class="pair"><div class="col-en" lang="en"><p>Anything in the repo that documents how code should be written, such as <code>CODING_STANDARDS.md</code> or <code>CONTRIBUTING.md</code>.</p></div><div class="col-zh" lang="zh-Hant"><p>repo 中任何記錄程式碼應如何撰寫的東西，例如 <code>CODING_STANDARDS.md</code> 或 <code>CONTRIBUTING.md</code>。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Search the repo for every file that documents how code should be written. When <code>CODING_STANDARDS.md</code> or <code>CONTRIBUTING.md</code> exists, it must be on the list.</p></div><div class="col-zh" lang="zh-Hant"><p>repo 中任何記錄程式碼應如何撰寫的東西，例如 <code>CODING_STANDARDS.md</code> 或 <code>CONTRIBUTING.md</code>。</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><p>On top of whatever the repo documents, the Standards axis always carries the <strong>smell baseline</strong> below: a fixed set of Fowler code smells (<em>Refactoring</em>, ch.3) that applies even when a repo documents nothing. Two rules bind it:</p></div><div class="col-zh" lang="zh-Hant"><p>在 repo 記錄的任何東西之上，規範軸永遠攜帶下面這份<strong>壞味道基線</strong>——一組固定的 Fowler 壞味道（<em>Refactoring</em>，第 3 章），即使 repo 什麼都沒記錄也適用。兩條規則綁定它：</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><ul>
 <li><strong>The repo overrides.</strong> A documented repo standard always wins; where it endorses something the baseline would flag, suppress the smell.</li>
@@ -93,41 +93,41 @@
 <li><strong>拒絕遺贈（Refused Bequest）</strong>——子類別或實作者忽略或覆寫它繼承的大部分東西。→ 放棄繼承，改用組合。</li>
 </ul></div></div>
 <div class="pair"><div class="col-en" lang="en"><h3>4. Spawn both sub-agents in parallel</h3></div><div class="col-zh" lang="zh-Hant"><h3>4. 平行啟動兩個子代理</h3></div></div>
-<div class="pair"><div class="col-en" lang="en"><p><strong>Standards sub-agent prompt</strong> should include:</p></div><div class="col-zh" lang="zh-Hant"><p>發送單一訊息、兩個 <code>Agent</code> 工具呼叫。兩者都用 <code>general-purpose</code> 子代理。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Issue both sub-agent calls together, in the foreground, and aggregate the reports they return.</p></div><div class="col-zh" lang="zh-Hant"><p>發送單一訊息、兩個 <code>Agent</code> 工具呼叫。兩者都用 <code>general-purpose</code> 子代理。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p><strong>Standards sub-agent prompt</strong> should include:</p></div><div class="col-zh" lang="zh-Hant"><p><strong>規範子代理提示</strong>——包含：</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><ul>
 <li>The full diff command and commit list.</li>
 <li>The list of standards-source files you found in step 3, <strong>plus the smell baseline from step 3</strong> pasted in full (the sub-agent has no other access to it).</li>
 <li>The brief: "Report, per file/hunk where relevant, (a) every place the diff violates a documented standard: cite the standard (file + the rule); and (b) any baseline smell you spot: name it and quote the hunk. Distinguish hard violations from judgement calls: documented-standard breaches can be hard, but baseline smells are always judgement calls, and a documented repo standard overrides the baseline. Skip anything tooling enforces. Under 400 words."</li>
-</ul></div><div class="col-zh" lang="zh-Hant"><p><strong>規範子代理提示</strong>——包含：</p></div></div>
-<div class="pair"><div class="col-en" lang="en"><p><strong>Spec sub-agent prompt</strong> should include:</p></div><div class="col-zh" lang="zh-Hant"><ul>
+</ul></div><div class="col-zh" lang="zh-Hant"><ul>
 <li>完整的 diff 指令與 commit 清單。</li>
 <li>你在第 3 步找到的規範來源檔案清單，<strong>加上第 3 步的壞味道基線完整貼上</strong>——子代理沒有其他途徑取得它。</li>
 <li>簡報：「回報——在相關處逐檔案 / hunk——(a) diff 違反記錄在案標準的每一處：引用標準（檔案 + 規則）；以及 (b) 你注意到的任何基線壞味道：指出名字並引用 hunk。區分硬性違規與判斷——記錄在案的標準違規可以是硬性的，但基線壞味道永遠是判斷，而且記錄在案的 repo 標準覆蓋基線。跳過任何工具已強制的東西。400 字以內。」</li>
 </ul></div></div>
+<div class="pair"><div class="col-en" lang="en"><p><strong>Spec sub-agent prompt</strong> should include:</p></div><div class="col-zh" lang="zh-Hant"><p><strong>規格子代理提示</strong>——包含：</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><ul>
 <li>The diff command and commit list.</li>
 <li>The path or fetched contents of the spec.</li>
 <li>The brief: "Report: (a) requirements the spec asked for that are missing or partial; (b) behaviour in the diff that wasn't asked for (scope creep); (c) requirements that look implemented but where the implementation looks wrong. Quote the spec line for each finding. Under 400 words."</li>
-</ul></div><div class="col-zh" lang="zh-Hant"><p><strong>規格子代理提示</strong>——包含：</p></div></div>
-<div class="pair"><div class="col-en" lang="en"><p>If the spec is missing, skip the Spec sub-agent and note this in the final report.</p></div><div class="col-zh" lang="zh-Hant"><ul>
+</ul></div><div class="col-zh" lang="zh-Hant"><ul>
 <li>diff 指令與 commit 清單。</li>
 <li>規格的路徑或擷取的內容。</li>
 <li>簡報：「回報：(a) 規格要求但缺失或部分實作的需求；(b) diff 中沒有被要求卻存在的行為（範圍蔓延）；(c) 看起來已實作但實作看起來錯誤的需求。每個發現引用規格的原文。400 字以內。」</li>
 </ul></div></div>
-<div class="pair"><div class="col-en" lang="en"><h3>5. Aggregate</h3></div><div class="col-zh" lang="zh-Hant"><p>如果規格缺失，跳過規格子代理並在最終報告中註明。</p></div></div>
-<div class="pair"><div class="col-en" lang="en"><p>Present the two reports under <code>## Standards</code> and <code>## Spec</code> headings, verbatim or lightly cleaned. Do <strong>not</strong> merge or rerank findings, because the two axes are deliberately separate (see <em>Why two axes</em>).</p></div><div class="col-zh" lang="zh-Hant"><h3>5. 匯總</h3></div></div>
-<div class="pair"><div class="col-en" lang="en"><p>End with a one-line summary: total findings per axis, and the worst issue <em>within each axis</em> (if any). Don't pick a single winner across axes: that's the reranking the separation exists to prevent.</p></div><div class="col-zh" lang="zh-Hant"><p>在 <code>## Standards</code> 與 <code>## Spec</code> 標題下呈現兩份報告，原樣或輕度清理。<strong>不要</strong>合併或重新排序發現——兩個軸刻意分開（見《為什麼兩軸》）。</p></div></div>
-<div class="pair"><div class="col-en" lang="en"><h2>Why two axes</h2></div><div class="col-zh" lang="zh-Hant"><p>以一行摘要結尾：每個軸的發現總數，以及<em>每個軸內</em>最嚴重的問題（如果有的話）。不要跨軸選一個總冠軍——那正是分離所要防止的重新排序。</p></div></div>
-<div class="pair"><div class="col-en" lang="en"><p>A change can pass one axis and fail the other:</p></div><div class="col-zh" lang="zh-Hant"><h2>為什麼兩軸</h2></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>If the spec is missing, skip the Spec sub-agent and note this in the final report.</p></div><div class="col-zh" lang="zh-Hant"><p>如果規格缺失，跳過規格子代理並在最終報告中註明。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h3>5. Aggregate</h3></div><div class="col-zh" lang="zh-Hant"><h3>5. 匯總</h3></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Present the two reports under <code>## Standards</code> and <code>## Spec</code> headings, verbatim or lightly cleaned. Do <strong>not</strong> merge or rerank findings, because the two axes are deliberately separate (see <em>Why two axes</em>).</p></div><div class="col-zh" lang="zh-Hant"><p>在 <code>## Standards</code> 與 <code>## Spec</code> 標題下呈現兩份報告，原樣或輕度清理。<strong>不要</strong>合併或重新排序發現——兩個軸刻意分開（見《為什麼兩軸》）。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>End with a one-line summary: total findings per axis, and the worst issue <em>within each axis</em> (if any). Don't pick a single winner across axes: that's the reranking the separation exists to prevent.</p></div><div class="col-zh" lang="zh-Hant"><p>以一行摘要結尾：每個軸的發現總數，以及<em>每個軸內</em>最嚴重的問題（如果有的話）。不要跨軸選一個總冠軍——那正是分離所要防止的重新排序。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><h2>Why two axes</h2></div><div class="col-zh" lang="zh-Hant"><h2>為什麼兩軸</h2></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>A change can pass one axis and fail the other:</p></div><div class="col-zh" lang="zh-Hant"><p>一個變更可以過一軸而掛另一軸：</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><ul>
 <li>Code that follows every standard but implements the wrong thing → <strong>Standards pass, Spec fail.</strong></li>
 <li>Code that does exactly what the issue asked but breaks the project's conventions → <strong>Spec pass, Standards fail.</strong></li>
-</ul></div><div class="col-zh" lang="zh-Hant"><p>一個變更可以過一軸而掛另一軸：</p></div></div>
-<div class="pair"><div class="col-en" lang="en"><p>Reporting them separately stops one axis from masking the other.</p></div><div class="col-zh" lang="zh-Hant"><ul>
+</ul></div><div class="col-zh" lang="zh-Hant"><ul>
 <li>遵循所有標準但實作錯誤的東西 → <strong>規範過、規格掛。</strong></li>
 <li>確切做了 issue 要求但破壞專案慣例的程式碼 → <strong>規格過、規範掛。</strong></li>
 </ul></div></div>
-<div class="pair"><div class="col-en" lang="en"><p class="zh-only">（無英文對照）</p></div><div class="col-zh" lang="zh-Hant"><p>分開回報能阻止一個軸掩蓋另一個。</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Reporting them separately stops one axis from masking the other.</p></div><div class="col-zh" lang="zh-Hant"><p>分開回報能阻止一個軸掩蓋另一個。</p></div></div>
 
 </div>
 </body>

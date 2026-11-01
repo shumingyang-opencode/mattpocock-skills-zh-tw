@@ -144,7 +144,7 @@
 <div class="pair"><div class="col-en" lang="en"><p>If a correct seam exists:</p></div><div class="col-zh" lang="zh-Hant"><p>宣告完成前必須完成：</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><ol>
 <li>Turn the minimised repro into a failing test at that seam.</li>
-<li>Watch it fail.</li>
+<li>Watch it fail. If you forced the red by mutating code or a fixture, <code>diff</code> against a pristine copy to prove the mutation landed before you trust it.</li>
 <li>Apply the fix.</li>
 <li>Watch it pass.</li>
 <li>Re-run the Phase 1 feedback loop against the original (un-minimised) scenario.</li>

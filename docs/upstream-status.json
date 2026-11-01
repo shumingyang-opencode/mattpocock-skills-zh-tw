@@ -5,80 +5,75 @@
     "date": "2026-08-05"
   },
   "upstream": {
-    "release": "v1.2.3",
-    "commit": "d81f3a183412e71a5b1e84ca21bc1a35eea03a60",
-    "date": "2026-08-06"
+    "release": "v1.3.2",
+    "commit": "4ae2317ddb22b046e26455e4f9c9b3aaaf62212d",
+    "date": "2026-10-29"
   },
   "up_to_date": false,
   "pending": [
     {
       "kind": "translate",
-      "path": ".changeset/domain-modeling-trigger-context-adr.md",
+      "path": ".changeset/chief-of-staff-shared-wiki-procedures.md",
       "reason": "added"
     },
     {
       "kind": "translate",
-      "path": ".changeset/fix-yaml-frontmatter-colons.md",
+      "path": ".changeset/implementer-fresh-per-ticket.md",
       "reason": "added"
     },
     {
       "kind": "translate",
-      "path": ".changeset/graduate-implement-spec.md",
+      "path": ".changeset/software-factory-skill.md",
       "reason": "added"
     },
     {
       "kind": "translate",
-      "path": ".changeset/graduate-pr.md",
+      "path": ".out-of-scope/frozen-misc-skills.md",
       "reason": "added"
     },
     {
       "kind": "translate",
-      "path": ".changeset/graduate-retro.md",
+      "path": ".out-of-scope/harness-name-collisions.md",
       "reason": "added"
     },
     {
       "kind": "translate",
-      "path": ".changeset/grilling-add-hr-between-questions.md",
+      "path": ".out-of-scope/lazy-load-writing-for-agents.md",
       "reason": "added"
     },
     {
       "kind": "translate",
-      "path": ".changeset/grilling-remove-em-dashes.md",
+      "path": ".out-of-scope/native-question-tool.md",
       "reason": "added"
     },
     {
       "kind": "translate",
-      "path": ".changeset/remove-em-dashes-repo-wide.md",
+      "path": ".out-of-scope/new-skills.md",
       "reason": "added"
     },
     {
       "kind": "translate",
-      "path": ".changeset/remove-resolving-merge-conflicts.md",
+      "path": ".out-of-scope/subagent-recursion.md",
       "reason": "added"
     },
     {
       "kind": "translate",
-      "path": ".changeset/rename-context-to-glossary.md",
-      "reason": "added"
-    },
-    {
-      "kind": "translate",
-      "path": ".changeset/skill-tool-invocation-terminology.md",
-      "reason": "added"
-    },
-    {
-      "kind": "translate",
-      "path": ".changeset/user-invoked-skill-invocation.md",
-      "reason": "added"
-    },
-    {
-      "kind": "translate",
-      "path": ".changeset/wait-what-context-map.md",
+      "path": "CONTRIBUTING.md",
       "reason": "added"
     },
     {
       "kind": "translate",
       "path": "GLOSSARY.md",
+      "reason": "added"
+    },
+    {
+      "kind": "translate",
+      "path": "SCOPE.md",
+      "reason": "added"
+    },
+    {
+      "kind": "translate",
+      "path": "docs/agents/triage-labels.md",
       "reason": "added"
     },
     {
@@ -125,13 +120,50 @@
       "note": "需翻譯＋加入 registry（blurb/level/inv）"
     },
     {
+      "kind": "new-skill",
+      "path": "skills/in-progress/chief-of-staff/SKILL.md",
+      "reason": "added",
+      "note": "需翻譯＋加入 registry（blurb/level/inv）"
+    },
+    {
+      "kind": "translate",
+      "path": "skills/in-progress/software-factory/EXAMPLE-TASKS.md",
+      "reason": "added"
+    },
+    {
+      "kind": "translate",
+      "path": "skills/in-progress/software-factory/GIT-HOSTS.md",
+      "reason": "added"
+    },
+    {
+      "kind": "translate",
+      "path": "skills/in-progress/software-factory/OBSERVABILITY-PLATFORMS.md",
+      "reason": "added"
+    },
+    {
+      "kind": "translate",
+      "path": "skills/in-progress/software-factory/RUNNERS.md",
+      "reason": "added"
+    },
+    {
+      "kind": "new-skill",
+      "path": "skills/in-progress/software-factory/SKILL.md",
+      "reason": "added",
+      "note": "需翻譯＋加入 registry（blurb/level/inv）"
+    },
+    {
+      "kind": "translate",
+      "path": "skills/in-progress/software-factory/TICKET-TRACKERS.md",
+      "reason": "added"
+    },
+    {
       "kind": "remove",
-      "path": "GLOSSARY.md",
+      "path": "CONTEXT.md",
       "reason": "deleted"
     },
     {
       "kind": "remove",
-      "path": "skills/engineering/domain-modeling/GLOSSARY-FORMAT.md",
+      "path": "skills/engineering/domain-modeling/CONTEXT-FORMAT.md",
       "reason": "deleted"
     },
     {
@@ -381,6 +413,11 @@
     },
     {
       "kind": "translate",
+      "path": "skills/engineering/implement/SKILL.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
       "path": "skills/engineering/improve-codebase-architecture/HTML-REPORT.md",
       "reason": "modified"
     },
@@ -432,6 +469,11 @@
     {
       "kind": "translate",
       "path": "skills/engineering/setup-matt-pocock-skills/issue-tracker-local.md",
+      "reason": "modified"
+    },
+    {
+      "kind": "translate",
+      "path": "skills/engineering/setup-matt-pocock-skills/triage-labels.md",
       "reason": "modified"
     },
     {
@@ -590,6 +632,6 @@
       "reason": "modified"
     }
   ],
-  "non_md_count": 24,
-  "checked_at": "2026-10-01T02:40:29Z"
+  "non_md_count": 30,
+  "checked_at": "2026-11-01T02:47:54Z"
 }

@@ -49,7 +49,7 @@
 <li>否則，往回走一段良好的 commit 歷史（<code>git log --oneline</code>）找出程式碼庫的熱點——那些一直出現的檔案與區域——讓那些路徑先吸引你的注意力。如果變更四散、沒有清楚熱點，就擴大網子。</li>
 </ul></div></div>
 <div class="pair"><div class="col-en" lang="en"><p>Read the project's domain glossary (<code>GLOSSARY.md</code>) and any ADRs in the area you're touching first.</p></div><div class="col-zh" lang="zh-Hant"><p>先讀專案的領域詞彙表（<code>GLOSSARY.md</code>）與你要觸及區域中的任何 ADR。</p></div></div>
-<div class="pair"><div class="col-en" lang="en"><p>Then spawn a sub-agent to walk the codebase. Don't follow rigid heuristics; explore organically and note where you experience friction:</p></div><div class="col-zh" lang="zh-Hant"><p>然後用 Agent 工具、<code>subagent_type=Explore</code> 走訪程式碼庫。不要遵循僵硬的啟發式——有機地探索，並記下你感到摩擦的地方：</p></div></div>
+<div class="pair"><div class="col-en" lang="en"><p>Then spawn a sub-agent with a fresh context window to walk the codebase. Don't follow rigid heuristics; explore organically and note where you experience friction:</p></div><div class="col-zh" lang="zh-Hant"><p>然後用 Agent 工具、<code>subagent_type=Explore</code> 走訪程式碼庫。不要遵循僵硬的啟發式——有機地探索，並記下你感到摩擦的地方：</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><ul>
 <li>Where does understanding one concept require bouncing between many small modules?</li>
 <li>Where are modules <strong>shallow</strong>, with an interface nearly as complex as the implementation?</li>

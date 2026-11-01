@@ -27,7 +27,7 @@
 <div class="pair"><div class="col-en" lang="en"><ul>
 <li><strong>Create an issue</strong>: <code>glab issue create --title "..." --description "..."</code>. Use a heredoc for multi-line descriptions. Pass <code>--description -</code> to open an editor.</li>
 <li><strong>Read an issue</strong>: <code>glab issue view &lt;number&gt; --comments</code>. Use <code>-F json</code> for machine-readable output.</li>
-<li><strong>List issues</strong>: <code>glab issue list -F json</code> with appropriate <code>--label</code> filters.</li>
+<li><strong>List issues</strong>: <code>glab issue list -O json</code> with appropriate <code>--label</code> filters.</li>
 <li><strong>Comment on an issue</strong>: <code>glab issue note &lt;number&gt; --message "..."</code>. GitLab calls comments "notes".</li>
 <li><strong>Apply / remove labels</strong>: <code>glab issue update &lt;number&gt; --label "..."</code> / <code>--unlabel "..."</code>. Multiple labels can be comma-separated or by repeating the flag.</li>
 <li><strong>Close</strong>: <code>glab issue close &lt;number&gt;</code>. <code>glab issue close</code> does not accept a closing comment, so post the explanation first with <code>glab issue note &lt;number&gt; --message "..."</code>, then close.</li>
@@ -47,7 +47,7 @@
 <div class="pair"><div class="col-en" lang="en"><p>When set to <code>yes</code>, MRs run through the same labels and states as issues, using the <code>glab mr</code> equivalents:</p></div><div class="col-zh" lang="zh-Hant"><p>設為 <code>yes</code> 時，MR 與 issue 跑同一套標籤與狀態，使用 <code>glab mr</code> 的對應指令：</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><ul>
 <li><strong>Read an MR</strong>: <code>glab mr view &lt;number&gt; --comments</code> and <code>glab mr diff &lt;number&gt;</code> for the diff.</li>
-<li><strong>List external MRs for triage</strong>: <code>glab mr list -F json</code>, then keep only MRs whose author is not a project member/owner (a contributor's MR, not a maintainer's in-flight work).</li>
+<li><strong>List external MRs for triage</strong>: <code>glab mr list -O json</code>, then keep only MRs whose author is not a project member/owner (a contributor's MR, not a maintainer's in-flight work).</li>
 <li><strong>Comment / label / close</strong>: <code>glab mr note</code>, <code>glab mr update --label</code>/<code>--unlabel</code>, <code>glab mr close</code>.</li>
 </ul></div><div class="col-zh" lang="zh-Hant"><ul>
 <li><strong>讀取 MR</strong>：<code>glab mr view &lt;number&gt; --comments</code>，diff 用 <code>glab mr diff &lt;number&gt;</code>。</li>
@@ -63,9 +63,9 @@
 <div class="pair"><div class="col-en" lang="en"><p>Used by <code>/wayfinder</code>. The <strong>map</strong> is a single issue with <strong>child</strong> issues as tickets.</p></div><div class="col-zh" lang="zh-Hant"><p>由 <code>/wayfinder</code> 使用。<strong>地圖</strong>是單一 issue，<strong>子</strong> issue 是 ticket。</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><ul>
 <li><strong>Map</strong>: a single issue labelled <code>wayfinder:map</code>, holding the Notes / Decisions-so-far / Fog body. <code>glab issue create --label wayfinder:map</code>. (On GitLab tiers with native epics, an epic may hold the map instead; a labelled issue works everywhere.)</li>
-<li><strong>Child ticket</strong>: an issue carrying <code>Part of #&lt;map&gt;</code> at the top of its description and labels <code>wayfinder:&lt;type&gt;</code> (<code>research</code>/<code>prototype</code>/<code>grilling</code>/<code>task</code>). Once claimed, the ticket is assigned to the driving dev.</li>
+<li><strong>Child ticket</strong>: an issue carrying <code>Part of #&lt;map&gt;</code> at the top of its description, linked to the map (<code>glab issue create --linked-issues &lt;map&gt; --link-type relates_to</code>), and labels <code>wayfinder:&lt;type&gt;</code> (<code>research</code>/<code>prototype</code>/<code>grilling</code>/<code>task</code>). Once claimed, the ticket is assigned to the driving dev.</li>
 <li><strong>Blocking</strong>: GitLab's <strong>native blocking link</strong>, the canonical, UI-visible representation. Add it with the <code>/blocked_by #&lt;n&gt;</code> quick action, posted as a note (<code>glab issue note &lt;child&gt; --message "/blocked_by #&lt;blocker&gt;"</code>). Native blocking links are a Premium/Ultimate feature; on the free tier (or where unavailable) fall back to a <code>Blocked by: #&lt;n&gt;, #&lt;n&gt;</code> line at the top of the description. A ticket is unblocked when every blocker is closed.</li>
-<li><strong>Frontier query</strong>: <code>glab issue list -F json</code> scoped to the map's children, drop any with an open blocker: a native <code>blocked_by</code> link to an open issue (<code>glab api projects/:id/issues/:iid/links</code>), or an open issue in the <code>Blocked by</code> line, or an assignee; first in map order wins.</li>
+<li><strong>Frontier query</strong>: list the map's children with <code>glab api projects/:id/issues/&lt;map&gt;/links</code>, keeping open issues that carry a <code>wayfinder:&lt;type&gt;</code> label; drop any with an open blocker: a native <code>blocked_by</code> link to an open issue (<code>glab api projects/:id/issues/&lt;child-iid&gt;/links</code>), or an open issue in the <code>Blocked by</code> line, or an assignee; first in map order wins.</li>
 <li><strong>Claim</strong>: <code>glab issue update &lt;n&gt; --assignee @me</code>, the session's first write.</li>
 <li><strong>Resolve</strong>: <code>glab issue note &lt;n&gt; --message "&lt;answer&gt;"</code>, then <code>glab issue close &lt;n&gt;</code>, then append a context pointer (gist + link) to the map's Decisions-so-far.</li>
 </ul></div><div class="col-zh" lang="zh-Hant"><ul>

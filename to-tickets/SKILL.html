@@ -81,7 +81,7 @@
 <div class="pair"><div class="col-en" lang="en"><p>Publish the approved tickets. <strong>How</strong> depends on the tracker <code>/setup-matt-pocock-skills</code> configured; the tickets are the same either way, only the shape of the blocking edges changes:</p></div><div class="col-zh" lang="zh-Hant"><p>發佈被認可的 tickets。<strong>怎麼發佈</strong>取決於 <code>/setup-matt-pocock-skills</code> 所設定的追蹤器——兩種方式下 tickets 都相同，只有阻塞邊的形狀會改變：</p></div></div>
 <div class="pair"><div class="col-en" lang="en"><ul>
 <li><strong>Local files</strong> → write one file per ticket under <code>.scratch/&lt;feature-slug&gt;/issues/&lt;NN&gt;-&lt;slug&gt;.md</code>, numbered from <code>01</code> in dependency order (blockers first). Each file's "Blocked by" lists the numbers/titles it depends on. Use the per-ticket file template below: one ticket per file, never a single combined file.</li>
-<li><strong>A real issue tracker (GitHub, Linear, …)</strong> → publish one issue per ticket in dependency order (blockers first) so each ticket's blocking edges can reference real identifiers. Use the platform's native blocking / sub-issue relationship where it has one; otherwise set each ticket's "Blocked by" to the blocking issues. Apply the <code>ready-for-agent</code> triage label unless instructed otherwise; the tickets are agent-grabbable by construction.</li>
+<li><strong>A real issue tracker (GitHub, Linear, …)</strong> → publish one issue per ticket in dependency order (blockers first) so each ticket's blocking edges can reference real identifiers. Use the platform's native blocking relationship where it has one; otherwise set each ticket's "Blocked by" to the blocking issues. If the source was an existing issue, make each ticket its sub-issue (tracker doc's operation). Apply the <code>ready-for-agent</code> triage label unless instructed otherwise; the tickets are agent-grabbable by construction.</li>
 </ul></div><div class="col-zh" lang="zh-Hant"><ul>
 <li><strong>本機檔案</strong> → 每個 ticket 在 <code>.scratch/&lt;feature-slug&gt;/issues/&lt;NN&gt;-&lt;slug&gt;.md</code> 下寫一個檔案，依依賴順序從 <code>01</code> 開始編號（阻塞者優先）。每個檔案的「Blocked by」列出它所依賴的編號／標題。使用下方的逐 ticket 檔案範本——每個檔案一張 ticket，絕不合成單一檔案。</li>
 <li><strong>真正的 Issue 追蹤器（GitHub、Linear、……）</strong> → 依依賴順序（阻塞者優先）逐 ticket 發佈一個 issue，這樣每張 ticket 的阻塞邊就能引用真實的識別符。在平台有原生阻塞／子 issue 關係的地方使用它；否則把每張 ticket 的「Blocked by」設為阻塞它的 issues。除非另有指示，套用 <code>ready-for-agent</code> 分診標籤——這些 tickets 天生就可供代理認領。</li>
@@ -119,7 +119,7 @@
 </ul>
 <h2>Blocked by</h2>
 <ul>
-<li>A reference to each blocking ticket, or "None (can start immediately)".</li>
+<li>A reference to each blocking ticket, or "None (can start immediately)". Omit this section when blockers were set as native edges.</li>
 </ul>
 <p></issue-template></p></div><div class="col-zh" lang="zh-Hant"><p><issue-template></p>
 <h2>父 issue</h2>
